@@ -15,17 +15,18 @@ from django.core.mail import send_mail
 
 
 def Home(request):
-    send_mail(
-    "Subject here",
-    "Here is the message. test test 123 ",
-    "lazariatik@gmail.com",
-    ["belaatiknizar@gmail.com"],
-    fail_silently=False,
-)
+
     
     #return render(request,'html/home.html',{"name":"night","username":"nightcode"})
     return render(request,'html/home.html')
     
+def send_email():
+    send_mail(
+    "Subject here",
+    "Here is the message. test test 123 ",
+    "guhgi155@gmail.com",
+    ["lazariatik@gmail.com"],
+    fail_silently=False,) 
 
 
 
