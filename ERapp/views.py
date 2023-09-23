@@ -5,11 +5,23 @@ from django.contrib.auth.models import User
 
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login , logout
+
+from .forms import TableDataForm1
+from .models import TableData1
+
+
+from django.core.mail import send_mail
 # Create your views here.
 
 
 def Home(request):
-    
+    send_mail(
+    "Subject here",
+    "Here is the message. test test 123 ",
+    "lazariatik@gmail.com",
+    ["belaatiknizar@gmail.com"],
+    fail_silently=False,
+)
     
     #return render(request,'html/home.html',{"name":"night","username":"nightcode"})
     return render(request,'html/home.html')
@@ -83,3 +95,16 @@ def LogoutU(request):
     logout(request)
     return redirect("/login/")
     #return render(request,'html/login.html')
+    
+    
+
+def table_view(request):
+    if request.method == 'POST':
+        form = TableDataForm1(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/formT/')  # Redirect to the same page to add more rows
+    else:
+        form = TableDataForm1()
+    data = TableData1.objects.all()
+    return render(request, 'html/formPage.html', {'form': form, 'data': data})

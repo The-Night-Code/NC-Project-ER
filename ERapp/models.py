@@ -9,3 +9,5 @@ class USER(models.Model):
     password = models.CharField(max_length=320)
 
     
+class TableData1(models.Model):
+    cell_data = models.CharField(max_length=255)
