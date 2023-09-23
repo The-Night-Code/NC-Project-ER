@@ -779,20 +779,7 @@
   <script type="text/javascript" src="{% static 'vendor/tinymce/tinymce.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/php-email-form/validate.js' %}"></script>
 
-  <script >
-            
-    $(document).ready(function() {
-        $("#add-row").click(function() {
-            $("#data-table tbody").append("<tr><td><input type='text' name='cell_data'></td></tr>");
-        });
-    
-        $("#add-col").click(function() {
-            $("#data-table thead").append("<th>Column Header</th>");
-            $("#data-table tbody tr").append("<td><input type='text' name='cell_data'></td>");
-        });
-    });
-
-</script>
+  
 
   <!-- Template Main JS File -->
   <script type="text/javascript" src="{% static 'js/main.js'%}"></script>

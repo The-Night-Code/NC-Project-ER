@@ -11,3 +11,4 @@ class USER(models.Model):
     
 class TableData1(models.Model):
     cell_data = models.CharField(max_length=255)
+    cell_data2 = models.CharField(max_length=255)

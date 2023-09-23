@@ -19,118 +19,51 @@
         <![endif]-->
 
 
+
+        
         <form method="post">
             {% csrf_token %}
             <table>
                 <thead>
-                    <tr>
-                        <th>Column Header</th>
-                    </tr>
+                    {% for column_name in column_names %}
+                    <th>{{ column_name }}</th>
+                    {% endfor %}
                 </thead>
                 <tbody>
                     {% for item in data %}
                     <tr>
                         <td>{{ item.cell_data }}</td>
+                        <td>{{ item.cell_data2 }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
-            </table>
-            {{ form.as_p }}
-            <button type="submit">Add Row</button>
-          </form>
-        
-        <script >
-            
-            $(document).ready(function() {
-                $("#add-row").click(function() {
-                    $("#data-table tbody").append("<tr><td><input type='text' name='cell_data'></td></tr>");
-                });
-            
-                $("#add-col").click(function() {
-                    $("#data-table thead").append("<th>Column Header</th>");
-                    $("#data-table tbody tr").append("<td><input type='text' name='cell_data'></td>");
-                });
-            });
-  
-        </script>
-
-
-
-
-
-        <form method="post">
-            {% csrf_token %}
-            <table>
-                <thead>
+                <tfoot>
                     <tr>
-                        {% for header in headers %}
-                        <th>{{ header }}</th>
-                        {% endfor %}
+                      <td><input type="text" name="cell_data" ></td>
+                      <td><input type="text" name="cell_data2" ></td>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for row in data %}
-                    <tr>
-                        {% for cell in row %}
-                        <td>{{ cell }}</td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
+                  </tfoot>
             </table>
-            {{ form.as_p }}
+            <!--{} form.as_p -->
             <button type="submit">Add Row</button>
-            <button type="button" id="add-column">Add Column</button>
-            <button type="button" id="save-table">Save</button>
         </form>
+    
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {
-                $("#add-column").click(function() {
-                    var columnName = prompt("Enter column name:");
-                    if (columnName) {
-                        // Add the new column header to the table
-                        $("thead tr").append("<th>" + columnName + "</th>");
-                        
-                        // Add an empty cell for the new column in each row
-                        $("tbody tr").each(function() {
-                            $(this).append("<td><input type='text' name='cell_data'></td>");
-                        });
-                    }
-                    
+                $("#add-row").click(function() {
+                    $("#data-table tbody").append("<tr><td><input type='text' name='cell_data'></td></tr>");
+                    $("#data-table2 tbody").append("<tr><td><input type='text' name='cell_data2'></td></tr>");
                 });
-                $("#save-table").click(function() {
-                  // Create an array to store cell_data values
-                  var cellDataValues = [];
-          
-                  // Iterate over each input field and add its value to the array
-                  $("input[name='cell_data']").each(function() {
-                      cellDataValues.push($(this).val());
-                  });
-          
-                  // Send an AJAX request to save the table data
-                  $.ajax({
-                      type: "POST",
-                      url: "{% url 'save_table' %}",
-                      data: {
-                          csrfmiddlewaretoken: "{{ csrf_token }}",
-                          cell_data: cellDataValues,
-                      },
-                      success: function() {
-                          // Optionally, you can provide feedback to the user upon successful save
-                          alert("Table data saved successfully.");
-                      },
-                      error: function() {
-                          alert("Error occurred while saving table data.");
-                      }
-                  });
-              });
-          });
+            
+                
+            });
         </script>
 
 
 
-
         
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     </body>
 </html>

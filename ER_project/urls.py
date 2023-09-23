@@ -20,7 +20,7 @@ from ERapp.views import Home, LoginU,table_view
 from ERapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', table_view),
+    path('home/', Home),
     path('login/', LoginU),
     path('formT/',table_view ),
     

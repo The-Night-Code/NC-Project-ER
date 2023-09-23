@@ -102,25 +102,56 @@ def LogoutU(request):
     
     
 
-def table_view1(request):
+def table_view3(request): # add row
     if request.method == 'POST':
         form = TableDataForm1(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/home/')  # /formT/ Redirect to the same page to add more rows
+            return redirect('/formT/')  # Redirect to the same page to add more rows
     else:
         form = TableDataForm1()
     data = TableData1.objects.all()
-    return render(request, 'html/home.html', {'form': form, 'data': data})
-    #return render(request, 'html/formPage.html', {'form': form, 'data': data})
+    return render(request, 'html/formPage.html', {'form': form, 'data': data})
+    
+    
+    
+def table_view(request): # add row
+    
+    if request.method == 'POST':
+        cell_data1=request.POST.get("cell_data")
+        cell_data2=request.POST.get("cell_data2")
+        #form = TableDataForm1(request.POST)
+        data = TableData1(cell_data=cell_data1,cell_data2=cell_data2)
+        data.save()
+        return redirect('/formT/')
+        #if form.is_valid():
+         #   form.save()
+          #  return redirect('/formT/')  # Redirect to the same page to add more rows
+    else:
+        form = TableDataForm1()
+    data = TableData1.objects.all()
+    col_count = data.count()
+    # Get unique column names from the TableData model
+    column_names = TableData1._meta.get_fields()
+    return render(request, 'html/formPage.html', {'form': form, 'data': data , 'col_count':col_count ,'column_names': column_names})
+       
+    
+    
+    
+    
+    
+    
+    
     
 
-def table_view(request):
+
+
+def table_view1(request): # add col and row 
     if request.method == 'POST':
         form = TableDataForm1(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/home/')  # Redirect to the same page to add more rows
+            return redirect('/formT/')  # Redirect to the same page to add more rows
     else:
         form = TableDataForm1()
     
@@ -133,7 +164,7 @@ def table_view(request):
     # Assuming you want a single header for the single column
     headers = ["Column Header"]
 
-    return render(request, 'html/home.html', {'form': form, 'values': values, 'headers': headers})
+    return render(request, 'html/formPage.html', {'form': form, 'values': values, 'headers': headers})
 
 def save_table(request):
     if request.method == 'POST':
@@ -147,4 +178,4 @@ def save_table(request):
         for cell_data in cell_data_values:
             TableData1.objects.create(cell_data=cell_data)
     
-    return redirect('html/home.html')
+    return redirect('html/formPage.html')
