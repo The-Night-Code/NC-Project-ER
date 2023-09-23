@@ -1,24 +1,6 @@
 /**
-* Template Name: NiceAdmin
-* Updated: Sep 18 2023 with Bootstrap v5.3.2
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
+
 */
-
-$(document).ready(function() {
-  $("#add-row").click(function() {
-      $("#data-table tbody").append("<tr><td><input type='text' name='cell_data'></td></tr>");
-  });
-
-  $("#add-col").click(function() {
-      $("#data-table thead").append("<th>Column Header</th>");
-      $("#data-table tbody tr").append("<td><input type='text' name='cell_data'></td>");
-  });
-});
-
-
-
 
 
 (function() {

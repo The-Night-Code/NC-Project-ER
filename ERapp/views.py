@@ -49,6 +49,9 @@ def LoginU(request):
     
     return render(request,'html/login.html')
 
+
+
+
 def SignupU(request):
     
     
@@ -99,13 +102,49 @@ def LogoutU(request):
     
     
 
+def table_view1(request):
+    if request.method == 'POST':
+        form = TableDataForm1(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/home/')  # /formT/ Redirect to the same page to add more rows
+    else:
+        form = TableDataForm1()
+    data = TableData1.objects.all()
+    return render(request, 'html/home.html', {'form': form, 'data': data})
+    #return render(request, 'html/formPage.html', {'form': form, 'data': data})
+    
+
 def table_view(request):
     if request.method == 'POST':
         form = TableDataForm1(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/formT/')  # Redirect to the same page to add more rows
+            return redirect('/home/')  # Redirect to the same page to add more rows
     else:
         form = TableDataForm1()
+    
+    # Query all rows from the TableData model
     data = TableData1.objects.all()
-    return render(request, 'html/formPage.html', {'form': form, 'data': data})
+
+    # Extract cell_data values for rendering in the template
+    values = [item.cell_data for item in data]
+
+    # Assuming you want a single header for the single column
+    headers = ["Column Header"]
+
+    return render(request, 'html/home.html', {'form': form, 'values': values, 'headers': headers})
+
+def save_table(request):
+    if request.method == 'POST':
+        # Extract all the cell_data values from the submitted form
+        cell_data_values = request.POST.getlist('cell_data')
+        
+        # Clear the existing data in the TableData model
+        TableData1.objects.all().delete()
+        
+        # Create new TableData objects for each cell_data value and save them
+        for cell_data in cell_data_values:
+            TableData1.objects.create(cell_data=cell_data)
+    
+    return redirect('html/home.html')
