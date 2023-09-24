@@ -121,24 +121,46 @@ def table_view(request): # add row
         cell_data1=request.POST.get("cell_data")
         cell_data2=request.POST.get("cell_data2")
         #form = TableDataForm1(request.POST)
-        data = TableData1(cell_data=cell_data1,cell_data2=cell_data2)
-        data.save()
-        return redirect('/formT/')
-        #if form.is_valid():
-         #   form.save()
-          #  return redirect('/formT/')  # Redirect to the same page to add more rows
+        if cell_data1 or cell_data2:
+            data = TableData1(cell_data=cell_data1,cell_data2=cell_data2)
+            data.save()
+            return redirect('/formT/')
+            #if form.is_valid():
+            #   form.save()
+            #  return redirect('/formT/')  # Redirect to the same page to add more rows
+            
+        
     else:
         form = TableDataForm1()
+        
+    
     data = TableData1.objects.all()
     col_count = data.count()
     # Get unique column names from the TableData model
     column_names = TableData1._meta.get_fields()
+    
     return render(request, 'html/formPage.html', {'form': form, 'data': data , 'col_count':col_count ,'column_names': column_names})
        
     
     
+def table_view_edit(request,pk):
+    get_col_by_id = TableData1.objects.get(id=pk)
     
+
+
+    get_col_by_id.cell_data = str(request.GET.getlist("cell_data2"))
+    get_col_by_id.cell_data2 = request.GET.getlist("cell_data3")
+       
     
+    #get_col_by_id.save(update_fields=['cell_data', 'cell_data2'])
+    get_col_by_id.save(update_fields=['cell_data', 'cell_data2'])
+    data = TableData1.objects.all()
+    col_count = data.count()
+    # Get unique column names from the TableData model
+    column_names = TableData1._meta.get_fields()
+    
+    #return render(request, 'html/formPage.html', { 'data': data , 'col_count':col_count ,'column_names': column_names})
+    return redirect('/formT/')
     
     
     

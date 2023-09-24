@@ -413,28 +413,35 @@
                 <div class="card-body">
                   <h5 class="card-title">Recent Sales <span>| Today</span></h5>
 
-                  <form method="post">
+                  <form method="post"  >
                     {% csrf_token %}
-                    <table class="table table-borderless datatable">
-                        <thead>
+                    <table class="table  table-sm table-hover table-striped  table-bordered" id="tableDATA">
+                        <thead class="thead-dark">
                             {% for column_name in column_names %}
-                            <th>{{ column_name }}</th>
+                            <th>{{ column_name }}</th>                            
                             {% endfor %}
+                            <th></th>
                         </thead>
                         <tbody>
                             {% for item in data %}
                             <tr>
-                                <td>{{ item.id }}</td>
-                                <td>{{ item.cell_data }}</td>
-                                <td>{{ item.cell_data2 }}</td>
+                                <td><input class="input_table_data" type="text" name="cell_data1" value="{{ item.id }} "  ></td>
+                                <td><input class="input_table_data" type="text" name="cell_data2" value="{{ item.cell_data }}"  ></td>
+                                <td><input class="input_table_data" type="text" name="cell_data3" value="{{ item.cell_data2 }}"  ></td>
+                                <td><a href="{% url 'editFormTable' item.id %}" ><i class="ri-edit-2-fill"></i></a></td>
+                                
+                                <td><a href="{% url 'editFormTable' item.id %}?cell_data1={{ item.id }}&cell_data2={{ item.cell_data }}&cell_data3={{ item.cell_data2 }}"><i class="ri-edit-2-fill"></i></a></td>
                             </tr>
                             {% endfor %}
+
+                            
                         </tbody>
                         <tfoot>
                             <tr>
                                 <td></td>
-                                <td><input type="text" name="cell_data" ></td>
-                                <td><input type="text" name="cell_data2" ></td>
+                                <td><input class="input_table_data" type="text" name="cell_data" ></td>
+                                <td ><input class="input_table_data" type="text" name="cell_data2" ></td>
+                                <td></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -453,7 +460,8 @@
 
                     });
                 </script>
-
+                <script> </script>
+                
                 </div>
 
 

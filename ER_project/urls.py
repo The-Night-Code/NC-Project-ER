@@ -16,12 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from ERapp.views import Home, LoginU,table_view
+from ERapp.views import Home, LoginU, table_view, table_view_edit
 from ERapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', Home),
     path('login/', LoginU),
     path('formT/',table_view ),
-    
+    #path('formT/<int:pk>',table_view_edit ,name="editFormTable"),
+    path('formT/<int:pk>/', table_view_edit, name="editFormTable"),
+
 ]
