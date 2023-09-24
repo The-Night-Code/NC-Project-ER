@@ -415,8 +415,8 @@
 
                   <form method="post"  >
                     {% csrf_token %}
-                    <table class="table  table-sm table-hover table-striped  table-bordered" id="tableDATA">
-                        <thead class="thead-dark">
+                    <table class="table  table-sm table-hover   table-bordered  w-auto table-responsive  " id="tableDATA">
+                        <thead class="table-dark">
                             {% for column_name in column_names %}
                             <th>{{ column_name }}</th>                            
                             {% endfor %}
@@ -424,10 +424,11 @@
                         </thead>
                         <tbody>
                             {% for item in data %}
+                            <input class="input_table_data" type="hidden" name="cell_data1" id="cell_data1{{ item.id }}" value="{{ item.id }} ">
                             <tr>
-                                <td><input class="input_table_data" type="hidden" name="cell_data1" id="cell_data1{{ item.id }}" value="{{ item.id }} "  ></td>
-                                <td><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data }}"  ></td>
-                                <td><input class="input_table_data" type="text" name="cell_data3" id="cell_data3{{ item.id }}" value="{{ item.cell_data2 }}"  ></td>
+                                <td><p style=" width:auto">{{ item.id }}</p></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3" id="cell_data3{{ item.id }}" value="{{ item.cell_data2 }}"  ></td>
 
                                 <td><button  class="button_table_data" type="button" onclick="myFunction('{{item.id }}')"><i class="ri-edit-2-fill"></i></button></td>
                             </tr>
@@ -436,17 +437,17 @@
                             
                         </tbody>
                         <tfoot>
-                            <tr>
-                                <td></td>
-                                <td><input class="input_table_data" type="text" name="cell_data" ></td>
-                                <td ><input class="input_table_data" type="text" name="cell_data2" ></td>
+                            <tr class="table-light">
+                                <td><button type="submit" class="button_table_data" style="text-align:left;"><i class="ri-add-circle-line">Add</i></button></td>
+                                <td class="td_input_cell"> <input class="input_table_data" type="text" name="cell_data" required ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" required></td>
                                 <td></td>
                             </tr>
                         </tfoot>
                     </table>
                     <!--{} form.as_p -->
                     <!--<button class="btn ri-add-fill"></button>-->
-                    <button type="submit">Add</button>
+                    
                 </form>
             
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

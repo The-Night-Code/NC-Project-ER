@@ -16,14 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from ERapp.views import Home, LoginU, table_view, table_view_edit
+from django.conf import settings
+from django.conf.urls.static import static
+from ERapp.views import Home, LoginU, table_view, table_view_edit,ProfileU,ImageUploadView
 from ERapp import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', Home),
     path('login/', LoginU),
+    path('profile/',ProfileU ),
     path('formT/',table_view ),
     path('formT1/',table_view_edit ,name="editFormTable"),
+    
     #path(r'formT/<int:pk>/(?P<val>[\w-]+)$', table_view_edit, name="editFormTable"),
     #path(r'formT/<int:pk>/^(?P<val>[\w-]+)/$', table_view_edit, name="editFormTable"),
-]
+] #+static(settings.MEDIA_URL, documnet_root=settings.MEDIA_ROOT)

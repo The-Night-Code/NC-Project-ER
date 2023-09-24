@@ -1,0 +1,9 @@
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload Image</button>
+</form>
+
+{% for image in image_list %}
+    <img src="{{ image.image.url }}" alt="{{ image.title }}">
+{% endfor %}

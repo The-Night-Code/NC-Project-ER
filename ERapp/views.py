@@ -6,8 +6,10 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login , logout
 
-from .forms import TableDataForm1
-from .models import TableData1
+from django.views.generic.edit import CreateView
+
+from .forms import TableDataForm1,ImageUploadForm
+from .models import TableData1,ImageModel
 
 
 from django.core.mail import send_mail
@@ -99,6 +101,18 @@ def LogoutU(request):
     logout(request)
     return redirect("/login/")
     #return render(request,'html/login.html')
+    
+    
+def ProfileU(request):
+    logout(request)
+    return render(request,'html/profileU.html')
+
+class ImageUploadView(CreateView):
+    model = ImageModel
+    form_class = ImageUploadForm
+    template_name = 'html/profile.html'  # Create this template for rendering the form
+    success_url = '/success/'  # Redirect to a success page after upload
+    
     
     
 
