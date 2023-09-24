@@ -14,7 +14,7 @@
 }
 
 
-.input_table_data{height:100%; width:100%; border:0}
+.input_table_data , .button_table_data , .icoon_table_data{height:100%; width:100%; border:0}
 body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;

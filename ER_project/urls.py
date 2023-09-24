@@ -23,7 +23,7 @@ urlpatterns = [
     path('home/', Home),
     path('login/', LoginU),
     path('formT/',table_view ),
-    #path('formT/<int:pk>',table_view_edit ,name="editFormTable"),
-    path('formT/<int:pk>/', table_view_edit, name="editFormTable"),
-
+    path('formT1/',table_view_edit ,name="editFormTable"),
+    #path(r'formT/<int:pk>/(?P<val>[\w-]+)$', table_view_edit, name="editFormTable"),
+    #path(r'formT/<int:pk>/^(?P<val>[\w-]+)/$', table_view_edit, name="editFormTable"),
 ]

@@ -425,12 +425,11 @@
                         <tbody>
                             {% for item in data %}
                             <tr>
-                                <td><input class="input_table_data" type="text" name="cell_data1" value="{{ item.id }} "  ></td>
-                                <td><input class="input_table_data" type="text" name="cell_data2" value="{{ item.cell_data }}"  ></td>
-                                <td><input class="input_table_data" type="text" name="cell_data3" value="{{ item.cell_data2 }}"  ></td>
-                                <td><a href="{% url 'editFormTable' item.id %}" ><i class="ri-edit-2-fill"></i></a></td>
-                                
-                                <td><a href="{% url 'editFormTable' item.id %}?cell_data1={{ item.id }}&cell_data2={{ item.cell_data }}&cell_data3={{ item.cell_data2 }}"><i class="ri-edit-2-fill"></i></a></td>
+                                <td><input class="input_table_data" type="hidden" name="cell_data1" id="cell_data1{{ item.id }}" value="{{ item.id }} "  ></td>
+                                <td><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data }}"  ></td>
+                                <td><input class="input_table_data" type="text" name="cell_data3" id="cell_data3{{ item.id }}" value="{{ item.cell_data2 }}"  ></td>
+
+                                <td><button  class="button_table_data" type="button" onclick="myFunction('{{item.id }}')"><i class="ri-edit-2-fill"></i></button></td>
                             </tr>
                             {% endfor %}
 
@@ -460,8 +459,48 @@
 
                     });
                 </script>
-                <script> </script>
+                <script> 
+                  document.getElementById("redirectButton").addEventListener("click", function() {
+                    var param1Value = document.getElementById("param1Input").value;
+                    var param2Value = document.getElementById("param2Input").value;
+                    // Add more variables for additional parameters as needed
+        
+                    var url = "/your_target_url/?" +
+                              "param1=" + encodeURIComponent(param1Value) +
+                              "&param2=" + encodeURIComponent(param2Value);
+                    // Add more parameters to the URL construction as needed
+        
+                    window.location.href = url;
+
+                </script>
                 
+
+                <script>
+      
+                  // Here the value is stored in new variable x 
+                  function myFunction(id) {
+                      var x1 = document.getElementById("cell_data1"+id).value;
+                      var x2 = document.getElementById("cell_data2"+id).value;
+                      var x3 = document.getElementById("cell_data3"+id).value;
+                      
+                      
+                    // Add more variables for additional parameters as needed
+        
+                      var url = "/formT/?" +
+                              "param1=" + encodeURIComponent(x1) +
+                              "&param2=" + encodeURIComponent(x2)+
+                              "&param3=" + encodeURIComponent(x3);
+                      var url2="{% url 'editFormTable'  %}?"+
+                        "param1=" + encodeURIComponent(x1) +
+                        "&param2=" + encodeURIComponent(x2)+
+                        "&param3=" + encodeURIComponent(x3);
+                      window.location.href = url2;
+
+                  }
+                  </script>
+
+
+
                 </div>
 
 

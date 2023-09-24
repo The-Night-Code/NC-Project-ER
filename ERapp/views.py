@@ -143,27 +143,26 @@ def table_view(request): # add row
        
     
     
-def table_view_edit(request,pk):
-    get_col_by_id = TableData1.objects.get(id=pk)
-    
 
+    
+def table_view_edit(request):
+    param1_value_id = request.GET.get('param1')
+    param2_value = request.GET.get('param2')
+    param3_value = request.GET.get('param3')
+    
+    if param2_value or param3_value:
+        try:
+            get_col_by_id = TableData1.objects.get(id=param1_value_id) 
+        except TableData1.DoesNotExist:
+            pass
+        
+        if get_col_by_id:
+            get_col_by_id.cell_data =param2_value 
+            get_col_by_id.cell_data2 = param3_value
+            get_col_by_id.save(update_fields=['cell_data', 'cell_data2'])
 
-    get_col_by_id.cell_data = str(request.GET.getlist("cell_data2"))
-    get_col_by_id.cell_data2 = request.GET.getlist("cell_data3")
-       
-    
-    #get_col_by_id.save(update_fields=['cell_data', 'cell_data2'])
-    get_col_by_id.save(update_fields=['cell_data', 'cell_data2'])
-    data = TableData1.objects.all()
-    col_count = data.count()
-    # Get unique column names from the TableData model
-    column_names = TableData1._meta.get_fields()
-    
-    #return render(request, 'html/formPage.html', { 'data': data , 'col_count':col_count ,'column_names': column_names})
     return redirect('/formT/')
-    
-    
-    
+     
     
 
 
