@@ -1,0 +1,16 @@
+
+{% load static %}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Page</title>
+</head>
+<body>
+    <h1>Image Page  {{ profile_image.imageTitle }} ttt </h1>
+    <img src="{{ profile_image.image.url }}" alt="Image" width="100px">
+    <!-- You can display other information related to the image here -->
+</body>
+</html>

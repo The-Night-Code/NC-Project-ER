@@ -487,22 +487,31 @@
 
                   <!-- Profile Edit Form -->
                   
-                  <form action="" method="post" enctype="multipart/form-data">
+                  <form  action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form.as_p }}
-
-                    <input type="file" name="upload" accept=".png, .jpg, .jpeg">
-                    <br>
-                    <button class="btn btn-dark my-4" type="submit">Submit</button>
-                    <button type="submit">Upload Image</button>
+                    <input type="file"  name="my_uploaded_image"/> 
+                    <!--<input type="submit" value="Submit" /> --> 
+                    <button type="submit" value="Submit" >save image</button>
+                  </form>
+                    
+                    
+                    
                 
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        {% for image in image_list %}
-                            <img src="{{ image.image.url }}" alt="{{ image.title }}">
-                        {% endfor %}
-                        <img src="assets/img/profile-img.jpg" alt="Profile">
+                        
+
+
+                        {% if profile_image %}  
+                          <img src="{{ profile_image.url }}" alt="Image" width="100px">  <!-- alt="image.title"-->
+                        {% else %}
+                          <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" width="100px">
+                        {% endif %}
+
+                        
+                        
+                        
                         <div class="pt-2">
                           <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
                           <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
@@ -510,7 +519,7 @@
                       </div>
                     </div>
 
-                  </form>
+                  
                   <form>
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>

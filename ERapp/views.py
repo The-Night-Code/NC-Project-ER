@@ -8,8 +8,8 @@ from django.contrib.auth import authenticate, login , logout
 
 from django.views.generic.edit import CreateView
 
-from .forms import TableDataForm1,ImageUploadForm
-from .models import TableData1,ImageModel
+from .forms import TableDataForm1,ImageForm
+from .models import TableData1,ImageModel,USER
 
 
 from django.core.mail import send_mail
@@ -104,33 +104,52 @@ def LogoutU(request):
     
     
 def ProfileU(request):
-    logout(request)
-    return render(request,'html/profileU.html')
+    user_Id="3"
+    user_L=USER.objects.get(user_id=user_Id) 
+    # Upload Profile Image
+    if request.method == 'POST' and request.FILES['my_uploaded_image']:
+        imagefile = request.FILES['my_uploaded_image']
+        imageTitle = imagefile.name
+        
+        
+        img_upload = ImageModel(user_id="user test 1",imageTitle=imageTitle,image=imagefile)
+        update_Profile_image = USER.objects.get(user_id=user_Id)  # user id 
+        
+        update_Profile_image.profile_pic =imagefile 
+        
+        update_Profile_image.save(update_fields=['profile_pic'])
+        return redirect("/profile/")
+        #img_upload.save()
+    profile_image=None
+    if user_L.profile_pic:
+        profile_image =user_L.profile_pic
+    
+        
+    return render(request,'html/profileU.html',{'profile_image':profile_image})
 
-class ImageUploadView(CreateView):
-    model = ImageModel
-    form_class = ImageUploadForm
-    template_name = 'html/profile.html'  # Create this template for rendering the form
-    success_url = '/success/'  # Redirect to a success page after upload
+def showimage(request):
+    
+    
+    profile_img = ImageModel.objects.get(user_id="n123") 
+    
+    return render(request,'html/showimage.html',{'profile_image': profile_img})
+
+
+    
+    
+def img_upload_image(request):
+    
+    return redirect('/profileU/')
+    
     
     
     
 
-def table_view3(request): # add row
-    if request.method == 'POST':
-        form = TableDataForm1(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/formT/')  # Redirect to the same page to add more rows
-    else:
-        form = TableDataForm1()
-    data = TableData1.objects.all()
-    return render(request, 'html/formPage.html', {'form': form, 'data': data})
     
-    
+
+
     
 def table_view(request): # add row
-    
     if request.method == 'POST':
         cell_data1=request.POST.get("cell_data")
         cell_data2=request.POST.get("cell_data2")
@@ -139,9 +158,7 @@ def table_view(request): # add row
             data = TableData1(cell_data=cell_data1,cell_data2=cell_data2)
             data.save()
             return redirect('/formT/')
-            #if form.is_valid():
-            #   form.save()
-            #  return redirect('/formT/')  # Redirect to the same page to add more rows
+
             
         
     else:
@@ -181,36 +198,4 @@ def table_view_edit(request):
 
 
 
-def table_view1(request): # add col and row 
-    if request.method == 'POST':
-        form = TableDataForm1(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('/formT/')  # Redirect to the same page to add more rows
-    else:
-        form = TableDataForm1()
-    
-    # Query all rows from the TableData model
-    data = TableData1.objects.all()
 
-    # Extract cell_data values for rendering in the template
-    values = [item.cell_data for item in data]
-
-    # Assuming you want a single header for the single column
-    headers = ["Column Header"]
-
-    return render(request, 'html/formPage.html', {'form': form, 'values': values, 'headers': headers})
-
-def save_table(request):
-    if request.method == 'POST':
-        # Extract all the cell_data values from the submitted form
-        cell_data_values = request.POST.getlist('cell_data')
-        
-        # Clear the existing data in the TableData model
-        TableData1.objects.all().delete()
-        
-        # Create new TableData objects for each cell_data value and save them
-        for cell_data in cell_data_values:
-            TableData1.objects.create(cell_data=cell_data)
-    
-    return redirect('html/formPage.html')
