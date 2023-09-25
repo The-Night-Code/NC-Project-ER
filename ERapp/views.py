@@ -136,10 +136,7 @@ def ProfileU(request):
     return render(request,'html/profileU.html',{'profile_image':profile_image})
 
 def showimage(request):
-    
-    
     profile_img = ImageModel.objects.get(user_id="n123") 
-    
     return render(request,'html/showimage.html',{'profile_image': profile_img})
 
 
@@ -167,7 +164,7 @@ def table_view(request): # add row
             data.save()
             return redirect('/formT/')
 
-            
+
         
     else:
         form = TableDataForm1()
@@ -185,6 +182,7 @@ def table_view(request): # add row
 
     
 def table_view_edit(request):
+    
     param1_value_id = request.GET.get('param1')
     param2_value = request.GET.get('param2')
     param3_value = request.GET.get('param3')
