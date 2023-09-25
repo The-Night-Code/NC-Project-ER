@@ -9,7 +9,7 @@ class USER(models.Model):
     email = models.CharField(max_length=320)
     password = models.CharField(max_length=320)
     #profile_pic = models.ImageField(upload_to='uploads/profilePic')
-    profile_pic = models.ImageField(null=True, blank=True,upload_to='uploads/profilePic')
+    profile_pic = models.ImageField(blank=True,upload_to='uploads/profilePic')
     
     def __str__(self):
         return f'{self.username}'

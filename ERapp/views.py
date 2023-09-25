@@ -106,25 +106,33 @@ def LogoutU(request):
 def ProfileU(request):
     user_Id="3"
     user_L=USER.objects.get(user_id=user_Id) 
-    # Upload Profile Image
-    if request.method == 'POST' and request.FILES['my_uploaded_image']:
-        imagefile = request.FILES['my_uploaded_image']
-        imageTitle = imagefile.name
-        
-        
-        img_upload = ImageModel(user_id="user test 1",imageTitle=imageTitle,image=imagefile)
-        update_Profile_image = USER.objects.get(user_id=user_Id)  # user id 
-        
-        update_Profile_image.profile_pic =imagefile 
-        
-        update_Profile_image.save(update_fields=['profile_pic'])
-        return redirect("/profile/")
-        #img_upload.save()
-    profile_image=None
-    if user_L.profile_pic:
-        profile_image =user_L.profile_pic
     
+    Submit_Upload_image=request.POST.get("Submit_Upload_image")
+    remove_profile_image=request.POST.get("remove_profile_image")
+    
+    # Upload Profile Image
+    if request.method == 'POST' :
+        user_L = USER.objects.get(user_id=user_Id)
+        if Submit_Upload_image=="Submit_Upload_image" and request.FILES['my_uploaded_image']:
+            imagefile = request.FILES['my_uploaded_image']
+            user_L.profile_pic =imagefile 
+            user_L.save(update_fields=['profile_pic'])
+            
+        if remove_profile_image=="remove_profile_image":
+            
+            user_L.profile_pic =None 
+            user_L.save(update_fields=['profile_pic'])
+            
+        return redirect("/profile/")
         
+    
+    
+    profile_image =user_L.profile_pic
+    if profile_image :
+        #profile_image="{% static 'image/default_user_avatar.png' %}"
+        profile_image =user_L.profile_pic.url
+    
+
     return render(request,'html/profileU.html',{'profile_image':profile_image})
 
 def showimage(request):

@@ -489,36 +489,26 @@
                   
                   <form  action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <input type="file"  name="my_uploaded_image"/> 
-                    <!--<input type="submit" value="Submit" /> --> 
-                    <button type="submit" value="Submit" >save image</button>
-                  </form>
                     
-                    
-                    
-                
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        
-
-
                         {% if profile_image %}  
-                          <img src="{{ profile_image.url }}" alt="Image" width="100px">  <!-- alt="image.title"-->
+                          <img src="{{ profile_image }}" alt="Image" width="100px">  <!-- alt="image.title"-->
                         {% else %}
                           <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" width="100px">
                         {% endif %}
-
-                        
-                        
                         
                         <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                          <input type="file"  name="my_uploaded_image" accept="image/*" required> 
+                        </div>
+                        <div class="pt-2">
+                          <button type="submit"  class="btn btn-primary btn-sm" value="Submit_Upload_image" name="Submit_Upload_image"><i class="bi bi-upload"></i></button>
+                          <button type="submit" class="btn btn-danger btn-sm"  value="remove_profile_image" name="remove_profile_image" formnovalidate ><i class="bi bi-trash"></i></button>
                         </div>
                       </div>
                     </div>
-
+                  </form>
                   
                   <form>
                     <div class="row mb-3">
