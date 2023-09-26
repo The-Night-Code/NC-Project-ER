@@ -18,13 +18,14 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import Home, LoginU, table_view, ProfileU ,img_upload_image,showimage,table_view_edit
+from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,table_view_edit
 from ERapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', Home),
     path('login/', LoginU),
+    path('logout/', LogoutU),
     path('profile/',ProfileU ),
     path('formT/',table_view ),
     path('formT1/',table_view_edit ,name="editFormTable"),

@@ -20,6 +20,58 @@
 }
 
 
+.badge-cell select {
+  display: none;
+}
+
+/* Style for the badge */
+.badge {
+  width:100%;
+  padding: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Style for different badge states */
+.badge[data-badge="Modification Faite"] {
+ 
+  background-color: cyan;
+  color: white;
+}
+
+.badge[data-badge="Payer"] {
+  background-color: purple;
+  color: white;
+}
+
+.badge[data-badge="A modifier"] {
+  background-color: gray;
+  color: white;
+}
+.badge[data-badge="Annule"] {
+  background-color: red;
+  color: white;
+}
+.badge[data-badge="En cours"] {
+  background-color: orange;
+  color: white;
+}
+.badge[data-badge="Fin"] {
+  background-color: green;
+  color: white;
+}
+
+/* Show the select element on hover */
+.badge-cell:hover select {
+  display: block;
+}
+
+/* Hide the badge when the select element is shown */
+.badge-cell:hover .badge {
+  display: none;
+}
+
+
 table.dataTable thead .sorting:after,
 table.dataTable thead .sorting:before,
 table.dataTable thead .sorting_asc:after,
@@ -39,8 +91,11 @@ table.dataTable thead .sorting_desc_disabled:before {
 }
 
 
- .border_none, .input_table_data,.button_table_data{border: none;}
-.input_table_data,.button_table_data , .td_input_cell,  .icoon_table_data , tr{padding:0;height:100%; width:100%;  background: transparent; }
+.border_none, .input_table_data,.button_table_data{border: none;}
+.input_table_data,.button_table_data , .td_input_cell,  .icoon_table_data {padding:0; background: transparent; }
+
+
+
 body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;

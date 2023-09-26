@@ -34,7 +34,7 @@
 </head>
 
 <body>
-
+  {% if user.is_authenticated %}
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     
@@ -309,18 +309,13 @@
               <hr class="dropdown-divider">
             </li>
 
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
-              </a>
-            </li>
+            
             <li>
               <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="/logout/">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -458,17 +453,13 @@
     <section class="section dashboard">
       <div class="row">
 
-        <!-- Left side columns -->
         
-          <div class="row">
-
-            
 
 
-
-            <!--  ======================================================== start table  ===============================================================  -->
+         <!--  ======================================================== start table  ===============================================================  -->
             <!-- Recent Sales -->
-
+          <div class="row">
+           
             <div class="col-12">
               <div class="card recent-sales overflow-auto">
 
@@ -490,14 +481,14 @@
 
                   <form method="post"  >
                     {% csrf_token %}
-                    <table class="table  table-sm table-hover   table-bordered  w-auto table-responsive  table-borderless border-info " id="tableDATA " cellspacing="0">
+                    <table class="table  table-hover   table-bordered     table-borderless border-info " id="tableDATA" cellspacing="0"> <!-- table-sm  table-responsive-->
                       
                         <thead class="table-dark border-info">
-                          <th style="width:auto;"></th>
-                          <th>id</th>
+                          <th ></th><!--style="width:auto;"-->
+                          <th >id</th>
                           <th>Nom</th>  
                           <th>Prénom</th> 
-                          <th>Adresse </th> 
+                          <th >Adresse </th> 
                           <th>N° de tél</th> 
                           <th>Visite technique</th> 
                           <th>État</th> 
@@ -515,29 +506,81 @@
                             <input class="input_table_data" type="hidden" name="cell_data1" id="cell_data1{{ item.id }}" value="{{ item.id }} ">
                             <tr>
                                 <td style="width:auto;"><button  class="button_table_data" type="button" onclick="myFunction('{{item.id }}')"><i class="ri-edit-2-fill"></i></button></td>
-                                <td><p style=" width:auto">{{ item.id }}</p></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data }}"  ></td>
+                                <td ><p style="width:auto;">{{ item.id }}</p></td>
+                                <td class="td_input_cell" ><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data }}"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3" id="cell_data3{{ item.id }}" value="{{ item.cell_data2 }}"  ></td>
                                 
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data3 }}"  ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data4 }}"  ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data5 }}"  ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data6 }}"  ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data7 }}"  ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data8 }}"  ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data9 }}"  ></td>
+                                
+                                
+                                <td class="badge-cell" data-state="badge">
+
+                                  <span class="badge" data-badge="Modification Faite">Modification Faite</span>
+                                  <span class="badge" data-badge="Payer">Payer</span>
+                                  <span class="badge" data-badge="A modifier">A modifier</span>
+                                  <span class="badge" data-badge="Annule">Annule</span>
+                                  <span class="badge" data-badge="En cours">Annule</span>
+                                  <span class="badge" data-badge="Fin">Fin</span>
+
+
+                                  <select class="form-select" aria-label="Default select example">
+                                      <option value="Modification Faite" style="background-color:cyan" >Modification Faite</option>
+                                      <option value="Payer" style="background-color:purple;"selected>Payer</option>
+                                      <option value="A modifier" style="background-color:gray;"selected>A modifier</option>
+                                      <option value="Annule" style="background-color: red">Annule</option>
+                                      <option value="En cours" style="background-color:orange;"selected>En cours</option>
+                                      <option value="Fin" style="background-color:green;"selected>Fin</option>
+                                  </select>
+                                </td>
+                               
+                                
+                                <td class="select-cell" data-state="select">Select Option</td>                                
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3" id="cell_data3{{ item.id }}" value="{{ item.cell_data2 }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3" id="cell_data3{{ item.id }}" value="{{ item.cell_data2 }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" id="cell_data2{{ item.id }}" value="{{ item.cell_data }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3" id="cell_data3{{ item.id }}" value="last {{ item.cell_data2 }}"  ></td>
 
                             </tr>
                             {% endfor %}
 
-                            
                         </tbody>
                         <tfoot>
                             <tr class="table-light">
                                 <td><button type="submit" class="button_table_data" style="text-align:left;"><i class="ri-add-circle-line">Add</i></button></td>
+                                <td></td>
                                 <td class="td_input_cell"> <input class="input_table_data" type="text" name="cell_data" required ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" required></td>
-                                <td></td>
+                                <td class="badge-cell " data-state="badge">
+
+                                  <span class="badge" data-badge="Modification Faite">Modification Faite</span>
+                                  <span class="badge" data-badge="Payer">Payer</span>
+                                  <span class="badge" data-badge="A modifier">A modifier</span>
+                                  <span class="badge" data-badge="Annule">Annule</span>
+                                  <span class="badge" data-badge="En cours">Annule</span>
+                                  <span class="badge" data-badge="Fin">Fin</span>
+
+
+                                  <select class="form-select" name="" aria-label="Default select example">
+                                      <option value="Modification Faite" style="background-color:cyan" >Modification Faite</option>
+                                      <option value="Payer" style="background-color:purple;"selected>Payer</option>
+                                      <option value="A modifier" style="background-color:gray;"selected>A modifier</option>
+                                      <option value="Annule" style="background-color: red">Annule</option>
+                                      <option value="En cours" style="background-color:orange;"selected>En cours</option>
+                                      <option value="Fin" style="background-color:green;"selected>Fin</option>
+                                  </select>
+                                </td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data5" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data6" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data7" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data8" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data9" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data10" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data11" ></td>
+                                
+                                
                             </tr>
                         </tfoot>
                     </table>
@@ -545,8 +588,31 @@
                     <!--<button class="btn ri-add-fill"></button>-->
                     
                 </form>
-            
+                
+
+                
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+                <script>
+                  const selectElement = document.querySelector('.form-select');
+                  const badgeElements = document.querySelectorAll('.badge');
+
+                  // Function to update the badge based on the selected option
+                  function updateBadge() {
+                      const selectedOption = selectElement.value;
+                      badgeElements.forEach(badge => {
+                          badge.style.display = 'none';
+                      });
+                      document.querySelector(`.badge[data-badge="${selectedOption}"]`).style.display = 'inline-block';
+                  }
+
+                  // Initial call to set the badge based on the default selected option
+                  updateBadge();
+
+                  // Add event listener to update the badge when the select element changes
+                  selectElement.addEventListener('change', updateBadge);
+                </script>
                 <script>
                  
                   $(document).ready(function () {
@@ -587,7 +653,6 @@
                     // Add more parameters to the URL construction as needed
         
                     window.location.href = url;
-
                 </script>
                 
 
@@ -622,37 +687,12 @@
 
 
               </div>
+
+              
             </div><!-- End Recent Sales -->
             <!--  ======================================================== end table  ===============================================================  -->
 
-
-
-
-
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -706,20 +746,19 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+  {% else %}
+      
+  <div class=""style="padding:10% 30% 10% 30%;"> <!-- overflow hidden for iPad mini landscape view-->
+    <div class="templatemo-content-widget white-bg templatemo-overflow-hidden">
+          <h1 class="text-center" style="font-weight:bold;margin-bottom:20px;">You are not logged in</h1>
+          <h3 class="text-center" style="margin-bottom:10px;"><a href="/login">Click here</a> to login</h2>
+          <!-- <h3 class="text-center">If you have not registered please <a href="/signup">click here</a></h2>
+            
+            Pie chart div <div id="pie_chart_div" class="templatemo-chart"></div> -->
     </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer><!-- End Footer -->
+</div>
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  {% endif %}
 
   <!-- Vendor JS Files -->
  

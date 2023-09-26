@@ -43,7 +43,7 @@ def LoginU(request):
         user = authenticate(username=usernameU,password=passwordU)
         if user is not None:
             login(request,user)
-            return HttpResponseRedirect('/home') 
+            return HttpResponseRedirect('/formT') 
 
     #if loginU:
      #   if emailU=="night" :

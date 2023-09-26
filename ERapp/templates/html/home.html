@@ -34,7 +34,7 @@
 </head>
 
 <body>
-
+  {% if user.is_authenticated %}
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -250,7 +250,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="/logout/">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
@@ -812,21 +812,20 @@
 
   </main><!-- End #main -->
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-    </div>
-    <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-      Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-    </div>
-  </footer><!-- End Footer -->
+  <!-- =======  ======= -->
+  {% else %}
+  
+  <div class=""style="padding:10% 30% 10% 30%;"> <!-- overflow hidden for iPad mini landscape view-->
+      <div class="templatemo-content-widget white-bg templatemo-overflow-hidden">
+            <h1 class="text-center" style="font-weight:bold;margin-bottom:20px;">You are not logged in</h1>
+            <h3 class="text-center" style="margin-bottom:10px;"><a href="/login">Click here</a> to login</h2>
+            <!-- <h3 class="text-center">If you have not registered please <a href="/signup">click here</a></h2>
+              
+              Pie chart div <div id="pie_chart_div" class="templatemo-chart"></div> -->
+      </div>
+  </div>
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  {% endif %}
 
   <!-- Vendor JS Files -->
  
