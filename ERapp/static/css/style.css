@@ -17,59 +17,71 @@
 }
 #tableDATA th, td {
   white-space: nowrap;
+  
+}
+#tableDATA tr{
+  height:100%;
+  
 }
 
 
-.badge-cell select {
+
+.badge-cell select , .badge-cellfoot select  {
   display: none;
 }
 
 /* Style for the badge */
-.badge {
-  width:50px;
+.badge ,.badgefoot{
+  text-align:center;
+  height:100%;
+  width:100%;
+  max-width:100px ;
   padding: 0;
   border-radius: 4px;
   cursor: pointer;
 }
 
 /* Style for different badge states */
-.badge[data-badge="Modification Faite"] {
- 
+.badge[data-badge="Modification Faite"] ,.badgefoot[data-badgefoot="Modification Faite"] {
   background-color: cyan;
   color: white;
 }
 
-.badge[data-badge="Payer"] {
+.badge[data-badge="Payer"] , .badgefoot[data-badgefoot="Payer"]{
   background-color: purple;
   color: white;
 }
 
-.badge[data-badge="A modifier"] {
+.badge[data-badge="A modifier"] , .badgefoot[data-badgefoot="A modifier"]{
   background-color: gray;
   color: white;
 }
-.badge[data-badge="Annule"] {
+.badge[data-badge="Annule"] , .badgefoot[data-badgefoot="Annule"]{
   background-color: red;
   color: white;
 }
-.badge[data-badge="En cours"] {
+.badge[data-badge="En cours"] , .badgefoot[data-badgefoot="En cours"] {
   background-color: orange;
   color: white;
 }
-.badge[data-badge="Fin"] {
+.badge[data-badge="Fin"] , .badgefoot[data-badgefoot="Fin"]{
   background-color: green;
   color: white;
 }
 
 /* Show the select element on hover */
-.badge-cell:hover select {
+.badge-cell:hover select ,.badge-cellfoot:hover select  {
   display: block;
 }
 
 /* Hide the badge when the select element is shown */
-.badge-cell:hover .badge {
+.badge-cell:hover .badge ,.badge-cellfoot:hover .badgefoot {
   display: none;
 }
+
+
+
+
 
 
 table.dataTable thead .sorting:after,

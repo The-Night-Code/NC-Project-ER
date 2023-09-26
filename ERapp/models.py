@@ -55,17 +55,17 @@ class TableData01(models.Model):
         return f'{self.cell_data}'
     
 class TableData001(models.Model):
-    cell_id = models.CharField(max_length=255)
-    firstname = models.CharField(max_length=255)
-    lastname = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
-    num = models.CharField(max_length=255)
-    vt = models.FileField(upload_to='uploads/files/% Y/% m/% d/')
-    etat = models.CharField(max_length=255)
-    tp = models.CharField(max_length=255)
-    auditV1 = models.FileField(upload_to='uploads/files/% Y/% m/% d/')
-    auditV2 = models.FileField(upload_to='uploads/files/% Y/% m/% d/')
-    auditV3 = models.FileField(upload_to='uploads/files/% Y/% m/% d/')
-    coffrac = models.CharField(max_length=255)
+    cell_id = models.CharField(max_length=255,blank=True)
+    firstname = models.CharField(max_length=255,blank=True)
+    lastname = models.CharField(max_length=255,blank=True)
+    address = models.CharField(max_length=255,blank=True)
+    num = models.CharField(max_length=255,blank=True)
+    vt = models.FileField(upload_to='uploads/files/% Y/% m/% d/',blank=True)
+    etat = models.CharField(max_length=255,blank=True)
+    tp = models.CharField(max_length=255,blank=True)
+    auditV1 = models.FileField(upload_to='uploads/files/% Y/% m/% d/',blank=True)
+    auditV2 = models.FileField(upload_to='uploads/files/% Y/% m/% d/',blank=True)
+    auditV3 = models.FileField(upload_to='uploads/files/% Y/% m/% d/',blank=True)
+    coffrac = models.CharField(max_length=255,blank=True)
     def __str__(self):
         return f'{self.cell_id} {self.firstname} {self.lastname}'
