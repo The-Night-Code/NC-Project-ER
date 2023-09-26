@@ -53,3 +53,19 @@ class TableData01(models.Model):
     
     def __str__(self):
         return f'{self.cell_data}'
+    
+class TableData001(models.Model):
+    cell_id = models.CharField(max_length=255)
+    firstname = models.CharField(max_length=255)
+    lastname = models.CharField(max_length=255)
+    address = models.CharField(max_length=255)
+    num = models.CharField(max_length=255)
+    vt = models.FileField(upload_to='uploads/files/% Y/% m/% d/')
+    etat = models.CharField(max_length=255)
+    tp = models.CharField(max_length=255)
+    auditV1 = models.FileField(upload_to='uploads/files/% Y/% m/% d/')
+    auditV2 = models.FileField(upload_to='uploads/files/% Y/% m/% d/')
+    auditV3 = models.FileField(upload_to='uploads/files/% Y/% m/% d/')
+    coffrac = models.CharField(max_length=255)
+    def __str__(self):
+        return f'{self.cell_id} {self.firstname} {self.lastname}'

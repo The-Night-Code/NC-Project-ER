@@ -186,7 +186,7 @@ def table_view_edit(request):
     param1_value_id = request.GET.get('param1')
     param2_value = request.GET.get('param2')
     param3_value = request.GET.get('param3')
-    
+    param4_value = request.GET.get('param4')
     if param2_value or param3_value:
         try:
             get_col_by_id = TableData1.objects.get(id=param1_value_id) 
@@ -196,6 +196,7 @@ def table_view_edit(request):
         if get_col_by_id:
             get_col_by_id.cell_data =param2_value 
             get_col_by_id.cell_data2 = param3_value
+            get_col_by_id.cell_data4 = param4_value
             get_col_by_id.save(update_fields=['cell_data', 'cell_data2'])
 
     #return redirect('/formT/')

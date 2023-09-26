@@ -513,7 +513,6 @@
                                 
                                 
                                 <td class="badge-cell" data-state="badge">
-
                                   <span class="badge" data-badge="Modification Faite">Modification Faite</span>
                                   <span class="badge" data-badge="Payer">Payer</span>
                                   <span class="badge" data-badge="A modifier">A modifier</span>
@@ -521,16 +520,16 @@
                                   <span class="badge" data-badge="En cours">Annule</span>
                                   <span class="badge" data-badge="Fin">Fin</span>
 
-
                                   <select class="form-select" aria-label="Default select example">
                                       <option value="Modification Faite" style="background-color:cyan" >Modification Faite</option>
                                       <option value="Payer" style="background-color:purple;"selected>Payer</option>
-                                      <option value="A modifier" style="background-color:gray;"selected>A modifier</option>
+                                      <option value="A modifier" style="background-color:gray;">A modifier</option>
                                       <option value="Annule" style="background-color: red">Annule</option>
-                                      <option value="En cours" style="background-color:orange;"selected>En cours</option>
-                                      <option value="Fin" style="background-color:green;"selected>Fin</option>
+                                      <option value="En cours" style="background-color:orange;">En cours</option>
+                                      <option value="Fin" style="background-color:green;">Fin</option>
                                   </select>
                                 </td>
+                                
                                
                                 
                                 <td class="select-cell" data-state="select">Select Option</td>                                
@@ -552,8 +551,8 @@
                                 <td></td>
                                 <td class="td_input_cell"> <input class="input_table_data" type="text" name="cell_data" required ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2" required></td>
-                                <td class="badge-cell " data-state="badge">
-
+                                
+                                <td class="badge-cell" data-state="badge">
                                   <span class="badge" data-badge="Modification Faite">Modification Faite</span>
                                   <span class="badge" data-badge="Payer">Payer</span>
                                   <span class="badge" data-badge="A modifier">A modifier</span>
@@ -561,16 +560,17 @@
                                   <span class="badge" data-badge="En cours">Annule</span>
                                   <span class="badge" data-badge="Fin">Fin</span>
 
-
-                                  <select class="form-select" name="" aria-label="Default select example">
+                                  <select class="form-select" aria-label="Default select example">
                                       <option value="Modification Faite" style="background-color:cyan" >Modification Faite</option>
                                       <option value="Payer" style="background-color:purple;"selected>Payer</option>
-                                      <option value="A modifier" style="background-color:gray;"selected>A modifier</option>
+                                      <option value="A modifier" style="background-color:gray;">A modifier</option>
                                       <option value="Annule" style="background-color: red">Annule</option>
-                                      <option value="En cours" style="background-color:orange;"selected>En cours</option>
-                                      <option value="Fin" style="background-color:green;"selected>Fin</option>
+                                      <option value="En cours" style="background-color:orange;">En cours</option>
+                                      <option value="Fin" style="background-color:green;">Fin</option>
                                   </select>
                                 </td>
+
+
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4" ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data5" ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data6" ></td>
@@ -595,23 +595,32 @@
 
 
                 <script>
-                  const selectElement = document.querySelector('.form-select');
-                  const badgeElements = document.querySelectorAll('.badge');
+                 // Function to update the badge based on the selected option in a row
+                  function updateBadge(row) {
+                    const selectElement = row.querySelector('.form-select');
+                    const badgeElements = row.querySelectorAll('.badge');
+                    const selectedOption = selectElement.value;
 
-                  // Function to update the badge based on the selected option
-                  function updateBadge() {
-                      const selectedOption = selectElement.value;
-                      badgeElements.forEach(badge => {
-                          badge.style.display = 'none';
-                      });
-                      document.querySelector(`.badge[data-badge="${selectedOption}"]`).style.display = 'inline-block';
+                    badgeElements.forEach(badge => {
+                        badge.style.display = 'none';
+                    });
+
+                    row.querySelector(`.badge[data-badge="${selectedOption}"]`).style.display = 'inline-block';
                   }
 
-                  // Initial call to set the badge based on the default selected option
-                  updateBadge();
+                  // Add event listener for each row to update the badge when the select element changes
+                  const rows = document.querySelectorAll('tbody tr');
 
-                  // Add event listener to update the badge when the select element changes
-                  selectElement.addEventListener('change', updateBadge);
+                  rows.forEach(row => {
+                    const selectElement = row.querySelector('.form-select');
+                    
+                    // Initial call to set the badge based on the default selected option in each row
+                    updateBadge(row);
+
+                    selectElement.addEventListener('change', () => {
+                        updateBadge(row);
+                    });
+                  });
                 </script>
                 <script>
                  

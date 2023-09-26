@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import TableData1,USER,ImageModel,TableData,TableData01
+from .models import TableData1,USER,ImageModel,TableData,TableData01,TableData001
 # Register your models here.
 
+admin.site.register(TableData001)
 admin.site.register(TableData1)
 admin.site.register(USER)
 admin.site.register(ImageModel)
