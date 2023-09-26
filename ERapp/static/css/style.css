@@ -19,11 +19,15 @@
   white-space: nowrap;
   
 }
-#tableDATA tr{
+
+#tableDATA td{
   height:100%;
   
 }
-
+#tableDATA td select{
+  height:0px;
+  
+}
 
 
 .badge-cell select , .badge-cellfoot select  {
@@ -35,7 +39,7 @@
   text-align:center;
   height:100%;
   width:100%;
-  max-width:100px ;
+  max-width:110px ;
   padding: 0;
   border-radius: 4px;
   cursor: pointer;
@@ -590,6 +594,7 @@ h6 {
   font-weight: normal;
   font-size: 12px;
   padding: 3px 6px;
+  height:auto;  /*  */  
 }
 
 .header-nav .notifications {
