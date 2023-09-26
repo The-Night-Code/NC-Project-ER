@@ -198,7 +198,7 @@ def table_view_edit(request):
             get_col_by_id.cell_data2 = param3_value
             get_col_by_id.save(update_fields=['cell_data', 'cell_data2'])
 
-    return redirect('/formT/')
+    #return redirect('/formT/')
      
     
 
