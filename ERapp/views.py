@@ -164,7 +164,7 @@ def generate_random_string(length):
     
 def table_view(request): # add row
     if request.method == 'POST':
-        
+        #if request.FILES['cell_data5add']:
         cell_id = generate_random_string(10)
         
         firstname = request.POST.get("cell_data1add")
@@ -172,29 +172,27 @@ def table_view(request): # add row
         address = request.POST.get("cell_data3add")
         num = request.POST.get("cell_data4add")
         
-        #vt = request.FILES["cell_data5"]
+        vt = request.FILES['cell_data5add']
         etat = request.POST.get("cell_data6add")
         #tp = request.POST.get("cell_data7")
         #auditV1 = request.FILES["cell_data8"]
         #auditV2 = request.FILES["cell_data9"]
         #auditV3 = request.FILES["cell_data10"]
         #coffrac = request.POST.get("cell_data11")
-        
+            
         
         #form = TableDataForm1(request.POST)
-        if firstname or lastname or address or num and etat:
-            #data = TableData001(cell_id=cell_id ,firstname=firstname ,lastname=lastname ,address=address ,num=num ,vt=vt ,etat=etat ,tp=tp ,auditV1=auditV1 ,auditV2=auditV2 ,auditV3=auditV3 ,coffrac=coffrac)
-            data = TableData001(cell_id=cell_id ,firstname=firstname ,lastname=lastname ,address=address ,num=num ,etat=etat )
+        #if firstname or lastname or address or num and etat:
+        #data = TableData001(cell_id=cell_id ,firstname=firstname ,lastname=lastname ,address=address ,num=num ,vt=vt ,etat=etat ,tp=tp ,auditV1=auditV1 ,auditV2=auditV2 ,auditV3=auditV3 ,coffrac=coffrac)
+        data = TableData001(cell_id=cell_id ,firstname=firstname ,lastname=lastname ,address=address ,num=num ,vt=vt ,etat=etat )
 
-            #data = TableData001(cell_data=cell_data1,cell_data2=cell_data2)
-            data.save()
+        #data = TableData001(cell_data=cell_data1,cell_data2=cell_data2)
+        
+        data.save()
         return redirect('/formT/')
-
-
-        
-
-        
     
+    
+
     data = TableData001.objects.all()
     col_count = data.count()
     # Get unique column names from the TableData model

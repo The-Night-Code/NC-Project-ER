@@ -60,12 +60,12 @@ class TableData001(models.Model):
     lastname = models.CharField(max_length=255,blank=True)
     address = models.CharField(max_length=255,blank=True)
     num = models.CharField(max_length=255,blank=True)
-    vt = models.FileField(upload_to='uploads/files/% Y/% m/% d/',blank=True)
+    vt = models.FileField(upload_to='uploads/files',blank=True)
     etat = models.CharField(max_length=255,blank=True)
     tp = models.CharField(max_length=255,blank=True)
-    auditV1 = models.FileField(upload_to='uploads/files/% Y/% m/% d/',blank=True)
-    auditV2 = models.FileField(upload_to='uploads/files/% Y/% m/% d/',blank=True)
-    auditV3 = models.FileField(upload_to='uploads/files/% Y/% m/% d/',blank=True)
+    auditV1 = models.FileField(upload_to='uploads/files/%Y/%m/%d/',blank=True)
+    auditV2 = models.FileField(upload_to='uploads/files/%Y/%m/%d/',blank=True)
+    auditV3 = models.FileField(upload_to='uploads/files/%Y/%m/%d/',blank=True)
     coffrac = models.CharField(max_length=255,blank=True)
     def __str__(self):
         return f'{self.cell_id} {self.firstname} {self.lastname}'

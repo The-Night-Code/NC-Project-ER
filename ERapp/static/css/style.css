@@ -10,6 +10,20 @@
 # General
 --------------------------------------------------------------*/
 
+.tooltipTrigger .tooltip {
+  display: none;
+}
+.tooltipTrigger:hover {
+  cursor: pointer;
+}
+.tooltipTrigger:hover .tooltip {
+  display: inline;
+  position: relative; /* relative to .tooltipTrigger */
+  left: 10px;
+  border: 1px solid #ccc;
+}
+
+
 
 .tableDATA {
   max-width: 600px;

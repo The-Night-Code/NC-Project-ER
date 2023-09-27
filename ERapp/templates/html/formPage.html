@@ -479,7 +479,7 @@
                 <div class="card-body" style="height:500px;">
                   <h5 class="card-title">Title <span>| title</span></h5>
 
-                  <form method="post"  >
+                  <form method="post"  enctype="multipart/form-data">
                     {% csrf_token %}
                     <table class="table  table-hover   table-bordered     table-borderless border-info " id="tableDATA" cellspacing="0"> <!-- table-sm  table-responsive-->
                       
@@ -510,11 +510,13 @@
                                 <td class="td_input_cell" ><input class="input_table_data" type="text" name="cell_data1edit" id="cell_data1edit{{ item.cell_id }}" value="{{ item.firstname }}"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2edit" id="cell_data2edit{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3edit" id="cell_data3edit{{ item.cell_id }}" value="{{ item.address }}"  ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4edit" id="cell_data4edit{{ item.cell_id }}" value="{{ item.num }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4edit" id="cell_data4edit{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
+                                
 
-
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data5edit" id="cell_data5edit{{ item.cell_id }}" value="{{ item.vt }}"  ></td>
-
+                                <td class="td_input_cell tooltipTrigger">{% if item.vt %}
+                                  <a href="{{ item.vt.url }}" download>{{ item.vt.name }}</a>
+                                  {% endif %}<span class="tooltip"><input class="input_table_data" type="file" name="cell_data5edit" id="cell_data5edit{{ item.cell_id }}" value="{{ item.vt }}" accept="image/*,.pdf,.docx,.doc,.xls" ></span></td>  <!--  target="_blank"-->
+                                
                                 <td class="badge-cell" data-state="badge">
                                   <span class="badge" data-badge="Modification Faite">Modification Faite</span>
                                   <span class="badge" data-badge="Payer">Payer</span>
@@ -552,7 +554,13 @@
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2add" ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3add" ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data5add" ></td>
+
+
+
+                                      
+                                <td class="td_input_cell"><input class="input_table_data" type="file" name="cell_data5add" accept="image/*,.pdf,.docx,.doc,.xls"></td>
+
+
 
                                 <td class="badge-cellfoot " data-state="badgefoot">
                                   <span class="badgefoot" data-badgefoot="Modification Faite">Modification Faite</span>
@@ -714,7 +722,7 @@
                         "&param2=" + encodeURIComponent(x2)+
                         "&param3=" + encodeURIComponent(x3)+
                         "&param4=" + encodeURIComponent(x4)+
-                        
+                        //"&param5=" + encodeURIComponent(x5)+
                         "&param6=" + encodeURIComponent(x6);
 
                         
