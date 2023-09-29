@@ -171,24 +171,36 @@ def table_view(request): # add row
         lastname = request.POST.get("cell_data2add")
         address = request.POST.get("cell_data3add")
         num = request.POST.get("cell_data4add")
-        
-        vt = request.FILES['cell_data5add']
+        vt1 = request.FILES.getlist('cell_data5add')
         etat = request.POST.get("cell_data6add")
         #tp = request.POST.get("cell_data7")
         #auditV1 = request.FILES["cell_data8"]
         #auditV2 = request.FILES["cell_data9"]
         #auditV3 = request.FILES["cell_data10"]
         #coffrac = request.POST.get("cell_data11")
-            
         
+        up_files = ""; 
+        #for uploaded_file in vt:
+            #up_files+=uploaded_file + " "
         #form = TableDataForm1(request.POST)
         #if firstname or lastname or address or num and etat:
         #data = TableData001(cell_id=cell_id ,firstname=firstname ,lastname=lastname ,address=address ,num=num ,vt=vt ,etat=etat ,tp=tp ,auditV1=auditV1 ,auditV2=auditV2 ,auditV3=auditV3 ,coffrac=coffrac)
-        data = TableData001(cell_id=cell_id ,firstname=firstname ,lastname=lastname ,address=address ,num=num ,vt=vt ,etat=etat )
-
+        for uploaded_file in vt1:
+            TableData001.objects.create(
+                cell_id=cell_id, 
+                firstname=firstname, 
+                lastname=lastname, 
+                address=address, 
+                num=num, 
+                vt=uploaded_file, 
+                etat=etat  
+            )
+            
+        #data = TableData001(cell_id=cell_id ,firstname=firstname ,lastname=lastname ,address=address ,num=num , vt=up_files  ,etat=etat )
+        
         #data = TableData001(cell_data=cell_data1,cell_data2=cell_data2)
         
-        data.save()
+        #data.save()
         return redirect('/formT/')
     
     
@@ -211,7 +223,7 @@ def table_view_edit(request):
     param2_value = request.GET.get('param2')
     param3_value = request.GET.get('param3')
     param4_value = request.GET.get('param4')
-    #param5_value = request.GET.get('param5')
+    param5_value = request.FILES.getlist('param5')
     param6_value = request.GET.get('param6')
     
     #if param2_value or param3_value:
@@ -225,10 +237,10 @@ def table_view_edit(request):
         get_col_by_id.lastname = param2_value
         get_col_by_id.address = param3_value
         get_col_by_id.num = param4_value
-        #get_col_by_id.vt = param5_value
+        get_col_by_id.vt = param5_value
         get_col_by_id.etat = param6_value
-        #get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','vt','etat'])
-        get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat'])
+        get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','vt','etat'])
+        #get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat'])
     return redirect('/formT/')
      
     

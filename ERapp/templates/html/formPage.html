@@ -479,10 +479,15 @@
                 <div class="card-body" style="height:500px;">
                   <h5 class="card-title">Title <span>| title</span></h5>
 
+                  
+                  
+                  <input type="text" id="filterInput" placeholder="Search...">
+                  <button onclick="filterTable()">Filter</button>
                   <form method="post"  enctype="multipart/form-data">
                     {% csrf_token %}
-                    <table class="table  table-hover   table-bordered     table-borderless border-info " id="tableDATA" cellspacing="0"> <!-- table-sm  table-responsive-->
-                      
+                    <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                    <table class="table  table-hover   table-bordered     table-borderless border-info "  cellspacing="0"> <!-- table-sm  table-responsive-->
+
                         <thead class="table-dark border-info">
                           <th></th><!--style="width:auto;"-->
                           <th>id</th>
@@ -496,12 +501,14 @@
                           <th>Audit v1</th> 
                           <th>Audit v2</th> 
                           <th>Audit v3</th> 
+                          <th>Audit fin</th> 
                           <th>Coffrac</th> 
+                          <th>Payer</th>
+                          <th>Agent</th>
+                          <th>Auditeur</th>
 
-                          
-                            
                         </thead>
-                        <tbody >
+                        <tbody id="myTable">
                             {% for item in data %}
                             <input class="input_table_data" type="hidden" name="cell_data0" id="cell_data0edit{{item.cell_id}}" value="{{item.cell_id}}">
                             <tr>
@@ -515,7 +522,7 @@
 
                                 <td class="td_input_cell tooltipTrigger">{% if item.vt %}
                                   <a href="{{ item.vt.url }}" download>{{ item.vt.name }}</a>
-                                  {% endif %}<span class="tooltip"><input class="input_table_data" type="file" name="cell_data5edit" id="cell_data5edit{{ item.cell_id }}" value="{{ item.vt }}" accept="image/*,.pdf,.docx,.doc,.xls" ></span></td>  <!--  target="_blank"-->
+                                  {% endif %}<span class="tooltip"><input class="input_table_data" type="file" name="cell_data5edit" id="cell_data5edit{{ item.cell_id }}" value="{{ item.vt }}" accept="image/*,.pdf,.docx,.doc,.xls" multiple ></span></td>  <!--  target="_blank"-->
                                 
                                 <td class="badge-cell" data-state="badge">
                                   <span class="badge" data-badge="Modification Faite">Modification Faite</span>
@@ -558,7 +565,7 @@
 
 
                                       
-                                <td class="td_input_cell"><input class="input_table_data" type="file" name="cell_data5add" accept="image/*,.pdf,.docx,.doc,.xls"></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="file" name="cell_data5add" accept="image/*,.pdf,.docx,.doc,.xls" multiple></td>
 
 
 
@@ -599,7 +606,60 @@
                 </form>
                 
 
+                <script>
+                  document.getElementById("filterInput").addEventListener("keyup", filterTable);
+                  
+                  function filterTable() {
+                    var input, filter, table, tr, td, i, j, txtValue;
+                    input = document.getElementById("filterInput");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("myTable");
+                    tr = table.getElementsByTagName("tr");
+                  
+                    for (i = 0; i < tr.length; i++) {
+                      tr[i].style.display = "none"; // Hide the row by default
+                      td = tr[i].getElementsByTagName("td");
+                  
+                      for (j = 0; j < td.length; j++) {
+                        var inputElement = td[j].querySelector("input[type='text']");
+                        var pElement = td[j].querySelector("p");
+                        
+                        if (inputElement) {
+                          txtValue = inputElement.value.toUpperCase();
+                          if (txtValue.indexOf(filter) > -1) {
+                            tr[i].style.display = ""; // Show the row if a match is found in any input element
+                            break; // No need to check other cells in this row
+                          }
+                        }
+                  
+                        if (pElement) {
+                          txtValue = pElement.textContent || pElement.innerText;
+                          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = ""; // Show the row if a match is found in any <p> element
+                            break; // No need to check other cells in this row
+                          }
+                        }
+                      }
+                    }
+                  }
+                  </script>
                 
+                
+                <script>
+                  $(document).ready(function(){
+                    $("#myInput").on("keyup", function() {
+                      var value = $(this).val().toLowerCase();
+                      $("#myTable tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                      });
+                    });
+                  });
+                </script>
+                
+                
+                
+
+
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
                 <!--  select box for rows table -->
@@ -698,13 +758,13 @@
                         
                   function my_Func_edit_table(id) {
                     
-                      var x0 =  document.getElementById("cell_data0edit"+id).value;
+                      var x0 = document.getElementById("cell_data0edit"+id).value;
                       var x1 = document.getElementById("cell_data1edit"+id).value;
                       var x2 = document.getElementById("cell_data2edit"+id).value;
                       var x3 = document.getElementById("cell_data3edit"+id).value;
                       var x4 = document.getElementById("cell_data4edit"+id).value;
                       
-                      //var x5 = document.getElementById("cell_data5edit"+id).value;
+                      var x5 = document.getElementById("cell_data5edit"+id).value;
                       
                       var selectElement = document.querySelector('#cell_data6edit'+id);
                       var x6 = selectElement.value;
@@ -715,14 +775,14 @@
                       //var x10 = document.getElementById("cell_data10edit"+id).value;
                     
                       
-                      var url2="{% url 'editFormTable'  %}?"+
+                      var url2="{% url 'editFormTable' %}?"+
                         "param=" + encodeURIComponent(x0) +
                         "&param0=" + x0 +
                         "&param1=" + encodeURIComponent(x1) +
                         "&param2=" + encodeURIComponent(x2)+
                         "&param3=" + encodeURIComponent(x3)+
                         "&param4=" + encodeURIComponent(x4)+
-                        //"&param5=" + encodeURIComponent(x5)+
+                        "&param5=" + encodeURIComponent(x5)+
                         "&param6=" + encodeURIComponent(x6);
 
                         
