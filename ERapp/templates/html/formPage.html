@@ -19,6 +19,9 @@
 
   <!-- Vendor CSS Files -->
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
   <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"> 
   
 
@@ -456,7 +459,10 @@
         
 
 
-         <!--  ======================================================== start table  ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
             <!-- Recent Sales -->
           <div class="row">
            
@@ -481,19 +487,17 @@
 
                   
                   
-                  <input type="text" id="filterInput" placeholder="Search...">
-                  <button onclick="filterTable()">Filter</button>
+                  <input class="form-control" type="text" id="filterInput" placeholder="Search..." style="width:30%;min-width:100px;">
                   <form method="post"  enctype="multipart/form-data">
                     {% csrf_token %}
-                    <input class="form-control" id="myInput" type="text" placeholder="Search..">
-                    <table class="table  table-hover   table-bordered     table-borderless border-info "  cellspacing="0"> <!-- table-sm  table-responsive-->
+                    <table class="table  table-hover   table-bordered  table-borderless border-info " id="tableDATA" cellspacing="0" >  <!-- table-sm  table-responsive-->
 
                         <thead class="table-dark border-info">
                           <th></th><!--style="width:auto;"-->
-                          <th>id</th>
-                          <th>Nom</th>  
-                          <th>Prénom</th> 
-                          <th>Adresse </th> 
+                          <th data-sortable="true" data-column="id" >id <span class="sortable-icon"  data-column="id"></span></th>
+                          <th data-sortable="true" data-column="nom" >Nom <span class="sortable-icon"  data-column="nom"></span></th>  
+                          <th data-sortable="true" data-column="prenom">Prénom <span class="sortable-icon"  data-column="prenom"></span></th> 
+                          <th data-sortable="true" data-column="adresse">Adresse <span class="sortable-icon"  data-column="adresse"></th> 
                           <th>N° de tél</th> 
                           <th>Visite technique</th> 
                           <th>État</th> 
@@ -557,7 +561,7 @@
                             <tr>
                                 <td><button type="submit" class="button_table_data" style="text-align:left;" function=myFunctionadd()><i class="ri-add-circle-line">Add</i></button></td>
                                 <td></td>
-                                <td class="td_input_cell"> <input class="input_table_data" type="text" name="cell_data1add"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data1add"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2add" ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3add" ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
@@ -605,7 +609,7 @@
                     
                 </form>
                 
-
+                <!--  search by cells -->
                 <script>
                   document.getElementById("filterInput").addEventListener("keyup", filterTable);
                   
@@ -643,17 +647,46 @@
                     }
                   }
                   </script>
-                
-                
+                <!-- end search by cells -->
+
+
+                <!--  sort by columns -->
                 <script>
-                  $(document).ready(function(){
-                    $("#myInput").on("keyup", function() {
-                      var value = $(this).val().toLowerCase();
-                      $("#myTable tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                  document.addEventListener('DOMContentLoaded', function () {
+                    const table = document.getElementById('tableDATA');
+                    const headers = table.querySelectorAll('th[data-sortable="true"]');
+                    headers.forEach(header => {
+                      header.addEventListener('click', () => {
+                        const column = header.getAttribute('data-column');
+                        const isAscending = !header.classList.contains('desc');
+                        sortTable(table, column, isAscending);
+                        headers.forEach(h => h.classList.remove('desc'));
+                        header.classList.toggle('desc', !isAscending);
                       });
                     });
                   });
+                  
+                  function sortTable(table, column, isAscending) {
+                    const tbody = table.querySelector('tbody');
+                    const rows = Array.from(tbody.querySelectorAll('tr'));
+                    rows.sort((rowA, rowB) => {
+                      const cellA = rowA.querySelector(`td:nth-child(${columnIndex(column)})`).textContent;
+                      const cellB = rowB.querySelector(`td:nth-child(${columnIndex(column)})`).textContent;
+                      return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+                    });
+                    rows.forEach(row => tbody.appendChild(row));
+                  }
+                  
+                  function columnIndex(columnName) {
+                    const headers = document.querySelectorAll('th[data-sortable="true"]');
+                    for (let i = 0; i < headers.length; i++) {
+                      if (headers[i].getAttribute('data-column') === columnName) {
+                        return i + 1;
+                      }
+                    }
+                    return -1;
+                  }
+                  
                 </script>
                 
                 
@@ -717,37 +750,7 @@
                 </script>
                 <!-- end select box for foot table -->
 
-                <!-- scroll table -->
-                <script>
-                  $(document).ready(function () {
-                    $('#tableDATA').DataTable({
-                      "scrollY": "50vh",
-                      "scrollCollapse": true,
-                    });
-                    $('.dataTables_length').addClass('bs-select');
-                  });
-                </script>
-                <script>
-                  $(document).ready(function () {
-                    $('#tableDATA').DataTable({
-                      "scrollX": true
-                    });
-                    $('.dataTables_length').addClass('bs-select');
-                  });
-                </script>
-                <!-- end scroll table -->
-
-                <!-- add row to table -->
-                <script>
-                    $(document).ready(function() {
-                        $("#add-row").click(function() {
-                            $("#data-table tbody").append("<tr><td><input type='text' name='cell_data'></td></tr>");
-                            $("#data-table2 tbody").append("<tr><td><input type='text' name='cell_data2'></td></tr>");
-                        });
-
-                    });
-                </script>
-                <!-- end add row to table -->
+                
                 
                 
                 
@@ -796,6 +799,703 @@
                 </div>
 
 
+                
+
+              </div>
+
+              
+            </div><!-- End Recent Sales -->
+            <!--  ======================================================== end table 1 ===============================================================  -->
+            <!--  ======================================================== end table 1 ===============================================================  -->
+            <!--  ======================================================== end table 1 ===============================================================  -->
+            <!--  ======================================================== end table 1 ===============================================================  -->
+
+          </div>
+
+
+
+          <div class="row">
+           
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body" style="height:500px;">
+                  <h5 class="card-title">Title <span>| title</span></h5>
+
+                  
+                  
+                  <input class="form-control" type="text" id="filterInput2" placeholder="Search..." style="width:30%;min-width:100px;">
+                  <form method="post"  enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table class="table  table-hover   table-bordered  table-borderless border-info " id="tableDATA2" cellspacing="0" >  <!-- table-sm  table-responsive-->
+
+                        <thead class="table-dark border-info">
+                          <th></th><!--style="width:auto;"-->
+                          <th data-sortable="true" data-column="id" >id <span class="sortable-icon"  data-column="id"></span></th>
+                          <th data-sortable="true" data-column="nom" >Nom <span class="sortable-icon"  data-column="nom"></span></th>  
+                          <th data-sortable="true" data-column="prenom">Prénom <span class="sortable-icon"  data-column="prenom"></span></th> 
+                          <th data-sortable="true" data-column="adresse">Adresse <span class="sortable-icon"  data-column="adresse"></th> 
+                          <th>N° de tél</th> 
+                          <th>Visite technique</th> 
+                          <th>État</th> 
+                          <th>Travaux à preconise</th> 
+                          <th>Audit v1</th> 
+                          <th>Audit v2</th> 
+                          <th>Audit v3</th> 
+                          <th>Audit fin</th> 
+                          <th>Coffrac</th> 
+                          <th>Payer</th>
+                          <th>Agent</th>
+                          <th>Auditeur</th>
+
+                        </thead>
+                        <tbody id="myTable2">
+                            {% for item in data %}
+                            <input class="input_table_data" type="hidden" name="cell_data0" id="cell_data0edit{{item.cell_id}}" value="{{item.cell_id}}">
+                            <tr>
+                                <td style="width:auto;"><button  class="button_table_data" type="button" id="edit_col_in_table" name="" value="" onclick="my_Func_edit_table('{{item.cell_id}}') "><i class="ri-edit-2-fill"></i></button></td>
+                                <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
+                                <td class="td_input_cell" ><input class="input_table_data" type="text" name="cell_data1edit" id="cell_data1edit{{ item.cell_id }}" value="{{ item.firstname }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2edit" id="cell_data2edit{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3edit" id="cell_data3edit{{ item.cell_id }}" value="{{ item.address }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4edit" id="cell_data4edit{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
+                                
+
+                                <td class="td_input_cell tooltipTrigger">{% if item.vt %}
+                                  <a href="{{ item.vt.url }}" download>{{ item.vt.name }}</a>
+                                  {% endif %}<span class="tooltip"><input class="input_table_data" type="file" name="cell_data5edit" id="cell_data5edit{{ item.cell_id }}" value="{{ item.vt }}" accept="image/*,.pdf,.docx,.doc,.xls" multiple ></span></td>  <!--  target="_blank"-->
+                                
+                                <td class="badge-cell" data-state="badge">
+                                  <span class="badge" data-badge="Modification Faite">Modification Faite</span>
+                                  <span class="badge" data-badge="Payer">Payer</span>
+                                  <span class="badge" data-badge="A modifier">A modifier</span>
+                                  <span class="badge" data-badge="Annule">Annule</span>
+                                  <span class="badge" data-badge="En cours">Annule</span>
+                                  <span class="badge" data-badge="Fin">Fin</span>
+
+                                  <select class="form-select" aria-label="Default select example"  name="cell_data6edit" id="cell_data6edit{{ item.cell_id }}" style="background-color:gray;">
+                                      <option value="Modification Faite" style="background-color:cyan" {% if item.etat  == "Modification Faite" %}selected{% endif %}>Modification Faite</option>
+                                      <option value="Payer" style="background-color:purple;" {% if item.etat  == "Payer" %}selected{% endif %} >Payer</option>
+                                      <option value="A modifier" style="background-color:gray;"  {% if item.etat  == "A modifier" %}selected{% endif %} >A modifier</option>
+                                      <option value="Annule" style="background-color: red" {% if item.etat  == "Annule" %}selected{% endif %} >Annule</option>
+                                      <option value="En cours" style="background-color:orange;" {% if item.etat  == "En cours" %}selected{% endif %} >En cours</option>
+                                      <option value="Fin" style="background-color:green;" {% if item.etat  == "Fin" %}selected{% endif %} >Fin</option>
+                                  </select>
+                                </td>
+
+
+                                <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
+
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><button type="submit" class="button_table_data" style="text-align:left;" function=myFunctionadd()><i class="ri-add-circle-line">Add</i></button></td>
+                                <td></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data1add"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2add" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3add" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
+
+
+
+                                      
+                                <td class="td_input_cell"><input class="input_table_data" type="file" name="cell_data5add" accept="image/*,.pdf,.docx,.doc,.xls" multiple></td>
+
+
+
+                                <td class="badge-cellfoot " data-state="badgefoot">
+                                  <span class="badgefoot" data-badgefoot="Modification Faite">Modification Faite</span>
+                                  <span class="badgefoot" data-badgefoot="Payer">Payer</span>
+                                  <span class="badgefoot" data-badgefoot="A modifier">A modifier</span>
+                                  <span class="badgefoot" data-badgefoot="Annule">Annule</span>
+                                  <span class="badgefoot" data-badgefoot="En cours">Annule</span>
+                                  <span class="badgefoot" data-badgefoot="Fin">Fin</span>
+
+                                  <select class="form-select form-selectfoot" aria-label="Default select example" name="cell_data6add" style="background-color:gray;">
+                                      <option value="Modification Faite" style="background-color:cyan" >Modification Faite</option>
+                                      <option value="Payer" style="background-color:purple;">Payer</option>
+                                      <option value="A modifier" style="background-color:gray;">A modifier</option>
+                                      <option value="Annule" style="background-color: red">Annule</option>
+                                      <option value="En cours" style="background-color:orange;" selected>En cours</option>
+                                      <option value="Fin" style="background-color:green;">Fin</option>
+                                  </select>
+                                </td>
+
+
+
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data7add" ></td>
+                                
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data8add" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data9add" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data10add" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data11add" ></td>
+                                
+                                
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <!--{} form.as_p -->
+                    <!--<button class="btn ri-add-fill"></button>-->
+                    
+                </form>
+
+
+                <script>
+                  document.getElementById("filterInput2").addEventListener("keyup", filterTable);
+                  
+                  function filterTable() {
+                    var input, filter, table, tr, td, i, j, txtValue;
+                    input = document.getElementById("filterInput2");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("myTable2");
+                    tr = table.getElementsByTagName("tr");
+                  
+                    for (i = 0; i < tr.length; i++) {
+                      tr[i].style.display = "none"; // Hide the row by default
+                      td = tr[i].getElementsByTagName("td");
+                  
+                      for (j = 0; j < td.length; j++) {
+                        var inputElement = td[j].querySelector("input[type='text']");
+                        var pElement = td[j].querySelector("p");
+                        
+                        if (inputElement) {
+                          txtValue = inputElement.value.toUpperCase();
+                          if (txtValue.indexOf(filter) > -1) {
+                            tr[i].style.display = ""; // Show the row if a match is found in any input element
+                            break; // No need to check other cells in this row
+                          }
+                        }
+                  
+                        if (pElement) {
+                          txtValue = pElement.textContent || pElement.innerText;
+                          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = ""; // Show the row if a match is found in any <p> element
+                            break; // No need to check other cells in this row
+                          }
+                        }
+                      }
+                    }
+                  }
+                  </script>
+                <!-- end search by cells -->
+
+
+                <!--  sort by columns -->
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+                    const table = document.getElementById('table2');
+                    const headers = table.querySelectorAll('th[data-sortable="true"]');
+                    headers.forEach(header => {
+                      header.addEventListener('click', () => {
+                        const column = header.getAttribute('data-column');
+                        const isAscending = !header.classList.contains('desc');
+                        sortTable(table, column, isAscending);
+                        headers.forEach(h => h.classList.remove('desc'));
+                        header.classList.toggle('desc', !isAscending);
+                      });
+                    });
+                  });
+                  
+                  function sortTable(table, column, isAscending) {
+                    const tbody = table.querySelector('tbody');
+                    const rows = Array.from(tbody.querySelectorAll('tr'));
+                    rows.sort((rowA, rowB) => {
+                      const cellA = rowA.querySelector(`td:nth-child(${columnIndex(column)})`).textContent;
+                      const cellB = rowB.querySelector(`td:nth-child(${columnIndex(column)})`).textContent;
+                      return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+                    });
+                    rows.forEach(row => tbody.appendChild(row));
+                  }
+                  
+                  function columnIndex(columnName) {
+                    const headers = document.querySelectorAll('th[data-sortable="true"]');
+                    for (let i = 0; i < headers.length; i++) {
+                      if (headers[i].getAttribute('data-column') === columnName) {
+                        return i + 1;
+                      }
+                    }
+                    return -1;
+                  }
+                  
+                </script>
+                
+                
+                
+
+
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+                <!--  select box for rows table -->
+                <script>
+                 // Function to update the badge based on the selected option in a row
+                  function updateBadge(row) {
+                    const selectElement = row.querySelector('.form-select');
+                    const badgeElements = row.querySelectorAll('.badge');
+                    const selectedOption = selectElement.value;
+
+                    badgeElements.forEach(badge => {
+                        badge.style.display = 'none';
+                    });
+
+                    row.querySelector(`.badge[data-badge="${selectedOption}"]`).style.display = 'inline-block';
+                  }
+
+                  // Add event listener for each row to update the badge when the select element changes
+                  const rows = document.querySelectorAll('tbody tr');
+
+                  rows.forEach(row => {
+                    const selectElement = row.querySelector('.form-select');
+                    
+                    // Initial call to set the badge based on the default selected option in each row
+                    updateBadge(row);
+
+                    selectElement.addEventListener('change', () => {
+                        updateBadge(row);
+                    });
+                  });
+                </script>
+                <!--  end select box for rows table -->
+
+
+                <!--  select box for foot table -->
+                <script>
+                  const selectElement = document.querySelector('.form-selectfoot');
+                  const badgeElements = document.querySelectorAll('.badgefoot');
+                  
+                  // Function to update the badge based on the selected option
+                  function updateBadgefoot() {
+                      const selectedOption = selectElement.value;
+                      badgeElements.forEach(badgefoot => {
+                          badgefoot.style.display = 'none';
+                      });
+                      document.querySelector(`.badgefoot[data-badgefoot="${selectedOption}"]`).style.display = 'inline-block';
+                  }
+                  
+                  // Initial call to set the badge based on the default selected option
+                  updateBadgefoot();
+                  
+                  // Add event listener to update the badge when the select element changes
+                  selectElement.addEventListener('change', updateBadgefoot);
+
+                </script>
+                <!-- end select box for foot table -->
+
+                
+                
+                
+                
+
+
+                <!-- redirect with param -->
+                <script>
+                        
+                  function my_Func_edit_table(id) {
+                    
+                      var x0 = document.getElementById("cell_data0edit"+id).value;
+                      var x1 = document.getElementById("cell_data1edit"+id).value;
+                      var x2 = document.getElementById("cell_data2edit"+id).value;
+                      var x3 = document.getElementById("cell_data3edit"+id).value;
+                      var x4 = document.getElementById("cell_data4edit"+id).value;
+                      
+                      var x5 = document.getElementById("cell_data5edit"+id).value;
+                      
+                      var selectElement = document.querySelector('#cell_data6edit'+id);
+                      var x6 = selectElement.value;
+                      
+                      //var x7 = document.getElementById("cell_data7edit"+id).value;
+                      //var x8 = document.getElementById("cell_data8edit"+id).value;
+                      //var x9 = document.getElementById("cell_data9edit"+id).value;
+                      //var x10 = document.getElementById("cell_data10edit"+id).value;
+                    
+                      
+                      var url2="{% url 'editFormTable' %}?"+
+                        "param=" + encodeURIComponent(x0) +
+                        "&param0=" + x0 +
+                        "&param1=" + encodeURIComponent(x1) +
+                        "&param2=" + encodeURIComponent(x2)+
+                        "&param3=" + encodeURIComponent(x3)+
+                        "&param4=" + encodeURIComponent(x4)+
+                        "&param5=" + encodeURIComponent(x5)+
+                        "&param6=" + encodeURIComponent(x6);
+
+                        
+                      window.location.href = url2;
+
+                  }
+                  </script>
+
+
+
+
+                </div>
+
+              </div>
+
+              
+            </div><!-- End Recent Sales -->
+            <!--  ======================================================== end table  ===============================================================  -->
+
+          </div>
+
+          <!--  ======================================================== start table 3  ===============================================================  -->
+          <!--  ======================================================== start table 3  ===============================================================  -->
+          <!--  ======================================================== start table 3  ===============================================================  -->
+          <!--  ======================================================== start table 3  ===============================================================  -->
+          <!--  ======================================================== start table 3  ===============================================================  -->
+          <div class="row">
+           
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body" style="height:500px;">
+                  <h5 class="card-title">Title <span>| title</span></h5>
+
+                  
+                  
+                  <input class="form-control" type="text" id="filterInput3" placeholder="Search..." style="width:30%;min-width:100px;">
+                  <form method="post"  enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table class="table  table-hover   table-bordered  table-borderless border-info " id="tableDATA3" cellspacing="0" >  <!-- table-sm  table-responsive-->
+
+                        <thead class="table-dark border-info">
+                          <th></th><!--style="width:auto;"-->
+                          <th data-sortable="true" data-column="id" >id <span class="sortable-icon"  data-column="id"></span></th>
+                          <th data-sortable="true" data-column="nom" >Nom <span class="sortable-icon"  data-column="nom"></span></th>  
+                          <th data-sortable="true" data-column="prenom">Prénom <span class="sortable-icon"  data-column="prenom"></span></th> 
+                          <th data-sortable="true" data-column="adresse">Adresse <span class="sortable-icon"  data-column="adresse"></th> 
+                          <th>N° de tél</th> 
+                          <th>Visite technique</th> 
+                          <th>État</th> 
+                          <th>Travaux à preconise</th> 
+                          <th>Audit v1</th> 
+                          <th>Audit v2</th> 
+                          <th>Audit v3</th> 
+                          <th>Audit fin</th> 
+                          <th>Coffrac</th> 
+                          <th>Payer</th>
+                          <th>Agent</th>
+                          <th>Auditeur</th>
+
+                        </thead>
+                        <tbody id="myTable3">
+                            {% for item in data %}
+                            <input class="input_table_data" type="hidden" name="cell_data03" id="cell_data0edit3{{item.cell_id}}" value="{{item.cell_id}}">
+                            <tr>
+                                <td style="width:auto;"><button  class="button_table_data" type="button" id="edit_col_in_table3" name="" value="" onclick="my_Func_edit_table3('{{item.cell_id}}') "><i class="ri-edit-2-fill"></i></button></td>
+                                <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
+                                <td class="td_input_cell" ><input class="input_table_data" type="text" name="cell_data1edit3" id="cell_data1edit3{{ item.cell_id }}" value="{{ item.firstname }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2edit3" id="cell_data2edit3{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3edit3" id="cell_data3edit3{{ item.cell_id }}" value="{{ item.address }}"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4edit3" id="cell_data4edit3{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
+                                
+
+                                <td class="td_input_cell tooltipTrigger">{% if item.vt %}
+                                  <a href="{{ item.vt.url }}" download>{{ item.vt.name }}</a>
+                                  {% endif %}<span class="tooltip"><input class="input_table_data" type="file" name="cell_data5edit3" id="cell_data5edit3{{ item.cell_id }}" value="{{ item.vt }}" accept="image/*,.pdf,.docx,.doc,.xls" multiple ></span></td>  <!--  target="_blank"-->
+                                
+                                <td class="badge-cell3" data-state-c="badge3">
+                                  <span class="badge3" data-badge-c="Modification Faite">Modification Faite</span>
+                                  <span class="badge3" data-badge-c="Payer">Payer</span>
+                                  <span class="badge3" data-badge-c="A modifier">A modifier</span>
+                                  <span class="badge3" data-badge-c="Annule">Annule</span>
+                                  <span class="badge3" data-badge-c="En cours">Annule</span>
+                                  <span class="badge3" data-badge-c="Fin">Fin</span>
+
+                                  <select class="form-select3" aria-label="Default select example"  name="cell_data6edit3" id="cell_data6edit3{{ item.cell_id }}" style="background-color:gray;">
+                                      <option value="Modification Faite" style="background-color:cyan" {% if item.etat  == "Modification Faite" %}selected{% endif %}>Modification Faite</option>
+                                      <option value="Payer" style="background-color:purple;" {% if item.etat  == "Payer" %}selected{% endif %} >Payer</option>
+                                      <option value="A modifier" style="background-color:gray;"  {% if item.etat  == "A modifier" %}selected{% endif %} >A modifier</option>
+                                      <option value="Annule" style="background-color: red" {% if item.etat  == "Annule" %}selected{% endif %} >Annule</option>
+                                      <option value="En cours" style="background-color:orange;" {% if item.etat  == "En cours" %}selected{% endif %} >En cours</option>
+                                      <option value="Fin" style="background-color:green;" {% if item.etat  == "Fin" %}selected{% endif %} >Fin</option>
+                                  </select>
+                                </td>
+
+
+                                <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
+
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><button type="submit" class="button_table_data" style="text-align:left;" function=myFunctionadd()><i class="ri-add-circle-line">Add</i></button></td>
+                                <td></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data1add3"  ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2add3" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3add3" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add3" ></td>
+
+
+
+                                      
+                                <td class="td_input_cell"><input class="input_table_data" type="file" name="cell_data5add3" accept="image/*,.pdf,.docx,.doc,.xls" multiple></td>
+
+
+
+                                <td class="badge-cellfoot3" data-state-c="badgefoot3">
+                                  <span class="badgefoot3" data-badgefoot-c="Modification Faite">Modification Faite</span>
+                                  <span class="badgefoot3" data-badgefoot-c="Payer">Payer</span>
+                                  <span class="badgefoot3" data-badgefoot-c="A modifier">A modifier</span>
+                                  <span class="badgefoot3" data-badgefoot-c="Annule">Annule</span>
+                                  <span class="badgefoot3" data-badgefoot-c="En cours">Annule</span>
+                                  <span class="badgefoot3" data-badgefoot-c="Fin">Fin</span>
+
+                                  <select class="form-select3 form-selectfoot3" aria-label="Default select example" name="cell_data6add3" style="background-color:gray;">
+                                      <option value="Modification Faite" style="background-color:cyan" >Modification Faite</option>
+                                      <option value="Payer" style="background-color:purple;">Payer</option>
+                                      <option value="A modifier" style="background-color:gray;">A modifier</option>
+                                      <option value="Annule" style="background-color: red">Annule</option>
+                                      <option value="En cours" style="background-color:orange;" selected>En cours</option>
+                                      <option value="Fin" style="background-color:green;">Fin</option>
+                                  </select>
+                                </td>
+
+
+
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data7add3" ></td>
+                                
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data8add3" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data9add3" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data10add3" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data11add3" ></td>
+                                
+                                
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <!--{} form.as_p -->
+                    <!--<button class="btn ri-add-fill"></button>-->
+                    
+                </form>
+
+                <!-- search by cells -->
+                <script>
+                  document.getElementById("filterInput3").addEventListener("keyup", filterTable);
+                  
+                  function filterTable() {
+                    var input, filter, table, tr, td, i, j, txtValue;
+                    input = document.getElementById("filterInput3");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("myTable3");
+                    tr = table.getElementsByTagName("tr");
+                  
+                    for (i = 0; i < tr.length; i++) {
+                      tr[i].style.display = "none"; // Hide the row by default
+                      td = tr[i].getElementsByTagName("td");
+                  
+                      for (j = 0; j < td.length; j++) {
+                        var inputElement = td[j].querySelector("input[type='text']");
+                        var pElement = td[j].querySelector("p");
+                        
+                        if (inputElement) {
+                          txtValue = inputElement.value.toUpperCase();
+                          if (txtValue.indexOf(filter) > -1) {
+                            tr[i].style.display = ""; // Show the row if a match is found in any input element
+                            break; // No need to check other cells in this row
+                          }
+                        }
+                  
+                        if (pElement) {
+                          txtValue = pElement.textContent || pElement.innerText;
+                          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = ""; // Show the row if a match is found in any <p> element
+                            break; // No need to check other cells in this row
+                          }
+                        }
+                      }
+                    }
+                  }
+                  </script>
+                <!-- end search by cells -->
+
+
+                <!--  sort by columns -->
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+                    const table = document.getElementById('tableDATA3');
+                    const headers = table.querySelectorAll('th[data-sortable="true"]');
+                    headers.forEach(header => {
+                      header.addEventListener('click', () => {
+                        const column = header.getAttribute('data-column3');
+                        const isAscending = !header.classList.contains('desc');
+                        sortTable(table, column, isAscending);
+                        headers.forEach(h => h.classList.remove('desc'));
+                        header.classList.toggle('desc', !isAscending);
+                      });
+                    });
+                  });
+                  
+                  function sortTable(table, column, isAscending) {
+                    const tbody = table.querySelector('tbody');
+                    const rows = Array.from(tbody.querySelectorAll('tr'));
+                    rows.sort((rowA, rowB) => {
+                      const cellA = rowA.querySelector(`td:nth-child(${columnIndex(column)})`).textContent;
+                      const cellB = rowB.querySelector(`td:nth-child(${columnIndex(column)})`).textContent;
+                      return isAscending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+                    });
+                    rows.forEach(row => tbody.appendChild(row));
+                  }
+                  
+                  function columnIndex(columnName) {
+                    const headers = document.querySelectorAll('th[data-sortable="true"]');
+                    for (let i = 0; i < headers.length; i++) {
+                      if (headers[i].getAttribute('data-column3') === columnName) {
+                        return i + 1;
+                      }
+                    }
+                    return -1;
+                  }
+                  
+                </script>
+                
+                
+                
+
+
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+                <!--  select box for rows table -->
+                <script>
+                 // Function to update the badge based on the selected option in a row
+                  function updateBadge(row) {
+                    const selectElement = row.querySelector('.form-select3');
+                    const badgeElements = row.querySelectorAll('.badge3');
+                    const selectedOption = selectElement.value;
+
+                    badgeElements.forEach(badge3 => {
+                        badge3.style.display = 'none';
+                    });
+
+                    row.querySelector(`.badge3[data-badge-c="${selectedOption}"]`).style.display = 'inline-block';
+                  }
+
+                  // Add event listener for each row to update the badge when the select element changes
+                  const rows = document.querySelectorAll('tbody tr');
+
+                  rows.forEach(row => {
+                    const selectElement = row.querySelector('.form-select3');
+                    
+                    // Initial call to set the badge based on the default selected option in each row
+                    updateBadge(row);
+
+                    selectElement.addEventListener('change', () => {
+                        updateBadge(row);
+                    });
+                  });
+                </script>
+                <!--  end select box for rows table -->
+
+
+                <!--  select box for foot table -->
+                <script>
+                  const selectElement3 = document.querySelector('.form-selectfoot3');
+                  const badgeElements3 = document.querySelectorAll('.badgefoot3');
+                  
+                  // Function to update the badge based on the selected option
+                  function updateBadgefoot() {
+                      const selectedOption = selectElement3.value;
+                      badgeElements3.forEach(badgefoot3 => {
+                          badgefoot3.style.display = 'none';
+                      });
+                      document.querySelector(`.badgefoot-c[data-badgefoot-c="${selectedOption}"]`).style.display = 'inline-block';
+                  }
+                  
+                  // Initial call to set the badge based on the default selected option
+                  updateBadgefoot();
+                  
+                  // Add event listener to update the badge when the select element changes
+                  selectElement3.addEventListener('change', updateBadgefoot);
+
+                </script>
+                <!-- end select box for foot table -->
+
+                
+                
+                
+                
+
+
+                <!-- redirect with param -->
+                <script>
+                        
+                  function my_Func_edit_table3(id) {
+                    
+                      var x0 = document.getElementById("cell_data0edit3"+id).value;
+                      var x1 = document.getElementById("cell_data1edit3"+id).value;
+                      var x2 = document.getElementById("cell_data2edit3"+id).value;
+                      var x3 = document.getElementById("cell_data3edit3"+id).value;
+                      var x4 = document.getElementById("cell_data4edit3"+id).value;
+                      
+                      var x5 = document.getElementById("cell_data5edit3"+id).value;
+                      
+                      var selectElement = document.querySelector('#cell_data6edit3'+id);
+                      var x6 = selectElement.value;
+                      
+                      //var x7 = document.getElementById("cell_data7edit"+id).value;
+                      //var x8 = document.getElementById("cell_data8edit"+id).value;
+                      //var x9 = document.getElementById("cell_data9edit"+id).value;
+                      //var x10 = document.getElementById("cell_data10edit"+id).value;
+                    
+                      
+                      var url2="{% url 'editFormTable' %}?"+
+                        "param=" + encodeURIComponent(x0) +
+                        "&param0=" + x0 +
+                        "&param1=" + encodeURIComponent(x1) +
+                        "&param2=" + encodeURIComponent(x2)+
+                        "&param3=" + encodeURIComponent(x3)+
+                        "&param4=" + encodeURIComponent(x4)+
+                        "&param5=" + encodeURIComponent(x5)+
+                        "&param6=" + encodeURIComponent(x6);
+
+                        
+                      window.location.href = url2;
+
+                  }
+                  </script>
+
+
+
+
+                </div>
 
               </div>
 
