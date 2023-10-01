@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,table_view_edit
+from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,table_view_edit    ,table_view2,table_view_edit2
 from ERapp import views
 
 urlpatterns = [
@@ -31,6 +31,11 @@ urlpatterns = [
     path('formT1/',table_view_edit ,name="editFormTable"),
     path('change_profile_pic/',img_upload_image ),
     path('showimage/',showimage ),
+    
+    
+    
+    path('f/',table_view2 ),
+    path('f1/',table_view_edit2 ,name="editFormTable2"),
     
     
 ] #+static(settings.MEDIA_URL, documnet_root=settings.MEDIA_ROOT)

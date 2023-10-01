@@ -35,41 +35,42 @@
 
 
 
-.tableDATA {
+
+
+
+.tableDATA_1,
+.tableDATA_2,
+.tableDATA_3 {
   max-width: 600px;
   margin: 0 auto;
 }
-#tableDATA th, td ,
-#tableDATA2 th, td, 
-#tableDATA3 th, td {
+#tableDATA_1 th, td,
+#tableDATA_2 th, td,
+#tableDATA_3 th, td {
   white-space: nowrap;
   
 }
 
-#tableDATA td,
-#tableDATA2 td,
-#tableDATA3 td{
+#tableDATA_1 td,
+#tableDATA_2 td,
+#tableDATA_3 td{
   height:100%;
   
 }
-#tableDATA td select,
-#tableDATA2 td select,
-#tableDATA3 td select{
+#tableDATA_1 td select,
+#tableDATA_2 td select,
+#tableDATA_3 td select{
   height:0px;
   
 }
 
 
-.badge-cell select , .badge-cellfoot select ,
-.badge-cell2 select , .badge-cellfoot2 select  ,
-.badge-cell3 select , .badge-cellfoot3 select   {
+.badge-cell select , .badge-cellfoot select  {
   display: none;
 }
 
 /* Style for the badge */
-.badge ,.badgefoot
-.badge2 ,.badgefoot2,
-.badge3 ,.badgefoot3{
+.badge ,.badgefoot{
   text-align:center;
   height:100%;
   width:100%;
@@ -80,59 +81,42 @@
 }
 
 /* Style for different badge states */
-.badge[data-badge="Modification Faite"] ,.badgefoot[data-badgefoot="Modification Faite"],
-.badge2[data-badge2="Modification Faite"] ,.badgefoot2[data-badgefoot2="Modification Faite"],
-.badge3[data-badge-c="Modification Faite"] ,.badgefoot3[data-badgefoot-c="Modification Faite"] {
+.badge[data-badge="Modification Faite"] ,.badgefoot[data-badgefoot="Modification Faite"] {
   background-color: cyan;
   color: white;
 }
 
-.badge[data-badge="Payer"] , .badgefoot[data-badgefoot="Payer"],
-.badge2[data-badge2="Payer"] , .badgefoot2[data-badgefoot2="Payer"],
-.badge3[data-badge-c="Payer"] , .badgefoot3[data-badgefoot-c="Payer"]{
+.badge[data-badge="Payer"] , .badgefoot[data-badgefoot="Payer"]{
   background-color: purple;
   color: white;
 }
 
-.badge[data-badge="A modifier"] , .badgefoot[data-badgefoot="A modifier"],
-.badge2[data-badge2="A modifier"] , .badgefoot2[data-badgefoot2="A modifier"],
-.badge3[data-badge-c="A modifier"] , .badgefoot3[data-badgefoot-c="A modifier"]{
+.badge[data-badge="A modifier"] , .badgefoot[data-badgefoot="A modifier"]{
   background-color: gray;
   color: white;
 }
-.badge[data-badge="Annule"] , .badgefoot[data-badgefoot="Annule"],
-.badge2[data-badge2="Annule"] , .badgefoot2[data-badgefoot2="Annule"],
-.badge3[data-badge-c="Annule"] , .badgefoot3[data-badgefoot-c="Annule"]{
+.badge[data-badge="Annule"] , .badgefoot[data-badgefoot="Annule"]{
   background-color: red;
   color: white;
 }
-.badge[data-badge="En cours"] , .badgefoot[data-badgefoot="En cours"],
-.badge[data-badge="En cours"] , .badgefoot[data-badgefoot="En cours"],
-.badge3[data-badge-c="En cours"] , .badgefoot3[data-badgefoot-c="En cours"] {
+.badge[data-badge="En cours"] , .badgefoot[data-badgefoot="En cours"] {
   background-color: orange;
   color: white;
 }
-.badge[data-badge="Fin"] , .badgefoot[data-badgefoot="Fin"],
-.badge[data-badge="Fin"] , .badgefoot[data-badgefoot="Fin"],
-.badge3[data-badge-c="Fin"] , .badgefoot3[data-badgefoot-c="Fin"]{
+.badge[data-badge="Fin"] , .badgefoot[data-badgefoot="Fin"]{
   background-color: green;
   color: white;
 }
 
 /* Show the select element on hover */
-.badge-cell:hover select ,.badge-cellfoot:hover select ,
-.badge-cell2:hover select ,.badge-cellfoot2:hover select , 
-.badge-cell3:hover select ,.badge-cellfoot3:hover select  {
+.badge-cell:hover select ,.badge-cellfoot:hover select  {
   display: block;
 }
 
 /* Hide the badge when the select element is shown */
-.badge-cell:hover .badge ,.badge-cellfoot:hover .badgefoot,
-.badge-cell2:hover .badge2 ,.badge-cellfoot2:hover .badgefoot2,
-.badge-cell3:hover .badge3 ,.badge-cellfoot3:hover .badgefoot3 {
+.badge-cell:hover .badge ,.badge-cellfoot:hover .badgefoot {
   display: none;
 }
-
 
 
 
