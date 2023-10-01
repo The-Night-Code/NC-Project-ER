@@ -34,7 +34,8 @@
 }
 
 
-
+.card-body{height:auto;
+  max-height:500px;}
 
 
 
@@ -43,6 +44,7 @@
 .tableDATA_3 {
   max-width: 600px;
   margin: 0 auto;
+  
 }
 #tableDATA_1 th, td,
 #tableDATA_2 th, td,
@@ -64,7 +66,12 @@
   
 }
 
-
+#tableDATA_1 td select,
+#tableDATA_2 td select,
+#tableDATA_3 td select{
+  width:100px;
+  
+}
 .badge-cell select , .badge-cellfoot select  {
   display: none;
 }

@@ -239,8 +239,8 @@ def table_view_edit(request):
         get_col_by_id.num = param4_value
         get_col_by_id.vt = param5_value
         get_col_by_id.etat = param6_value
-        get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','vt','etat'])
-        #get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat'])
+        #get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','vt','etat'])
+        get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat'])
     return redirect('/formT/')
      
     
