@@ -75,6 +75,8 @@ class file_table_auditV1(models.Model):
     file_index = models.AutoField(primary_key=True)
     file_name = models.CharField(max_length=255,blank=True)
     vt = models.FileField(upload_to=f'uploads/data/{file_id}/auditV1',blank=True)
+    file_format = models.CharField(max_length=255,blank=True)
+    
     def __str__(self):
         return f'{self.file_id} {self.file_index} {self.file_name}'
     

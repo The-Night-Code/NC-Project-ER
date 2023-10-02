@@ -458,7 +458,12 @@
         
 
 
-         <!--  ======================================================== start table  ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
+
             <!-- Recent Sales -->
           <div class="row">
            
@@ -549,7 +554,7 @@
                                 <td class="td_input_cell">
                                   <nav class="header-nav ms-auto" >
                                     <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                      <i class="bi bi-chat-left-text"></i>
+                                      <i class="ri-file-list-3-line"></i>
                                       <span class="badge bg-success badge-number">3</span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
@@ -559,24 +564,32 @@
                                         {% if F.file_id == item.cell_id %}
                                            <li class="dropdown-header">
                                              You have 3 new messages
-                                             <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                                             <a ><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
                                              
-                                             <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="remove_file_from_auditV1('{{item.cell_id}}','{{F.file_index}}')">
+                                             <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_remove_file_from_auditV1('{{item.cell_id}}','{{F.file_index}}')">
                                                <i class="ri-delete-bin-2-fill" style="color:red;"></i>
                                              </button>
                                            </li>
-                                           <li>
-                                             <hr class="dropdown-divider">
-                                           </li>
+                                           
                                          {% endif %}
                                       {% endfor %}
-
+                                      
+                                      <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="ri-file-excel-2-line" ></i></a></li>
+                                      <hr class="dropdown-divider">
+                                      <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-earmark-pdf" ></i></a></li>
+                                      <hr class="dropdown-divider">
+                                      <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-earmark-image" ></i></a></li>
+                                      <hr class="dropdown-divider">
+                                      <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-earmark-word" ></i></a></li>
+                                      <hr class="dropdown-divider">
+                                      
                                       <li style="text-align:center;height:20px;">
-                                           <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="add_files_to_auditV1('{{item.cell_id}}')"><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
+                                           <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_add_files_to_auditV1('{{item.cell_id}}')"><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
                                       </li>
                                       <li></li>
+                                      
 
-                                        
+                                      
 
                                     </ul>
 
@@ -630,10 +643,10 @@
 
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data7add" ></td>
                                 
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data8add" ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data9add" ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data10add" ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data11add" ></td>
+                                <td class="td_input_cell"></td>
+                                <td class="td_input_cell"></td>
+                                <td class="td_input_cell"></td>
+                                <td class="td_input_cell"></td>
                                 
                                 
                             </tr>
