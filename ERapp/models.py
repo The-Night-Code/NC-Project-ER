@@ -69,3 +69,12 @@ class TableData001(models.Model):
     coffrac = models.CharField(max_length=255,blank=True)
     def __str__(self):
         return f'{self.cell_id} {self.firstname} {self.lastname}'
+    
+class file_table_auditV1(models.Model):
+    file_id = models.CharField(max_length=255,blank=True)
+    file_index = models.AutoField(primary_key=True)
+    file_name = models.CharField(max_length=255,blank=True)
+    vt = models.FileField(upload_to=f'uploads/data/{file_id}/auditV1',blank=True)
+    def __str__(self):
+        return f'{self.file_id} {self.file_index} {self.file_name}'
+    

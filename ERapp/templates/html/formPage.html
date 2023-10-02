@@ -548,39 +548,40 @@
                                 <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
                                 <td class="td_input_cell">
                                   <nav class="header-nav ms-auto" >
-                                  <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                    <i class="bi bi-chat-left-text"></i>
-                                    <span class="badge bg-success badge-number">3</span>
-                                  </a>
-                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages " data-popper-placement="bottom-end" >
+                                    <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
+                                      <i class="bi bi-chat-left-text"></i>
+                                      <span class="badge bg-success badge-number">3</span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
 
-                                        <!-- for i in datafiles  if item.cell_id == i.file_id -->
-                                        <li class="dropdown-header">
-                                          You have 3 new messages
-                                          <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                                          
-                                          <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="">
-                                            <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                          </button>
-                                        </li>
-                                        <li>
-                                          <hr class="dropdown-divider">
-                                        </li>
+                                         <!-- for i in datafiles  if item.cell_id == i.file_id -->
+                                      {% for F in datafiles %}
+                                        {% if F.file_id == item.cell_id %}
+                                           <li class="dropdown-header">
+                                             You have 3 new messages
+                                             <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                                             
+                                             <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="remove_file_from_auditV1('{{item.cell_id}}','{{F.file_index}}')">
+                                               <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                             </button>
+                                           </li>
+                                           <li>
+                                             <hr class="dropdown-divider">
+                                           </li>
+                                         {% endif %}
+                                      {% endfor %}
+
+                                      <li style="text-align:center;height:20px;">
+                                           <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="add_files_to_auditV1('{{item.cell_id}}')"><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
+                                      </li>
+                                      <li></li>
 
                                         
-                                        
-                                        <li style="text-align:center;height:20px;">
-                                          <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick=""><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
-                                        </li>
 
-                                        <li>
-                                          <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick=""><i class="bxs-file-plus" ></i></button>
-                                        </li>
-
-                                      </ul>
+                                    </ul>
 
 
-                                    </nav>
+                                  </nav>
                                 </td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
@@ -953,7 +954,46 @@
   
   
                                   <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
-                                  <td class="td_input_cell"><input class="input_table_data" type="text"  ></td>
+                                  <td class="td_input_cell">
+
+                                    <nav class="header-nav ms-auto" >
+                                      <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
+                                        <i class="bi bi-chat-left-text"></i>
+                                        <span class="badge bg-success badge-number">3</span>
+                                      </a>
+                                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
+    
+                                             <!-- for i in datafiles  if item.cell_id == i.file_id -->
+                                            {% for F in datafiles %}
+                                            {% if F.file_id == item.cell_id %}
+                                              <li class="dropdown-header">
+                                                You have 3 new messages
+                                                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                                                
+                                                <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="add_files_to_('{{item.cell_id}}')">
+                                                  <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                                </button>
+                                              </li>
+                                              <li>
+                                                <hr class="dropdown-divider">
+                                              </li>
+                                            {% endif %}
+                                            {% endfor %}
+
+                                            <li style="text-align:center;height:20px;">
+                                              <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick=""><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
+                                            </li>
+                                            <li></li>
+    
+                                            
+    
+                                          </ul>
+    
+    
+                                        </nav>
+
+
+                                  </td>
                                   <td class="td_input_cell"><input class="input_table_data" type="text" ></td>
                                   <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
                                   <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
