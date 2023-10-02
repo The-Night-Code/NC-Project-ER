@@ -573,14 +573,23 @@
                                            
                                          {% endif %}
                                       {% endfor %}
+                                      {% if F.file_format == "excel" %}
+                                        <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="ri-file-excel-2-line" ></i></a></li>
+                                      {% elif F.file_format == "pdf" %}
+                                        <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-earmark-pdf" ></i></a></li>
+                                      {% elif F.file_format == "image" %}
+                                        <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-earmark-image" ></i></a></li>
+                                      {% elif F.file_format == "word" %}
+                                        <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-earmark-word" ></i></a></li>
+                                      {% elif F.file_format == "pz2" %}
+                                        <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-ppt" ></i></a></li>
+                                      {% else %}
+                                        <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="ri-file-line" ></i></a></li>
+                                      {% endif %}
                                       
-                                      <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="ri-file-excel-2-line" ></i></a></li>
-                                      <hr class="dropdown-divider">
-                                      <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-earmark-pdf" ></i></a></li>
-                                      <hr class="dropdown-divider">
-                                      <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-earmark-image" ></i></a></li>
-                                      <hr class="dropdown-divider">
-                                      <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-earmark-word" ></i></a></li>
+
+                                      
+                                      
                                       <hr class="dropdown-divider">
                                       
                                       <li style="text-align:center;height:20px;">
