@@ -35,9 +35,20 @@
 
 
 .card-body{height:auto;
-  max-height:500px;}
+  max-height:800px;}
 
 
+.dropdown-menu {
+  background-color: #fff; /* Background color */
+  border: 1px solid #ccc; /* Border */
+  max-height: 200px; /* Max height of the dropdown */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  position: absolute;
+  inset: 0px 0px auto auto;
+  margin: 0px;
+  transform: translate(-25px, 35px);
+  z-index: 1000; /* Ensure the dropdown appears on top */
+}
 
 .tableDATA_1,
 .tableDATA_2,
@@ -46,6 +57,8 @@
   margin: 0 auto;
   
 }
+
+
 #tableDATA_1 th, td,
 #tableDATA_2 th, td,
 #tableDATA_3 th, td {

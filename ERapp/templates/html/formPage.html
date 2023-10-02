@@ -513,7 +513,7 @@
                             {% if item.etat == "Modification Faite" or item.etat == "A modifier" or item.etat == "En cours" %}
                             <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             <tr>
-                                <td style="width:auto;"><button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="my_Func_edit_table_1('{{item.cell_id}}') "><i class="ri-edit-2-fill"></i></button></td>
+                                <td style="width:auto;"><button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="my_Func_edit_table_1('{{item.cell_id}}')"><i class="ri-edit-2-fill"></i></button></td>
                                 <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
                                 <td class="td_input_cell" ><input class="input_table_data" type="text" name="table1_firstname" id="table1_firstname{{ item.cell_id }}" value="{{ item.firstname }}"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="table1_lastname" id="table1_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
@@ -521,9 +521,11 @@
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="table1_num" id="table1_num{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
                                 
 
-                                <td class="td_input_cell tooltipTrigger">{% if item.vt %}
+                                <td class="td_input_cell tooltipTrigger">
+                                  {% if item.vt %}
                                   <a href="{{ item.vt.url }}" download>{{ item.vt.name }}</a>
-                                  {% endif %}<span class="tooltip"><input class="input_table_data" type="file" id="table1_vt{{ item.cell_id }}" value="{{ item.vt }}" accept="image/*,.pdf,.docx,.doc,.xls" multiple ></span>
+                                  {% endif %}
+                                  <span class="tooltip"><input class="input_table_data" type="file" id="table1_vt{{ item.cell_id }}" value="{{ item.vt }}" accept="image/*,.pdf,.docx,.doc,.xls" multiple ></span>
                                 </td>  <!--  target="_blank"-->
                                 
                                 <td class="badge-cell" data-state="badge">
@@ -544,7 +546,42 @@
 
 
                                 <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text"  ></td>
+                                <td class="td_input_cell">
+                                  <nav class="header-nav ms-auto" >
+                                  <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
+                                    <i class="bi bi-chat-left-text"></i>
+                                    <span class="badge bg-success badge-number">3</span>
+                                  </a>
+                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages " data-popper-placement="bottom-end" >
+
+                                        <!-- for i in datafiles  if item.cell_id == i.file_id -->
+                                        <li class="dropdown-header">
+                                          You have 3 new messages
+                                          <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                                          
+                                          <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="">
+                                            <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                          </button>
+                                        </li>
+                                        <li>
+                                          <hr class="dropdown-divider">
+                                        </li>
+
+                                        
+                                        
+                                        <li style="text-align:center;height:20px;">
+                                          <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick=""><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
+                                        </li>
+
+                                        <li>
+                                          <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick=""><i class="bxs-file-plus" ></i></button>
+                                        </li>
+
+                                      </ul>
+
+
+                                    </nav>
+                                </td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
@@ -1162,8 +1199,20 @@
     });
     </script>
 
-
   
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggleIcon = document.getElementById("toggle-dropdown");
+      const dropdownMenu = document.querySelector(".dropdown-menu");
+    
+      toggleIcon.addEventListener("click", function (e) {
+        e.preventDefault();
+        dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+      });
+    });
+  </script>
+
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/chart.js/chart.umd.js' %}"></script>
