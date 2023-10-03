@@ -798,3 +798,149 @@ rowsTable2.forEach(row => {
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+                        
+  function add_files_to_table(id,table,column) {
+    var tab="#"+table+"_input_files_to_"+id
+
+
+    // Get the selected files from the source input
+    var sourceInput = document.getElementById(tab);
+    var selectedFiles = sourceInput.files;
+
+    // Clone the selected files
+    var clonedFiles = Array.from(selectedFiles);
+
+    // Set the cloned files in the target input
+    var targetInput = document.getElementById("fileInput");
+    targetInput.files = clonedFiles;
+    
+
+    document.getElementById('file_id').value = id;
+    document.getElementById('column').value = column;
+
+    var submitButton = document.getElementById("fileUploadForm");
+    submitButton.submit();
+    
+    var form = document.getElementById("fileUploadForm");
+
+    document.getElementById("submit_add_file_to_model").addEventListener("click", function () {
+      form.submit();
+    });
+
+
+
+  }
+  </script>
+
+
+
+
+
+  <script>
+                        
+    function add_files_to_table(id,table,column) {
+      // Get the selected files from the source input
+      var tab="#"+table+"_input_files_to_"+id
+      var sourceInput = document.getElementById(tab);
+      var selectedFiles = sourceInput.files;
+
+      // Clone the selected files
+      var clonedFiles = Array.from(selectedFiles);
+
+      // Set the cloned files in the target input
+      var targetInput = document.getElementById("fileInput");
+      targetInput.files = clonedFiles;
+      
+
+      document.getElementById('file_id').value = id;
+      document.getElementById('column').value = column;
+
+      // Append all selected files individually
+      for (var i = 0; i < selectedFiles.length; i++) {
+        formData.append("fileInput", selectedFiles[i]);
+      }
+
+      // Send a POST request to the server using the Fetch API
+      fetch("{% url 'add_files_to_model' %}", {
+        method: "POST",
+        body: formData,
+      })
+        .then(function (response) {
+          // Handle the response from the server if needed
+          if (response.ok) {
+            // Success
+            console.log("Form submitted successfully");
+          } else {
+            // Error
+            console.error("Form submission failed");
+          }
+        })
+        .catch(function (error) {
+          // Handle any errors that occurred during the fetch
+          console.error("Fetch error: " + error.message);
+    });
+
+    }
+    </script>
+
+
+    <script>
+    
+      function add_files_to_table(id,table,column) {
+        //var tab="#"+table+"_input_files_to_"+id
+        var tab="#table1_input_files_to_"+id
+        
+    
+        // Get the selected files from the source input
+        var sourceInput = document.getElementById(tab);
+        var selectedFiles = sourceInput.files;
+    
+        // Clone the selected files
+        var clonedFiles = Array.from(selectedFiles);
+    
+        // Set the cloned files in the target input
+        var targetInput = document.getElementById("fileInput");
+        targetInput.files = clonedFiles;
+        
+    
+        document.getElementById('file_id').value = id;
+        document.getElementById('column').value = column;
+    
+        
+        
+        var form = document.getElementById("fileUploadForm");
+    
+        document.getElementById("submit_add_file_to_model").addEventListener("click", function () {
+          form.submit();
+        });
+    
+    
+    
+      }
+    </script>

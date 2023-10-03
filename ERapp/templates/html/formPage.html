@@ -441,13 +441,13 @@
 
   <!-- main Page ========================================================================================================================================     -->
   <main id="main" class="main">
-    <div style="display:none;">
-    <form id="fileUploadForm" enctype="multipart/form-data" method="POST" action="{% url 'add_files_to_model' %}">
+    <div style="display:;">
+    <form id="fileUploadForm" enctype="multipart/form-data" method="POST" >
       {% csrf_token %}
-      <input type="file" id="fileInput" name="fileInput" multiple>
-      <input type="text" name="file_id" id="file_id">
-      <input type="text" name="column" id="column">
-      <button id="submit_add_file_to_model" type="submit"></button>
+      <input type="file" id="fileInput" name="fileInput" style="display:none" multiple>
+      <input type="text" name="file_id" id="file_id" style="display:none">
+      <input type="text" name="column" id="column" style="display:none">
+      <button id="submit_add_file_to_model" type="submit" style="display:none"></button>
     </form>
 
   </div>
@@ -501,7 +501,7 @@
                   <form method="post"  enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="hidden" name="myid" id="myid">
-
+                    <input type="hidden" name="mybutton" id="mybutton">
                     <table class="table  table-hover w-auto  table-bordered  table-borderless border-info " id="tableDATA_1" cellspacing="0" >  <!-- table-sm  table-responsive-->
 
                         <thead class="table-dark border-info">
@@ -608,8 +608,9 @@
                                            
                                       </li>-->
                                       <hr class="dropdown-divider">
-                                      <li><input class="input_table_data" type="file" id="table1_input_files_to_{{ item.cell_id }}" multiple ></li>
-                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="button" id="table1_add_file_to_row_{{ item.cell_id }}" value="click"  onclick="add_files_to_table('{{item.cell_id}}','table1','auditV1')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
+                                      <li><input class="input_table_data" type="file" id="table1_input_files_to_{{ item.cell_id }}" name="table1_input_files_to_{{ item.cell_id }}" multiple></li>
+                                      <input type="hidden" name="mybutton{{ item.cell_id }}" id="mybutton{{ item.cell_id }}">
+                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table('{{item.cell_id}}','table1','auditV1')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
                                       <li></li>
                                       
 
@@ -1035,7 +1036,7 @@
                                       </li>-->
                                       <hr class="dropdown-divider">
                                       <li><input class="input_table_data" type="file" id="table3_input_files_to_{{ item.cell_id }}" value="{{ item.vt }}" multiple ></li>
-                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="button" id="table3_edit_col"  onclick="add_files_to_table('{{item.cell_id}}','table3',auditV1)"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
+                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="button" id="table3_edit_col"  onclick="add_files_to_table123123('{{item.cell_id}}','table3',auditV1)"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
                                       <li></li>
     
                                           </ul>
@@ -1309,7 +1310,7 @@
 
   <!-- table1_remove_file_from_auditV1 -->
   <script>
-
+    
     function remove_file_from_auditV1(id,index) {
       
         var url2="{% url 'remove_file_from_auditV1' %}?"+
@@ -1334,48 +1335,21 @@
   </script>
 
   <script>
-                        
-    function add_files_to_table(id,table,column) {
-      var tab="#"+table+"_input_files_to_"+id
-
-
-      // Get the selected files from the source input
-      var sourceInput = document.getElementById(tab);
-      var selectedFiles = sourceInput.files;
-
-      // Clone the selected files
-      var clonedFiles = Array.from(selectedFiles);
-
-      // Set the cloned files in the target input
-      var targetInput = document.getElementById("fileInput");
-      targetInput.files = clonedFiles;
+    
+    function add_files_to_table(fileId, table, column) {
+      
+      
       
 
-      document.getElementById('file_id').value = id;
-      document.getElementById('column').value = column;
-
-      var submitButton = document.getElementById("fileUploadForm");
-      submitButton.submit();
+      // Set the values of the hidden input fields in the form
+      document.getElementById("myid").value = fileId;
+      document.getElementById("mybutton").value = "clicked";
       
-      var form = document.getElementById("fileUploadForm");
 
-      document.getElementById("submit_add_file_to_model").addEventListener("click", function () {
-        form.submit();
-      });
-
-
-      //var x = document.getElementById("table1_hidden_id"+id).value;
-      //document.getElementById("myid").innerHTML = x;
-
-        var url2="{% url 'add_files_to_model' %}?"+
-          "param0=" + encodeURIComponent(id)  +
-          "&param1=" + encodeURIComponent(column)+
-          "&param2=" + encodeURIComponent(files)+
-          "&param3=" + encodeURIComponent(tab);
-        //window.location.href = url2;
-
+      
+      
     }
-    </script>
+  </script>
 
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
