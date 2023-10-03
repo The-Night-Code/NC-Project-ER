@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login , logout
 from django.views.generic.edit import CreateView
 
 from .forms import TableDataForm1,ImageForm
-from .models import TableData1,ImageModel,USER,TableData001
+from .models import TableData1,ImageModel,USER,TableData001,file_table_auditV1
 
 
 from django.core.mail import send_mail
@@ -17,6 +17,8 @@ from django.core.mail import send_mail
 import random
 import string
 
+
+formT="/formT/"
 
 
 def Home(request):
@@ -206,11 +208,12 @@ def table_view(request): # add row
     
 
     data = TableData001.objects.all()
+    datafiles = file_table_auditV1.objects.all()
     col_count = data.count()
     # Get unique column names from the TableData model
     column_names = TableData001._meta.get_fields()
     
-    return render(request, 'html/formPage.html', { 'data': data , 'col_count':col_count ,'column_names': column_names})
+    return render(request, 'html/formPage.html', { 'data': data ,'datafiles': datafiles , 'col_count':col_count ,'column_names': column_names})
        
     
     
@@ -329,3 +332,15 @@ def table_view_edit2(request):
         get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','vt','etat'])
         #get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat'])
     return redirect('/f/')
+
+
+def remove_file_from_auditV1(request):
+    
+    file_id = request.GET.get('param0')
+    index = request.GET.get('param1')
+    try:
+        f_table_audit_v1 =file_table_auditV1.objects.get(file_id=str(file_id),file_index=str(index))
+    except file_table_auditV1.DoesNotExist:
+        pass
+    f_table_audit_v1.delete()
+    return redirect(formT)

@@ -42,7 +42,8 @@
   background-color: e#fff; /* Background color */
   border: 1px solid #ccc; /* Border */
   height:auto;
-  max-height: 80px; /* Max height of the dropdown */
+  max-height: 80px;
+  min-height:40px; /* Max height of the dropdown */
   overflow-y: auto; /* Enable vertical scrolling if content overflows */
   position: absolute;
   inset: 0px 0px auto auto;

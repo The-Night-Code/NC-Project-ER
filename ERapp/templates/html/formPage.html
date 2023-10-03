@@ -558,46 +558,47 @@
                                       <span class="badge bg-success badge-number">3</span>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
-
+                                      
                                          <!-- for i in datafiles  if item.cell_id == i.file_id -->
                                       {% for F in datafiles %}
+                                      
                                         {% if F.file_id == item.cell_id %}
-                                           <li class="dropdown-header">
-                                             You have 3 new messages
-                                             <a ><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                                             
-                                             <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_remove_file_from_auditV1('{{item.cell_id}}','{{F.file_index}}')">
-                                               <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                             </button>
-                                           </li>
+                                        <li>
+                                          <li class="list-inline-item">
+                                            {% if F.file_format == "excel" %}
+                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
+                                            {% elif F.file_format == "pdf" %}
+                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
+                                            {% elif F.file_format == "image" %}
+                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
+                                            {% elif F.file_format == "word" %}
+                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
+                                            {% elif F.file_format == "pz2" %}
+                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
+                                            {% else %}
+                                              <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
+                                            {% endif %}
+                                          </li>
+                                            
+                                            {{ F.file_name }}
+                                              
+                                          <li class="list-inline-item">
+                                            <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_remove_file_from_auditV1('{{item.cell_id}}','{{F.file_index}}')">
+                                              <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                            </button>
+                                          </li>
+                                        </li>
                                            
                                          {% endif %}
                                       {% endfor %}
-                                      {% if F.file_format == "excel" %}
-                                        <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="ri-file-excel-2-line" ></i></a></li>
-                                      {% elif F.file_format == "pdf" %}
-                                        <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-earmark-pdf" ></i></a></li>
-                                      {% elif F.file_format == "image" %}
-                                        <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-earmark-image" ></i></a></li>
-                                      {% elif F.file_format == "word" %}
-                                        <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-earmark-word" ></i></a></li>
-                                      {% elif F.file_format == "pz2" %}
-                                        <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="bi bi-file-ppt" ></i></a></li>
-                                      {% else %}
-                                        <li><a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true"><i class="ri-file-line" ></i></a></li>
-                                      {% endif %}
-                                      
-
-                                      
-                                      
-                                      <hr class="dropdown-divider">
-                                      
-                                      <li style="text-align:center;height:20px;">
+                                      <!-- <li style="text-align:center;height:20px;">
                                            <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_add_files_to_auditV1('{{item.cell_id}}')"><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
-                                      </li>
+                                           
+                                      </li>-->
+                                      <hr class="dropdown-divider">
+                                      <li><input class="input_table_data" type="file" id="table1_input_files_to_auditV1{{ item.cell_id }}" value="{{ item.vt }}" multiple ></li>
+                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="button" id="table1_edit_col"  onclick="table1_add_files_to_auditV1('{{item.cell_id}}')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
                                       <li></li>
-                                      
-
                                       
 
                                     </ul>
@@ -1274,6 +1275,36 @@
       });
     });
   </script>
+
+
+
+
+  <!-- table1_remove_file_from_auditV1 -->
+  <script>
+
+    function remove_file_from_auditV1(id,index) {
+      
+        var url2="{% url 'remove_file_from_auditV1' %}?"+
+          "param=" + encodeURIComponent(id) +
+          "&param0=" + id +
+          "&param1=" + encodeURIComponent(index);
+
+          
+        window.location.href = url2;
+
+    }
+    function table1_remove_file_from_auditV1(id1,index1) {
+      remove_file_from_auditV1(id1,index1);
+    }
+    function table2_remove_file_from_auditV1(id1,index1) {
+      remove_file_from_auditV1(id1,index1);
+    }
+    function table3_remove_file_from_auditV1(id1,index1) {
+      remove_file_from_auditV1(id1,index1);    
+    }
+
+  </script>
+
 
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
