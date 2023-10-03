@@ -441,7 +441,16 @@
 
   <!-- main Page ========================================================================================================================================     -->
   <main id="main" class="main">
+    <div style="display:none;">
+    <form id="fileUploadForm" enctype="multipart/form-data" method="POST" action="{% url 'add_files_to_model' %}">
+      {% csrf_token %}
+      <input type="file" id="fileInput" name="fileInput" multiple>
+      <input type="text" name="file_id" id="file_id">
+      <input type="text" name="column" id="column">
+      <button id="submit_add_file_to_model" type="submit"></button>
+    </form>
 
+  </div>
     <div class="pagetitle">
       <h1>Dashboard</h1>
       <nav>
@@ -491,6 +500,8 @@
                   <input class="form-control" type="text" id="filterInput_1" placeholder="Search..." style="width:30%;min-width:100px;">
                   <form method="post"  enctype="multipart/form-data">
                     {% csrf_token %}
+                    <input type="hidden" name="myid" id="myid">
+
                     <table class="table  table-hover w-auto  table-bordered  table-borderless border-info " id="tableDATA_1" cellspacing="0" >  <!-- table-sm  table-responsive-->
 
                         <thead class="table-dark border-info">
@@ -517,6 +528,7 @@
                             {% for item in data %}
                             {% if item.etat == "Modification Faite" or item.etat == "A modifier" or item.etat == "En cours" %}
                             <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
+                            
                             <tr>
                                 <td style="width:auto;"><button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="my_Func_edit_table_1('{{item.cell_id}}')"><i class="ri-edit-2-fill"></i></button></td>
                                 <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
@@ -596,8 +608,8 @@
                                            
                                       </li>-->
                                       <hr class="dropdown-divider">
-                                      <li><input class="input_table_data" type="file" id="table1_input_files_to_auditV1{{ item.cell_id }}" value="{{ item.vt }}" multiple ></li>
-                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="button" id="table1_edit_col"  onclick="table1_add_files_to_auditV1('{{item.cell_id}}')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
+                                      <li><input class="input_table_data" type="file" id="table1_input_files_to_{{ item.cell_id }}" multiple ></li>
+                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="button" id="table1_add_file_to_row_{{ item.cell_id }}" value="click"  onclick="add_files_to_table('{{item.cell_id}}','table1','auditV1')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
                                       <li></li>
                                       
 
@@ -986,29 +998,45 @@
                                       </a>
                                       <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
     
-                                             <!-- for i in datafiles  if item.cell_id == i.file_id -->
-                                            {% for F in datafiles %}
-                                            {% if F.file_id == item.cell_id %}
-                                              <li class="dropdown-header">
-                                                You have 3 new messages
-                                                <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                                                
-                                                <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="add_files_to_('{{item.cell_id}}')">
-                                                  <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                                </button>
-                                              </li>
-                                              <li>
-                                                <hr class="dropdown-divider">
-                                              </li>
+                                        {% for F in datafiles %}
+                                      
+                                        {% if F.file_id == item.cell_id %}
+                                        <li>
+                                          <li class="list-inline-item">
+                                            {% if F.file_format == "excel" %}
+                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
+                                            {% elif F.file_format == "pdf" %}
+                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
+                                            {% elif F.file_format == "image" %}
+                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
+                                            {% elif F.file_format == "word" %}
+                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
+                                            {% elif F.file_format == "pz2" %}
+                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
+                                            {% else %}
+                                              <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
                                             {% endif %}
-                                            {% endfor %}
-
-                                            <li style="text-align:center;height:20px;">
-                                              <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick=""><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
-                                            </li>
-                                            <li></li>
-    
+                                          </li>
                                             
+                                            {{ F.file_name }}
+                                              
+                                          <li class="list-inline-item">
+                                            <button  class="button_table_data" type="button" id="table3_edit_col" name="" value="" onclick="table3_remove_file_from_auditV1('{{item.cell_id}}','{{F.file_index}}')">
+                                              <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                            </button>
+                                          </li>
+                                        </li>
+                                           
+                                         {% endif %}
+                                      {% endfor %}
+                                      <!-- <li style="text-align:center;height:20px;">
+                                           <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_add_files_to_auditV1('{{item.cell_id}}')"><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
+                                           
+                                      </li>-->
+                                      <hr class="dropdown-divider">
+                                      <li><input class="input_table_data" type="file" id="table3_input_files_to_{{ item.cell_id }}" value="{{ item.vt }}" multiple ></li>
+                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="button" id="table3_edit_col"  onclick="add_files_to_table('{{item.cell_id}}','table3',auditV1)"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
+                                      <li></li>
     
                                           </ul>
     
@@ -1076,9 +1104,9 @@
                 </div>
               </div><!-- End Recent Sales -->
             </div>
-            <!--  ======================================================== end table 1 ===============================================================  -->
-            <!--  ======================================================== end table 1 ===============================================================  -->
-            <!--  ======================================================== end table 1 ===============================================================  -->
+            <!--  ======================================================== end table 3 ===============================================================  -->
+            <!--  ======================================================== end table 3 ===============================================================  -->
+            <!--  ======================================================== end table 3 ===============================================================  -->
 
 
 
@@ -1305,6 +1333,49 @@
 
   </script>
 
+  <script>
+                        
+    function add_files_to_table(id,table,column) {
+      var tab="#"+table+"_input_files_to_"+id
+
+
+      // Get the selected files from the source input
+      var sourceInput = document.getElementById(tab);
+      var selectedFiles = sourceInput.files;
+
+      // Clone the selected files
+      var clonedFiles = Array.from(selectedFiles);
+
+      // Set the cloned files in the target input
+      var targetInput = document.getElementById("fileInput");
+      targetInput.files = clonedFiles;
+      
+
+      document.getElementById('file_id').value = id;
+      document.getElementById('column').value = column;
+
+      var submitButton = document.getElementById("fileUploadForm");
+      submitButton.submit();
+      
+      var form = document.getElementById("fileUploadForm");
+
+      document.getElementById("submit_add_file_to_model").addEventListener("click", function () {
+        form.submit();
+      });
+
+
+      //var x = document.getElementById("table1_hidden_id"+id).value;
+      //document.getElementById("myid").innerHTML = x;
+
+        var url2="{% url 'add_files_to_model' %}?"+
+          "param0=" + encodeURIComponent(id)  +
+          "&param1=" + encodeURIComponent(column)+
+          "&param2=" + encodeURIComponent(files)+
+          "&param3=" + encodeURIComponent(tab);
+        //window.location.href = url2;
+
+    }
+    </script>
 
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
