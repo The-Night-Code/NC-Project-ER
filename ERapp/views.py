@@ -18,6 +18,7 @@ import random
 import string
 
 
+
 formT="/formT/"
 
 
@@ -182,6 +183,8 @@ def table_view(request): # add row
                     
                 if file.name.split(".")[1] in ['xls','xlsm']:
                     format_file="excel"  
+                    
+                
                 file_table_auditV1.objects.create(
                     file_id = myID,
                     file_name = file.name,

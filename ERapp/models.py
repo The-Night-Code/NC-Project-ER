@@ -1,5 +1,7 @@
 from django.db import models
-
+from PIL import Image
+import subprocess
+import os
 # Create your models here.
 
 
@@ -80,6 +82,8 @@ class file_table_auditV1(models.Model):
     
     def __str__(self):
         return f'{self.file_id} {self.file_index} {self.file_name}'
+    
+    
 
 class file_table_auditV2(models.Model):
     
