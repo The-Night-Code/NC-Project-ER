@@ -166,22 +166,21 @@ def generate_random_string(length):
     return random_string
     
 def table_view(request): # add row
-
+    
+    
     if request.method == 'POST' :
         
-        myID=request.POST.get("myid")
-        column=request.POST.get("col_type")
-        l="table1_input_files_to_"+str(myID)
+        myID1=request.POST.get("myid1")
+        column1=request.POST.get("col_type1")
         
-        if request.POST.get("mybutton") == 'clicked':
-            inp_files=request.FILES.getlist(l)
-            
-                    
+        l1="table1_input_files_to_"+str(myID1)
+        #return redirect(f"/{myID}_{column}/")
+        if request.POST.get("mybutton1") == 'clicked':
+            inp_files=request.FILES.getlist(l1)  
             #inp_files=request.FILES["table1_input_files_to_"+str(myID)]
-            file_table = ModelByColumn(column)
-            
-            
-            for file in request.FILES.getlist(l):
+            file_table = ModelByColumn(column1)
+
+            for file in request.FILES.getlist(l1):
                 format_file=file.name.split(".")[1]
                 if format_file in ['jpg','png','jpeg','heic']:
                     format_file="image"
@@ -190,17 +189,70 @@ def table_view(request): # add row
                     
                 if format_file in ['xls','xlsm']:
                     format_file="excel"  
-               
-                
                 
                 file_table.objects.create(
-                    file_id = myID,
+                    file_id = myID1,
                     file_name = file.name,
                     file_save = file,
                     file_format =format_file
                 
                 )
+        
+        
+        myID2=request.POST.get("myid2")
+        column2=request.POST.get("col_type2")
+        
+        l2="table2_input_files_to_"+str(myID2)
+        #return redirect(f"/{myID}_{column}/")
+        if request.POST.get("mybutton2") == 'clicked':
+            inp_files=request.FILES.getlist(l2)  
+            #inp_files=request.FILES["table1_input_files_to_"+str(myID)]
+            file_table = ModelByColumn(column2)
+
+            for file in request.FILES.getlist(l2):
+                format_file=file.name.split(".")[1]
+                if format_file in ['jpg','png','jpeg','heic']:
+                    format_file="image"
+                if format_file in ['doc','docx']:
+                    format_file="word"
+                    
+                if format_file in ['xls','xlsm']:
+                    format_file="excel"  
                 
+                file_table.objects.create(
+                    file_id = myID2,
+                    file_name = file.name,
+                    file_save = file,
+                    file_format =format_file
+                
+                )
+      
+        myID3=request.POST.get("myid3")
+        column3=request.POST.get("col_type3")
+        l3="table3_input_files_to_"+str(myID3)
+        
+        if request.POST.get("mybutton3") == 'clicked':
+            inp_files=request.FILES.getlist(l3)  
+            #inp_files=request.FILES["table1_input_files_to_"+str(myID)]
+            file_table = ModelByColumn(column3)
+
+            for file in request.FILES.getlist(l3):
+                format_file=file.name.split(".")[1]
+                if format_file in ['jpg','png','jpeg','heic']:
+                    format_file="image"
+                if format_file in ['doc','docx']:
+                    format_file="word"
+                    
+                if format_file in ['xls','xlsm']:
+                    format_file="excel"  
+                
+                file_table.objects.create(
+                    file_id = myID3,
+                    file_name = file.name,
+                    file_save = file,
+                    file_format =format_file
+                
+                )
         return redirect(formT)
     
     
@@ -276,9 +328,7 @@ def remove_file_from_MODELS(request):
     model_by_column = request.GET.get('param2')
     file_table=ModelByColumn(model_by_column)
     
-    
-    
-    
+
     try:
         f_table_audit_v1 =file_table.objects.get(file_id=str(file_id),file_index=str(index))
     except file_table.DoesNotExist:
