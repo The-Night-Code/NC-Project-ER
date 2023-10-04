@@ -90,7 +90,7 @@ class file_table_auditV2(models.Model):
     file_index = models.AutoField(primary_key=True)
     file_id = models.CharField(max_length=255,blank=True)
     file_name = models.CharField(max_length=255,blank=True)
-    file_save = models.FileField(upload_to=f'uploads/data/auditV1',blank=True ,unique=True)
+    file_save = models.FileField(upload_to=f'uploads/data/auditV2',blank=True ,unique=True)
     file_format = models.CharField(max_length=255,blank=True)
     
     def __str__(self):
@@ -101,7 +101,7 @@ class file_table_auditV3(models.Model):
     file_index = models.AutoField(primary_key=True)
     file_id = models.CharField(max_length=255,blank=True)
     file_name = models.CharField(max_length=255,blank=True)
-    file_save = models.FileField(upload_to=f'uploads/data/auditV1',blank=True ,unique=True)
+    file_save = models.FileField(upload_to=f'uploads/data/auditV3',blank=True ,unique=True)
     file_format = models.CharField(max_length=255,blank=True)
     
     def __str__(self):
@@ -112,7 +112,7 @@ class file_table_vt(models.Model):
     file_index = models.AutoField(primary_key=True)
     file_id = models.CharField(max_length=255,blank=True)
     file_name = models.CharField(max_length=255,blank=True)
-    file_save = models.FileField(upload_to=f'uploads/data/auditV1',blank=True ,unique=True)
+    file_save = models.FileField(upload_to=f'uploads/data/vt',blank=True ,unique=True)
     file_format = models.CharField(max_length=255,blank=True)
     
     def __str__(self):

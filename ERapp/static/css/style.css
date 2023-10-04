@@ -123,8 +123,11 @@
   width:100px;
   
 }
+
+
 .badge-cell select , .badge-cellfoot select  {
   display: none;
+  width:50px !important;
 }
 
 /* Style for the badge */

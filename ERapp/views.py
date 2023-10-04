@@ -168,13 +168,19 @@ def generate_random_string(length):
 def table_view(request): # add row
 
     if request.method == 'POST' :
-        myID=request.POST.get("myid")
         
+        myID=request.POST.get("myid")
+        column=request.POST.get("col_type")
         l="table1_input_files_to_"+str(myID)
+        
         if request.POST.get("mybutton") == 'clicked':
             inp_files=request.FILES.getlist(l)
+            
+                    
             #inp_files=request.FILES["table1_input_files_to_"+str(myID)]
-
+            file_table = ModelByColumn(column)
+            
+            
             for file in request.FILES.getlist(l):
                 format_file=file.name.split(".")[1]
                 if format_file in ['jpg','png','jpeg','heic']:
@@ -187,7 +193,7 @@ def table_view(request): # add row
                
                 
                 
-                file_table_auditV1.objects.create(
+                file_table.objects.create(
                     file_id = myID,
                     file_name = file.name,
                     file_save = file,
@@ -195,25 +201,24 @@ def table_view(request): # add row
                 
                 )
                 
-            
-            
-   
-            
-        
-        
-        
-        
         return redirect(formT)
     
     
 
     data = TableData001.objects.all()
-    datafiles = file_table_auditV1.objects.all()
+    
     col_count = data.count()
     # Get unique column names from the TableData model
     column_names = TableData001._meta.get_fields()
-    
-    return render(request, 'html/formPage.html', { 'data': data ,'datafiles': datafiles , 'col_count':col_count ,'column_names': column_names})
+    datafiles_VT = file_table_vt.objects.all()
+    datafiles_AuditV1 = file_table_auditV1.objects.all()
+    datafiles_AuditV2 = file_table_auditV2.objects.all()
+    datafiles_AuditV3 = file_table_auditV3.objects.all()
+    return render(request, 'html/formPage.html', { 'data': data ,'col_count':col_count ,'column_names': column_names,
+                                                  'datafiles_VT': datafiles_VT ,
+                                                  'datafiles_AuditV1': datafiles_AuditV1 ,
+                                                  'datafiles_AuditV2': datafiles_AuditV2 ,
+                                                  'datafiles_AuditV3': datafiles_AuditV3 })
        
     
     
@@ -268,14 +273,34 @@ def table_view_edit(request):
 
 
 
-def remove_file_from_auditV1(request):
+
+
+
+def ModelByColumn(model_by_column):
+    if model_by_column == "vt":
+        return file_table_vt
+    if model_by_column == "auditV1":
+        return file_table_auditV1
+    if model_by_column == "auditV2":
+        return file_table_auditV2
+    if model_by_column == "auditV3":
+        return file_table_auditV3
     
+    
+def remove_file_from_MODELS(request):
     file_id = request.GET.get('param0')
     index = request.GET.get('param1')
+    model_by_column = request.GET.get('param2')
+    file_table=ModelByColumn(model_by_column)
+    
+    
+    
+    
     try:
-        f_table_audit_v1 =file_table_auditV1.objects.get(file_id=str(file_id),file_index=str(index))
-    except file_table_auditV1.DoesNotExist:
+        f_table_audit_v1 =file_table.objects.get(file_id=str(file_id),file_index=str(index))
+    except file_table.DoesNotExist:
         pass
+    
     f_table_audit_v1.delete()
     return redirect(formT)
 

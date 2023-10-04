@@ -3,40 +3,19 @@ function load()
     
 }
 
-function add_files_to_table(fileId, table, column) {
+function add_files_to_table(fileId, table, col_type) {
     
-    
-    
-
     // Set the values of the hidden input fields in the form
     document.getElementById("myid").value = fileId;
+    //document.getElementById("table").value = table;
+    document.getElementById("col_type").value = col_type;
     document.getElementById("mybutton").value = "clicked";
     
 
     
     
 }
-// table1_remove_file_from_auditV1 
-function remove_file_from_auditV1(id,index) {
-      
-    var url2="{% url 'remove_file_from_auditV1' %}?"+
-      "param=" + encodeURIComponent(id) +
-      "&param0=" + id +
-      "&param1=" + encodeURIComponent(index);
 
-      
-    window.location.href = url2;
-
-}
-function table1_remove_file_from_auditV1(id1,index1) {
-  remove_file_from_auditV1(id1,index1);
-}
-function table2_remove_file_from_auditV1(id1,index1) {
-  remove_file_from_auditV1(id1,index1);
-}
-function table3_remove_file_from_auditV1(id1,index1) {
-  remove_file_from_auditV1(id1,index1);    
-}
 
 
 document.addEventListener("DOMContentLoaded", function () {
