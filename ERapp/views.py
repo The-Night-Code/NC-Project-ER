@@ -8,8 +8,8 @@ from django.contrib.auth import authenticate, login , logout
 
 from django.views.generic.edit import CreateView
 
-from .forms import TableDataForm1,ImageForm
-from .models import TableData1,ImageModel,USER,TableData001,file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt
+
+from .models import ImageModel,USER,TableData001,file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal
 
 
 from django.core.mail import send_mail
@@ -214,18 +214,21 @@ def table_view(request): # add row
     datafiles_AuditV1 = file_table_auditV1.objects.all()
     datafiles_AuditV2 = file_table_auditV2.objects.all()
     datafiles_AuditV3 = file_table_auditV3.objects.all()
-    return render(request, 'html/formPage.html', { 'data': data ,'col_count':col_count ,'column_names': column_names,
+    datafiles_AuditFinal = file_table_auditFinal.objects.all()
+    return render(request, 'html/formPage.html', { 'data': data ,
+                                                  'col_count':col_count ,
+                                                  'column_names': column_names,
                                                   'datafiles_VT': datafiles_VT ,
                                                   'datafiles_AuditV1': datafiles_AuditV1 ,
                                                   'datafiles_AuditV2': datafiles_AuditV2 ,
-                                                  'datafiles_AuditV3': datafiles_AuditV3 })
+                                                  'datafiles_AuditV3': datafiles_AuditV3 ,
+                                                  'datafiles_AuditFinal':datafiles_AuditFinal})
        
     
     
 
     
 def table_view_edit(request):
-    
     param_value_id = request.GET.get('param0')
     param1_value = request.GET.get('param1')
     param2_value = request.GET.get('param2')
@@ -233,7 +236,7 @@ def table_view_edit(request):
     param4_value = request.GET.get('param4')
     #param5_value = request.FILES.getlist('param5')
     param6_value = request.GET.get('param6')
-    
+    param7_value = request.GET.get('param7')
     #if param2_value or param3_value:
     try:
         get_col_by_id = TableData001.objects.get(cell_id=str(param_value_id))
@@ -245,36 +248,15 @@ def table_view_edit(request):
         get_col_by_id.lastname = param2_value
         get_col_by_id.address = param3_value
         get_col_by_id.num = param4_value
-        #get_col_by_id.vt = param5_value
-        get_col_by_id.etat = param6_value
+       
+        get_col_by_id.etat = param6_value 
+        get_col_by_id.paiement = param7_value
         #get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','vt','etat'])
-        get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat'])
+        get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat','paiement'])
     return redirect(formT)
-     
-    
 
-
-
-
-
-    
-
-    data = TableData001.objects.all()
-    col_count = data.count()
-    # Get unique column names from the TableData model
-    column_names = TableData001._meta.get_fields()
-    
-    return render(request, 'html/test.html', { 'data': data , 'col_count':col_count ,'column_names': column_names})
        
     
-    
-
-    
-
-
-
-
-
 
 def ModelByColumn(model_by_column):
     if model_by_column == "vt":
@@ -285,7 +267,8 @@ def ModelByColumn(model_by_column):
         return file_table_auditV2
     if model_by_column == "auditV3":
         return file_table_auditV3
-    
+    if model_by_column == "auditFinal":
+        return file_table_auditFinal
     
 def remove_file_from_MODELS(request):
     file_id = request.GET.get('param0')

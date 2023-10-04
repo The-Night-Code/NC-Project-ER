@@ -8,12 +8,39 @@
 
 /*--------------------------------------------------------------
 # General
-
-
-
-
 --------------------------------------------------------------*/
 /* Style the sorting icons */
+
+.reduce_div button{
+  border: none !important;
+  background: none !important;
+  width:50px !important;
+  height:50px !important;
+}
+.reduce_div{
+  padding: 0px;
+  margin: 0px;
+  margin-bottom: -20px;
+}
+
+
+
+.form-check-checkbox{
+  width:90% !important;
+  height:20px !important;
+  background-color:red !important;
+  border-radius: 25px !important;
+}
+.form-check-checkbox:checked{
+  background-color:green !important;
+}
+
+
+.button_table_data .bi-save2{
+  width:50px !important;
+  height:50px !important;
+}
+
 
 .fixed-column  {
   position:sticky;

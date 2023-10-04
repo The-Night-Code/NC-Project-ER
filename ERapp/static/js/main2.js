@@ -3,18 +3,7 @@ function load()
     
 }
 
-function add_files_to_table(fileId, table, col_type) {
-    
-    // Set the values of the hidden input fields in the form
-    document.getElementById("myid").value = fileId;
-    //document.getElementById("table").value = table;
-    document.getElementById("col_type").value = col_type;
-    document.getElementById("mybutton").value = "clicked";
-    
 
-    
-    
-}
 
 
 
@@ -27,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
       dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
     });
 });
-
 
 
 
