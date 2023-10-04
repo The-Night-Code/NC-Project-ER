@@ -49,7 +49,7 @@ def LoginU(request):
         user = authenticate(username=usernameU,password=passwordU)
         if user is not None:
             login(request,user)
-            return HttpResponseRedirect('/formT') 
+            return HttpResponseRedirect(formT) 
 
     #if loginU:
      #   if emailU=="night" :
@@ -176,14 +176,16 @@ def table_view(request): # add row
             #inp_files=request.FILES["table1_input_files_to_"+str(myID)]
 
             for file in request.FILES.getlist(l):
-                if file.name.split(".")[1] in ['jpg','png','jpeg','heic']:
+                format_file=file.name.split(".")[1]
+                if format_file in ['jpg','png','jpeg','heic']:
                     format_file="image"
-                if file.name.split(".")[1] in ['doc','docx']:
-                    format_file="excel"
+                if format_file in ['doc','docx']:
+                    format_file="word"
                     
-                if file.name.split(".")[1] in ['xls','xlsm']:
+                if format_file in ['xls','xlsm']:
                     format_file="excel"  
-                    
+               
+                
                 
                 file_table_auditV1.objects.create(
                     file_id = myID,
@@ -201,7 +203,7 @@ def table_view(request): # add row
         
         
         
-        return redirect('/formT/')
+        return redirect(formT)
     
     
 
@@ -224,7 +226,7 @@ def table_view_edit(request):
     param2_value = request.GET.get('param2')
     param3_value = request.GET.get('param3')
     param4_value = request.GET.get('param4')
-    param5_value = request.FILES.getlist('param5')
+    #param5_value = request.FILES.getlist('param5')
     param6_value = request.GET.get('param6')
     
     #if param2_value or param3_value:
@@ -238,11 +240,11 @@ def table_view_edit(request):
         get_col_by_id.lastname = param2_value
         get_col_by_id.address = param3_value
         get_col_by_id.num = param4_value
-        get_col_by_id.vt = param5_value
+        #get_col_by_id.vt = param5_value
         get_col_by_id.etat = param6_value
         #get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','vt','etat'])
         get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat'])
-    return redirect('/formT/')
+    return redirect(formT)
      
     
 

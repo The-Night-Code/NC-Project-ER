@@ -32,10 +32,15 @@
   <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
-  
+  <script>
+    
+      
+    
+    </script>
+    
 </head>
 
-<body>
+<body onload="load()">
   {% if user.is_authenticated %}
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
@@ -45,7 +50,7 @@
         <!--<img src="{% static 'image\default_user_avatar.png' %}" alt="">-->
         <span class="d-none d-lg-block">Énergie Renouvelable</span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      <i class="bi bi-list toggle-sidebar-btn " id="click_side_bar"></i>
     </div><!-- End Logo -->
 
     <!-- <div class="search-bar">
@@ -477,20 +482,9 @@
           <div class="row">
            
             <div class="col-12">
-              <div class="card recent-sales overflow-auto">
+              <div class="card recent-sales">
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
-                </div>
+                
                 
                 <div class="card-body">
                   <h5 class="card-title">Title <span>| title</span></h5>
@@ -498,17 +492,18 @@
                   
                   
                   <input class="form-control" type="text" id="filterInput_1" placeholder="Search..." style="width:30%;min-width:100px;">
+                  <div class="overflow-auto" style="padding:1px;">
                   <form method="post"  enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="hidden" name="myid" id="myid">
                     <input type="hidden" name="mybutton" id="mybutton">
-                    <table class="table  table-hover w-auto  table-bordered  table-borderless border-info " id="tableDATA_1" cellspacing="0" >  <!-- table-sm  table-responsive-->
+                    <table class="table  table-hover w-auto  table-bordered  table-borderless border-info fixed-header-table" id="tableDATA_1" cellspacing="0" >  <!-- table-sm  table-responsive-->
 
-                        <thead class="table-dark border-info">
-                          <th></th><!--style="width:auto;"-->
-                          <th data-sortable="true" data-column="id" >id <span class="sortable-icon"  data-column="id"></span></th>
-                          <th data-sortable="true" data-column="nom" >Nom <span class="sortable-icon"  data-column="nom"></span></th>  
-                          <th data-sortable="true" data-column="prenom">Prénom <span class="sortable-icon"  data-column="prenom"></span></th> 
+                        <thead class="table-dark border-info ">
+                          <th class="fixed-column" ></th><!--style="width:auto;"-->
+                          <th data-sortable="true" data-column="id"  >id <span class="sortable-icon"  data-column="id"></span></th>
+                          <th data-sortable="true" data-column="nom"  >Nom <span class="sortable-icon"  data-column="nom"></span></th>  
+                          <th data-sortable="true" data-column="prenom" >Prénom <span class="sortable-icon"  data-column="prenom"></span></th> 
                           <th data-sortable="true" data-column="adresse">Adresse <span class="sortable-icon"  data-column="adresse"></th> 
                           <th>N° de tél</th> 
                           <th>Visite technique</th> 
@@ -518,10 +513,11 @@
                           <th>Audit v2</th> 
                           <th>Audit v3</th> 
                           <th>Audit fin</th> 
-                          <th>Coffrac</th> 
-                          <th>Payer</th>
+                          
+                          
+                          <!--<th>Coffrac</th> <th>Payer</th>
                           <th>Agent</th>
-                          <th>Auditeur</th>
+                          <th>Auditeur</th>-->
 
                         </thead>
                         <tbody id="myTable_1">
@@ -530,7 +526,7 @@
                             <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             
                             <tr>
-                                <td style="width:auto;"><button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="my_Func_edit_table_1('{{item.cell_id}}')"><i class="ri-edit-2-fill"></i></button></td>
+                                <td class="fixed-column fixed-column-backcolor" ><button  class="button_table_data " type="button" id="table1_edit_col" name="" value="" onclick="my_Func_edit_table_1('{{item.cell_id}}')"><i class="ri-edit-2-fill"></i></button></td>
                                 <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
                                 <td class="td_input_cell" ><input class="input_table_data" type="text" name="table1_firstname" id="table1_firstname{{ item.cell_id }}" value="{{ item.firstname }}"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="table1_lastname" id="table1_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
@@ -563,6 +559,8 @@
 
 
                                 <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
+
+                                
                                 <td class="td_input_cell">
                                   <nav class="header-nav ms-auto" >
                                     <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
@@ -630,9 +628,9 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td><button type="submit" class="button_table_data" style="text-align:left;" function=myFunctionadd()><i class="ri-add-circle-line">Add</i></button></td>
+                                <td class="fixed-column fixed-column-backcolor" ><button type="submit" class="button_table_data" style="text-align:left;" function=myFunctionadd()><i class="ri-add-circle-line">Add</i></button></td>
                                 <td></td>
-                                <td class="td_input_cell"> <input class="input_table_data" type="text" name="cell_data1add"  ></td>
+                                <td class="td_input_cell "> <input class="input_table_data" type="text" name="cell_data1add"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2add" ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data3add" ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
@@ -679,7 +677,7 @@
                     <!--<button class="btn ri-add-fill"></button>-->
                     
                 </form>
-                
+              </div>
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
                 <!-- redirect with param -->
@@ -692,7 +690,6 @@
                     var x2 = document.getElementById("table1_lastname"+id).value;
                     var x3 = document.getElementById("table1_address"+id).value;
                     var x4 = document.getElementById("table1_num"+id).value;
-                    var x5 = document.getElementById("table1_vt"+id).value;
 
                     var selectElement = document.querySelector('#table1_etat'+id);
                     var x6 = selectElement.value;
@@ -710,7 +707,6 @@
                         "&param2=" + encodeURIComponent(x2)+
                         "&param3=" + encodeURIComponent(x3)+
                         "&param4=" + encodeURIComponent(x4)+
-                        "&param5=" + encodeURIComponent(x5)+
                         "&param6=" + encodeURIComponent(x6);
 
                         
@@ -1148,209 +1144,6 @@
 
   {% endif %}
 
-  <!-- Vendor JS Files -->
- 
-
-
-
-  <!--  <select> with <span>badge for tbody  -->
-  <script>
-    // Function to update the badge based on the selected option in a row
-    function updateBadge(row) {
-        const selectElement = row.querySelector('.form-select');
-        const badgeElements = row.querySelectorAll('.badge');
-        const selectedOption = selectElement.value;
-
-        badgeElements.forEach(badge => {
-            if (badge.getAttribute('data-badge') === selectedOption) {
-                badge.style.display = 'inline-block';
-            } else {
-                badge.style.display = 'none';
-            }
-        });
-    }
-
-    // Add event listener for each row in tableDATA1
-    const rows1 = document.querySelectorAll('#tableDATA_1 tbody tr');
-
-    rows1.forEach(row => {
-        const selectElement = row.querySelector('.form-select');
-
-        // Initial call to set the badge based on the default selected option in each row
-        updateBadge(row);
-
-        selectElement.addEventListener('change', () => {
-            updateBadge(row);
-        });
-    });
-
-    // Add event listener for each row in tableDATA2
-    const rows2 = document.querySelectorAll('#tableDATA_2 tbody tr');
-
-    rows2.forEach(row => {
-        const selectElement = row.querySelector('.form-select');
-
-        // Initial call to set the badge based on the default selected option in each row
-        updateBadge(row);
-
-        selectElement.addEventListener('change', () => {
-            updateBadge(row);
-        });
-    });
-
-    // Add event listener for each row in tableDATA3
-    const rows3 = document.querySelectorAll('#tableDATA_3 tbody tr');
-
-    rows3.forEach(row => {
-        const selectElement = row.querySelector('.form-select');
-
-        // Initial call to set the badge based on the default selected option in each row
-        updateBadge(row);
-
-        selectElement.addEventListener('change', () => {
-            updateBadge(row);
-        });
-    });
-
-
-    
-  </script>
-
-
-  <!--  <select> with <span>badge for tfoot  -->
-  <script>
-    const selectElement = document.querySelector('.form-selectfoot');
-    const badgeElements = document.querySelectorAll('.badgefoot');
-    
-    // Function to update the badge based on the selected option
-    function updateBadgefoot() {
-        const selectedOption = selectElement.value;
-        badgeElements.forEach(badgefoot => {
-            badgefoot.style.display = 'none';
-        });
-        document.querySelector(`.badgefoot[data-badgefoot="${selectedOption}"]`).style.display = 'inline-block';
-    }
-    
-    // Initial call to set the badge based on the default selected option
-    updateBadgefoot();
-    
-    // Add event listener to update the badge when the select element changes
-    selectElement.addEventListener('change', updateBadgefoot);
-
-  </script>
-
- 
-  
-  <script>
-    // Function to filter table rows
-    function filterTable(myTable,filterInput) {
-      var input, filter, table, tr, td, i, j, txtValue;
-      input = document.getElementById(filterInput);
-      filter = input.value.toUpperCase();
-      table = document.getElementById(myTable);
-      tr = table.getElementsByTagName("tr");
-    
-      for (i = 0; i < tr.length; i++) {
-        tr[i].style.display = "none"; // Hide the row by default
-        td = tr[i].getElementsByTagName("td");
-    
-        for (j = 0; j < td.length; j++) {
-          var inputElement = td[j].querySelector("input[type='text']");
-          var pElement = td[j].querySelector("p");
-          
-          if (inputElement) {
-            txtValue = inputElement.value.toUpperCase();
-            if (txtValue.indexOf(filter) > -1) {
-              tr[i].style.display = ""; // Show the row if a match is found in any input element
-              break; // No need to check other cells in this row
-            }
-          }
-    
-          if (pElement) {
-            txtValue = pElement.textContent || pElement.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              tr[i].style.display = ""; // Show the row if a match is found in any <p> element
-              break; // No need to check other cells in this row
-            }
-          }
-        }
-      }
-    }
-
-    // Add event listeners for each input element
-    document.getElementById("filterInput_1").addEventListener("keyup", function () {
-      filterTable("myTable_1", "filterInput_1");
-    });
-
-    document.getElementById("filterInput_2").addEventListener("keyup", function () {
-      filterTable("myTable_2", "filterInput_2");
-    });
-
-    document.getElementById("filterInput_3").addEventListener("keyup", function () {
-      filterTable("myTable_3", "filterInput_3");
-    });
-    </script>
-
-  
-  <script>
-
-    document.addEventListener("DOMContentLoaded", function () {
-      const toggleIcon = document.getElementById("toggle-dropdown");
-      const dropdownMenu = document.querySelector(".dropdown-menu");
-    
-      toggleIcon.addEventListener("click", function (e) {
-        e.preventDefault();
-        dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
-      });
-    });
-  </script>
-
-
-
-
-  <!-- table1_remove_file_from_auditV1 -->
-  <script>
-    
-    function remove_file_from_auditV1(id,index) {
-      
-        var url2="{% url 'remove_file_from_auditV1' %}?"+
-          "param=" + encodeURIComponent(id) +
-          "&param0=" + id +
-          "&param1=" + encodeURIComponent(index);
-
-          
-        window.location.href = url2;
-
-    }
-    function table1_remove_file_from_auditV1(id1,index1) {
-      remove_file_from_auditV1(id1,index1);
-    }
-    function table2_remove_file_from_auditV1(id1,index1) {
-      remove_file_from_auditV1(id1,index1);
-    }
-    function table3_remove_file_from_auditV1(id1,index1) {
-      remove_file_from_auditV1(id1,index1);    
-    }
-
-  </script>
-
-  <script>
-    
-    function add_files_to_table(fileId, table, column) {
-      
-      
-      
-
-      // Set the values of the hidden input fields in the form
-      document.getElementById("myid").value = fileId;
-      document.getElementById("mybutton").value = "clicked";
-      
-
-      
-      
-    }
-  </script>
-
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/chart.js/chart.umd.js' %}"></script>
@@ -1364,7 +1157,7 @@
 
   <!-- Template Main JS File -->
   <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
-
+  <script type="text/javascript" src="{% static 'js/main2.js'%}"></script>
 </body>
 
 </html>

@@ -8,8 +8,40 @@
 
 /*--------------------------------------------------------------
 # General
+
+
+
+
 --------------------------------------------------------------*/
 /* Style the sorting icons */
+
+.fixed-column  {
+  position:sticky;
+  left: 0;
+  z-index: 1;
+  text-align: center;
+}
+
+.fixed-column-backcolor{width:auto;
+  --bs-table-color: #fff !important;
+  --bs-table-bg: #212529 !important;
+  --bs-table-border-color: #4d5154 !important;
+  --bs-table-striped-bg: #2c3034 !important;
+  --bs-table-striped-color: #fff !important;
+  --bs-table-active-bg: #373b3e !important;
+  --bs-table-active-color: #fff !important;
+  --bs-table-hover-bg: #323539 !important;
+  --bs-table-hover-color: #fff !important;
+  color: var(--bs-table-color)!important;
+  border-color: var(--bs-table-border-color)!important;
+
+  --bs-border-opacity: 1;
+  border-color: rgba(var(--bs-info-rgb), var(--bs-border-opacity)) !important;
+}
+.fixed-column-backcolor .ri-edit-2-fill , .ri-add-circle-line{color:#fff !important;}
+
+
+
 .sortable-icon::before {
   content: "\f0dc"; /* Up arrow icon (Font Awesome) */
   margin-left: 5px;
