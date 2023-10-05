@@ -172,29 +172,61 @@ tr .badge ,tr .badgefoot{
 }
 
 /* Style for different badge states */
-.badge[data-badge="Modification Faite"] ,.badgefoot[data-badgefoot="Modification Faite"] {
+.badge[data-badge="A realiser"] , .badgefoot[data-badgefoot="A realiser"],
+.badge-cell select option[value="A realiser"] , .badge-cellfoot select option[value="A realiser"]{
+  font-size:medium;
+  background-color: rgb(252, 131, 131) ;
+  color: black;
+}
+.badge[data-badge="En cours"] , .badgefoot[data-badgefoot="En cours"],
+.badge-cell select option[value="En cours"] , .badge-cellfoot select option[value="En cours"] {
+  font-size:medium;
+  background-color: rgb(255, 149, 49);
+  color: white;
+}
+
+.badge[data-badge="A modifier"] , .badgefoot[data-badgefoot="A modifier"],
+.badge-cell select option[value="A modifier"] , .badge-cellfoot select option[value="A modifier"]{
+  font-size:medium;
+  background-color: gray;
+  color: white;
+}
+.badge[data-badge="Modification Faite"] ,.badgefoot[data-badgefoot="Modification Faite"],
+.badge-cell select option[value="Modification Faite"] , .badge-cellfoot select option[value="Modification Faite"] {
+  font-size:medium;
   background-color: cyan;
   color: white;
 }
 
-.badge[data-badge="Payer"] , .badgefoot[data-badgefoot="Payer"]{
+.badge[data-badge="Reclamation"] , .badgefoot[data-badgefoot="Reclamation"],
+.badge-cell select option[value="Reclamation"] , .badge-cellfoot select option[value="Reclamation"]{
+  font-size:medium;
+  background-color: #212529;
+  color: white;
+}
+.badge[data-badge="Reclamation Faite"] , .badgefoot[data-badgefoot="Reclamation Faite"],
+.badge-cell select option[value="Reclamation Faite"] , .badge-cellfoot select option[value="Reclamation Faite"]{
+  font-size:medium;
+  background-color: rgb(72, 253, 118);
+  color: white;
+}
+.badge[data-badge="Envoye"] , .badgefoot[data-badgefoot="Envoye"],
+.badge-cell select option[value="Envoye"] ,  .badge-cellfoot select option[value="Envoye"]{
+  font-size:medium;
   background-color: purple;
   color: white;
 }
 
-.badge[data-badge="A modifier"] , .badgefoot[data-badgefoot="A modifier"]{
-  background-color: gray;
-  color: white;
-}
-.badge[data-badge="Annule"] , .badgefoot[data-badgefoot="Annule"]{
+.badge[data-badge="Annule"] , .badgefoot[data-badgefoot="Annule"],
+.badge-cell select option[value="Annule"] , .badge-cellfoot select option[value="Annule"]{
+  font-size:medium;
   background-color: red;
   color: white;
 }
-.badge[data-badge="En cours"] , .badgefoot[data-badgefoot="En cours"] {
-  background-color: orange;
-  color: white;
-}
-.badge[data-badge="Fin"] , .badgefoot[data-badgefoot="Fin"]{
+
+.badge[data-badge="Fini"] , .badgefoot[data-badgefoot="Fini"],
+.badge-cell select option[value="Fini"] , .badge-cellfoot select option[value="Fini"]{
+  font-size:medium;
   background-color: green;
   color: white;
 }

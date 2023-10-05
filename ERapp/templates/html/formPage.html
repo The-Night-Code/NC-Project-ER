@@ -524,7 +524,7 @@
                         </thead>
                         <tbody id="myTable_1">
                             {% for item in data %}
-                            {% if item.etat == "Modification Faite" or item.etat == "A modifier" or item.etat == "En cours" %}
+                            {% if item.etat == "Modification Faite" or item.etat == "A modifier" or item.etat == "En cours" or item.etat == "A realiser" or item.etat == "Reclamation" or item.etat == "Reclamation Faite" or item.etat == "Envoye" %}
                             <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             
                             <tr>
@@ -594,18 +594,27 @@
                                 </td>  <!--  target="_blank"-->
                                 
                                 <td class="badge-cell" data-state="badge">
-                                  <span class="badge" data-badge="Modification Faite">Modification Faite</span>
-                                  <span class="badge" data-badge="A modifier">A modifier</span>
-                                  <span class="badge" data-badge="Annule">Annule</span>
+
+                                  <span class="badge" data-badge="A realiser">A réaliser</span>
                                   <span class="badge" data-badge="En cours">En cours</span>
-                                  <span class="badge" data-badge="Fin">Fin</span>
+                                  <span class="badge" data-badge="A modifier">A modifier</span>
+                                  <span class="badge" data-badge="Modification Faite">Modification Faite</span>
+                                  <span class="badge" data-badge="Reclamation">Reclamation</span>
+                                  <span class="badge" data-badge="Reclamation Faite">Réclamation Faite</span>
+                                  <span class="badge" data-badge="Envoye">Envoyé</span>
+                                  <span class="badge" data-badge="Annule">Annule</span>
+                                  <span class="badge" data-badge="Fini">Fin</span>
 
                                   <select class="form-select" aria-label="Default select example"  name="cell_data6edit" id="table1_etat{{ item.cell_id }}" style="background-color:gray;">
-                                      <option value="Modification Faite" style="background-color:cyan" {% if item.etat  == "Modification Faite" %}selected{% endif %}>Modification Faite</option>
-                                      <option value="A modifier" style="background-color:gray;"  {% if item.etat  == "A modifier" %}selected{% endif %} >A modifier</option>
-                                      <option value="Annule" style="background-color: red" {% if item.etat  == "Annule" %}selected{% endif %} >Annule</option>
-                                      <option value="En cours" style="background-color:orange;" {% if item.etat  == "En cours" %}selected{% endif %} >En cours</option>
-                                      <option value="Fin" style="background-color:green;" {% if item.etat  == "Fin" %}selected{% endif %} >Fin</option>
+                                      <option value="A realiser" {% if item.etat  == "A realiser" %}selected{% endif %}>A réaliser</option>
+                                      <option value="En cours"  {% if item.etat  == "En cours" %}selected{% endif %} >En cours</option>
+                                      <option value="A modifier"  {% if item.etat  == "A modifier" %}selected{% endif %} >A modifier</option>
+                                      <option value="Modification Faite" {% if item.etat  == "Modification Faite" %}selected{% endif %}>Modification faite</option>
+                                      <option value="Reclamation" {% if item.etat  == "Reclamation" %}selected{% endif %} >Réclamation</option>
+                                      <option value="Reclamation Faite"  {% if item.etat  == "Reclamation Faite" %}selected{% endif %} >Réclamation faite</option>
+                                      <option value="Envoye"   {% if item.etat  == "Envoye" %}selected{% endif %} >Envoyé</option>
+                                      <option value="Annule" {% if item.etat  == "Annule" %}selected{% endif %} >Annule</option>
+                                      <option value="Fini"  {% if item.etat  == "Fini" %}selected{% endif %} >Fini</option>
                                   </select>
                                 </td>
 
@@ -884,7 +893,7 @@
                                       <option value="A modifier" style="background-color:gray;">A modifier</option>
                                       <option value="Annule" style="background-color:red">Annule</option>
                                       <option value="En cours" style="background-color:orange;" selected>En cours</option>
-                                      <option value="Fin" style="background-color:green;">Fin</option>
+                                      <option value="Fini" style="background-color:green;">Fin</option>
                                   </select>
                                 </td>
     
@@ -1455,7 +1464,7 @@
                           </thead>
                           <tbody id="myTable_3">
                               {% for item in data %}
-                              {% if item.etat == "Fin"%}
+                              {% if item.etat == "Fin" or item.etat == "Fini"%}
                               <input class="input_table_data" type="hidden" name="cell_data0" id="table3_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             <tr>
                                 <td class="fixed-column fixed-column-backcolor" style="width:auto;"><button  class="button_table_data" type="button" id="table3_edit_col" name="" value="" onclick="my_Func_edit_table_3('{{item.cell_id}}') "><i class="ri-edit-2-fill"></i></button></td>
