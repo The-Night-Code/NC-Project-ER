@@ -118,6 +118,10 @@
   margin: 0 auto;
   
 }
+#tableDATA_1 tfoot select{
+  height: 8px !important;
+}
+
 #tableDATA_1,
 #tableDATA_2,
 #tableDATA_3 {
@@ -158,31 +162,37 @@
 }
 
 tr .badge ,tr .badgefoot{
-  width:100px;
+  width:160px;
+  text-align:center;
 }
 /* Style for the badge */
 .badge ,.badgefoot{
   text-align:center;
   height:100%;
   
-  max-width:110px ;
+  max-width:160px;
   padding: 0;
   border-radius: 4px;
   cursor: pointer;
 }
-
+.badge-cell select ,.badge-cellfoot select{
+  font-size:medium!important;
+  width:160px !important;
+  text-align:center;
+}
 /* Style for different badge states */
 .badge[data-badge="A realiser"] , .badgefoot[data-badgefoot="A realiser"],
 .badge-cell select option[value="A realiser"] , .badge-cellfoot select option[value="A realiser"]{
   font-size:medium;
   background-color: rgb(252, 131, 131) ;
-  color: black;
+  color: white;
 }
 .badge[data-badge="En cours"] , .badgefoot[data-badgefoot="En cours"],
 .badge-cell select option[value="En cours"] , .badge-cellfoot select option[value="En cours"] {
   font-size:medium;
-  background-color: rgb(255, 149, 49);
+  background-color: rgb(255, 154, 86);
   color: white;
+  
 }
 
 .badge[data-badge="A modifier"] , .badgefoot[data-badgefoot="A modifier"],
@@ -194,7 +204,7 @@ tr .badge ,tr .badgefoot{
 .badge[data-badge="Modification Faite"] ,.badgefoot[data-badgefoot="Modification Faite"],
 .badge-cell select option[value="Modification Faite"] , .badge-cellfoot select option[value="Modification Faite"] {
   font-size:medium;
-  background-color: cyan;
+  background-color: rgb(0, 218, 218);
   color: white;
 }
 
@@ -207,7 +217,7 @@ tr .badge ,tr .badgefoot{
 .badge[data-badge="Reclamation Faite"] , .badgefoot[data-badgefoot="Reclamation Faite"],
 .badge-cell select option[value="Reclamation Faite"] , .badge-cellfoot select option[value="Reclamation Faite"]{
   font-size:medium;
-  background-color: rgb(72, 253, 118);
+  background-color: rgb(8, 196, 55);
   color: white;
 }
 .badge[data-badge="Envoye"] , .badgefoot[data-badgefoot="Envoye"],

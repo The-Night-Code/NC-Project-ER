@@ -603,7 +603,7 @@
                                   <span class="badge" data-badge="Reclamation Faite">Réclamation Faite</span>
                                   <span class="badge" data-badge="Envoye">Envoyé</span>
                                   <span class="badge" data-badge="Annule">Annule</span>
-                                  <span class="badge" data-badge="Fini">Fin</span>
+                                  <span class="badge" data-badge="Fini">Fini</span>
 
                                   <select class="form-select" aria-label="Default select example"  name="cell_data6edit" id="table1_etat{{ item.cell_id }}" style="background-color:gray;">
                                       <option value="A realiser" {% if item.etat  == "A realiser" %}selected{% endif %}>A réaliser</option>
@@ -865,7 +865,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td class="fixed-column fixed-column-backcolor" ><button type="submit" class="button_table_data" style="text-align:left;" function=myFunctionadd()><i class="ri-add-circle-line">Add</i></button></td>
+                                <td class="fixed-column fixed-column-backcolor" ><button type="submit" class="button_table_data" style="text-align:left;" function=myFunctionadd()><i class="ri-add-circle-line"></i></button></td>
                                 <td></td>
                                 <td class="td_input_cell "> <input class="input_table_data" type="text" name="cell_data1add"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data2add" ></td>
@@ -877,25 +877,32 @@
                                       
                                 <td class="td_input_cell"></td>
 
-
-                                
                                 <td class="badge-cellfoot" data-state="badgefoot">
-                                  <span class="badgefoot" data-badgefoot="Modification Faite">Modification Faite</span>
-                                  <span class="badgefoot" data-badgefoot="Payer">Payer</span>
-                                  <span class="badgefoot" data-badgefoot="A modifier">A modifier</span>
-                                  <span class="badgefoot" data-badgefoot="Annule">Annule</span>
-                                  <span class="badgefoot" data-badgefoot="En cours">En cours</span>
-                                  <span class="badgefoot" data-badgefoot="Fin">Fin</span>
 
-                                  <select class="form-selectfoot" aria-label="Default select example" name="cell_data6add" style="background-color:gray;">
-                                      <option value="Modification Faite" style="background-color:cyan" >Modification Faite</option>
-                                      <option value="Payer" style="background-color:purple;">Payer</option>
-                                      <option value="A modifier" style="background-color:gray;">A modifier</option>
-                                      <option value="Annule" style="background-color:red">Annule</option>
-                                      <option value="En cours" style="background-color:orange;" selected>En cours</option>
-                                      <option value="Fini" style="background-color:green;">Fin</option>
+                                  <span class="badgefoot" data-badgefoot="A realiser">A réaliser</span>
+                                  <span class="badgefoot" data-badgefoot="En cours">En cours</span>
+                                  <span class="badgefoot" data-badgefoot="A modifier">A modifier</span>
+                                  <span class="badgefoot" data-badgefoot="Modification Faite">Modification Faite</span>
+                                  <span class="badgefoot" data-badgefoot="Reclamation">Reclamation</span>
+                                  <span class="badgefoot" data-badgefoot="Reclamation Faite">Réclamation Faite</span>
+                                  <span class="badgefoot" data-badgefoot="Envoye">Envoyé</span>
+                                  <span class="badgefoot" data-badgefoot="Annule">Annule</span>
+                                  <span class="badgefoot" data-badgefoot="Fini">Fini</span>
+
+                                  <select class="form-selectfoot" aria-label=""  name="cell_data6add"  style="background-color:gray;">
+                                      <option value="A realiser" selected>A réaliser</option>
+                                      <option value="En cours"  >En cours</option>
+                                      <option value="A modifier"   >A modifier</option>
+                                      <option value="Modification Faite" >Modification faite</option>
+                                      <option value="Reclamation" >Réclamation</option>
+                                      <option value="Reclamation Faite"  >Réclamation faite</option>
+                                      <option value="Envoye"   >Envoyé</option>
+                                      <option value="Annule"  >Annule</option>
+                                      <option value="Fini"  >Fini</option>
                                   </select>
                                 </td>
+                                
+                                
     
 
 
@@ -1087,23 +1094,30 @@
                                 </nav>
                               </td> 
                               
-                                <td class="badge-cell" data-state="badge">
-                                  <span class="badge" data-badge="Modification Faite">Modification Faite</span>
-                                  <span class="badge" data-badge="Payer">Payer</span>
-                                  <span class="badge" data-badge="A modifier">A modifier</span>
-                                  <span class="badge" data-badge="Annule">Annule</span>
-                                  <span class="badge" data-badge="En cours">En cours</span>
-                                  <span class="badge" data-badge="Fin">Fin</span>
+                              <td class="badge-cell" data-state="badge">
 
-                                  <select class="form-select" aria-label="Default select example"  name="cell_data6edit" id="table2_etat{{ item.cell_id }}" style="background-color:gray;">
-                                      <option value="Modification Faite" style="background-color:cyan" {% if item.etat  == "Modification Faite" %}selected{% endif %}>Modification Faite</option>
-                                      <option value="Payer" style="background-color:purple;" {% if item.etat  == "Payer" %}selected{% endif %} >Payer</option>
-                                      <option value="A modifier" style="background-color:gray;"  {% if item.etat  == "A modifier" %}selected{% endif %} >A modifier</option>
-                                      <option value="Annule" style="background-color: red" {% if item.etat  == "Annule" %}selected{% endif %} >Annule</option>
-                                      <option value="En cours" style="background-color:orange;" {% if item.etat  == "En cours" %}selected{% endif %} >En cours</option>
-                                      <option value="Fin" style="background-color:green;" {% if item.etat  == "Fin" %}selected{% endif %} >Fin</option>
-                                  </select>
-                                </td>
+                                <span class="badge" data-badge="A realiser">A réaliser</span>
+                                <span class="badge" data-badge="En cours">En cours</span>
+                                <span class="badge" data-badge="A modifier">A modifier</span>
+                                <span class="badge" data-badge="Modification Faite">Modification Faite</span>
+                                <span class="badge" data-badge="Reclamation">Reclamation</span>
+                                <span class="badge" data-badge="Reclamation Faite">Réclamation Faite</span>
+                                <span class="badge" data-badge="Envoye">Envoyé</span>
+                                <span class="badge" data-badge="Annule">Annule</span>
+                                <span class="badge" data-badge="Fini">Fini</span>
+
+                                <select class="form-select" aria-label="Default select example"  name="cell_data6edit" id="table2_etat{{ item.cell_id }}" style="background-color:gray;">
+                                    <option value="A realiser" {% if item.etat  == "A realiser" %}selected{% endif %}>A réaliser</option>
+                                    <option value="En cours"  {% if item.etat  == "En cours" %}selected{% endif %} >En cours</option>
+                                    <option value="A modifier"  {% if item.etat  == "A modifier" %}selected{% endif %} >A modifier</option>
+                                    <option value="Modification Faite" {% if item.etat  == "Modification Faite" %}selected{% endif %}>Modification faite</option>
+                                    <option value="Reclamation" {% if item.etat  == "Reclamation" %}selected{% endif %} >Réclamation</option>
+                                    <option value="Reclamation Faite"  {% if item.etat  == "Reclamation Faite" %}selected{% endif %} >Réclamation faite</option>
+                                    <option value="Envoye"   {% if item.etat  == "Envoye" %}selected{% endif %} >Envoyé</option>
+                                    <option value="Annule" {% if item.etat  == "Annule" %}selected{% endif %} >Annule</option>
+                                    <option value="Fini"  {% if item.etat  == "Fini" %}selected{% endif %} >Fini</option>
+                                </select>
+                              </td>
 
 
                                 <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
@@ -1533,23 +1547,30 @@
                                 </td> <!--  target="_blank"-->
                                 
 
-                                  <td class="badge-cell" data-state="badge">
-                                    <span class="badge" data-badge="Modification Faite">Modification Faite</span>
-                                    <span class="badge" data-badge="Payer">Payer</span>
-                                    <span class="badge" data-badge="A modifier">A modifier</span>
-                                    <span class="badge" data-badge="Annule">Annule</span>
-                                    <span class="badge" data-badge="En cours">En cours</span>
-                                    <span class="badge" data-badge="Fin">Fin</span>
-  
-                                    <select class="form-select" aria-label="Default select example"  name="cell_data6edit" id="table3_etat{{ item.cell_id }}" style="background-color:gray;">
-                                        <option value="Modification Faite" style="background-color:cyan" {% if item.etat  == "Modification Faite" %}selected{% endif %}>Modification Faite</option>
-                                        <option value="Payer" style="background-color:purple;" {% if item.etat  == "Payer" %}selected{% endif %} >Payer</option>
-                                        <option value="A modifier" style="background-color:gray;"  {% if item.etat  == "A modifier" %}selected{% endif %} >A modifier</option>
-                                        <option value="Annule" style="background-color: red" {% if item.etat  == "Annule" %}selected{% endif %} >Annule</option>
-                                        <option value="En cours" style="background-color:orange;" {% if item.etat  == "En cours" %}selected{% endif %} >En cours</option>
-                                        <option value="Fin" style="background-color:green;" {% if item.etat  == "Fin" %}selected{% endif %} >Fin</option>
-                                    </select>
-                                  </td>
+                                <td class="badge-cell" data-state="badge">
+
+                                  <span class="badge" data-badge="A realiser">A réaliser</span>
+                                  <span class="badge" data-badge="En cours">En cours</span>
+                                  <span class="badge" data-badge="A modifier">A modifier</span>
+                                  <span class="badge" data-badge="Modification Faite">Modification Faite</span>
+                                  <span class="badge" data-badge="Reclamation">Reclamation</span>
+                                  <span class="badge" data-badge="Reclamation Faite">Réclamation Faite</span>
+                                  <span class="badge" data-badge="Envoye">Envoyé</span>
+                                  <span class="badge" data-badge="Annule">Annule</span>
+                                  <span class="badge" data-badge="Fini">Fini</span>
+
+                                  <select class="form-select" aria-label="Default select example"  name="cell_data6edit" id="table3_etat{{ item.cell_id }}" style="background-color:gray;">
+                                      <option value="A realiser" {% if item.etat  == "A realiser" %}selected{% endif %}>A réaliser</option>
+                                      <option value="En cours"  {% if item.etat  == "En cours" %}selected{% endif %} >En cours</option>
+                                      <option value="A modifier"  {% if item.etat  == "A modifier" %}selected{% endif %} >A modifier</option>
+                                      <option value="Modification Faite" {% if item.etat  == "Modification Faite" %}selected{% endif %}>Modification faite</option>
+                                      <option value="Reclamation" {% if item.etat  == "Reclamation" %}selected{% endif %} >Réclamation</option>
+                                      <option value="Reclamation Faite"  {% if item.etat  == "Reclamation Faite" %}selected{% endif %} >Réclamation faite</option>
+                                      <option value="Envoye"   {% if item.etat  == "Envoye" %}selected{% endif %} >Envoyé</option>
+                                      <option value="Annule" {% if item.etat  == "Annule" %}selected{% endif %} >Annule</option>
+                                      <option value="Fini"  {% if item.etat  == "Fini" %}selected{% endif %} >Fini</option>
+                                  </select>
+                                </td>
   
   
                                   <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
