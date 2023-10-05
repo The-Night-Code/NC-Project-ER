@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,table_view_edit  ,add_files_to_MODELS,remove_file_from_MODELS
+from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,table_view_edit  ,add_files_to_MODELS,remove_file_from_MODELS,agent_immo
 from ERapp import views
 
 urlpatterns = [
@@ -31,7 +31,7 @@ urlpatterns = [
     path('formT1/',table_view_edit ,name="editFormTable"),#remove_file_from_auditV1
     path('formT2/',remove_file_from_MODELS ,name="remove_file_from_MODEL"),
     path('formT4/',add_files_to_MODELS ,name="add_files_to_model"),
-    
+    path('ai/',agent_immo ),
     
     
     path('change_profile_pic/',img_upload_image ),

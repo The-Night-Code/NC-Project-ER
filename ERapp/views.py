@@ -20,7 +20,7 @@ import string
 
 
 formT="/formT/"
-
+link2="/agentimmo/"
 
 def Home(request):
 
@@ -383,3 +383,25 @@ def add_files_to_MODELS(request):
             
     
     return redirect(formT)
+
+
+def agent_immo(request):
+    
+    
+    
+    
+    data = TableData001.objects.all()
+    
+    col_count = data.count()
+    # Get unique column names from the TableData model
+    column_names = TableData001._meta.get_fields()
+    datafiles_VT = file_table_vt.objects.all()
+    datafiles_AuditV1 = file_table_auditV1.objects.all()
+    datafiles_AuditV2 = file_table_auditV2.objects.all()
+    datafiles_AuditV3 = file_table_auditV3.objects.all()
+    datafiles_AuditFinal = file_table_auditFinal.objects.all()
+    return render(request, 'html/agentimmo.html', { 'data': data ,
+                                                  'col_count':col_count ,
+                                                  'column_names': column_names,
+                                                  'datafiles_VT': datafiles_VT ,
+                                                  'datafiles_AuditFinal':datafiles_AuditFinal})

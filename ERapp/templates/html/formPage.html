@@ -1,4 +1,5 @@
 {% load static %}
+{% load l10n %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -503,8 +504,8 @@
                         <thead class="table-dark border-info ">
                           <th class="fixed-column" ></th><!--style="width:auto;"-->
                           <th data-sortable="true" data-column="id"  >id <span class="sortable-icon"  data-column="id"></span></th>
-                          <th data-sortable="true" data-column="nom"  >Nom <span class="sortable-icon"  data-column="nom"></span></th>  
-                          <th data-sortable="true" data-column="prenom" >Prénom <span class="sortable-icon"  data-column="prenom"></span></th> 
+                          <th>Prénom</th>  
+                          <th>Nom</th> 
                           <th data-sortable="true" data-column="adresse">Adresse <span class="sortable-icon"  data-column="adresse"></th> 
                           <th>N° de tél</th> 
                           <th>Visite technique</th> 
@@ -520,6 +521,7 @@
                           <th>Paiement</th>
                           <th>Agent</th>
                           <th>Auditeur</th>
+                          <th>Date de création</th>
 
                         </thead>
                         <tbody id="myTable_1">
@@ -857,8 +859,9 @@
                                 </td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
-
+                                <td><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
                             </tr>
+                            
                             {% endif %}
                             {% endfor %}
 
@@ -1011,8 +1014,8 @@
                         <thead class="table-dark border-info">
                           <th class="fixed-column"></th><!--style="width:auto;"-->
                           <th >id <span class="sortable-icon"  data-column="id"></span></th>
-                          <th >Nom <span class="sortable-icon"  data-column="nom"></span></th>  
-                          <th >Prénom <span class="sortable-icon"  data-column="prenom"></span></th> 
+                          <th>Prénom</th>  
+                          <th>Nom</th> 
                           <th >Adresse <span class="sortable-icon"  data-column="adresse"></th> 
                           <th>N° de tél</th> 
                           <th>Visite technique</th> 
@@ -1459,8 +1462,8 @@
                           <thead class="table-dark border-info">
                             <th class="fixed-column"></th><!--style="width:auto;"-->
                             <th data-sortable="true" data-column="id" >id <span class="sortable-icon"  data-column="id"></span></th>
-                            <th data-sortable="true" data-column="nom" >Nom <span class="sortable-icon"  data-column="nom"></span></th>  
-                            <th data-sortable="true" data-column="prenom">Prénom <span class="sortable-icon"  data-column="prenom"></span></th> 
+                            <th>Prénom</th>  
+                            <th>Nom</th> 
                             <th data-sortable="true" data-column="adresse">Adresse <span class="sortable-icon"  data-column="adresse"></th> 
                             <th>N° de tél</th> 
                             <th>Visite technique</th> 
@@ -1916,6 +1919,7 @@
     document.getElementById("mybutton2").value = "clicked";
     }
   </script>
+  
   <script>
   function add_files_to_table3(fileId, table, col_type) {
     
@@ -1941,6 +1945,9 @@
   <!-- Template Main JS File -->
   <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main2.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main3.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main4.js'%}"></script>
+
 </body>
 
 </html>

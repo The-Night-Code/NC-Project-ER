@@ -1,7 +1,9 @@
 from django.db import models
+from django.utils import timezone
 from PIL import Image
 import subprocess
 import os
+
 # Create your models here.
 
 
@@ -70,6 +72,8 @@ class TableData001(models.Model):
     auditV3 = models.FileField(upload_to='uploads/files/%Y/%m/%d/',blank=True)
     coffrac = models.CharField(max_length=255,blank=True)
     paiement = models.BooleanField(default=False)
+    agent= models.CharField(max_length=255,blank=True)
+    creation_time =models.DateTimeField(auto_now_add=True, blank = True)
     def __str__(self):
         return f'{self.cell_id} {self.firstname} {self.lastname}'
     
