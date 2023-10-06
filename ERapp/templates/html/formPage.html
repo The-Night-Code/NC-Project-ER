@@ -1029,7 +1029,7 @@
                           <th>Paiement</th>
                           <th>Agent</th>
                           <th>Auditeur</th>
-
+                          <th>Date de création</th>
                         </thead>
                         <tbody id="myTable_2">
                             {% for item in data %}
@@ -1348,6 +1348,8 @@
 
                               <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
                               <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
+                              <td><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
+
                             </tr>
                             {% endif %}
                             {% endfor %}
@@ -1477,7 +1479,7 @@
                             <th>Paiement</th>
                             <th>Agent</th>
                             <th>Auditeur</th>
-  
+                            <th>Date de création</th>
                           </thead>
                           <tbody id="myTable_3">
                               {% for item in data %}
@@ -1791,6 +1793,7 @@
                                 </td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
+                                <td><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
                               </tr>
                               {% endif %}
                               {% endfor %}

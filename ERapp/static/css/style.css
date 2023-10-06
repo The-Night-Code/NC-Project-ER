@@ -166,7 +166,7 @@ tr .badge ,tr .badgefoot{
   text-align:center;
 }
 /* Style for the badge */
-.badge ,.badgefoot{
+.badge ,.badgefoot,.badge2{
   text-align:center;
   height:100%;
   
@@ -241,6 +241,14 @@ tr .badge ,tr .badgefoot{
   color: white;
 }
 
+.badge2[data-badge="Valide"]{
+  font-size:medium;
+  background-color: green;
+  color: white;
+}
+
+
+
 /* Show the select element on hover */
 .badge-cell:hover select ,.badge-cellfoot:hover select  {
   display: block;
@@ -251,8 +259,10 @@ tr .badge ,tr .badgefoot{
   display: none;
 }
 
-
-
+.td_badge_cell,.td_badge_cell span{
+  width:100px;
+  font-size:medium;}
+.td_input_files_cell{width:50px;}
 
 
 table.dataTable thead .sorting:after,
@@ -275,9 +285,10 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 
 .border_none, .input_table_data,.button_table_data{border: none;}
-.input_table_data,.button_table_data , .td_input_cell,  .icoon_table_data {padding:0; background: transparent; }
+.input_table_data,.button_table_data , .td_input_cell,  .icoon_table_data {padding:1px; background: transparent; }
 
-
+.td_p_cell2{padding:1px; background: transparent; width:auto; }
+.td_p_dateTime_cell2{padding:1px; background: transparent; width:125px !important; }
 
 body {
   font-family: "Open Sans", sans-serif;

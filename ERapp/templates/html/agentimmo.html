@@ -492,6 +492,7 @@
 
                   <input class="form-control" type="text" id="filterInput_1" placeholder="Search..." style="width:30%;min-width:100px;">
                   <div class="overflow-auto" style="padding:1px;">
+                  
                   <form method="post"  enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="hidden" name="myid1" id="myid1">
@@ -507,25 +508,27 @@
                           <th>Nom</th> 
                           <th>Adresse</th> 
                           <th>N° de tél</th>
-                          <th></th>  
+                          <th>Agent</th>  
                           <th colspan="2">Visite technique</th> 
                           <th colspan="2">Apporteur d'affaire</th> 
                           <th>Commercial</th> 
-
+                          <th>Date de création</th>
                         </thead>
                         <tbody id="myTable_1">
-                            
+                          {% for item in data %}
                             <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             
                             <tr>
                                 <!--<td class="fixed-column fixed-column-backcolor" ><button  class="button_table_data " type="button" id="table1_edit_col" name="" value="" onclick="my_Func_edit_table_1('{{item.cell_id}}')"><i class="ri-edit-2-fill"></i></button></td>
                                 <td ><p style="width:auto;">{{ item.cell_id }}</p></td>-->
-                                <td class="td_input_cell" ><p>{{ item.firstname }}</p></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table1_lastname" id="table1_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table1_address" id="table1_address{{ item.cell_id }}" value="{{ item.address }}"  ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table1_num" id="table1_num{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
-                                
-                                <td class="td_input_cell" > <!-- VT-->
+                                <td class="td_p_cell2"><p>{{ item.firstname }}</p></td>
+                                <td class="td_p_cell2"><p>{{ item.lastname }}</p></td>
+                                <td class="td_p_cell2"><p>{{ item.address }}</p></td>
+                                <td class="td_p_cell2"><p>{{ item.num }}</p></td>  
+                                <td class="td_p_cell2"><p>{{ item.agent }}</p></td>  
+
+
+                                <td class="td_input_files_cell" > <!-- VT-->
                                   <nav class="header-nav ms-auto" >
                                     <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                       <i class="ri-file-list-3-line"></i>
@@ -545,66 +548,38 @@
                                             <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
                                             {% elif F.file_format == "image" %}
                                               <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                            {% elif F.file_format == "word" %}
-                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                            {% elif F.file_format == "pz2" %}
-                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                            {% else %}
-                                              <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
                                             {% endif %}
                                           </li>{{ F.file_name }}
-
                                         </li>
                                            
                                          {% endif %}
                                       {% endfor %}
-                                      <!-- <li style="text-align:center;height:20px;">
-                                           <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_add_files_to_auditV1('{{item.cell_id}}')"><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
-                                           
-                                      </li>-->
+
                                       <hr class="dropdown-divider">
-                                      <li><input class="input_table_data" type="file" id="table1_input_files_to_{{ item.cell_id }}" name="table1_input_files_to_{{ item.cell_id }}" multiple></li>
-                                      <input type="hidden" name="mybutton1{{ item.cell_id }}" id="mybutton1{{ item.cell_id }}">
+                                      <li><input class="input_table_data" type="file"  name="table1_input_files_VT_{{ item.cell_id }}" multiple></li>
                                       <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table('{{item.cell_id}}','table1','vt')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
                                       <li></li>
-                                      
-
                                     </ul>
-
-
                                   </nav>
                                 </td>  <!--  target="_blank"-->
                                 
-                                <td class="badge-cell" data-state="badge">
-
-                                  <span class="badge" data-badge="A realiser">A réaliser</span>
-                                  <span class="badge" data-badge="En cours">En cours</span>
-                                  <span class="badge" data-badge="A modifier">A modifier</span>
-                                  <span class="badge" data-badge="Modification Faite">Modification Faite</span>
-                                  <span class="badge" data-badge="Reclamation">Reclamation</span>
-                                  <span class="badge" data-badge="Reclamation Faite">Réclamation Faite</span>
-                                  <span class="badge" data-badge="Envoye">Envoyé</span>
-                                  <span class="badge" data-badge="Annule">Annule</span>
-                                  <span class="badge" data-badge="Fini">Fini</span>
-
-                                  <select class="form-select" aria-label="Default select example"  name="cell_data6edit" id="table1_etat{{ item.cell_id }}" style="background-color:gray;">
-                                      <option value="A realiser" {% if item.etat  == "A realiser" %}selected{% endif %}>A réaliser</option>
-                                      <option value="En cours"  {% if item.etat  == "En cours" %}selected{% endif %} >En cours</option>
-                                      <option value="A modifier"  {% if item.etat  == "A modifier" %}selected{% endif %} >A modifier</option>
-                                      <option value="Modification Faite" {% if item.etat  == "Modification Faite" %}selected{% endif %}>Modification faite</option>
-                                      <option value="Reclamation" {% if item.etat  == "Reclamation" %}selected{% endif %} >Réclamation</option>
-                                      <option value="Reclamation Faite"  {% if item.etat  == "Reclamation Faite" %}selected{% endif %} >Réclamation faite</option>
-                                      <option value="Envoye"   {% if item.etat  == "Envoye" %}selected{% endif %} >Envoyé</option>
-                                      <option value="Annule" {% if item.etat  == "Annule" %}selected{% endif %} >Annule</option>
-                                      <option value="Fini"  {% if item.etat  == "Fini" %}selected{% endif %} >Fini</option>
-                                  </select>
+                                <td  class="td_badge_cell">
+                                  {% if item.etat_VT  == "A realiser" %}
+                                    <span class="badge bg-warning text-dark" >A réaliser</span>
+                                  {% elif item.etat_VT  == "Realiser" %}
+                                    <span class="badge bg-primary" >Réaliser</span>
+                                  {% elif item.etat_VT  == "Facture" %}
+                                    <span class="badge bg-secondary" >Facturé</span>
+                                  {% elif item.etat_VT  == "Valide" %}
+                                    <span class="badge bg-success" >Validé</span>
+                                  {% endif %}
                                 </td>
 
 
-                                <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
+                                
 
 
-                                <td class="td_input_cell"> <!-- auditV1-->
+                                <td class="td_input_files_cell"> <!-- auditV1-->
                                   <nav class="header-nav ms-auto" >
                                     <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                       <i class="ri-file-list-3-line"></i>
@@ -652,16 +627,22 @@
                                       <input type="hidden" name="mybutton1{{ item.cell_id }}" id="mybutton1{{ item.cell_id }}">
                                       <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table('{{item.cell_id}}','table1','auditV1')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
                                       <li></li>
-                                      
 
                                     </ul>
-
-
                                   </nav>
+                                </td>
+                                <td  class="td_badge_cell">
+                                  {% if item.etat_AdA  == "A Valide" %}
+                                    <span class="badge bg-warning text-dark" >A Validé</span>
+                                  {% elif item.etat_AdA  == "Facture" %}
+                                    <span class="badge bg-secondary" >Facturé</span>
+                                  {% elif item.etat_AdA  == "Valide" %}
+                                    <span class="badge bg-success" >Validé</span>
+                                  {% endif %}
                                 </td>
 
 
-                                <td class="td_input_cell"> <!-- auditV2-->
+                                <td class="td_input_files_cell"> <!-- auditV2-->
                                   <nav class="header-nav ms-auto" >
                                     <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                       <i class="ri-file-list-3-line"></i>
@@ -717,132 +698,15 @@
                                   </nav>
                                 </td>
 
-                                <td class="td_input_cell"> <!-- auditV3-->
-                                  <nav class="header-nav ms-auto" >
-                                    <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                      <i class="ri-file-list-3-line"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
-                                      
-                                         <!-- for i in datafiles  if item.cell_id == i.file_id -->
-                                      {% for F in datafiles_AuditV3 %}
-                                      
-                                        {% if F.file_id == item.cell_id %}
-                                        <li>
-                                          <li class="list-inline-item">
-                                            {% if F.file_format == "excel" %}
-                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                            {% elif F.file_format == "pdf" %}
-                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                            {% elif F.file_format == "image" %}
-                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                            {% elif F.file_format == "word" %}
-                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                            {% elif F.file_format == "pz2" %}
-                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                            {% else %}
-                                              <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                            {% endif %}
-                                          </li>
-                                            
-                                            {{ F.file_name }}
-                                              
-                                          <li class="list-inline-item">
-                                            <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_remove_file_from_model('{{item.cell_id}}','{{F.file_index}}','auditV3')">
-                                              <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                            </button>
-                                          </li>
-                                        </li>
-                                           
-                                         {% endif %}
-                                      {% endfor %}
-                                      <!-- <li style="text-align:center;height:20px;">
-                                           <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_add_files_to_auditV1('{{item.cell_id}}')"><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
-                                           
-                                      </li>-->
-                                      <hr class="dropdown-divider">
-                                      <li><input class="input_table_data" type="file" id="table1_input_files_to_{{ item.cell_id }}" name="table1_input_files_to_{{ item.cell_id }}" multiple></li>
-                                      <input type="hidden" name="mybutton1{{ item.cell_id }}" id="mybutton1{{ item.cell_id }}">
-                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table('{{item.cell_id}}','table1','auditV3')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
-                                      <li></li>
-                                      
-
-                                    </ul>
-
-
-                                  </nav>
-                                </td>
-
-
-                                <td class="td_input_cell"> <!-- auditFinal-->
-                                  <nav class="header-nav ms-auto" >
-                                    <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                      <i class="ri-file-list-3-line"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
-                                      
-                                         <!-- for i in datafiles  if item.cell_id == i.file_id -->
-                                      {% for F in datafiles_AuditFinal %}
-                                      
-                                        {% if F.file_id == item.cell_id %}
-                                        <li>
-                                          <li class="list-inline-item">
-                                            {% if F.file_format == "excel" %}
-                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                            {% elif F.file_format == "pdf" %}
-                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                            {% elif F.file_format == "image" %}
-                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                            {% elif F.file_format == "word" %}
-                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                            {% elif F.file_format == "pz2" %}
-                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                            {% else %}
-                                              <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                            {% endif %}
-                                          </li>
-                                            
-                                            {{ F.file_name }}
-                                              
-                                          <li class="list-inline-item">
-                                            <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_remove_file_from_model('{{item.cell_id}}','{{F.file_index}}','auditFinal')">
-                                              <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                            </button>
-                                          </li>
-                                        </li>
-                                           
-                                         {% endif %}
-                                      {% endfor %}
-                                      <!-- <li style="text-align:center;height:20px;">
-                                           <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_add_files_to_auditV1('{{item.cell_id}}')"><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
-                                           
-                                      </li>-->
-                                      <hr class="dropdown-divider">
-                                      <li><input class="input_table_data" type="file" id="table1_input_files_to_{{ item.cell_id }}" name="table1_input_files_to_{{ item.cell_id }}" multiple></li>
-                                      <input type="hidden" name="mybutton1{{ item.cell_id }}" id="mybutton1{{ item.cell_id }}">
-                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table('{{item.cell_id}}','table1','auditFinal')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
-                                      <li></li>
-                                      
-
-                                    </ul>
-
-
-                                  </nav>
-                                </td>
-
-
-                                <td class="td_input_cell"><input class="input_table_data" type="text"   ></td>
-
                                 
-                                <td class="td_input_cell td-form-check-checkbox" >
-                                  <input class="form-check-input form-check-checkbox" type="checkbox" value="True" id="paiement{{ item.cell_id }}"  {% if  item.paiement  %} Checked {% endif %}>
-                                </td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
+
+
+                                <td class="td_p_dateTime_cell2"><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
+
 
                             </tr>
 
-
+                          {% endfor %}
                         </tbody>
                         
                     </table>
@@ -850,6 +714,7 @@
                     <!--<button class="btn ri-add-fill"></button>-->
                     
                 </form>
+                
               </div>
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

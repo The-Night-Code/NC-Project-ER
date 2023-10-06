@@ -405,3 +405,8 @@ def agent_immo(request):
                                                   'column_names': column_names,
                                                   'datafiles_VT': datafiles_VT ,
                                                   'datafiles_AuditFinal':datafiles_AuditFinal})
+
+def agent_immo_f(request):
+    
+
+    return render(request, 'html/agentimmof.html', )

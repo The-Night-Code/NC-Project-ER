@@ -1585,3 +1585,22 @@ window.location.href = url2;
 <!--<button class="btn ri-add-fill"></button>-->
 
 </form>
+
+
+
+
+
+
+
+<td class="badge-cell2" data-state="badge2">
+  {% if item.etat  == "A realiser" %}
+    <span class="badge2" data-badge="A realiser">A réaliser</span>
+  {% elif item.etat  == "Realiser" %}
+    <span class="badge2" data-badge="realiser">Réaliser</span>
+  {% elif item.etat  == "Valide" %}
+    <span class="badge2" data-badge="Facture">Facturé</span>
+  {% elif item.etat  == "Realiser" %}
+    <span class="badge2" data-badge="Valide">Validé</span>
+  {% endif %}
+  <span class="badge2" data-badge="Valide">Validé</span>
+</td>
