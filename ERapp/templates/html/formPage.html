@@ -1,5 +1,6 @@
 {% load static %}
 {% load l10n %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -633,58 +634,28 @@
                           
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                                       <li class="dropdown-header">
-                                        You have 3 new messages
-                                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                                        <input type="text" name="input_msg_1" id="send_msg_1">
+                                        <button class="style_none_border style_background_transparent" type="button" id="send_msg_1"> <i class="bi bi-send" ></i></button>
+                                        <a><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
                                       </li>
                                       <li>
                                         <hr class="dropdown-divider">
                                       </li>
-                          
-                                      <li class="message-item">
-                                        <a href="#">
-                                          <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                                          <div>
-                                            <h4>Maria Hudson</h4>
-                                            <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                            <p>4 hrs. ago</p>
-                                          </div>
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <hr class="dropdown-divider">
-                                      </li>
-                          
-                                      <li class="message-item">
-                                        <a href="#">
-                                          <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-                                          <div>
-                                            <h4>Anna Nelson</h4>
-                                            <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                            <p>6 hrs. ago</p>
-                                          </div>
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <hr class="dropdown-divider">
-                                      </li>
-                          
-                                      <li class="message-item">
-                                        <a href="#">
-                                          <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-                                          <div>
-                                            <h4>David Muldon</h4>
-                                            <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                            <p>8 hrs. ago</p>
-                                          </div>
-                                        </a>
-                                      </li>
-                                      <li>
-                                        <hr class="dropdown-divider">
-                                      </li>
-                          
-                                      <!-- <li class="dropdown-footer">
-                                        <a href="#">Show all messages</a>
-                                      </li>-->
+                                      {% for msg in message_box_1 %}
+                                        <li class="message-item">
+                                          <a >
+                                            <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                                            <div>
+                                              <h4>{{ msg.username }}</h4>
+                                              <p>{{ msg.message }}</p>
+                                              <p>{{ msg.message_date|naturaltime }}</p>
+                                            </div>
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <hr class="dropdown-divider">
+                                        </li>
+                                      {% endfor %}
                           
                                     </ul><!-- End Messages Dropdown Items -->
                           

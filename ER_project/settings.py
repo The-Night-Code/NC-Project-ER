@@ -40,6 +40,8 @@ ALLOWED_HOSTS = ["192.168.1.100",
 
 INSTALLED_APPS = [
     'ERapp',
+    'django.contrib.humanize',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

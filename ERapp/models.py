@@ -152,3 +152,15 @@ class file_table_vt(models.Model):
     def __str__(self):
         return f'{self.file_id} {self.file_index} {self.file_name}'
     
+    
+class message_box_1(models.Model):
+    message_id= models.CharField(max_length=255,blank=True)
+    user_id = models.CharField(max_length=255,blank=True)
+    row_id = models.CharField(max_length=255,blank=True)
+    username = models.CharField(max_length=255,blank=True)
+    email = models.CharField(max_length=255,blank=True)
+    message = models.CharField(max_length=255,blank=True)
+    message_date = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return f'{self.email} {self.message}'

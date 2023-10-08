@@ -284,8 +284,8 @@ table.dataTable thead .sorting_desc_disabled:before {
 }
 
 
-.border_none, .input_table_data,.button_table_data{border: none;}
-.input_table_data,.button_table_data , .td_input_cell,  .icoon_table_data {padding:1px; background: transparent; }
+.border_none, .input_table_data,.button_table_data,.style_none_border{border: none !important;}
+.input_table_data,.button_table_data , .td_input_cell,  .icoon_table_data ,.style_background_transparent{padding:1px; background: transparent !important; }
 
 .td_p_cell2{padding:1px; background: transparent; width:auto; }
 .td_p_dateTime_cell2{padding:1px; background: transparent; width:125px !important; }
