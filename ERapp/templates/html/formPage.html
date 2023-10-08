@@ -634,8 +634,8 @@
                           
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                                       <li class="dropdown-header">
-                                        <input type="text" name="input_msg_1" id="send_msg_1">
-                                        <button class="style_none_border style_background_transparent" type="button" id="send_msg_1"> <i class="bi bi-send" ></i></button>
+                                        <input type="text" name="input_msg_1" id="input_msg_1">
+                                        <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="send_message_box('{{item.cell_id}}','1')" > <i class="bi bi-send" ></i></button>
                                         <a><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
                                       </li>
                                       <li>
@@ -643,8 +643,12 @@
                                       </li>
                                       {% for msg in message_box_1 %}
                                         <li class="message-item">
-                                          <a >
-                                            <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                                          <a>
+                                            {% if profile_pic %}  
+                                              <img src="{{ profile_pic }}" alt="Image"  class="rounded-circle">  <!-- alt="image.title"-->
+                                            {% else %}
+                                              <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
+                                            {% endif %}
                                             <div>
                                               <h4>{{ msg.username }}</h4>
                                               <p>{{ msg.message }}</p>

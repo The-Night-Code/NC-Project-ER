@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login , logout
 from django.views.generic.edit import CreateView
 
 
-from .models import ImageModel,USER,TableData001,file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal
+from .models import ImageModel,USER,TableData001,file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal,message_box_1
 
 
 from django.core.mail import send_mail
@@ -253,6 +253,8 @@ def table_view(request): # add row
                     file_format =format_file
                 
                 )
+                
+        
         return redirect(formT)
     
     
@@ -267,6 +269,7 @@ def table_view(request): # add row
     datafiles_AuditV2 = file_table_auditV2.objects.all()
     datafiles_AuditV3 = file_table_auditV3.objects.all()
     datafiles_AuditFinal = file_table_auditFinal.objects.all()
+    message_box_01 = message_box_1.objects.all()
     return render(request, 'html/formPage.html', { 'data': data ,
                                                   'col_count':col_count ,
                                                   'column_names': column_names,
@@ -274,7 +277,8 @@ def table_view(request): # add row
                                                   'datafiles_AuditV1': datafiles_AuditV1 ,
                                                   'datafiles_AuditV2': datafiles_AuditV2 ,
                                                   'datafiles_AuditV3': datafiles_AuditV3 ,
-                                                  'datafiles_AuditFinal':datafiles_AuditFinal})
+                                                  'datafiles_AuditFinal':datafiles_AuditFinal,
+                                                  'message_box_1':message_box_01})
        
     
     
