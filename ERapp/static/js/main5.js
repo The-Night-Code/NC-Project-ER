@@ -8,17 +8,7 @@ input1.addEventListener("keypress", function(event) {
     document.getElementById("send_msg_1").click();
     
   }
-});
+})
 
 
 
-function send_message_box(cell_id,box) {
-                    
-    var x0 = document.getElementById("input_msg_1").value;
-
-      var url2="{% url '' %}?"+
-        "param=" + encodeURIComponent(x0) +
-        "&param0=" + x0 ;
-      window.location.href = "url2";
-
-};

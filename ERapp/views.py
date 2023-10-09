@@ -414,3 +414,29 @@ def agent_immo_f(request):
     
 
     return render(request, 'html/agentimmof.html', )
+
+
+def chat_box_1(request):
+    cell_id = request.GET.get('param0')
+    
+    user_email = request.GET.get('param1')
+    user_firstname = request.GET.get('param2')
+    user_lastname = request.GET.get('param3')
+    box = request.GET.get('param4')
+    msg = request.GET.get('param5')
+    
+    msg_id =generate_random_string(8)
+    
+
+    
+    message_box_1.objects.create(
+                message_id = msg_id,
+                row_id = cell_id,
+                username =user_firstname + " , " +  user_lastname,
+                email =  user_email,
+                message =msg,
+                box =box
+            )
+    
+        
+    return redirect(formT)

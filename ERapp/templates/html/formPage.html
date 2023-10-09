@@ -44,6 +44,9 @@
 
 <body onload="load()">
   {% if user.is_authenticated %}
+  <input  type="hidden" name="user_email" id="user_email" value="{{ user.email }}">
+  <input  type="hidden" name="user_firstname" id="user_firstname" value="{{user.first_name}}">
+  <input  type="hidden" name="user_lastname" id="user_lastname" value="{{user.last_name}}">
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     
@@ -528,7 +531,7 @@
                         <tbody id="myTable_1">
                             {% for item in data %}
                             {% if item.etat == "Modification Faite" or item.etat == "A modifier" or item.etat == "En cours" or item.etat == "A realiser" or item.etat == "Reclamation" or item.etat == "Reclamation Faite" or item.etat == "Envoye" %}
-                            <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
+                            <input  type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             
                             <tr>
                                 <td class="fixed-column fixed-column-backcolor" ><button  class="button_table_data " type="button" id="table1_edit_col" name="" value="" onclick="my_Func_edit_table_1('{{item.cell_id}}')"><i class="ri-edit-2-fill"></i></button></td>
@@ -642,6 +645,7 @@
                                         <hr class="dropdown-divider">
                                       </li>
                                       {% for msg in message_box_1 %}
+                                      {% if item.cell_id == msg.row_id %}
                                         <li class="message-item">
                                           <a>
                                             {% if profile_pic %}  
@@ -659,6 +663,7 @@
                                         <li>
                                           <hr class="dropdown-divider">
                                         </li>
+                                        {% endif %}
                                       {% endfor %}
                           
                                     </ul><!-- End Messages Dropdown Items -->
@@ -1980,6 +1985,28 @@
   }
   </script>
 
+  <script>
+    function send_message_box(cell_id,box) {
+    
+    
+      var message = document.getElementById("input_msg_1").value;
+      
+      var x1 = document.getElementById("user_email").value;
+      var x2 = document.getElementById("user_firstname").value;
+      var x3 = document.getElementById("user_lastname").value;
+      
+        var url2="{% url 'send_message_box1' %}?"+
+          "param0=" + cell_id +
+          "&param1=" + x1 +
+          "&param2=" + x2 +
+          "&param3=" + x3 +
+          "&param4=" + box +
+          "&param5=" + message ;
+        window.location.href = url2;
+  
+  }
+  </script>
+  
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/chart.js/chart.umd.js' %}"></script>
@@ -1996,7 +2023,7 @@
   <script type="text/javascript" src="{% static 'js/main2.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main3.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main4.js'%}"></script>
-
+  <script type="text/javascript" src="{% static 'js/main5.js'%}"></script>
 </body>
 
 </html>
