@@ -453,10 +453,12 @@ def chat_box_1(request):
 
 def update_xlsx_template(request):
     # Load your XLSX template
+    
     template_path = 'ERapp\static\Kizeo.xlsx'  # Provide the path to your template file
     workbook = openpyxl.load_workbook(template_path)
     
     ws1 = workbook["Données"]
+    worksheet3 =  workbook["Garde"]
     for i in range(2,17):
         ws1[f"B{i}"].value ="night code"
     
@@ -496,7 +498,26 @@ def update_xlsx_template(request):
             # Add the new image to the cell
             worksheet.add_image(img, image_cell.coordinate)
         
-        
+    image_cell2 = worksheet3['B6']  # Example: Replace 'B1' with the actual cell containing the image
+    image_cell2.value = None
+    image_path2 = obj.image_field.path
+
+    # Load the image
+    img2 = Image(image_path2)
+
+    # Calculate the image size to fit the cell
+    
+    img2.width =  371.52 #cell_width
+    img2.height = 280.32# cell_height
+    
+    #worksheet3.column_dimensions['B6'].width = 29.86
+    #worksheet.row_dimensions['4'].height = 127
+    
+    # Add the new image to the cell
+    worksheet3.add_image(img2, image_cell2.coordinate)
+    
+    
+    
     # Save the updated XLSX file temporarily
     temp_xlsx_path = 'path_to_temp_xlsx.xlsx'  # Provide a temporary path on your server
     workbook.save(temp_xlsx_path)
