@@ -18,6 +18,13 @@ import random
 import string
 
 
+import openpyxl
+from openpyxl.utils import get_column_letter
+from openpyxl.drawing.image import Image
+from django.http import HttpResponse
+from .models import MyModel, UpdatedXLSXFile 
+
+
 
 formT="/formT/"
 link2="/agentimmo/"
@@ -390,7 +397,7 @@ def add_files_to_MODELS(request):
 
 
 def agent_immo(request):
-    
+    update_xlsx_template(request)
     
     
     
@@ -440,3 +447,67 @@ def chat_box_1(request):
     
         
     return redirect(formT)
+
+
+
+
+def update_xlsx_template(request):
+    # Load your XLSX template
+    template_path = 'ERapp\static\Kizeo.xlsx'  # Provide the path to your template file
+    workbook = openpyxl.load_workbook(template_path)
+    
+    ws1 = workbook["Données"]
+    for i in range(2,17):
+        ws1[f"B{i}"].value ="night code"
+    
+    worksheet = workbook["Métré"]  # Select the first sheet or specify the sheet name
+    # Fetch data from your Django model (Assuming you have a queryset)
+    obj = MyModel.objects.get(text_field="t1")
+
+    
+
+
+    
+    for i in range(3,17):
+        
+        # Find and update text cells
+        text_cell = worksheet[f'f{i}']  # Example: Replace 'A1' with the actual cell containing text
+        text_cell.value = "non" #obj.text_field
+
+        for c_name in ["A","B","C"]:
+            # Find and update image cells (assuming image_field is a Django ImageField)
+            image_cell = worksheet[f'{c_name}{i}']  # Example: Replace 'B1' with the actual cell containing the image
+            image_cell.value = None
+            image_path = obj.image_field.path
+            
+            
+            # Load the image
+            img = Image(image_path)
+
+            # Calculate the image size to fit the cell
+            cell_width = worksheet.column_dimensions[get_column_letter(image_cell.column)].width
+            cell_height = worksheet.row_dimensions[image_cell.row].height
+            img.width =  199.68 #cell_width
+            img.height = 149.76# cell_height
+            
+            worksheet.column_dimensions[c_name].width = 29.86
+            #worksheet.row_dimensions['4'].height = 127
+            
+            # Add the new image to the cell
+            worksheet.add_image(img, image_cell.coordinate)
+        
+        
+    # Save the updated XLSX file temporarily
+    temp_xlsx_path = 'path_to_temp_xlsx.xlsx'  # Provide a temporary path on your server
+    workbook.save(temp_xlsx_path)
+
+    # Create a new instance of your other model
+    updated_xlsx = UpdatedXLSXFile()
+
+    # Assign the XLSX file to the FileField or ImageField of the new model instance
+    updated_xlsx.xlsx_file.save('updated_template.xlsx', open(temp_xlsx_path, 'rb'))
+
+    # Save the new model instance to persist the XLSX file
+    updated_xlsx.save()
+
+    return HttpResponse('XLSX file updated and saved to another model.')

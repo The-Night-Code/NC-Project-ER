@@ -164,3 +164,15 @@ class message_box_1(models.Model):
     box = models.CharField(max_length=255,blank=True)
     def __str__(self):
         return f'{self.email} {self.message}'
+    
+    
+    
+from django.db import models
+
+class MyModel(models.Model):
+    text_field = models.CharField(max_length=100,blank=True)
+    image_field = models.ImageField(upload_to='images/')
+    
+class UpdatedXLSXFile(models.Model):
+    name = models.CharField(max_length=100,blank=True)
+    xlsx_file = models.ImageField(upload_to='uploads/data/kizeo')
