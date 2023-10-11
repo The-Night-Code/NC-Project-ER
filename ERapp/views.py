@@ -639,9 +639,49 @@ def update_xlsx_template(request):
 def Kizeo_form_page(request):
     if request.method == 'POST':
         
-        facade_1=request.POST.get("myid1")
+        facade_1=request.POST.get("")
         column1=request.POST.get("col_type1")
-        inp_files=request.FILES.getlist(l1)
+        
+        inp_files=request.FILES['my_uploaded_image']
+        
+        ### Façades
+        Facade_1_Orientation = request.POST.get("Facade_1_Orientation")
+        Facade_1_Mitoyennete = request.POST.get("Facade_1_Mitoyennete")
+        Facade_1_Longueur = request.POST.get("Facade_1_Longueur")
+        Facade_1_Hauteur = request.POST.get("Facade_1_Hauteur")
+        Facade_1_Surfac = request.POST.get("Facade_1_Surfac")
+        Facade_1_Photo_Principale = request.FILES['Facade_1_Photo_Principale']
+        
+        Facade_2_Orientation = request.POST.get("Facade_2_Orientation")
+        Facade_2_Mitoyennete = request.POST.get("Facade_2_Mitoyennete")
+        Facade_2_Longueur = request.POST.get("Facade_2_Longueur")
+        Facade_2_Hauteur = request.POST.get("Facade_2_Hauteur")
+        Facade_2_Surfac = request.POST.get("Facade_2_Surfac")
+        Facade_2_Photo_Principale = request.FILES['Facade_2_Photo_Principale']
+        
+        Facade_3_Orientation = request.POST.get("Facade_3_Orientation")
+        Facade_3_Mitoyennete = request.POST.get("Facade_3_Mitoyennete")
+        Facade_3_Longueur = request.POST.get("Facade_3_Longueur")
+        Facade_3_Hauteur = request.POST.get("Facade_3_Hauteur")
+        Facade_3_Surfac = request.POST.get("Facade_3_Surfac")
+        Facade_3_Photo_Principale = request.FILES['Facade_3_Photo_Principale']
+        
+        Facade_4_Orientation = request.POST.get("Facade_4_Orientation")
+        Facade_4_Mitoyennete = request.POST.get("Facade_4_Mitoyennete")
+        Facade_4_Longueur = request.POST.get("Facade_4_Longueur")
+        Facade_4_Hauteur = request.POST.get("Facade_4_Hauteur")
+        Facade_4_Surfac = request.POST.get("Facade_4_Surfac")
+        Facade_4_Photo_Principale = request.FILES['Facade_4_Photo_Principale']
+        
+        
+        ### Cauffage
+        
+        
+        
+        
+        
+        
+        
         l1="table1_input_files_to_"+str("myID1")
         
         #return redirect(f"/{myID}_{column}/")

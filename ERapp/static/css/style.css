@@ -300,15 +300,13 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 /*  Kizeo form */
 .card-body_facade{height:auto !important;max-height:3000px  !important;}
-#show_div_1{display:none;
+#show_div_1,#show_div_2,#show_div_3,#show_div_4,#show_div_5,
+#show_div_6,#show_div_7,#show_div_8,#show_div_9,#show_div_10,
+#show_div_11{display:none;
   height:auto !important;
   padding-bottom: 15px!important;
 }
 
-#show_div_2{display:none;
-  height:auto !important;
-  padding-bottom: 15px!important;
-}
 
 .kizeo_select_box{width:auto;height:auto !important;}
 .card-body_formK{padding:0px;margin:-10px 0px;}
