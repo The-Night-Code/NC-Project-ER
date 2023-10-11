@@ -462,91 +462,407 @@
     </div><!-- End Page Title -->
 
     <section class="section">
-      <div class="row" style="margin-left:15%;margin-right:15%;">
-        
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">General Form Elements</h5>
+      <div class="row" >
+          <div class="card" >
+            <!-- ================================== -->
+            <!-- ================================== -->
+            <div class="card-body card-body_formK card-body_facade " >
+              <div class="row g-2" >
+                <div class="col-md-12">
+                  <h5 class="card-title card-title_outside">
+                  <button class="border_none style_background_transparent" onclick="myFunction_show_div('1')" >
+                    <i class="ri-arrow-down-s-line ms-auto  fa-2x card-title_outside" id="show_div_i_1" ></i>
+                  </button> 
+                  Façades</h5>
+                </div>
+              </div>
 
               <!-- General Form Elements -->
-              <form>
-                <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Nom</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="lastname" required>
+              <div class=""  id="show_div_1" >
+
+                <h5 class="card-title card-title_inside">Façade Principale</h5>
+                <div class="row g-3">
+                  
+                  <div class="col-md-6">
+                    <label class="col-sm-2 col-form-label form-label_formK">Orientation</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_1_Orientation">
+                      <option value=""selected></option>
+                      <option value="Intérieur">Intérieur</option>
+                      <option value="Nord">Nord</option>
+                      <option value="Sud">Sud</option>
+                      <option value="Est">Est</option>
+                      <option value="Ouest">Ouest</option>
+                      <option value="Nord-Est">Nord-Est</option>
+                      <option value="Nord-Ouest">Nord-Ouest</option>
+                      <option value="Sud-Est">Sud-Est</option>
+                      <option value="Sud-Ouest">Sud-Ouest</option>
+                    </select>
                   </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="inputEmail" class="col-sm-2 col-form-label">Prénom</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="firstname" required>
+                  <div class="col-md-6">
+                    <label class="col-sm-2 col-form-label form-label_formK">Mitoyenneté</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_1_Mitoyennete">
+                      <option value=""selected></option>
+                      <option value="Pas de mitoyenneté">Pas de mitoyenneté</option>
+                      <option value="Mitoyenneté partielle">Mitoyenneté partielle</option>
+                      <option value="Mitoyenneté totale">Mitoyenneté totale</option>
+                    </select>
                   </div>
-                </div>
 
-                <div class="row mb-3">
-                  <label for="inputPassword" class="col-sm-2 col-form-label">Adresse</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="address" required>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Longueur:</label>
+                    <input type="number" class="form-control" name="Facade_1_Longueur" >
                   </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="inputNumber" class="col-sm-2 col-form-label">N° de tél</label>
-                  <div class="col-sm-10">
-                    <input type="number" class="form-control" id="num" required>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Hauteur:</label>
+                    <input type="number" class="form-control" name="Facade_1_Hauteur" >
                   </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">Agent</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="agent" required>
-                    </div>
-                </div>
-
-
-                <div class="row mb-3">
-                  <label for="inputNumber" class="col-sm-2 col-form-label">Visite technique</label>
-                  <div class="col-sm-10">
-                    <input class="form-control" type="file" id="vt" multiple required>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Surface:</label>
+                    <label  class="form-label"></label>
                   </div>
+
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
+                    <input type="file" id="file-input" name="Facade_1_Photo_Principale" accept="image/*"> </input>
+                  </div>
+
+                </div>
+                <hr/>
+                <h5 class="card-title card-title_inside">Façade 2</h5>
+                <div class="row g-3">
+                  
+                  <div class="col-md-6">
+                    <label class="col-sm-2 col-form-label form-label_formK">Orientation</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_2_Orientation">
+                      <option value=""selected></option>
+                      <option value="Intérieur">Intérieur</option>
+                      <option value="Nord">Nord</option>
+                      <option value="Sud">Sud</option>
+                      <option value="Est">Est</option>
+                      <option value="Ouest">Ouest</option>
+                      <option value="Nord-Est">Nord-Est</option>
+                      <option value="Nord-Ouest">Nord-Ouest</option>
+                      <option value="Sud-Est">Sud-Est</option>
+                      <option value="Sud-Ouest">Sud-Ouest</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-sm-2 col-form-label form-label_formK">Mitoyenneté</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_2_Mitoyennete">
+                      <option value=""selected></option>
+                      <option value="Pas de mitoyenneté">Pas de mitoyenneté</option>
+                      <option value="Mitoyenneté partielle">Mitoyenneté partielle</option>
+                      <option value="Mitoyenneté totale">Mitoyenneté totale</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Longueur:</label>
+                    <input type="number" class="form-control" name="Facade_2_Longueur" >
+                  </div>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Hauteur:</label>
+                    <input type="number" class="form-control" name="Facade_2_Hauteur" >
+                  </div>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Surface:</label>
+                    <label  class="form-label"></label>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
+                    <input type="file" id="file-input" name="Facade_2_Photo_Principale" accept="image/*"> </input>
+                  </div>
+
                 </div>
 
-                <div class="row mb-3">
-                    <label for="inputNumber" class="col-sm-2 col-form-label">Apporteur d'affaire</label>
-                    <div class="col-sm-10">
-                      <input class="form-control" type="file" id="AdA" multiple required>
-                    </div>
-                </div>
 
-                <div class="row mb-3">
-                <label for="inputNumber" class="col-sm-2 col-form-label">Commercial</label>
-                <div class="col-sm-10">
-                    <input class="form-control" type="file" id="comm" multiple required>
-                </div>
+                <hr/>
+
+                <h5 class="card-title card-title_inside">Façade 3</h5>
+                <div class="row g-3">
+                  
+                  <div class="col-md-6">
+                    <label class="col-sm-2 col-form-label form-label_formK">Orientation</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_3_Orientation">
+                      <option value=""selected></option>
+                      <option value="Intérieur">Intérieur</option>
+                      <option value="Nord">Nord</option>
+                      <option value="Sud">Sud</option>
+                      <option value="Est">Est</option>
+                      <option value="Ouest">Ouest</option>
+                      <option value="Nord-Est">Nord-Est</option>
+                      <option value="Nord-Ouest">Nord-Ouest</option>
+                      <option value="Sud-Est">Sud-Est</option>
+                      <option value="Sud-Ouest">Sud-Ouest</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-sm-2 col-form-label form-label_formK">Mitoyenneté</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_3_Mitoyennete">
+                      <option value=""selected></option>
+                      <option value="Pas de mitoyenneté">Pas de mitoyenneté</option>
+                      <option value="Mitoyenneté partielle">Mitoyenneté partielle</option>
+                      <option value="Mitoyenneté totale">Mitoyenneté totale</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Longueur:</label>
+                    <input type="number" class="form-control" name="Facade_3_Longueur" >
+                  </div>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Hauteur:</label>
+                    <input type="number" class="form-control" name="Facade_3_Hauteur" >
+                  </div>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Surface:</label>
+                    <label  class="form-label"></label>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
+                    <input type="file" id="file-input" name="Facade_3_Photo_Principale" accept="image/*"> </input>
+                  </div>
+
                 </div>
 
                 
+                
+                <hr/>
 
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label"></label>
-                  <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">Submit Form</button>
+                <h5 class="card-title card-title_inside">Façade 4</h5>
+                <div class="row g-3">
+                  
+                  <div class="col-md-6">
+                    <label class="col-sm-2 col-form-label form-label_formK">Orientation</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_4_Orientation">
+                      <option value=""selected></option>
+                      <option value="Intérieur">Intérieur</option>
+                      <option value="Nord">Nord</option>
+                      <option value="Sud">Sud</option>
+                      <option value="Est">Est</option>
+                      <option value="Ouest">Ouest</option>
+                      <option value="Nord-Est">Nord-Est</option>
+                      <option value="Nord-Ouest">Nord-Ouest</option>
+                      <option value="Sud-Est">Sud-Est</option>
+                      <option value="Sud-Ouest">Sud-Ouest</option>
+                    </select>
                   </div>
+                  <div class="col-md-6">
+                    <label class="col-sm-2 col-form-label form-label_formK">Mitoyenneté</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_4_Mitoyennete">
+                      <option value=""selected></option>
+                      <option value="Pas de mitoyenneté">Pas de mitoyenneté</option>
+                      <option value="Mitoyenneté partielle">Mitoyenneté partielle</option>
+                      <option value="Mitoyenneté totale">Mitoyenneté totale</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Longueur:</label>
+                    <input type="number" class="form-control" name="Facade_4_Longueur" >
+                  </div>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Hauteur:</label>
+                    <input type="number" class="form-control" name="Facade_4_Hauteur" >
+                  </div>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Surface:</label>
+                    <label  class="form-label"></label>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
+                    <input type="file" id="file-input" name="Facade_4_Photo_Principale" accept="image/*"> </input>
+                  </div>
+
                 </div>
 
-              </form><!-- End General Form Elements -->
-
+              </div>
+              <!-- ================================== -->
+              <!-- ================================== -->
             </div>
-          
-
+          </div>
         </div>
-
-        
-      </div>
     </section>
+
+
+
+
+
+    <section class="section">
+      <div class="row" >
+          <div class="card" >
+            <!-- ================================== -->
+            <!-- ================================== -->
+            <div class="card-body card-body_formK card-body_facade " >
+              <div class="row g-2" >
+                <div class="col-md-12">
+                  <h5 class="card-title card-title_outside">
+                  <button class="border_none style_background_transparent" onclick="myFunction_show_div('2')" >
+                    <i class="ri-arrow-down-s-line ms-auto  fa-2x card-title_outside" id="show_div_i_2" ></i>
+                  </button> 
+                  Cauffage</h5>
+                </div>
+              </div>
+
+              <!-- General Form Elements -->
+              <div class=""  id="show_div_2" >
+
+                <h5 class="card-title card-title_inside">Façade Principale</h5>
+                <div class="row g-3">
+                  
+                  <div class="col-md-12">
+                    <label class="col-sm-2 col-form-label form-label_formK">Système</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_1_Orientation">
+                      <option value="" selected></option>
+                      <option value="Chaudière fioul">Chaudière fioul</option>
+                      <option value="Chaudière gaz">Chaudière gaz</option>
+                      <option value="Chaudière au charbon">Chaudière au charbon</option>
+                      <option value="Radiateurs électriques">Radiateurs électriques</option>
+                      <option value="Poêle à granulés">Poêle à granulés</option>
+                      <option value="Poêle à bois">Poêle à bois</option>
+                      <option value="Cheminée bois">Cheminée bois</option>
+                      <option value="Cheminée gaz">Cheminée gaz</option>
+                      <option value="PAC Air/Eau">PAC Air/Eau</option>
+                      <option value="PAC Air/Air">PAC Air/Air</option>
+                    </select>
+                  </div>
+
+
+                  <div class="col-md-12">
+                    <label class="col-sm-2 col-form-label form-label_formK">Type de régulation</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_1_Mitoyennete">
+                      <option value="" selected></option>
+                      <option value="Aucune">Aucune</option>
+                      <option value="Robinet manuel">Robinet manuel</option>
+                      <option value="Robinet thermostatique">Robinet thermostatique</option>
+                      <option value="Thermostat d'ambiance">Thermostat d'ambiance</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Longueur:</label>
+                    <input type="number" class="form-control" name="Facade_1_Longueur" >
+                  </div>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Hauteur:</label>
+                    <input type="number" class="form-control" name="Facade_1_Hauteur" >
+                  </div>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Surface:</label>
+                    <label  class="form-label"></label>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
+                    <input type="file" id="file-input" name="Facade_1_Photo_Principale" accept="image/*"> </input>
+                  </div>
+
+                </div>
+                <hr/>
+                <h5 class="card-title card-title_inside">Façade 2</h5>
+                <div class="row g-3">
+                  
+                  <div class="col-md-6">
+                    <label class="col-sm-2 col-form-label form-label_formK">Orientation</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_2_Orientation">
+                      <option value="Intérieur">Intérieur</option>
+                      <option value="Nord">Nord</option>
+                      <option value="Sud">Sud</option>
+                      <option value="Est">Est</option>
+                      <option value="Ouest">Ouest</option>
+                      <option value="Nord-Est">Nord-Est</option>
+                      <option value="Nord-Ouest">Nord-Ouest</option>
+                      <option value="Sud-Est">Sud-Est</option>
+                      <option value="Sud-Ouest">Sud-Ouest</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-sm-2 col-form-label form-label_formK">Mitoyenneté</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_2_Mitoyennete">
+                      <option value="Pas de mitoyenneté">Pas de mitoyenneté</option>
+                      <option value="Mitoyenneté partielle">Mitoyenneté partielle</option>
+                      <option value="Mitoyenneté totale">Mitoyenneté totale</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Longueur:</label>
+                    <input type="number" class="form-control" name="Facade_2_Longueur" >
+                  </div>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Hauteur:</label>
+                    <input type="number" class="form-control" name="Facade_2_Hauteur" >
+                  </div>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Surface:</label>
+                    <label  class="form-label"></label>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
+                    <input type="file" id="file-input" name="Facade_2_Photo_Principale" accept="image/*"> </input>
+                  </div>
+
+                </div>
+                <hr/>
+                <h5 class="card-title card-title_inside">Façade 3</h5>
+                <div class="row g-3">
+                  
+                  <div class="col-md-6">
+                    <label class="col-sm-2 col-form-label form-label_formK">Orientation</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_3_Orientation">
+                      <option value="Intérieur">Intérieur</option>
+                      <option value="Nord">Nord</option>
+                      <option value="Sud">Sud</option>
+                      <option value="Est">Est</option>
+                      <option value="Ouest">Ouest</option>
+                      <option value="Nord-Est">Nord-Est</option>
+                      <option value="Nord-Ouest">Nord-Ouest</option>
+                      <option value="Sud-Est">Sud-Est</option>
+                      <option value="Sud-Ouest">Sud-Ouest</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-sm-2 col-form-label form-label_formK">Mitoyenneté</label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Facade_3_Mitoyennete">
+                      <option value="Pas de mitoyenneté">Pas de mitoyenneté</option>
+                      <option value="Mitoyenneté partielle">Mitoyenneté partielle</option>
+                      <option value="Mitoyenneté totale">Mitoyenneté totale</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Longueur:</label>
+                    <input type="number" class="form-control" name="Facade_3_Longueur" >
+                  </div>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Hauteur:</label>
+                    <input type="number" class="form-control" name="Facade_3_Hauteur" >
+                  </div>
+                  <div class="col-md-4">
+                    <label  class="form-label form-label_formK">Surface:</label>
+                    <label  class="form-label"></label>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
+                    <input type="file" id="file-input" name="Facade_3_Photo_Principale" accept="image/*"> </input>
+                  </div>
+
+                </div>
+
+              </div>
+              <!-- ================================== -->
+              <!-- ================================== -->
+            </div>
+          </div>
+        </div>
+    </section>
+
+
 
   </main>
 
@@ -564,10 +880,27 @@
 </div>
 
   {% endif %}
+  <script>
+    function myFunction_show_div(div_id){
+      var xi = document.getElementById("show_div_i_"+div_id);
+      var xdiv = document.getElementById("show_div_"+div_id);
+      if (xdiv.style.display === "block") {
+        xdiv.style.display = "none";
+        xi.classList.add('ri-arrow-down-s-line');
+
+        xi.classList.remove('ri-arrow-up-s-line');
+       
+      } else {
+        xdiv.style.display = "block";
+        xi.classList.add('ri-arrow-up-s-line');
+        xi.classList.remove('ri-arrow-down-s-line');
+
+      }
+    }
+  
+  </script>
 
 
-  
-  
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/chart.js/chart.umd.js' %}"></script>

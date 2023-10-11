@@ -11,6 +11,7 @@
 --------------------------------------------------------------*/
 /* Style the sorting icons */
 
+
 .reduce_div button{
   border: none !important;
   background: none !important;
@@ -289,6 +290,44 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 .td_p_cell2{padding:1px; background: transparent; width:auto; }
 .td_p_dateTime_cell2{padding:1px; background: transparent; width:125px !important; }
+
+
+
+
+
+
+
+
+/*  Kizeo form */
+.card-body_facade{max-height:1350px  !important;}
+#show_div_1{display:none;
+  height:1400px !important;
+}
+
+#show_div_2{display:none;
+  height:1100px !important;
+}
+
+.kizeo_select_box{width:auto;height:auto !important;}
+.card-body_formK{padding:0px;margin:-10px 0px;}
+.image-upload>input {
+  display: none!important;
+}
+.card-title_inside{color:red!important;}
+.form-label_formK{
+  color:rgb(0, 3, 34)!important;
+  font-weight: bold!important;}
+.card-title_outside{
+  color:#4154f1!important;
+  font-weight: bold!important;}
+
+
+
+/*  end Kizeo form */
+
+
+
+
 
 body {
   font-family: "Open Sans", sans-serif;

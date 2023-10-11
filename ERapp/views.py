@@ -633,3 +633,21 @@ def update_xlsx_template(request):
     updated_xlsx.save()
 
     return HttpResponse('XLSX file updated and saved to another model.')
+
+
+
+def Kizeo_form_page(request):
+    if request.method == 'POST':
+        
+        facade_1=request.POST.get("myid1")
+        column1=request.POST.get("col_type1")
+        inp_files=request.FILES.getlist(l1)
+        l1="table1_input_files_to_"+str("myID1")
+        
+        #return redirect(f"/{myID}_{column}/")
+        if request.POST.get("mybutton1") == 'clicked':
+            inp_files=request.FILES.getlist(l1)  
+    
+    
+    
+    return render(request, 'html/formK.html')
