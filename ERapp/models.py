@@ -172,6 +172,8 @@ from django.db import models
 class MyModel(models.Model):
     text_field = models.CharField(max_length=100,blank=True)
     image_field = models.ImageField(upload_to='images/')
+    image_field_2 = models.ImageField(upload_to='images/',blank=True)
+    image_field_3 = models.ImageField(upload_to='images/',blank=True)
     
 class UpdatedXLSXFile(models.Model):
     name = models.CharField(max_length=100,blank=True)

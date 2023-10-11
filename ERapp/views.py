@@ -23,7 +23,7 @@ from openpyxl.utils import get_column_letter
 from openpyxl.drawing.image import Image
 from django.http import HttpResponse
 from .models import MyModel, UpdatedXLSXFile 
-
+from openpyxl.styles import NamedStyle
 
 
 formT="/formT/"
@@ -459,9 +459,19 @@ def update_xlsx_template(request):
     
     ws1 = workbook["Données"]
     worksheet3 =  workbook["Garde"]
-    for i in range(2,17):
-        ws1[f"B{i}"].value ="night code"
+    worksheet4 =  workbook["Site"]
+    #for i in range(2,17):
+        #ws1[f"B{i}"].value ="night code"
     
+    ws1["B2"].value ="night code"
+    ws1["B4"].value ="derb seltan"
+    
+    
+    ############################# WORK SHEET 2
+    ############################# WORK SHEET 2
+    ############################# WORK SHEET 2
+    ############################# WORK SHEET 2
+    ############################# WORK SHEET 2
     worksheet = workbook["Métré"]  # Select the first sheet or specify the sheet name
     # Fetch data from your Django model (Assuming you have a queryset)
     obj = MyModel.objects.get(text_field="t1")
@@ -480,7 +490,9 @@ def update_xlsx_template(request):
             # Find and update image cells (assuming image_field is a Django ImageField)
             image_cell = worksheet[f'{c_name}{i}']  # Example: Replace 'B1' with the actual cell containing the image
             image_cell.value = None
-            image_path = obj.image_field.path
+            #image_cell.hyperlink = None
+            image_list = [obj.image_field.path,obj.image_field_2.path,obj.image_field_3.path]
+            image_path = random.choice(image_list)
             
             
             # Load the image
@@ -498,26 +510,115 @@ def update_xlsx_template(request):
             # Add the new image to the cell
             worksheet.add_image(img, image_cell.coordinate)
         
+    ############################# END WORK SHEET 2
+    ############################# END WORK SHEET 2
+    ############################# END WORK SHEET 2
+    ############################# END WORK SHEET 2
+
+    
+    
+    ############################################### sheet 3 image
     image_cell2 = worksheet3['B6']  # Example: Replace 'B1' with the actual cell containing the image
     image_cell2.value = None
+    #image_cell2.hyperlink = None
     image_path2 = obj.image_field.path
 
     # Load the image
     img2 = Image(image_path2)
 
     # Calculate the image size to fit the cell
-    
     img2.width =  371.52 #cell_width
     img2.height = 280.32# cell_height
-    
     #worksheet3.column_dimensions['B6'].width = 29.86
     #worksheet.row_dimensions['4'].height = 127
-    
     # Add the new image to the cell
     worksheet3.add_image(img2, image_cell2.coordinate)
     
     
     
+    
+    ############################## header
+    ############################## header
+    ############################## header
+    # Load the image
+    img3 = Image(image_path2)
+    # Calculate the image size to fit the cell
+    img3.width =  50 #cell_width
+    img3.height = 30# cell_height
+    worksheet3.oddHeader.center.text = "&L &G &C Your Image Placeholder &R"
+    ############################## header
+    ############################## header
+    ############################## header
+        
+    
+    
+    
+    ######################################   WORK_SHEET_4
+    ######################################   WORK_SHEET_4
+    ######################################   WORK_SHEET_4
+    # A38 E38 
+    # A50 E50
+    # B67
+    
+    image_cell_1 = worksheet4['A38']  # Example: Replace 'B1' with the actual cell containing the image
+    image_cell_1.value = None
+    #image_cell_1.hyperlink = None
+    image_path1 = obj.image_field_2.path
+    img_1 = Image(image_path1)
+    img_1.width =  185.28 #cell_width
+    img_1.height = 140.16 # cell_height
+    worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    image_cell_1 = worksheet4['E38']  # Example: Replace 'B1' with the actual cell containing the image
+    image_cell_1.value = None
+    #image_cell_1.hyperlink = None
+    # image url
+    image_path1 = obj.image_field_3.path
+    img_1 = Image(image_path1)
+    img_1.width =  185.28 #cell_width
+    img_1.height = 140.16 # cell_height
+    worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    image_cell_1 = worksheet4['E50']  # Example: Replace 'B1' with the actual cell containing the image
+    image_cell_1.value = None
+    #image_cell_1.hyperlink = None
+    image_path1 = obj.image_field_2.path
+    img_1 = Image(image_path1)
+    img_1.width =  185.28 #cell_width
+    img_1.height = 140.16 # cell_height
+    worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    image_cell_1 = worksheet4['A50']  # Example: Replace 'B1' with the actual cell containing the image
+    image_cell_1.value = None
+    #image_cell_1.hyperlink = None
+    # image url
+    image_path1 = obj.image_field_3.path
+    img_1 = Image(image_path1)
+    img_1.width =  185.28 #cell_width
+    img_1.height = 140.16 # cell_height
+    worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    image_cell_1 = worksheet4['B67']  # Example: Replace 'B1' with the actual cell containing the image
+    image_cell_1.value = None
+    #image_cell_1.hyperlink = None
+    # image url
+    image_path1 = obj.image_field_3.path
+    img_1 = Image(image_path1)
+    img_1.width =  185.28 #cell_width
+    img_1.height = 140.16 # cell_height
+    worksheet4.add_image(img_1, image_cell_1.coordinate)
+    ######################################   END WORK_SHEET_4
+    ######################################   END WORK_SHEET_4
+    ######################################   END WORK_SHEET_4
+    
+    
+
+
+    ###################################################### save process #######################################################
     # Save the updated XLSX file temporarily
     temp_xlsx_path = 'path_to_temp_xlsx.xlsx'  # Provide a temporary path on your server
     workbook.save(temp_xlsx_path)
