@@ -299,13 +299,14 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 
 /*  Kizeo form */
-.card-body_facade{max-height:1350px  !important;}
+.card-body_facade{display: block!important;
+  overfloxw: auto !important;}
 #show_div_1{display:none;
   height:1400px !important;
 }
 
 #show_div_2{display:none;
-  height:1100px !important;
+  height:635px !important;
 }
 
 .kizeo_select_box{width:auto;height:auto !important;}
