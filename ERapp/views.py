@@ -3,10 +3,11 @@ from django.http import HttpResponse,HttpResponseRedirect
 from django.forms import inlineformset_factory
 from django.contrib.auth.models import User
 
-from django.shortcuts import redirect
+from django.shortcuts import redirect , get_object_or_404
 from django.contrib.auth import authenticate, login , logout
 
 from django.views.generic.edit import CreateView
+
 
 
 from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1
@@ -120,15 +121,15 @@ def LogoutU(request):
     
     
 def ProfileU(request):
-    user_Id="3"
-    user_L=USER.objects.get(user_id=user_Id) 
+    #user_Id="3"
+    user_L=USER.objects.get(email="night@gmail.com") 
     
     Submit_Upload_image=request.POST.get("Submit_Upload_image")
     remove_profile_image=request.POST.get("remove_profile_image")
     
     # Upload Profile Image
     if request.method == 'POST' :
-        user_L = USER.objects.get(user_id=user_Id)
+        user_L = USER.objects.get(email="night@gmail.com")
         if Submit_Upload_image=="Submit_Upload_image" and request.FILES['my_uploaded_image']:
             imagefile = request.FILES['my_uploaded_image']
             user_L.profile_pic =imagefile 
@@ -636,79 +637,71 @@ def update_xlsx_template(request):
 
 
 
-def Kizeo_form_page(request):
-    template_path = 'ERapp\static\Kizeo.xlsx'  # Provide the path to your template file
-    workbook = openpyxl.load_workbook(template_path)
-    
-    worksheet1 = workbook["Données"]
-    worksheet2 = workbook["Métré"]
-    worksheet3 = workbook["Garde"]
-    worksheet4 = workbook["Site"]
+def Kizeo_form_page(request,client_id):
 
+    if kizeo_model.objects.filter(kizeo_id=client_id):
+            pass
+    else:
+        kizeo_model.objects.create(kizeo_id=client_id)
     
-    
-    ############################# WORK SHEET 2
-    ############################# WORK SHEET 2
-    ############################# WORK SHEET 2
-    ############################# WORK SHEET 2
-    ############################# WORK SHEET 2
-      # Select the first sheet or specify the sheet name
-    # Fetch data from your Django model (Assuming you have a queryset)
-    
-    obj = kizeo_model.objects.get(id="1")
-    
+    obj = kizeo_model.objects.get(kizeo_id=client_id)
     if request.method == 'POST':
+        
+            
+       
+        
         submit_to_Kizeo = request.POST.get("submit_to_Kizeo")
         if submit_to_Kizeo=="submit":
+            
             ### Façades
             Facade_1_Orientation = request.POST.get("Facade_1_Orientation")
             Facade_1_Mitoyennete = request.POST.get("Facade_1_Mitoyennete")
-            Facade_1_Longueur = request.POST.get("Facade_1_Longueur")
-            Facade_1_Hauteur = request.POST.get("Facade_1_Hauteur")
+            Facade_1_Longueur = float(request.POST.get("Facade_1_Longueur"))
+            Facade_1_Hauteur = float(request.POST.get("Facade_1_Hauteur"))
             #Facade_1_Surfac = request.POST.get("Facade_1_Surfac")
-            Facade_1_Photo_Principale = request.FILES['Facade_1_Photo_Principale']
+            #Facade_1_Photo_Principale = request.FILES['Facade_1_Photo_Principale']
             
             Facade_2_Orientation = request.POST.get("Facade_2_Orientation")
             Facade_2_Mitoyennete = request.POST.get("Facade_2_Mitoyennete")
-            Facade_2_Longueur = request.POST.get("Facade_2_Longueur")
-            Facade_2_Hauteur = request.POST.get("Facade_2_Hauteur")
+            Facade_2_Longueur = float(request.POST.get("Facade_2_Longueur"))
+            Facade_2_Hauteur = float(request.POST.get("Facade_2_Hauteur"))
             #Facade_2_Surfac = request.POST.get("Facade_2_Surfac")
-            Facade_2_Photo_Principale = request.FILES['Facade_2_Photo_Principale']
+            #Facade_2_Photo_Principale = request.FILES['Facade_2_Photo_Principale']
             
             Facade_3_Orientation = request.POST.get("Facade_3_Orientation")
             Facade_3_Mitoyennete = request.POST.get("Facade_3_Mitoyennete")
-            Facade_3_Longueur = request.POST.get("Facade_3_Longueur")
-            Facade_3_Hauteur = request.POST.get("Facade_3_Hauteur")
+            Facade_3_Longueur = float(request.POST.get("Facade_3_Longueur"))
+            Facade_3_Hauteur = float(request.POST.get("Facade_3_Hauteur"))
             #Facade_3_Surfac = request.POST.get("Facade_3_Surfac")
-            Facade_3_Photo_Principale = request.FILES['Facade_3_Photo_Principale']
+            #Facade_3_Photo_Principale = request.FILES['Facade_3_Photo_Principale']
             
             Facade_4_Orientation = request.POST.get("Facade_4_Orientation")
             Facade_4_Mitoyennete = request.POST.get("Facade_4_Mitoyennete")
-            Facade_4_Longueur = request.POST.get("Facade_4_Longueur")
-            Facade_4_Hauteur = request.POST.get("Facade_4_Hauteur")
+            Facade_4_Longueur = float(request.POST.get("Facade_4_Longueur"))
+            Facade_4_Hauteur = float(request.POST.get("Facade_4_Hauteur"))
             #Facade_4_Surfac = request.POST.get("Facade_4_Surfac")
-            Facade_4_Photo_Principale = request.FILES['Facade_4_Photo_Principale']
+            #Facade_4_Photo_Principale = request.FILES['Facade_4_Photo_Principale']
             
             
             ### Cauffage
             Cauffage_systeme = request.POST.get("Cauffage_systeme")
-            Cauffage_annee_de_mise_en_oeuvre = request.POST.get("Cauffage_annee_de_mise_en_oeuvre")
-            Cauffage_photo_systeme_de_production = request.FILES['Cauffage_photo_systeme_de_production']
-            Cauffage_photo_fiche_signaletique = request.FILES['Cauffage_photo_fiche_signaletique']
+            Cauffage_annee_de_mise_en_oeuvre = int(request.POST.get("Cauffage_annee_de_mise_en_oeuvre"))
+            #Cauffage_photo_systeme_de_production = request.FILES['Cauffage_photo_systeme_de_production']
+            #Cauffage_photo_fiche_signaletique = request.FILES['Cauffage_photo_fiche_signaletique']
             Cauffage_type_de_regulation = request.POST.get("Cauffage_type_de_regulation")
             Cauffage_system_d_appoint = request.POST.get("Cauffage_system_d_appoint")
-            Cauffage_photo_appoint = request.FILES['Cauffage_photo_appoint']
+            #Cauffage_photo_appoint = request.FILES['Cauffage_photo_appoint']
             Cauffage_commentaire = request.POST.get("Cauffage_commentaire")
                 
             ### ECS
             ECS_type =request.POST.get("ECS_type")
             ECS_system_d_appoint = request.POST.get("ECS_system_d_appoint")
-            ECS_photo_appoint = request.FILES['ECS_photo_appoint']
+            #ECS_photo_appoint = request.FILES['ECS_photo_appoint']
             ECS_commentaire = request.POST.get("ECS_commentaire")
 
             ### Ventilation
             Ventilation_type = request.POST.get("ECS_type")
-            Ventilation_photo_ventilation = request.FILES['Ventilation_photo_ventilation']
+            #Ventilation_photo_ventilation = request.FILES['Ventilation_photo_ventilation']
             
             ### Refroidissement
             Refroidissement_type = request.POST.get("Refroidissement_type")
@@ -717,203 +710,299 @@ def Kizeo_form_page(request):
             ### Compteur Electrique
             Compteur_Electrique_Puissance_souscrite = request.POST.get("Compteur_Electrique_Puissance_souscrite")
             Compteur_Electrique_type = request.POST.get("Compteur_Electrique_type")
-            Compteur_Electrique_photo_compteur = request.FILES['Compteur_Electrique_photo_compteur']
+            #Compteur_Electrique_photo_compteur = request.FILES['Compteur_Electrique_photo_compteur']
             Compteur_Electrique_commentaire = request.POST.get("Compteur_Electrique_commentaire")
             
+            ### Mur 1
+            obj.Mur_1_Position = request.POST.get("Mur_1_Position")
+            obj.Mur_1_Composition = request.POST.get("Mur_1_Composition")
+            obj.Mur_1_Epaisseur_mur = request.POST.get("Mur_1_Epaisseur_mur")
+            obj.Mur_1_Isolation = request.POST.get("Mur_1_Isolation")
+            obj.Mur_1_Epaisseur_isolant = request.POST.get("Mur_1_Epaisseur_isolant")
+            obj.Mur_1_Date_d_isolation = request.POST.get("Mur_1_Date_d_isolation")
+            obj.Mur_1_Preuve_d_isolation = request.POST.get("Mur_1_Preuve_d_isolation")
+            #obj.Mur_1_Photo_mur = request.FILES['Mur_1_Photo_mur']
             
             
-            kizeo_model.objects.create(
-                Facade_1_Orientation = Facade_1_Orientation,
-                Facade_1_Mitoyennete = Facade_1_Mitoyennete,
-                Facade_1_Longueur = Facade_1_Longueur,
-                Facade_1_Hauteur =  Facade_1_Hauteur,
-                Facade_1_Surface =Facade_1_Longueur * Facade_1_Hauteur ,
-                Facade_1_Photo_Principale =Facade_1_Photo_Principale,
-                
-                Facade_2_Orientation = Facade_2_Orientation,
-                Facade_2_Mitoyennete = Facade_2_Mitoyennete,
-                Facade_2_Longueur = Facade_2_Longueur,
-                Facade_2_Hauteur =  Facade_2_Hauteur,
-                Facade_2_Surface =Facade_2_Longueur * Facade_2_Hauteur ,
-                Facade_2_Photo_Principale =Facade_2_Photo_Principale,
-                
-                Facade_3_Orientation = Facade_3_Orientation,
-                Facade_3_Mitoyennete = Facade_3_Mitoyennete,
-                Facade_3_Longueur = Facade_3_Longueur,
-                Facade_3_Hauteur =  Facade_3_Hauteur,
-                Facade_3_Surface =Facade_3_Longueur * Facade_3_Hauteur ,
-                Facade_3_Photo_Principale =Facade_3_Photo_Principale,
-                
-                Facade_4_Orientation = Facade_4_Orientation,
-                Facade_4_Mitoyennete = Facade_4_Mitoyennete,
-                Facade_4_Longueur = Facade_4_Longueur,
-                Facade_4_Hauteur =  Facade_4_Hauteur,
-                Facade_4_Surface =Facade_4_Longueur * Facade_4_Hauteur ,
-                Facade_4_Photo_Principale =Facade_4_Photo_Principale,
-                
-                ### Cauffage
-                Cauffage_systeme = Cauffage_systeme,
-                Cauffage_annee_de_mise_en_oeuvre = Cauffage_annee_de_mise_en_oeuvre,
-                Cauffage_photo_systeme_de_production = Cauffage_photo_systeme_de_production,
-                Cauffage_photo_fiche_signaletique = Cauffage_photo_fiche_signaletique,
-                Cauffage_type_de_regulation = Cauffage_type_de_regulation,
-                Cauffage_system_d_appoint = Cauffage_system_d_appoint,
-                Cauffage_photo_appoint = Cauffage_photo_appoint,
-                Cauffage_commentaire =Cauffage_commentaire,
-                
-                ### ECS
-                ECS_type = ECS_type,
-                ECS_system_d_appoint = ECS_system_d_appoint,
-                ECS_photo_appoint =ECS_photo_appoint,
-                ECS_commentaire = ECS_commentaire,
-                
-                ### Ventilation
-                Ventilation_type = Ventilation_type,
-                Ventilation_photo_ventilation = Ventilation_photo_ventilation,
-                
-                ### Refroidissement
-                Refroidissement_type = Refroidissement_type,
-                Refroidissement_commentaire = Refroidissement_commentaire,
-                
-                ### Compteur Electrique
-                Compteur_Electrique_Puissance_souscrite = Compteur_Electrique_Puissance_souscrite,
-                Compteur_Electrique_type = Compteur_Electrique_type,
-                Compteur_Electrique_photo_compteur = Compteur_Electrique_photo_compteur,
-                Compteur_Electrique_commentaire = Compteur_Electrique_commentaire
-                
-                
-            )
             
-        if submit_to_Kizeo=="download":
+            obj.Facade_1_Orientation = Facade_1_Orientation
+            obj.Facade_1_Mitoyennete = Facade_1_Mitoyennete
+            obj.Facade_1_Longueur = Facade_1_Longueur
+            obj.Facade_1_Hauteur =  Facade_1_Hauteur
+            obj.Facade_1_Surface =Facade_1_Longueur * Facade_1_Hauteur 
+            #obj.Facade_1_Photo_Principale =Facade_1_Photo_Principale
+            
+            obj.Facade_2_Orientation = Facade_2_Orientation
+            obj.Facade_2_Mitoyennete = Facade_2_Mitoyennete
+            obj.Facade_2_Longueur = Facade_2_Longueur
+            obj.Facade_2_Hauteur =  Facade_2_Hauteur
+            obj.Facade_2_Surface =Facade_2_Longueur * Facade_2_Hauteur 
+            #obj.Facade_2_Photo_Principale =Facade_2_Photo_Principale
+            
+            obj.Facade_3_Orientation = Facade_3_Orientation
+            obj.Facade_3_Mitoyennete = Facade_3_Mitoyennete
+            obj.Facade_3_Longueur = Facade_3_Longueur
+            obj.Facade_3_Hauteur =  Facade_3_Hauteur
+            obj.Facade_3_Surface =Facade_3_Longueur * Facade_3_Hauteur 
+            #obj.Facade_3_Photo_Principale =Facade_3_Photo_Principale
+            
+            obj.Facade_4_Orientation = Facade_4_Orientation
+            obj.Facade_4_Mitoyennete = Facade_4_Mitoyennete
+            obj.Facade_4_Longueur = Facade_4_Longueur
+            obj.Facade_4_Hauteur =  Facade_4_Hauteur
+            obj.Facade_4_Surface =Facade_4_Longueur * Facade_4_Hauteur 
+            #obj.Facade_4_Photo_Principale =Facade_4_Photo_Principale
+            
+            ### Cauffage
+            obj.Cauffage_systeme = Cauffage_systeme
+            obj.Cauffage_annee_de_mise_en_oeuvre = Cauffage_annee_de_mise_en_oeuvre
+            #obj.Cauffage_photo_systeme_de_production = Cauffage_photo_systeme_de_production
+            #obj.Cauffage_photo_fiche_signaletique = Cauffage_photo_fiche_signaletique
+            obj.Cauffage_type_de_regulation = Cauffage_type_de_regulation
+            obj.Cauffage_system_d_appoint = Cauffage_system_d_appoint
+            #obj.Cauffage_photo_appoint = Cauffage_photo_appoint
+            obj.Cauffage_commentaire =Cauffage_commentaire
+            
+            ### ECS
+            obj.ECS_type = ECS_type
+            obj.ECS_system_d_appoint = ECS_system_d_appoint
+            #obj.ECS_photo_appoint = ECS_photo_appoint
+            obj.ECS_commentaire = ECS_commentaire
+            
+            ### Ventilation
+            obj.Ventilation_type = Ventilation_type
+            #obj.Ventilation_photo_ventilation = Ventilation_photo_ventilation
+            
+            ### Refroidissement
+            obj.Refroidissement_type = Refroidissement_type
+            obj.Refroidissement_commentaire = Refroidissement_commentaire
+            
+            ### Compteur Electrique
+            obj.Compteur_Electrique_Puissance_souscrite = Compteur_Electrique_Puissance_souscrite
+            obj.Compteur_Electrique_type = Compteur_Electrique_type
+            #obj.Compteur_Electrique_photo_compteur = Compteur_Electrique_photo_compteur
+            obj.Compteur_Electrique_commentaire = Compteur_Electrique_commentaire
+            
+            ### Mur 1
+            #obj.Mur_1_Position = Mur_1_Position
+            #obj.Mur_1_Composition = Mur_1_Composition
+            #obj.Mur_1_Epaisseur_mur = Mur_1_Epaisseur_mur
+            #obj.Mur_1_Isolation = Mur_1_Isolation
+            #obj.Mur_1_Epaisseur_isolant = Mur_1_Epaisseur_isolant
+            #obj.Mur_1_Date_d_isolation = Mur_1_Date_d_isolation
+            #obj.Mur_1_Preuve_d_isolation = Mur_1_Preuve_d_isolation
+            #obj.Mur_1_Photo_mur = Mur_1_Photo_mur
+            
+            obj.save(update_fields=['Facade_1_Orientation', 'Facade_1_Mitoyennete','Facade_1_Longueur','Facade_1_Hauteur','Facade_1_Surface',#'Facade_1_Photo_Principale',
+                                    'Facade_2_Orientation', 'Facade_2_Mitoyennete','Facade_2_Longueur','Facade_2_Hauteur','Facade_2_Surface',#'Facade_2_Photo_Principale',
+                                    'Facade_3_Orientation', 'Facade_3_Mitoyennete','Facade_3_Longueur','Facade_3_Hauteur','Facade_3_Surface',#'Facade_3_Photo_Principale',
+                                    'Facade_4_Orientation', 'Facade_4_Mitoyennete','Facade_4_Longueur','Facade_4_Hauteur','Facade_4_Surface',#'Facade_4_Photo_Principale',
+                                     
+                                    ### Cauffage
+                                    "Cauffage_systeme",
+                                    "Cauffage_annee_de_mise_en_oeuvre",
+                                    #"Cauffage_photo_systeme_de_production",
+                                    #"Cauffage_photo_fiche_signaletique",
+                                    "Cauffage_type_de_regulation",
+                                    "Cauffage_system_d_appoint",
+                                    #"Cauffage_photo_appoint" ,
+                                    "Cauffage_commentaire" ,
+                                    
+                                    ### ECS
+                                    "ECS_type",
+                                    "ECS_system_d_appoint",
+                                    #"ECS_photo_appoint" ,
+                                    "ECS_commentaire",
+                                    
+                                    ### Ventilation
+                                    "Ventilation_type" ,
+                                    #"Ventilation_photo_ventilation" ,
+                                    
+                                    ### Refroidissement
+                                    "Refroidissement_type" ,
+                                    "Refroidissement_commentaire" ,
+                                    
+                                    ### Compteur Electrique
+                                    "Compteur_Electrique_Puissance_souscrite" ,
+                                    "Compteur_Electrique_type" ,
+                                    #"Compteur_Electrique_photo_compteur" ,
+                                    "Compteur_Electrique_commentaire" ,
+                                    
+                                    ### Mur 1
+                                    "Mur_1_Position", 
+                                    "Mur_1_Composition",
+                                    "Mur_1_Epaisseur_mur",
+                                    "Mur_1_Isolation",
+                                    "Mur_1_Epaisseur_isolant",
+                                    "Mur_1_Date_d_isolation",
+                                    "Mur_1_Preuve_d_isolation",
+                                    #"Mur_1_Photo_mur",
+                                    
+                                ])
+
+                
+                
+     
+            
+            
+        
             ######################################   WORK_SHEET_4
             ######################################   WORK_SHEET_4
             ######################################   WORK_SHEET_4
 
-            ################################### start Facade
-            text_cell = worksheet4['A33']  
-            text_cell.value = obj.Facade_1_Orientation
-            text_cell = worksheet4['A34']  
-            text_cell.value = obj.Facade_1_Mitoyennete
-            text_cell = worksheet4['A35'] 
-            text_cell.value = f"Longueur = {obj.Facade_1_Longueur}"
-            text_cell = worksheet4['A36']  
-            text_cell.value = f"Hauteur = {obj.Facade_1_Hauteur}"
-            text_cell = worksheet4['A37']  
-            text_cell.value = f"Surface = {obj.Facade_1_Surface}"
             
-            image_cell_1 = worksheet4['A38'] 
-            image_cell_1.value = None
-            #image_cell_1.hyperlink = None
-            if obj.Facade_1_Photo_Principale:
-                image_path_ = obj.Facade_1_Photo_Principale.path  # Get the file path
-                if default_storage.exists(image_path_):
-                    image_path1 = obj.Facade_1_Photo_Principale.path
-                    img_1 = Image(image_path1)
-                    img_1.width =  185.28 #cell_width
-                    img_1.height = 140.16 # cell_height
-                    worksheet4.add_image(img_1, image_cell_1.coordinate)
-            
-            
-            
-            text_cell = worksheet4['E33']  
-            text_cell.value = obj.Facade_2_Orientation
-            text_cell = worksheet4['E34']  
-            text_cell.value = obj.Facade_2_Mitoyennete
-            text_cell = worksheet4['E35'] 
-            text_cell.value = f"Longueur = {obj.Facade_2_Longueur}"
-            text_cell = worksheet4['E36']  
-            text_cell.value = f"Hauteur = {obj.Facade_2_Hauteur}"
-            text_cell = worksheet4['E37']  
-            text_cell.value = f"Surface = {obj.Facade_2_Surface}"
-            
-            image_cell_1 = worksheet4['E38']  
-            image_cell_1.value = None
-            if obj.Facade_2_Photo_Principale:
-                image_path_ = obj.Facade_2_Photo_Principale.path  # Get the file path
-                if default_storage.exists(image_path_):
-                    image_path1 = obj.Facade_2_Photo_Principale.path
-                    img_1 = Image(image_path1)
-                    img_1.width =  185.28 #cell_width
-                    img_1.height = 140.16 # cell_height
-                    worksheet4.add_image(img_1, image_cell_1.coordinate)
-            
-            
-            
-            text_cell = worksheet4['A46']  
-            text_cell.value = obj.Facade_3_Orientation
-            #text_cell = worksheet4['A4']  
-            #text_cell.value = obj.Facade_3_Mitoyennete
-            text_cell = worksheet4['A47'] 
-            text_cell.value = f"Longueur = {obj.Facade_3_Longueur}"
-            text_cell = worksheet4['A48']  
-            text_cell.value = f"Hauteur = {obj.Facade_3_Hauteur}"
-            text_cell = worksheet4['A49']  
-            text_cell.value = f"Surface = {obj.Facade_3_Surface}"
-            
-            image_cell_1 = worksheet4['A50'] 
-            image_cell_1.value = None
-            #image_cell_1.hyperlink = None
-            if obj.Facade_3_Photo_Principale:
-                image_path_ = obj.Facade_3_Photo_Principale.path  # Get the file path
-                if default_storage.exists(image_path_):
-                    image_path1 = obj.Facade_3_Photo_Principale.path
-                    img_1 = Image(image_path1)
-                    img_1.width =  185.28 #cell_width
-                    img_1.height = 140.16 # cell_height
-                    worksheet4.add_image(img_1, image_cell_1.coordinate)
-            
-            
-            
-            text_cell = worksheet4['E46']  
-            text_cell.value = obj.Facade_4_Orientation
-            #text_cell = worksheet4['E34']  
-            #text_cell.value = obj.Facade_4_Mitoyennete
-            text_cell = worksheet4['E47'] 
-            text_cell.value = f"Longueur = {obj.Facade_4_Longueur}"
-            text_cell = worksheet4['E48']  
-            text_cell.value = f"Hauteur = {obj.Facade_4_Hauteur}"
-            text_cell = worksheet4['E49']  
-            text_cell.value = f"Surface = {obj.Facade_4_Surface}"
-            
-            image_cell_1 = worksheet4['E50'] 
-            image_cell_1.value = None
-            if obj.Facade_4_Photo_Principale:
-                image_path_ = obj.Facade_4_Photo_Principale.path  # Get the file path
-                if default_storage.exists(image_path_):
-                    image_path1 = obj.Facade_4_Photo_Principale.path
-                    img_1 = Image(image_path1)
-                    img_1.width =  185.28 #cell_width
-                    img_1.height = 140.16 # cell_height
-                    worksheet4.add_image(img_1, image_cell_1.coordinate)
-            
-            ################################### end Facade
-            
-            
-            
-            
-            
-            
-            
-            ######################################   END WORK_SHEET_4
-            ######################################   END WORK_SHEET_4
-            ######################################   END WORK_SHEET_4
-            
-             ###################################################### save process #######################################################
-            # Save the updated XLSX file temporarily
-            temp_xlsx_path = 'path_to_temp_xlsx.xlsx'  # Provide a temporary path on your server
-            workbook.save(temp_xlsx_path)
-
-            # Create a new instance of your other model
-            updated_xlsx = UpdatedXLSXFile()
-
-            # Assign the XLSX file to the FileField or ImageField of the new model instance
-            updated_xlsx.xlsx_file.save('updated_template.xlsx', open(temp_xlsx_path, 'rb'))
-
-            # Save the new model instance to persist the XLSX file
-            updated_xlsx.save()
-
-            return HttpResponse('XLSX file updated and saved to another model.')
     
     
-    data = kizeo_model.objects.get(id="1")
+    data = kizeo_model.objects.get(kizeo_id=client_id)
     return render(request, 'html/formK.html',{"data":data})
+
+
+
+def download_K_file(request,file_id):
+    obj = kizeo_model.objects.get(kizeo_id=file_id)
+    template_path = 'ERapp\static\Kizeo.xlsx'  # Provide the path to your template file
+    workbook = openpyxl.load_workbook(template_path)
+    
+    worksheet1 = workbook["Données"]
+    worksheet2 = workbook["Métré"]
+    worksheet3 = workbook["Garde"]
+    worksheet4 = workbook["Site"]
+    ################################### start Facade
+    text_cell = worksheet4['A33']  
+    text_cell.value = obj.Facade_1_Orientation
+    text_cell = worksheet4['A34']  
+    text_cell.value = obj.Facade_1_Mitoyennete
+    text_cell = worksheet4['A35'] 
+    text_cell.value = f"Longueur = {obj.Facade_1_Longueur}"
+    text_cell = worksheet4['A36']  
+    text_cell.value = f"Hauteur = {obj.Facade_1_Hauteur}"
+    text_cell = worksheet4['A37']  
+    text_cell.value = f"Surface = {obj.Facade_1_Surface}"
+    
+    image_cell_1 = worksheet4['A38'] 
+    image_cell_1.value = None
+    #image_cell_1.hyperlink = None
+    if obj.Facade_1_Photo_Principale:
+        image_path_ = obj.Facade_1_Photo_Principale.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = obj.Facade_1_Photo_Principale.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    
+    text_cell = worksheet4['E33']  
+    text_cell.value = obj.Facade_2_Orientation
+    text_cell = worksheet4['E34']  
+    text_cell.value = obj.Facade_2_Mitoyennete
+    text_cell = worksheet4['E35'] 
+    text_cell.value = f"Longueur = {obj.Facade_2_Longueur}"
+    text_cell = worksheet4['E36']  
+    text_cell.value = f"Hauteur = {obj.Facade_2_Hauteur}"
+    text_cell = worksheet4['E37']  
+    text_cell.value = f"Surface = {obj.Facade_2_Surface}"
+    
+    image_cell_1 = worksheet4['E38']  
+    image_cell_1.value = None
+    if obj.Facade_2_Photo_Principale:
+        image_path_ = obj.Facade_2_Photo_Principale.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = obj.Facade_2_Photo_Principale.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    
+    text_cell = worksheet4['A46']  
+    text_cell.value = obj.Facade_3_Orientation
+    #text_cell = worksheet4['A4']  
+    #text_cell.value = obj.Facade_3_Mitoyennete
+    text_cell = worksheet4['A47'] 
+    text_cell.value = f"Longueur = {obj.Facade_3_Longueur}"
+    text_cell = worksheet4['A48']  
+    text_cell.value = f"Hauteur = {obj.Facade_3_Hauteur}"
+    text_cell = worksheet4['A49']  
+    text_cell.value = f"Surface = {obj.Facade_3_Surface}"
+    
+    image_cell_1 = worksheet4['A50'] 
+    image_cell_1.value = None
+    #image_cell_1.hyperlink = None
+    if obj.Facade_3_Photo_Principale:
+        image_path_ = obj.Facade_3_Photo_Principale.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = obj.Facade_3_Photo_Principale.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    
+    text_cell = worksheet4['E46']  
+    text_cell.value = obj.Facade_4_Orientation
+    #text_cell = worksheet4['E34']  
+    #text_cell.value = obj.Facade_4_Mitoyennete
+    text_cell = worksheet4['E47'] 
+    text_cell.value = f"Longueur = {obj.Facade_4_Longueur}"
+    text_cell = worksheet4['E48']  
+    text_cell.value = f"Hauteur = {obj.Facade_4_Hauteur}"
+    text_cell = worksheet4['E49']  
+    text_cell.value = f"Surface = {obj.Facade_4_Surface}"
+    
+    image_cell_1 = worksheet4['E50'] 
+    image_cell_1.value = None
+    if obj.Facade_4_Photo_Principale:
+        image_path_ = obj.Facade_4_Photo_Principale.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = obj.Facade_4_Photo_Principale.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    ################################### end Facade
+    
+    
+    
+    
+    
+    
+    
+    ######################################   END WORK_SHEET_4
+    ######################################   END WORK_SHEET_4
+    ######################################   END WORK_SHEET_4
+    
+        ###################################################### save process #######################################################
+    # Save the updated XLSX file temporarily
+    temp_xlsx_path = 'path_to_temp_xlsx.xlsx'  # Provide a temporary path on your server
+    workbook.save(temp_xlsx_path)
+    if UpdatedXLSXFile.objects.filter(name=file_id) :
+        pass
+    else:
+        UpdatedXLSXFile.objects.create(name=file_id)
+    # Create a new instance of your other model
+    updated_xlsx = UpdatedXLSXFile.objects.get(name=file_id)
+
+    # Assign the XLSX file to the FileField or ImageField of the new model instance
+    updated_xlsx.xlsx_file.save( 'updated_template.xlsx', open(temp_xlsx_path, 'rb'))
+
+    # Save the new model instance to persist the XLSX file
+    updated_xlsx.save()
+
+    
+        
+        
+        
+    # Fetch the MyFile object by its ID
+    my_file = get_object_or_404(UpdatedXLSXFile, name=file_id)
+
+    # Open the file and create an HttpResponse with the file's content
+    with my_file.xlsx_file.open('rb') as f:
+        response = HttpResponse(f.read(), content_type='application/octet-stream')
+        response['Content-Disposition'] = f'attachment; filename="{my_file.xlsx_file.name}"'
+        return response
+    pass

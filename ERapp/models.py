@@ -181,7 +181,7 @@ class UpdatedXLSXFile(models.Model):
     
     
 class kizeo_model(models.Model):
-    
+    kizeo_id = models.CharField(max_length=100,blank=True)
     ### Façades
     Facade_1_Orientation =models.CharField(max_length=100,blank=True)
     Facade_1_Mitoyennete=models.CharField(max_length=100,blank=True)
@@ -241,6 +241,13 @@ class kizeo_model(models.Model):
     Compteur_Electrique_photo_compteur = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
     Compteur_Electrique_commentaire = models.CharField(max_length=750,blank=True)
     
-    
-    
+    ###
+    Mur_1_Position = models.CharField(max_length=100,blank=True)
+    Mur_1_Composition = models.CharField(max_length=100,blank=True)
+    Mur_1_Epaisseur_mur = models.IntegerField(default=0,blank=True)
+    Mur_1_Isolation = models.CharField(max_length=100,blank=True)
+    Mur_1_Epaisseur_isolant = models.IntegerField(default=0,blank=True)
+    Mur_1_Date_d_isolation = models.CharField(max_length=100,blank=True)
+    Mur_1_Preuve_d_isolation = models.CharField(max_length=100,blank=True)
+    Mur_1_Photo_mur = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
     

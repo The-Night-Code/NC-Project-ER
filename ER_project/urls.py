@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage
+from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,download_K_file
 from ERapp.views import table_view_edit ,add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,chat_box_1,Kizeo_form_page
 from ERapp import views
 
@@ -45,8 +45,9 @@ urlpatterns = [
     path('formT5/',chat_box_1 , name="send_message_box1" ),
     
     
-    path(f'{formK}/',Kizeo_form_page  ),
-   
+    #path(f'{formK}/',Kizeo_form_page  ),
+    path(f'{formK}/<str:client_id>',Kizeo_form_page  ),
+    path('download_K_file/<str:file_id>/', download_K_file, name='download_K_file'),
     
     
 ] #+static(settings.MEDIA_URL, documnet_root=settings.MEDIA_ROOT)

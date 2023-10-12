@@ -291,7 +291,7 @@ table.dataTable thead .sorting_desc_disabled:before {
 .td_p_cell2{padding:1px; background: transparent; width:auto; }
 .td_p_dateTime_cell2{padding:1px; background: transparent; width:125px !important; }
 
-
+.formT_div_for_table{padding:1px!important; max-height:600px!important;}
 
 
 
