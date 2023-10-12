@@ -241,7 +241,7 @@ class kizeo_model(models.Model):
     Compteur_Electrique_photo_compteur = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
     Compteur_Electrique_commentaire = models.CharField(max_length=750,blank=True)
     
-    ###
+    ### Mur 1
     Mur_1_Position = models.CharField(max_length=100,blank=True)
     Mur_1_Composition = models.CharField(max_length=100,blank=True)
     Mur_1_Epaisseur_mur = models.IntegerField(default=0,blank=True)
@@ -250,4 +250,14 @@ class kizeo_model(models.Model):
     Mur_1_Date_d_isolation = models.CharField(max_length=100,blank=True)
     Mur_1_Preuve_d_isolation = models.CharField(max_length=100,blank=True)
     Mur_1_Photo_mur = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    
+    ### Mur 2
+    Mur_2_Position = models.CharField(max_length=100,blank=True)
+    Mur_2_Composition = models.CharField(max_length=100,blank=True)
+    Mur_2_Epaisseur_mur = models.IntegerField(default=0,blank=True)
+    Mur_2_Isolation = models.CharField(max_length=100,blank=True)
+    Mur_2_Epaisseur_isolant = models.IntegerField(default=0,blank=True)
+    Mur_2_Date_d_isolation = models.CharField(max_length=100,blank=True)
+    Mur_2_Preuve_d_isolation = models.CharField(max_length=100,blank=True)
+    Mur_2_Photo_mur = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
     

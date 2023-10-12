@@ -647,8 +647,17 @@ def Kizeo_form_page(request,client_id):
     obj = kizeo_model.objects.get(kizeo_id=client_id)
     if request.method == 'POST':
         
-            
-       
+        myButton = request.POST.get("mybutton1")
+        if myButton=="mybutton1":
+            #return redirect(formT)
+            input_cell_name = request.POST.get("input_value")
+            img_get= request.FILES[input_cell_name]
+        
+            if hasattr(obj, input_cell_name):
+                # Check if the field exists in the model
+                setattr(obj, input_cell_name, img_get)
+                obj.save()        
+        
         
         submit_to_Kizeo = request.POST.get("submit_to_Kizeo")
         if submit_to_Kizeo=="submit":
@@ -723,6 +732,14 @@ def Kizeo_form_page(request,client_id):
             obj.Mur_1_Preuve_d_isolation = request.POST.get("Mur_1_Preuve_d_isolation")
             #obj.Mur_1_Photo_mur = request.FILES['Mur_1_Photo_mur']
             
+            ### Mur 1
+            obj.Mur_2_Position = request.POST.get("Mur_2_Position")
+            obj.Mur_2_Composition = request.POST.get("Mur_2_Composition")
+            obj.Mur_2_Epaisseur_mur = request.POST.get("Mur_2_Epaisseur_mur")
+            obj.Mur_2_Isolation = request.POST.get("Mur_2_Isolation")
+            obj.Mur_2_Epaisseur_isolant = request.POST.get("Mur_2_Epaisseur_isolant")
+            obj.Mur_2_Date_d_isolation = request.POST.get("Mur_2_Date_d_isolation")
+            obj.Mur_2_Preuve_d_isolation = request.POST.get("Mur_2_Preuve_d_isolation")
             
             
             obj.Facade_1_Orientation = Facade_1_Orientation
@@ -837,6 +854,14 @@ def Kizeo_form_page(request,client_id):
                                     "Mur_1_Date_d_isolation",
                                     "Mur_1_Preuve_d_isolation",
                                     #"Mur_1_Photo_mur",
+                                    ### Mur 2
+                                    "Mur_2_Position", 
+                                    "Mur_2_Composition",
+                                    "Mur_2_Epaisseur_mur",
+                                    "Mur_2_Isolation",
+                                    "Mur_2_Epaisseur_isolant",
+                                    "Mur_2_Date_d_isolation",
+                                    "Mur_2_Preuve_d_isolation",
                                     
                                 ])
 
@@ -849,7 +874,7 @@ def Kizeo_form_page(request,client_id):
             ######################################   WORK_SHEET_4
             ######################################   WORK_SHEET_4
             ######################################   WORK_SHEET_4
-
+        
             
     
     

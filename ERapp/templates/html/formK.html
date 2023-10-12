@@ -238,6 +238,10 @@
     </div><!-- End Page Title -->
     <form  action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    <div>
+    <input  type="hidden" name="input_value" id="input_value" >
+    <button type="submit" name="mybutton1" id="mybutton1" value="mybutton1" style="display:none;"></button>
+    </div>
     <section class="section">
       <div class="row" >
           <div class="card" >
@@ -287,11 +291,11 @@
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Longueur:</label>
-                    <input type="number" class="form-control" name="Facade_1_Longueur" value={{ data.Facade_1_Longueur }} >
+                    <input type="number" class="form-control" name="Facade_1_Longueur" value={{ data.Facade_1_Longueur }}  step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Hauteur:</label>
-                    <input type="number" class="form-control" name="Facade_1_Hauteur" value={{ data.Facade_1_Hauteur }} >
+                    <input type="number" class="form-control" name="Facade_1_Hauteur" value={{ data.Facade_1_Hauteur }}  step="0.01" >
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Surface:</label>
@@ -301,6 +305,8 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
                     <input type="file" id="file-input" name="Facade_1_Photo_Principale" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK_id" onclick="upload_image_formK_click_button('Facade_1_Photo_Principale')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Facade_1_Photo_Principale.url }}"  alt="Image" width="70">
                   </div>
 
                 </div>
@@ -335,11 +341,11 @@
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Longueur:</label>
-                    <input type="number" class="form-control" name="Facade_2_Longueur" value={{ data.Facade_2_Longueur }}>
+                    <input type="number" class="form-control" name="Facade_2_Longueur" value={{ data.Facade_2_Longueur }} step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Hauteur:</label>
-                    <input type="number" class="form-control" name="Facade_2_Hauteur" value={{ data.Facade_2_Hauteur }}>
+                    <input type="number" class="form-control" name="Facade_2_Hauteur" value={{ data.Facade_2_Hauteur }} step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Surface:</label>
@@ -349,6 +355,8 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
                     <input type="file" id="file-input" name="Facade_2_Photo_Principale" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Facade_2_Photo_Principale')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Facade_2_Photo_Principale.url }}"  alt="Image" alt="Image" width="70">
                   </div>
 
                 </div>
@@ -386,11 +394,11 @@
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Longueur:</label>
-                    <input type="number" class="form-control" name="Facade_3_Longueur" value={{ data.Facade_3_Longueur }}>
+                    <input type="number" class="form-control" name="Facade_3_Longueur" value={{ data.Facade_3_Longueur }} step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Hauteur:</label>
-                    <input type="number" class="form-control" name="Facade_3_Hauteur" value={{ data.Facade_3_Hauteur }}>
+                    <input type="number" class="form-control" name="Facade_3_Hauteur" value={{ data.Facade_3_Hauteur }} step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Surface:</label>
@@ -400,6 +408,8 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
                     <input type="file" id="file-input" name="Facade_3_Photo_Principale" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Facade_3_Photo_Principale')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Facade_3_Photo_Principale.url }}"  alt="Image" width="70" >
                   </div>
 
                 </div>
@@ -438,11 +448,11 @@
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Longueur:</label>
-                    <input type="number" class="form-control" name="Facade_4_Longueur" value={{ data.Facade_4_Longueur }}>
+                    <input type="number" class="form-control" name="Facade_4_Longueur" value={{ data.Facade_4_Longueur }} step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Hauteur:</label>
-                    <input type="number" class="form-control" name="Facade_4_Hauteur" value={{ data.Facade_4_Hauteur }}>
+                    <input type="number" class="form-control" name="Facade_4_Hauteur" value={{ data.Facade_4_Hauteur }} step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Surface:</label>
@@ -452,6 +462,8 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
                     <input type="file" id="file-input" name="Facade_4_Photo_Principale" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Facade_4_Photo_Principale')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Facade_4_Photo_Principale.url }}"  alt="Image" width="70" >                  
                   </div>
 
                 </div>
@@ -510,18 +522,22 @@
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Année de mise en oeuvre: </label>
-                    <input type="number" class="form-control" name="Cauffage_annee_de_mise_en_oeuvre" value={{ data.Cauffage_annee_de_mise_en_oeuvre }}>
+                    <input type="number" class="form-control" name="Cauffage_annee_de_mise_en_oeuvre" value={{ data.Cauffage_annee_de_mise_en_oeuvre }} step="0.01">
                   </div>
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo système de production:  </label>
                     <input type="file" id="file-input" name="Cauffage_photo_systeme_de_production" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Cauffage_photo_systeme_de_production')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Cauffage_photo_systeme_de_production.url }}"  alt="Image" width="70" >
                   </div>
 
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo fiche signalétique:  </label>
                     <input type="file" id="file-input" name="Cauffage_photo_fiche_signaletique" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Cauffage_photo_fiche_signaletique')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Cauffage_photo_fiche_signaletique.url }}"  alt="Image" width="70" >
                   </div>
 
                   <div class="col-md-8">
@@ -537,17 +553,19 @@
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Système d'appoint</label>
-                    <input type="text" class="form-control" name="Cauffage_system_d_appoint" value={{ data.Cauffage_system_d_appoint }}>
+                    <input type="text" class="form-control" name="Cauffage_system_d_appoint" value="{{ data.Cauffage_system_d_appoint }}">
                   </div>
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo appoint </label>
                     <input type="file" id="file-input" name="Cauffage_photo_appoint" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Cauffage_photo_appoint')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Cauffage_photo_appoint.url }}"  alt="Image" width="70" >
                   </div>
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Commentaire: </label>
-                    <input type="text" class="form-control" name="Cauffage_commentaire"  value={{ data.Cauffage_commentaire }}>
+                    <input type="text" class="form-control" name="Cauffage_commentaire"  value="{{ data.Cauffage_commentaire }}">
                   </div>
 
                   
@@ -598,18 +616,20 @@
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Système d'appoint: </label>
-                    <input type="text" class="form-control" name="ECS_system_d_appoint"  value={{ data.ECS_system_d_appoint }} >
+                    <input type="text" class="form-control" name="ECS_system_d_appoint"  value="{{ data.ECS_system_d_appoint }}" >
                   </div>
 
                   
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo appoint: </label>
                     <input type="file" id="file-input" name="ECS_photo_appoint" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('ECS_photo_appoint')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.ECS_photo_appoint.url }}"  alt="Image" width="70" >
                   </div>
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Commentaire: </label>
-                    <input type="text" class="form-control" name="ECS_commentaire"  value={{ data.ECS_commentaire }} >
+                    <input type="text" class="form-control" name="ECS_commentaire"  value="{{ data.ECS_commentaire }}" >
                   </div>
 
                   
@@ -657,6 +677,8 @@
                     <div class="col-md-12">
                       <label  class="form-label form-label_formK">Photo ventilation: </label>
                       <input type="file" id="file-input" name="Ventilation_photo_ventilation" accept="image/*"> </input>
+                      <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Ventilation_photo_ventilation')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                      <img src="{{ data.Ventilation_photo_ventilation.url }}"  alt="Image" width="70" >
                     </div>
   
 
@@ -704,7 +726,7 @@
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Commentaire: </label>
-                    <input type="text" class="form-control" name="Refroidissement_commentaire"  value={{ data.Refroidissement_commentaire }}>
+                    <input type="text" class="form-control" name="Refroidissement_commentaire"  value="{{ data.Refroidissement_commentaire }}">
                   </div>
 
                 </div>
@@ -736,7 +758,7 @@
                 <div class="row g-3">
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Puissance souscrite (kVA) </label>
-                    <input type="number" class="form-control" name="Compteur_Electrique_Puissance_souscrite" value={{ data.Compteur_Electrique_Puissance_souscrite }}>
+                    <input type="number" class="form-control" name="Compteur_Electrique_Puissance_souscrite" value={{ data.Compteur_Electrique_Puissance_souscrite }} step="0.01">
                   </div>
                   <div class="row g-3">
                     <div class="col-md-12">
@@ -750,10 +772,12 @@
                     <div class="col-md-12">
                       <label  class="form-label form-label_formK">Photo compteur: </label>
                       <input type="file" id="file-input" name="Compteur_Electrique_photo_compteur" accept="image/*"> </input>
+                      <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Compteur_Electrique_photo_compteur')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                      <img src="{{ data.Compteur_Electrique_photo_compteur.url }}"  alt="Image" width="70" >
                     </div>
                     <div class="col-md-12">
                       <label  class="form-label form-label_formK">Commentaire: </label>
-                      <input type="text" class="form-control" name="Compteur_Electrique_commentaire" value={{ data.Compteur_Electrique_commentaire }}>
+                      <input type="text" class="form-control" name="Compteur_Electrique_commentaire" value="{{ data.Compteur_Electrique_commentaire }}">
                     </div>
   
                   </div>
@@ -811,7 +835,7 @@
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Epaisseur mur: </label>
-                    <input type="number" class="form-control" name="Mur_1_Epaisseur_mur" value={{ data.Mur_1_Epaisseur_mur }}>
+                    <input type="number" class="form-control" name="Mur_1_Epaisseur_mur" value={{ data.Mur_1_Epaisseur_mur }} step="0.01">
                   </div>
 
                   <div class="col-md-12">
@@ -827,7 +851,7 @@
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Epaisseur isolant: </label>
-                    <input type="number" class="form-control" name="Mur_1_Epaisseur_isolant" value={{ data.Mur_1_Epaisseur_isolant }}>
+                    <input type="number" class="form-control" name="Mur_1_Epaisseur_isolant" value={{ data.Mur_1_Epaisseur_isolant }} step="0.01">
                   </div>
 
                   <div class="col-md-12">
@@ -853,6 +877,8 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo mur: </label>
                     <input type="file" id="file-input" name="Mur_1_Photo_mur" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Mur_1_Photo_mur')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Mur_1_Photo_mur.url }}"  alt="Image" width="70" >
                   </div>
 
                 </div>
@@ -877,7 +903,77 @@
               <!-- General Form Elements -->
               <div class=""  id="show_div_8" >
                 <div class="row g-3">
+                  <div class="col-md-12">
+                    <label class="col-form-label form-label_formK">Position: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Mur_2_Position">
+                      <option value="" {% if data.Mur_2_Position  == "" %}selected{% endif %}></option>
+                      <option value="L'extérieur" {% if data.Mur_2_Position  == "L'extérieur" %}selected{% endif %}>L'extérieur</option>
+                      <option value="LNC" {% if data.Mur_2_Position  == "LNC" %}selected{% endif %}>LNC</option>
+                      <option value="qu'habitation" {% if data.Mur__Position  == "qu'habitation" %}selected{% endif %}>Autres qu'habitation</option>
+                      <option value="Terre-Pleiné" {% if data.Mur_2_Position  == "Terre-Pleiné" %}selected{% endif %}>Terre-Plein</option>
+                    </select>
+                  </div>
 
+                  <div class="col-md-12">
+                    <label class="col-form-label form-label_formK">Composition: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Mur_2_Composition">
+                      <option value="" {% if data.Mur_2_Composition  == "" %}selected{% endif %}></option>
+                      <option value="Béton creux" {% if data.Mur_2_Composition  == "" %}selected{% endif %}>Béton creux</option>
+                      <option value="Béton plein" {% if data.Mur_2_Composition  == "" %}selected{% endif %}>Béton plein</option>
+                      <option value="Pierre" {% if data.Mur_2_Composition  == "" %}selected{% endif %}>Pierre</option>
+                      <option value="Briques creuses" {% if data.Mur_2_Composition  == "" %}selected{% endif %}>Briques creuses</option>
+                      <option value="Briques pleines" {% if data.Mur_2_Composition  == "" %}selected{% endif %}>Briques pleines</option>
+                      <option value="Autres" {% if data.Mur_2_Composition  == "" %}selected{% endif %}>Autres</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Epaisseur mur: </label>
+                    <input type="number" class="form-control" name="Mur_2_Epaisseur_mur" value={{ data.Mur_2_Epaisseur_mur }} step="0.01">
+                  </div>
+
+                  <div class="col-md-12">
+                    <label class="col-form-label form-label_formK">Isolation: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Mur_2_Isolation">
+                      <option value="" {% if data.Mur_2_Isolation  == "" %}selected{% endif %}></option>
+                      <option value="Non isolé" {% if data.Mur_2_Isolation  == "Non isolé" %}selected{% endif %}>Non isolé</option>
+                      <option value="ITI" {% if data.Mur_2_Isolation  == "ITI" %}selected{% endif %}>ITI</option>
+                      <option value="ITE" {% if data.Mur_2_Isolation  == "ITE" %}selected{% endif %}>ITE</option>
+                      <option value="ITE+ITI" {% if data.Mur_2_Isolation  == "ITE+ITI" %}selected{% endif %}>ITE+ITI</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Epaisseur isolant: </label>
+                    <input type="number" class="form-control" name="Mur_2_Epaisseur_isolant" value={{ data.Mur_2_Epaisseur_isolant }} step="0.01">
+                  </div>
+
+                  <div class="col-md-12">
+                    <label class="col-form-label form-label_formK">Date d'isolation: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Mur_2_Date_d_isolation">
+                      <option value="" {% if data.Mur_2_Date_d_isolation  == "" %}selected{% endif %}></option>
+                      <option value="Moins de 5 ans" {% if data.Mur_2_Date_d_isolation  == "Moins de 5 ans" %}selected{% endif %}>Moins de 5 ans</option>
+                      <option value="Entre 5 et 10 ans" {% if data.Mur_2_Date_d_isolation  == "Entre 5 et 10 ans" %}selected{% endif %}>Entre 5 et 10 ans</option>
+                      <option value="Plus de 10 ans" {% if data.Mur_2_Date_d_isolation  == "Plus de 10 ans" %}selected{% endif %}>Plus de 10 ans</option>
+                    </select>
+                  </div>
+
+
+                  <div class="col-md-12">
+                    <label class="col-form-label form-label_formK">Preuve d'isolation: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Mur_2_Preuve_d_isolation">
+                      <option value="" {% if data.Mur_2_Preuve_d_isolation  == "" %}selected{% endif %}></option>
+                      <option value="Confirmation du client" {% if data.Mur_2_Preuve_d_isolation  == "Confirmation du client" %}selected{% endif %}>Confirmation du client</option>
+                      <option value="Photo" {% if data.Mur_2_Preuve_d_isolation  == "Photo" %}selected{% endif %}>Photo</option>
+                    </select>
+                  </div>
+                  
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo mur: </label>
+                    <input type="file" id="file-input" name="Mur_2_Photo_mur" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Mur_2_Photo_mur')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Mur_2_Photo_mur.url }}"  alt="Image" width="70" >
+                  </div>
 
 
                 </div>
@@ -1114,7 +1210,7 @@
 
 
     <div class="text-center">
-      <button type="submit" class="btn btn-primary" name="submit_to_Kizeo" value="submit">Submit</button>
+      <button type="submit" class="btn btn-primary" name="submit_to_Kizeo" value="submit" >Submit</button>
       <button type="submit" class="btn btn-primary" name="submit_to_Kizeo" value="download">Télécharger</button>
     </div>
 
@@ -1154,8 +1250,10 @@
     }
   
   </script>
-
-
+  <script>
+    
+  </script>
+  
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/chart.js/chart.umd.js' %}"></script>
@@ -1172,6 +1270,7 @@
   <script type="text/javascript" src="{% static 'js/main2.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main3.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main4.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main6.js'%}"></script>
 </body>
 
 </html>
