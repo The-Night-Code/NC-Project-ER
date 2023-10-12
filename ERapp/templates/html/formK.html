@@ -824,12 +824,12 @@
                     <label class="col-form-label form-label_formK">Composition: </label>
                     <select class="form-select kizeo_select_box" aria-label="Default select example" name="Mur_1_Composition">
                       <option value="" {% if data.Mur_1_Composition  == "" %}selected{% endif %}></option>
-                      <option value="Béton creux" {% if data.Mur_1_Composition  == "" %}selected{% endif %}>Béton creux</option>
-                      <option value="Béton plein" {% if data.Mur_1_Composition  == "" %}selected{% endif %}>Béton plein</option>
-                      <option value="Pierre" {% if data.Mur_1_Composition  == "" %}selected{% endif %}>Pierre</option>
-                      <option value="Briques creuses" {% if data.Mur_1_Composition  == "" %}selected{% endif %}>Briques creuses</option>
-                      <option value="Briques pleines" {% if data.Mur_1_Composition  == "" %}selected{% endif %}>Briques pleines</option>
-                      <option value="Autres" {% if data.Mur_1_Composition  == "" %}selected{% endif %}>Autres</option>
+                      <option value="Béton creux" {% if data.Mur_1_Composition  == "Béton creux" %}selected{% endif %}>Béton creux</option>
+                      <option value="Béton plein" {% if data.Mur_1_Composition  == "Béton plein" %}selected{% endif %}>Béton plein</option>
+                      <option value="Pierre" {% if data.Mur_1_Composition  == "Pierre" %}selected{% endif %}>Pierre</option>
+                      <option value="Briques creuses" {% if data.Mur_1_Composition  == "Briques creuses" %}selected{% endif %}>Briques creuses</option>
+                      <option value="Briques pleines" {% if data.Mur_1_Composition  == "Briques pleines" %}selected{% endif %}>Briques pleines</option>
+                      <option value="Autres" {% if data.Mur_1_Composition  == "Autres" %}selected{% endif %}>Autres</option>
                     </select>
                   </div>
 
@@ -909,7 +909,7 @@
                       <option value="" {% if data.Mur_2_Position  == "" %}selected{% endif %}></option>
                       <option value="L'extérieur" {% if data.Mur_2_Position  == "L'extérieur" %}selected{% endif %}>L'extérieur</option>
                       <option value="LNC" {% if data.Mur_2_Position  == "LNC" %}selected{% endif %}>LNC</option>
-                      <option value="qu'habitation" {% if data.Mur__Position  == "qu'habitation" %}selected{% endif %}>Autres qu'habitation</option>
+                      <option value="qu'habitation" {% if data.Mur_2_Position  == "qu'habitation" %}selected{% endif %}>Autres qu'habitation</option>
                       <option value="Terre-Pleiné" {% if data.Mur_2_Position  == "Terre-Pleiné" %}selected{% endif %}>Terre-Plein</option>
                     </select>
                   </div>
@@ -918,12 +918,12 @@
                     <label class="col-form-label form-label_formK">Composition: </label>
                     <select class="form-select kizeo_select_box" aria-label="Default select example" name="Mur_2_Composition">
                       <option value="" {% if data.Mur_2_Composition  == "" %}selected{% endif %}></option>
-                      <option value="Béton creux" {% if data.Mur_2_Composition  == "" %}selected{% endif %}>Béton creux</option>
-                      <option value="Béton plein" {% if data.Mur_2_Composition  == "" %}selected{% endif %}>Béton plein</option>
-                      <option value="Pierre" {% if data.Mur_2_Composition  == "" %}selected{% endif %}>Pierre</option>
-                      <option value="Briques creuses" {% if data.Mur_2_Composition  == "" %}selected{% endif %}>Briques creuses</option>
-                      <option value="Briques pleines" {% if data.Mur_2_Composition  == "" %}selected{% endif %}>Briques pleines</option>
-                      <option value="Autres" {% if data.Mur_2_Composition  == "" %}selected{% endif %}>Autres</option>
+                      <option value="Béton creux" {% if data.Mur_2_Composition  == "Béton creux" %}selected{% endif %}>Béton creux</option>
+                      <option value="Béton plein" {% if data.Mur_2_Composition  == "Béton plein" %}selected{% endif %}>Béton plein</option>
+                      <option value="Pierre" {% if data.Mur_2_Composition  == "Pierre" %}selected{% endif %}>Pierre</option>
+                      <option value="Briques creuses" {% if data.Mur_2_Composition  == "Briques creuses" %}selected{% endif %}>Briques creuses</option>
+                      <option value="Briques pleines" {% if data.Mur_2_Composition  == "Briques pleines" %}selected{% endif %}>Briques pleines</option>
+                      <option value="Autres" {% if data.Mur_2_Composition  == "Autres" %}selected{% endif %}>Autres</option>
                     </select>
                   </div>
 
@@ -999,8 +999,80 @@
               <!-- General Form Elements -->
               <div class=""  id="show_div_9" >
                 <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Position: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_bas_1_Position">
+                      <option value="" {% if data.Plancher_bas_1_  == "" %}selected{% endif %}></option>
+                      <option value="Sous-sol non chauffé" {% if data.Plancher_bas_1_  == "Sous-sol non chauffé" %}selected{% endif %}>Sous-sol non chauffé</option>
+                      <option value="Local non chauffé" {% if data.Plancher_bas_1_  == "Local non chauffé" %}selected{% endif %}>Local non chauffé</option>
+                      <option value="Extérieur" {% if data.Plancher_bas_1_  == "Extérieur" %}selected{% endif %}>Extérieur</option>
+                      <option value="Terre plein" {% if data.Plancher_bas_1_  == "Terre plein" %}selected{% endif %}>Terre plein</option>
+                      <option value="Vide sanitaire" {% if data.Plancher_bas_1_  == "Vide sanitaire" %}selected{% endif %}>Vide sanitaire</option>
+                      <option value="Autre qu'habitation" {% if data.Plancher_bas_1_  == "Autre qu'habitation" %}selected{% endif %}>Autre qu'habitation</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Composition: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_bas_1_Composition">
+                      <option value="" {% if data.Plancher_bas_1_Composition  == "" %}selected{% endif %}></option>
+                      <option value="Dalle béton" {% if data.Plancher_bas_1_Composition  == "Dalle béton" %}selected{% endif %}>Dalle béton</option>
+                      <option value="Voutains briques/moellons" {% if data.Plancher_bas_1_Composition  == "Voutains briques/moellons" %}selected{% endif %}>Voutains briques/moellons</option>
+                      <option value="Voutains sur solvies métalliques" {% if data.Plancher_bas_1_Composition  == "Voutains sur solvies métalliques" %}selected{% endif %}>Voutains sur solvies métalliques</option>
+                      <option value="Plancher bois sur solives bois" {% if data.Plancher_bas_1_Composition  == "Plancher bois sur solives bois" %}selected{% endif %}>Plancher bois sur solives bois</option>
+                      <option value="Plancher bois sur solives métalliques" {% if data.Plancher_bas_1_Composition  == "Plancher bois sur solives métalliques" %}selected{% endif %}>Plancher bois sur solives métalliques</option>
+                      <option value="Plancher entre solives bois" {% if data.Plancher_bas_1_Composition  == "Plancher entre solives bois" %}selected{% endif %}>Plancher entre solives bois</option>
+                      <option value="Plancher entre solives métalliques" {% if data.Plancher_bas_1_Composition  == "Plancher entre solives métalliques" %}selected{% endif %}>Plancher entre solives métalliques</option>
+                    </select>
+                  </div>
 
 
+                  <div class="col-md-6">
+                    <label  class="form-label form-label_formK">Surface: </label>
+                    <input type="number" class="form-control" name="Plancher_bas_1_Surface" value={{ data.Plancher_bas_1_Surface }} step="0.01">
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Isolation: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_bas_1_Isolation">
+                      <option value="" {% if data.Plancher_bas_1_Isolation  == "" %}selected{% endif %}></option>
+                      <option value="Non isolé" {% if data.Plancher_bas_1_Isolation  == "Non isolé" %}selected{% endif %}>Non isolé</option>
+                      <option value="ITI" {% if data.Plancher_bas_1_Isolation  == "ITI" %}selected{% endif %}>ITI</option>
+                      <option value="ITE" {% if data.Plancher_bas_1_Isolation  == "ITE" %}selected{% endif %}>ITE</option>
+                      <option value="ITI+ITE" {% if data.Plancher_bas_1_Isolation  == "ITI+ITE" %}selected{% endif %}>ITI+ITE</option>
+                      <option value="Inconnue" {% if data.Plancher_bas_1_Isolation  == "Inconnue" %}selected{% endif %}>Inconnue</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label  class="form-label form-label_formK">Epaisseur isolant: </label>
+                    <input type="number" class="form-control" name="Plancher_bas_1_Epaisseur_isolant" value={{ data.Plancher_bas_1_Epaisseur_isolant }} step="0.01">
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Date d'isolation: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_bas_1_Date_d_isolation">
+                      <option value="" {% if data.Plancher_bas_1_Date_d_isolation  == "" %}selected{% endif %}></option>
+                      <option value="Moins de 5 ans" {% if data.Plancher_bas_1_Date_d_isolation  == "Moins de 5 ans" %}selected{% endif %}>Moins de 5 ans</option>
+                      <option value="Entre 5 et 10 ans" {% if data.Plancher_bas_1_Date_d_isolation  == "Entre 5 et 10 ans" %}selected{% endif %}>Entre 5 et 10 ans</option>
+                      <option value="Plus de 10 ans" {% if data.Plancher_bas_1_Date_d_isolation  == "Plus de 10 ans" %}selected{% endif %}>Plus de 10 ans</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Preuve d'isolation: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_bas_1_Preuve_d_isolation">
+                      <option value="" {% if data.Plancher_bas_1_Preuve_d_isolation  == "" %}selected{% endif %}></option>
+                      <option value="Confirmation du client" {% if data.Plancher_bas_1_Preuve_d_isolation  == "Confirmation du client" %}selected{% endif %}>Confirmation du client</option>
+                      <option value="Photo" {% if data.Plancher_bas_1_Preuve_d_isolation  == "Photo" %}selected{% endif %}>Photo</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo plancher bas: </label>
+                    <input type="file" id="file-input" name="Plancher_bas_1_Photo_plancher_bas" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Plancher_bas_1_Photo_plancher_bas')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Plancher_bas_1_Photo_plancher_bas.url }}"  alt="Image" width="70" >
+                  </div>
 
                 </div>
           </div>
@@ -1024,7 +1096,80 @@
               <!-- General Form Elements -->
               <div class=""  id="show_div_10" >
                 <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Position: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_bas_2_Position">
+                      <option value="" {% if data.Plancher_bas_2_Position  == "" %}selected{% endif %}></option>
+                      <option value="Sous-sol non chauffé" {% if data.Plancher_bas_2_Position  == "Sous-sol non chauffé" %}selected{% endif %}>Sous-sol non chauffé</option>
+                      <option value="Local non chauffé" {% if data.Plancher_bas_2_Position  == "Local non chauffé" %}selected{% endif %}>Local non chauffé</option>
+                      <option value="Extérieur" {% if data.Plancher_bas_2_Position  == "Extérieur" %}selected{% endif %}>Extérieur</option>
+                      <option value="Terre plein" {% if data.Plancher_bas_2_Position  == "Terre plein" %}selected{% endif %}>Terre plein</option>
+                      <option value="Vide sanitaire" {% if data.Plancher_bas_2_Position  == "Vide sanitaire" %}selected{% endif %}>Vide sanitaire</option>
+                      <option value="Autre qu'habitation" {% if data.Plancher_bas_2_Position  == "Autre qu'habitation" %}selected{% endif %}>Autre qu'habitation</option>
+                    </select>
+                  </div>
 
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Composition: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_bas_2_Composition">
+                      <option value="" {% if data.Plancher_bas_2_Composition  == "" %}selected{% endif %}></option>
+                      <option value="Dalle béton" {% if data.Plancher_bas_2_Composition  == "Dalle béton" %}selected{% endif %}>Dalle béton</option>
+                      <option value="Voutains briques/moellons" {% if data.Plancher_bas_2_Composition  == "Voutains briques/moellons" %}selected{% endif %}>Voutains briques/moellons</option>
+                      <option value="Voutains sur solvies métalliques" {% if data.Plancher_bas_2_Composition  == "Voutains sur solvies métalliques" %}selected{% endif %}>Voutains sur solvies métalliques</option>
+                      <option value="Plancher bois sur solives bois" {% if data.Plancher_bas_2_Composition  == "Plancher bois sur solives bois" %}selected{% endif %}>Plancher bois sur solives bois</option>
+                      <option value="Plancher bois sur solives métalliques" {% if data.Plancher_bas_2_Composition  == "Plancher bois sur solives métalliques" %}selected{% endif %}>Plancher bois sur solives métalliques</option>
+                      <option value="Plancher entre solives bois" {% if data.Plancher_bas_2_Composition  == "Plancher entre solives bois" %}selected{% endif %}>Plancher entre solives bois</option>
+                      <option value="Plancher entre solives métalliques" {% if data.Plancher_bas_2_Composition  == "Plancher entre solives métalliques" %}selected{% endif %}>Plancher entre solives métalliques</option>
+                    </select>
+                  </div>
+
+
+                  <div class="col-md-6">
+                    <label  class="form-label form-label_formK">Surface: </label>
+                    <input type="number" class="form-control" name="Plancher_bas_2_Surface" value={{ data.Plancher_bas_2_Surface }} step="0.01">
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Isolation: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_bas_2_Isolation">
+                      <option value="" {% if data.Plancher_bas_2_Isolation  == "" %}selected{% endif %}></option>
+                      <option value="Non isolé" {% if data.Plancher_bas_2_Isolation  == "Non isolé" %}selected{% endif %}>Non isolé</option>
+                      <option value="ITI" {% if data.Plancher_bas_2_Isolation  == "ITI" %}selected{% endif %}>ITI</option>
+                      <option value="ITE" {% if data.Plancher_bas_2_Isolation  == "ITE" %}selected{% endif %}>ITE</option>
+                      <option value="ITI+ITE" {% if data.Plancher_bas_2_Isolation  == "ITI+ITE" %}selected{% endif %}>ITI+ITE</option>
+                      <option value="Inconnue" {% if data.Plancher_bas_2_Isolation  == "Inconnue" %}selected{% endif %}>Inconnue</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label  class="form-label form-label_formK">Epaisseur isolant: </label>
+                    <input type="number" class="form-control" name="Plancher_bas_2_Epaisseur_isolant" value={{ data.Plancher_bas_2_Epaisseur_isolant }} step="0.01">
+                  </div>
+
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Date d'isolation: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_bas_2_Date_d_isolation">
+                      <option value="" {% if data.Plancher_bas_2_Date_d_isolation  == "" %}selected{% endif %}></option>
+                      <option value="Moins de 5 ans" {% if data.Plancher_bas_2_Date_d_isolation  == "Moins de 5 ans" %}selected{% endif %}>Moins de 5 ans</option>
+                      <option value="Entre 5 et 10 ans" {% if data.Plancher_bas_2_Date_d_isolation  == "Entre 5 et 10 ans" %}selected{% endif %}>Entre 5 et 10 ans</option>
+                      <option value="Plus de 10 ans" {% if data.Plancher_bas_2_Date_d_isolation  == "Plus de 10 ans" %}selected{% endif %}>Plus de 10 ans</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Preuve d'isolation: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_bas_2_Preuve_d_isolation">
+                      <option value="" {% if data.Plancher_bas_2_Preuve_d_isolation  == "" %}selected{% endif %}></option>
+                      <option value="Confirmation du client" {% if data.Plancher_bas_2_Preuve_d_isolation  == "Confirmation du client" %}selected{% endif %}>Confirmation du client</option>
+                      <option value="Photo" {% if data.Plancher_bas_2_Preuve_d_isolation  == "Photo" %}selected{% endif %}>Photo</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo plancher bas: </label>
+                    <input type="file" id="file-input" name="Plancher_bas_2_Photo_plancher_bas" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Plancher_bas_2_Photo_plancher_bas')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Plancher_bas_2_Photo_plancher_bas.url }}"  alt="Image" width="70" >
+                  </div>
 
 
                 </div>
@@ -1049,7 +1194,75 @@
               <!-- General Form Elements -->
               <div class=""  id="show_div_11" >
                 <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="col-form-label form-label_formK">Type: </label>
+                  <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_Haut_1_Type">
+                    <option value="" {% if data.  == "" %}selected{% endif %}></option>
+                    <option value="Combles perdus" {% if data.Plancher_Haut_1_Type  == "Combles perdus" %}selected{% endif %}>Combles perdus</option>
+                    <option value="Combles aménagés" {% if data.Plancher_Haut_1_Type  == "Combles aménagés" %}selected{% endif %}>Combles aménagés</option>
+                    <option value="Toiture terrasse" {% if data.Plancher_Haut_1_Type  == "Toiture terrasse" %}selected{% endif %}>Toiture terrasse</option>
+                  </select>
+                </div>
 
+                <div class="col-md-6">
+                  <label class="col-form-label form-label_formK">Composition: </label>
+                  <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_Haut_1_Composition">
+                    <option value="" {% if data.Plancher_Haut_1_Composition  == "" %}selected{% endif %}></option>
+                    <option value="Dalle béton" {% if data.Plancher_Haut_1_Composition  == "Dalle béton" %}selected{% endif %}>Dalle béton</option>
+                    <option value="Solives bois" {% if data.Plancher_Haut_1_Composition  == "Solives bois" %}selected{% endif %}>Solives bois</option>
+                    <option value="Solives métalliques" {% if data.Plancher_Haut_1_Composition  == "Solives métalliques" %}selected{% endif %}>Solives métalliques</option>
+                    <option value="Entre solives bois" {% if data.Plancher_Haut_1_Composition  == "Entre solives bois" %}selected{% endif %}>Entre solives bois</option>
+                    <option value="Entre solives métalliques" {% if data.Plancher_Haut_1_Composition  == "Entre solives métalliques" %}selected{% endif %}>Entre solives métalliques</option>
+                  </select>
+                </div>
+
+
+                <div class="col-md-6">
+                  <label  class="form-label form-label_formK">Surface: </label>
+                  <input type="number" class="form-control" name="Plancher_Haut_1_Surface" value={{ data.Plancher_Haut_1_Surface }} step="0.01">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="col-form-label form-label_formK">Isolation: </label>
+                  <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_Haut_1_Isolation">
+                    <option value="" {% if data.Plancher_Haut_1_Isolation  == "" %}selected{% endif %}></option>
+                    <option value="Non isolé" {% if data.Plancher_Haut_1_Isolation  == "Non isolé" %}selected{% endif %}>Non isolé</option>
+                    <option value="ITI" {% if data.Plancher_Haut_1_Isolation  == "ITI" %}selected{% endif %}>ITI</option>
+                    <option value="ITE" {% if data.Plancher_Haut_1_Isolation  == "ITE" %}selected{% endif %}>ITE</option>
+                    <option value="ITI+ITE" {% if data.Plancher_Haut_1_Isolation  == "ITI+ITE" %}selected{% endif %}>ITI+ITE</option>
+                    <option value="Inconnue" {% if data.Plancher_Haut_1_Isolation  == "Inconnue" %}selected{% endif %}>Inconnue</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6">
+                  <label  class="form-label form-label_formK">Epaisseur isolant: </label>
+                  <input type="number" class="form-control" name="Plancher_Haut_1_Epaisseur_isolant" value={{ data.Plancher_Haut_1_Epaisseur_isolant }} step="0.01">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="col-form-label form-label_formK">Date d'isolation: </label>
+                  <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_Haut_1_Date_d_isolation">
+                    <option value="" {% if data.Plancher_Haut_1_Date_d_isolation  == "" %}selected{% endif %}></option>
+                    <option value="Moins de 5 ans" {% if data.Plancher_Haut_1_Date_d_isolation  == "Moins de 5 ans" %}selected{% endif %}>Moins de 5 ans</option>
+                    <option value="Entre 5 et 10 ans" {% if data.Plancher_Haut_1_Date_d_isolation  == "Entre 5 et 10 ans" %}selected{% endif %}>Entre 5 et 10 ans</option>
+                    <option value="Plus de 10 ans" {% if data.Plancher_Haut_1_Date_d_isolation  == "Plus de 10 ans" %}selected{% endif %}>Plus de 10 ans</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="col-form-label form-label_formK">Preuve d'isolation: </label>
+                  <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_Haut_1_Preuve_d_isolation">
+                    <option value="" {% if data.Plancher_Haut_1_Preuve_d_isolation  == "" %}selected{% endif %}></option>
+                    <option value="Confirmation du client" {% if data.Plancher_Haut_1_Preuve_d_isolation  == "Confirmation du client" %}selected{% endif %}>Confirmation du client</option>
+                    <option value="Photo" {% if data.Plancher_Haut_1_Preuve_d_isolation  == "Photo" %}selected{% endif %}>Photo</option>
+                  </select>
+                </div>
+
+                <div class="col-md-12">
+                  <label  class="form-label form-label_formK">Photo plancher bas: </label>
+                  <input type="file" id="file-input" name="Plancher_Haut_1_Photo_plancher_bas" accept="image/*"> </input>
+                  <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Plancher_Haut_1_Photo_plancher_bas')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                  <img src="{{ data.Plancher_Haut_1_Photo_plancher_bas.url }}"  alt="Image" width="70" >
+                </div>
 
 
                 </div>
@@ -1074,8 +1287,75 @@
               <!-- General Form Elements -->
               <div class=""  id="show_div_12" >
                 <div class="row g-3">
+                  <div class="col-md-6">
+                  <label class="col-form-label form-label_formK">Type: </label>
+                  <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_Haut_2_Type">
+                    <option value="" {% if data.  == "" %}selected{% endif %}></option>
+                    <option value="Combles perdus" {% if data.Plancher_Haut_2_Type  == "Combles perdus" %}selected{% endif %}>Combles perdus</option>
+                    <option value="Combles aménagés" {% if data.Plancher_Haut_2_Type  == "Combles aménagés" %}selected{% endif %}>Combles aménagés</option>
+                    <option value="Toiture terrasse" {% if data.Plancher_Haut_2_Type  == "Toiture terrasse" %}selected{% endif %}>Toiture terrasse</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="col-form-label form-label_formK">Composition: </label>
+                  <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_Haut_2_Composition">
+                    <option value="" {% if data.Plancher_Haut_2_Composition  == "" %}selected{% endif %}></option>
+                    <option value="Dalle béton" {% if data.Plancher_Haut_2_Composition  == "Dalle béton" %}selected{% endif %}>Dalle béton</option>
+                    <option value="Solives bois" {% if data.Plancher_Haut_2_Composition  == "Solives bois" %}selected{% endif %}>Solives bois</option>
+                    <option value="Solives métalliques" {% if data.Plancher_Haut_2_Composition  == "Solives métalliques" %}selected{% endif %}>Solives métalliques</option>
+                    <option value="Entre solives bois" {% if data.Plancher_Haut_2_Composition  == "Entre solives bois" %}selected{% endif %}>Entre solives bois</option>
+                    <option value="Entre solives métalliques" {% if data.Plancher_Haut_2_Composition  == "Entre solives métalliques" %}selected{% endif %}>Entre solives métalliques</option>
+                  </select>
+                </div>
 
 
+                <div class="col-md-6">
+                  <label  class="form-label form-label_formK">Surface: </label>
+                  <input type="number" class="form-control" name="Plancher_Haut_2_Surface" value={{ data.Plancher_Haut_2_Surface }} step="0.01">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="col-form-label form-label_formK">Isolation: </label>
+                  <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_Haut_2_Isolation">
+                    <option value="" {% if data.Plancher_Haut_2_Isolation  == "" %}selected{% endif %}></option>
+                    <option value="Non isolé" {% if data.Plancher_Haut_2_Isolation  == "Non isolé" %}selected{% endif %}>Non isolé</option>
+                    <option value="ITI" {% if data.Plancher_Haut_2_Isolation  == "ITI" %}selected{% endif %}>ITI</option>
+                    <option value="ITE" {% if data.Plancher_Haut_2_Isolation  == "ITE" %}selected{% endif %}>ITE</option>
+                    <option value="ITI+ITE" {% if data.Plancher_Haut_2_Isolation  == "ITI+ITE" %}selected{% endif %}>ITI+ITE</option>
+                    <option value="Inconnue" {% if data.Plancher_Haut_2_Isolation  == "Inconnue" %}selected{% endif %}>Inconnue</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6">
+                  <label  class="form-label form-label_formK">Epaisseur isolant: </label>
+                  <input type="number" class="form-control" name="Plancher_Haut_2_Epaisseur_isolant" value={{ data.Plancher_Haut_2_Epaisseur_isolant }} step="0.01">
+                </div>
+
+                <div class="col-md-6">
+                  <label class="col-form-label form-label_formK">Date d'isolation: </label>
+                  <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_Haut_2_Date_d_isolation">
+                    <option value="" {% if data.Plancher_Haut_2_Date_d_isolation  == "" %}selected{% endif %}></option>
+                    <option value="Moins de 5 ans" {% if data.Plancher_Haut_2_Date_d_isolation  == "Moins de 5 ans" %}selected{% endif %}>Moins de 5 ans</option>
+                    <option value="Entre 5 et 10 ans" {% if data.Plancher_Haut_2_Date_d_isolation  == "Entre 5 et 10 ans" %}selected{% endif %}>Entre 5 et 10 ans</option>
+                    <option value="Plus de 10 ans" {% if data.Plancher_Haut_2_Date_d_isolation  == "Plus de 10 ans" %}selected{% endif %}>Plus de 10 ans</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="col-form-label form-label_formK">Preuve d'isolation: </label>
+                  <select class="form-select kizeo_select_box" aria-label="Default select example" name="Plancher_Haut_2_Preuve_d_isolation">
+                    <option value="" {% if data.Plancher_Haut_2_Preuve_d_isolation  == "" %}selected{% endif %}></option>
+                    <option value="Confirmation du client" {% if data.Plancher_Haut_2_Preuve_d_isolation  == "Confirmation du client" %}selected{% endif %}>Confirmation du client</option>
+                    <option value="Photo" {% if data.Plancher_Haut_2_Preuve_d_isolation  == "Photo" %}selected{% endif %}>Photo</option>
+                  </select>
+                </div>
+
+                <div class="col-md-12">
+                  <label  class="form-label form-label_formK">Photo plancher bas: </label>
+                  <input type="file" id="file-input" name="Plancher_Haut_2_Photo_plancher_bas" accept="image/*"> </input>
+                  <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Plancher_Haut_2_Photo_plancher_bas')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                  <img src="{{ data.Plancher_Haut_2_Photo_plancher_bas.url }}"  alt="Image" width="70" >
+                </div>
 
                 </div>
           </div>
@@ -1099,9 +1379,59 @@
               <!-- General Form Elements -->
               <div class=""  id="show_div_13" >
                 <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Menuiserie: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Fenetre_type_1_Menuiserie">
+                      <option value="" {% if data.Fenetre_type_1_Menuiserie  == "" %}selected{% endif %}></option>
+                      <option value="Fenêtre battante" {% if data.Fenetre_type_1_Menuiserie  == "Fenêtre battante" %}selected{% endif %}>Fenêtre battante</option>
+                      <option value="Fenêtre coullissante" {% if data.Fenetre_type_1_Menuiserie  == "Fenêtre coullissante" %}selected{% endif %}>Fenêtre coullissante</option>
+                      <option value="PF battante sans sous-bassement" {% if data.Fenetre_type_1_Menuiserie  == "PF battante sans sous-bassement" %}selected{% endif %}>PF battante sans sous-bassement</option>
+                      <option value="PF battante avec sous-bassement" {% if data.Fenetre_type_1_Menuiserie  == "PF battante avec sous-bassement" %}selected{% endif %}>PF battante avec sous-bassement</option>
+                      <option value="PF Coulissante" {% if data.Fenetre_type_1_Menuiserie  == "PF Coulissante" %}selected{% endif %}>PF Coulissante</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Matériaux: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Fenetre_type_1_Materiaux">
+                      <option value="" {% if data.Fenetre_type_1_Materiaux  == "" %}selected{% endif %}></option>
+                      <option value="Bois" {% if data.Fenetre_type_1_Materiaux  == "Bois" %}selected{% endif %}>Bois</option>
+                      <option value="PVC" {% if data.Fenetre_type_1_Materiaux  == "PVC" %}selected{% endif %}>PVC</option>
+                      <option value="Aluminium" {% if data.Fenetre_type_1_Materiaux  == "Aluminium" %}selected{% endif %}>Aluminium</option>
+                      <option value="Métal" {% if data.Fenetre_type_1_Materiaux  == "Métal" %}selected{% endif %}>Métal</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Type de vitrage: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Fenetre_type_1_Type_de_vitrage">
+                      <option value="" {% if data.Fenetre_type_1_Type_de_vitrage  == "" %}selected{% endif %}></option>
+                      <option value="Simple vitrage" {% if data.Fenetre_type_1_Type_de_vitrage  == "Simple vitrage" %}selected{% endif %}>Simple vitrage</option>
+                      <option value="Double vitrage" {% if data.Fenetre_type_1_Type_de_vitrage  == "Double vitrage" %}selected{% endif %}>Double vitrage</option>
+                      <option value="Triple vitrage" {% if data.Fenetre_type_1_Type_de_vitrage  == "Triple vitrage" %}selected{% endif %}>Triple vitrage</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Volets: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Fenetre_type_1_Volets">
+                      <option value="" {% if data.Fenetre_type_1_Volets  == "" %}selected{% endif %}></option>
+                      <option value="Battant bois" {% if data.Fenetre_type_1_Volets  == "Battant bois" %}selected{% endif %}>Battant bois</option>
+                      <option value="Battant PVC" {% if data.Fenetre_type_1_Volets  == "Battant PVC" %}selected{% endif %}>Battant PVC</option>
+                      <option value="Roulant PVC" {% if data.Fenetre_type_1_Volets  == "Roulant PVC" %}selected{% endif %}>Roulant PVC</option>
+                      <option value="Roulant Alu" {% if data.Fenetre_type_1_Volets  == "Roulant Alu" %}selected{% endif %}>Roulant Alu</option>
+                      <option value="Persienne" {% if data.Fenetre_type_1_Volets  == "Persienne" %}selected{% endif %}>Persienne</option>
+                      <option value="Autres" {% if data.Fenetre_type_1_Volets  == "Autres" %}selected{% endif %}>Autres</option>
+                    </select>
+                  </div>
 
-
-
+                  <div class="col-md-6">
+                    <label  class="form-label form-label_formK">Nombre: </label>
+                    <input type="number" class="form-control" name="Fenetre_type_1_Nombre" value={{ data.Fenetre_type_1_Nombre }}>
+                  </div>
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo menuiseries: </label>
+                    <input type="file" id="file-input" name="Fenetre_type_1_menuiseries" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Fenetre_type_1_menuiseries')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Fenetre_type_1_menuiseries.url }}"  alt="Image" width="70" >
+                  </div>
                 </div>
           </div>
         </div>
@@ -1124,9 +1454,59 @@
               <!-- General Form Elements -->
               <div class=""  id="show_div_14" >
                 <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Menuiserie: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Fenetre_type_2_Menuiserie">
+                      <option value="" {% if data.Fenetre_type_2_Menuiserie  == "" %}selected{% endif %}></option>
+                      <option value="Fenêtre battante" {% if data.Fenetre_type_2_Menuiserie  == "Fenêtre battante" %}selected{% endif %}>Fenêtre battante</option>
+                      <option value="Fenêtre coullissante" {% if data.Fenetre_type_2_Menuiserie  == "Fenêtre coullissante" %}selected{% endif %}>Fenêtre coullissante</option>
+                      <option value="PF battante sans sous-bassement" {% if data.Fenetre_type_2_Menuiserie  == "PF battante sans sous-bassement" %}selected{% endif %}>PF battante sans sous-bassement</option>
+                      <option value="PF battante avec sous-bassement" {% if data.Fenetre_type_2_Menuiserie  == "PF battante avec sous-bassement" %}selected{% endif %}>PF battante avec sous-bassement</option>
+                      <option value="PF Coulissante" {% if data.Fenetre_type_2_Menuiserie  == "PF Coulissante" %}selected{% endif %}>PF Coulissante</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Matériaux: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Fenetre_type_2_Materiaux">
+                      <option value="" {% if data.Fenetre_type_2_Materiaux  == "" %}selected{% endif %}></option>
+                      <option value="Bois" {% if data.Fenetre_type_2_Materiaux  == "Bois" %}selected{% endif %}>Bois</option>
+                      <option value="PVC" {% if data.Fenetre_type_2_Materiaux  == "PVC" %}selected{% endif %}>PVC</option>
+                      <option value="Aluminium" {% if data.Fenetre_type_2_Materiaux  == "Aluminium" %}selected{% endif %}>Aluminium</option>
+                      <option value="Métal" {% if data.Fenetre_type_2_Materiaux  == "Métal" %}selected{% endif %}>Métal</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Type de vitrage: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Fenetre_type_2_Type_de_vitrage">
+                      <option value="" {% if data.Fenetre_type_2_Type_de_vitrage  == "" %}selected{% endif %}></option>
+                      <option value="Simple vitrage" {% if data.Fenetre_type_2_Type_de_vitrage  == "Simple vitrage" %}selected{% endif %}>Simple vitrage</option>
+                      <option value="Double vitrage" {% if data.Fenetre_type_2_Type_de_vitrage  == "Double vitrage" %}selected{% endif %}>Double vitrage</option>
+                      <option value="Triple vitrage" {% if data.Fenetre_type_2_Type_de_vitrage  == "Triple vitrage" %}selected{% endif %}>Triple vitrage</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Volets: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Fenetre_type_2_Volets">
+                      <option value="" {% if data.Fenetre_type_2_Volets  == "" %}selected{% endif %}></option>
+                      <option value="Battant bois" {% if data.Fenetre_type_2_Volets  == "Battant bois" %}selected{% endif %}>Battant bois</option>
+                      <option value="Battant PVC" {% if data.Fenetre_type_2_Volets  == "Battant PVC" %}selected{% endif %}>Battant PVC</option>
+                      <option value="Roulant PVC" {% if data.Fenetre_type_2_Volets  == "Roulant PVC" %}selected{% endif %}>Roulant PVC</option>
+                      <option value="Roulant Alu" {% if data.Fenetre_type_2_Volets  == "Roulant Alu" %}selected{% endif %}>Roulant Alu</option>
+                      <option value="Persienne" {% if data.Fenetre_type_2_Volets  == "Persienne" %}selected{% endif %}>Persienne</option>
+                      <option value="Autres" {% if data.Fenetre_type_2_Volets  == "Autres" %}selected{% endif %}>Autres</option>
+                    </select>
+                  </div>
 
-
-
+                  <div class="col-md-6">
+                    <label  class="form-label form-label_formK">Nombre: </label>
+                    <input type="number" class="form-control" name="Fenetre_type_2_Nombre" value={{ data.Fenetre_type_2_Nombre }}>
+                  </div>
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo menuiseries: </label>
+                    <input type="file" id="file-input" name="Fenetre_type_2_menuiseries" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Fenetre_type_2_menuiseries')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Fenetre_type_2_menuiseries.url }}"  alt="Image" width="70" >
+                  </div>
                 </div>
           </div>
         </div>
@@ -1151,7 +1531,39 @@
                 <div class="row g-3">
 
 
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Matériaux: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Porte_1_Materiaux">
+                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
+                      <option value="Bois" {% if data.Porte_1_Materiaux  == "Bois" %}selected{% endif %}>Bois</option>
+                      <option value="PVC" {% if data.Porte_1_Materiaux  == "PVC" %}selected{% endif %}>PVC</option>
+                      <option value="Aluminium" {% if data.Porte_1_Materiaux  == "Aluminium" %}selected{% endif %}>Aluminium</option>
+                      <option value="Métal" {% if data.Porte_1_Materiaux  == "Métal" %}selected{% endif %}>Métal</option>
+                      
+                    </select>
+                  </div>
 
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Type porte: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Porte_1_Type_porte">
+                      <option value="" {% if data.Porte_1_Type_porte  == "" %}selected{% endif %}></option>
+                      <option value="Opaque pleine simple" {% if data.Porte_1_Type_porte  == "Opaque pleine simple" %}selected{% endif %}>Opaque pleine simple</option>
+                      <option value="Avec <30% de vitrage simple" {% if data.Porte_1_Type_porte  == "Avec <30% de vitrage simple" %}selected{% endif %}>Avec &lt 30% de vitrage simple</option>
+                      <option value="Avec 30-60% de vitrage simple" {% if data.Porte_1_Type_porte  == "Avec 30-60% de vitrage simple" %}selected{% endif %}>Avec 30-60% de vitrage simple</option>
+                      <option value="Avec double vitrage" {% if data.Porte_1_Type_porte  == "Avec double vitrage" %}selected{% endif %}>Avec double vitrage</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label  class="form-label form-label_formK">Nombre: </label>
+                    <input type="number" class="form-control" name="Porte_1_Nombre" value={{ data.Porte_1_Nombre }}>
+                  </div>
+            
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo porte: </label>
+                    <input type="file" id="file-input" name="Porte_1_Photo_porte" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Porte_1_Photo_porte')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Porte_1_Photo_porte.url }}"  alt="Image" width="70" >
+                  </div>
                 </div>
           </div>
         </div>
@@ -1175,7 +1587,39 @@
               <div class=""  id="show_div_16" >
                 <div class="row g-3">
 
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Matériaux: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Porte_2_Materiaux">
+                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
+                      <option value="Bois" {% if data.Porte_2_Materiaux  == "Bois" %}selected{% endif %}>Bois</option>
+                      <option value="PVC" {% if data.Porte_2_Materiaux  == "PVC" %}selected{% endif %}>PVC</option>
+                      <option value="Aluminium" {% if data.Porte_2_Materiaux  == "Aluminium" %}selected{% endif %}>Aluminium</option>
+                      <option value="Métal" {% if data.Porte_2_Materiaux  == "Métal" %}selected{% endif %}>Métal</option>
+                      
+                    </select>
+                  </div>
 
+                  <div class="col-md-6">
+                    <label class="col-form-label form-label_formK">Type porte: </label>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Porte_2_Type_porte">
+                      <option value="" {% if data.Porte_2_Type_porte  == "" %}selected{% endif %}></option>
+                      <option value="Opaque pleine simple" {% if data.Porte_2_Type_porte  == "Opaque pleine simple" %}selected{% endif %}>Opaque pleine simple</option>
+                      <option value="Avec <30% de vitrage simple" {% if data.Porte_2_Type_porte  == "Avec <30% de vitrage simple" %}selected{% endif %}>Avec &lt 30% de vitrage simple</option>
+                      <option value="Avec 30-60% de vitrage simple" {% if data.Porte_2_Type_porte  == "Avec 30-60% de vitrage simple" %}selected{% endif %}>Avec 30-60% de vitrage simple</option>
+                      <option value="Avec double vitrage" {% if data.Porte_2_Type_porte  == "Avec double vitrage" %}selected{% endif %}>Avec double vitrage</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label  class="form-label form-label_formK">Nombre: </label>
+                    <input type="number" class="form-control" name="Porte_2_Nombre" value={{ data.Porte_2_Nombre }}>
+                  </div>
+            
+                  <div class="col-md-12">
+                    <label  class="form-label form-label_formK">Photo porte: </label>
+                    <input type="file" id="file-input" name="Porte_2_Photo_porte" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Porte_2_Photo_porte')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Porte_2_Photo_porte.url }}"  alt="Image" width="70" >
+                  </div>
 
                 </div>
           </div>
@@ -1200,7 +1644,7 @@
               <div class=""  id="show_div_17" >
                 <div class="row g-3">
 
-
+                  
 
                 </div>
           </div>
@@ -1210,13 +1654,14 @@
 
 
     <div class="text-center">
-      <button type="submit" class="btn btn-primary" name="submit_to_Kizeo" value="submit" >Submit</button>
-      <button type="submit" class="btn btn-primary" name="submit_to_Kizeo" value="download">Télécharger</button>
+      <button type="submit" class="btn btn-primary" name="submit_to_Kizeo" value="submit" >Sauvegarder</button>
     </div>
 
   </form>
   </main>
 
+
+  <
   <!-- ======= Footer ======= -->
   {% else %}
       
@@ -1251,7 +1696,13 @@
   
   </script>
   <script>
-    
+    var canvas = document.getElementById('signature-canvas');
+    var signaturePad = new SignaturePad(canvas);
+
+    // Clear the signature
+    document.getElementById('clear-signature').addEventListener('click', function() {
+      signaturePad.clear();
+    });
   </script>
   
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>

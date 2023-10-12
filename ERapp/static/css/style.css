@@ -302,7 +302,8 @@ table.dataTable thead .sorting_desc_disabled:before {
 .card-body_facade{height:auto !important;max-height:3000px  !important;}
 #show_div_1,#show_div_2,#show_div_3,#show_div_4,#show_div_5,
 #show_div_6,#show_div_7,#show_div_8,#show_div_9,#show_div_10,
-#show_div_11{display:none;
+#show_div_11,#show_div_12,#show_div_13,#show_div_14,#show_div_15,
+#show_div_16,#show_div_17{display:none;
   height:auto !important;
   padding-bottom: 15px!important;
 }

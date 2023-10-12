@@ -16,7 +16,8 @@ from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,fil
 from django.core.mail import send_mail
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 import random
 import string
@@ -661,66 +662,66 @@ def Kizeo_form_page(request,client_id):
         
         submit_to_Kizeo = request.POST.get("submit_to_Kizeo")
         if submit_to_Kizeo=="submit":
-            
+            #obj.signature_data = request.FILES.get('signatureData')
             ### Façades
-            Facade_1_Orientation = request.POST.get("Facade_1_Orientation")
-            Facade_1_Mitoyennete = request.POST.get("Facade_1_Mitoyennete")
-            Facade_1_Longueur = float(request.POST.get("Facade_1_Longueur"))
-            Facade_1_Hauteur = float(request.POST.get("Facade_1_Hauteur"))
-            #Facade_1_Surfac = request.POST.get("Facade_1_Surfac")
+            obj.Facade_1_Orientation = request.POST.get("Facade_1_Orientation")
+            obj.Facade_1_Mitoyennete = request.POST.get("Facade_1_Mitoyennete")
+            obj.Facade_1_Longueur = float(request.POST.get("Facade_1_Longueur"))
+            obj.Facade_1_Hauteur = float(request.POST.get("Facade_1_Hauteur"))
+            obj.Facade_1_Surfac = float(request.POST.get("Facade_1_Longueur")) * float(request.POST.get("Facade_1_Hauteur"))
             #Facade_1_Photo_Principale = request.FILES['Facade_1_Photo_Principale']
             
-            Facade_2_Orientation = request.POST.get("Facade_2_Orientation")
-            Facade_2_Mitoyennete = request.POST.get("Facade_2_Mitoyennete")
-            Facade_2_Longueur = float(request.POST.get("Facade_2_Longueur"))
-            Facade_2_Hauteur = float(request.POST.get("Facade_2_Hauteur"))
-            #Facade_2_Surfac = request.POST.get("Facade_2_Surfac")
+            obj.Facade_2_Orientation = request.POST.get("Facade_2_Orientation")
+            obj.Facade_2_Mitoyennete = request.POST.get("Facade_2_Mitoyennete")
+            obj.Facade_2_Longueur = float(request.POST.get("Facade_2_Longueur"))
+            obj.Facade_2_Hauteur = float(request.POST.get("Facade_2_Hauteur"))
+            obj.Facade_2_Surfac = (float(request.POST.get("Facade_2_Longueur")) * float(request.POST.get("Facade_2_Hauteur")))
             #Facade_2_Photo_Principale = request.FILES['Facade_2_Photo_Principale']
             
-            Facade_3_Orientation = request.POST.get("Facade_3_Orientation")
-            Facade_3_Mitoyennete = request.POST.get("Facade_3_Mitoyennete")
-            Facade_3_Longueur = float(request.POST.get("Facade_3_Longueur"))
-            Facade_3_Hauteur = float(request.POST.get("Facade_3_Hauteur"))
-            #Facade_3_Surfac = request.POST.get("Facade_3_Surfac")
+            obj.Facade_3_Orientation = request.POST.get("Facade_3_Orientation")
+            obj.Facade_3_Mitoyennete = request.POST.get("Facade_3_Mitoyennete")
+            obj.Facade_3_Longueur = float(request.POST.get("Facade_3_Longueur"))
+            obj.Facade_3_Hauteur = float(request.POST.get("Facade_3_Hauteur"))
+            obj.Facade_3_Surfac = (float(request.POST.get("Facade_3_Longueur")) * float(request.POST.get("Facade_3_Hauteur")))
             #Facade_3_Photo_Principale = request.FILES['Facade_3_Photo_Principale']
             
-            Facade_4_Orientation = request.POST.get("Facade_4_Orientation")
-            Facade_4_Mitoyennete = request.POST.get("Facade_4_Mitoyennete")
-            Facade_4_Longueur = float(request.POST.get("Facade_4_Longueur"))
-            Facade_4_Hauteur = float(request.POST.get("Facade_4_Hauteur"))
-            #Facade_4_Surfac = request.POST.get("Facade_4_Surfac")
+            obj.Facade_4_Orientation = request.POST.get("Facade_4_Orientation")
+            obj.Facade_4_Mitoyennete = request.POST.get("Facade_4_Mitoyennete")
+            obj.Facade_4_Longueur = float(request.POST.get("Facade_4_Longueur"))
+            obj.Facade_4_Hauteur = float(request.POST.get("Facade_4_Hauteur"))
+            obj.Facade_4_Surfac = (float(request.POST.get("Facade_4_Longueur")) * float(request.POST.get("Facade_4_Hauteur")))
             #Facade_4_Photo_Principale = request.FILES['Facade_4_Photo_Principale']
             
             
             ### Cauffage
-            Cauffage_systeme = request.POST.get("Cauffage_systeme")
-            Cauffage_annee_de_mise_en_oeuvre = int(request.POST.get("Cauffage_annee_de_mise_en_oeuvre"))
+            obj.Cauffage_systeme = request.POST.get("Cauffage_systeme")
+            obj.Cauffage_annee_de_mise_en_oeuvre = int(request.POST.get("Cauffage_annee_de_mise_en_oeuvre"))
             #Cauffage_photo_systeme_de_production = request.FILES['Cauffage_photo_systeme_de_production']
             #Cauffage_photo_fiche_signaletique = request.FILES['Cauffage_photo_fiche_signaletique']
-            Cauffage_type_de_regulation = request.POST.get("Cauffage_type_de_regulation")
-            Cauffage_system_d_appoint = request.POST.get("Cauffage_system_d_appoint")
+            obj.Cauffage_type_de_regulation = request.POST.get("Cauffage_type_de_regulation")
+            obj.Cauffage_system_d_appoint = request.POST.get("Cauffage_system_d_appoint")
             #Cauffage_photo_appoint = request.FILES['Cauffage_photo_appoint']
-            Cauffage_commentaire = request.POST.get("Cauffage_commentaire")
+            obj.Cauffage_commentaire = request.POST.get("Cauffage_commentaire")
                 
             ### ECS
-            ECS_type =request.POST.get("ECS_type")
-            ECS_system_d_appoint = request.POST.get("ECS_system_d_appoint")
+            obj.ECS_type =request.POST.get("ECS_type")
+            obj.ECS_system_d_appoint = request.POST.get("ECS_system_d_appoint")
             #ECS_photo_appoint = request.FILES['ECS_photo_appoint']
-            ECS_commentaire = request.POST.get("ECS_commentaire")
+            obj.ECS_commentaire = request.POST.get("ECS_commentaire")
 
             ### Ventilation
-            Ventilation_type = request.POST.get("ECS_type")
+            obj.Ventilation_type = request.POST.get("Ventilation_type")
             #Ventilation_photo_ventilation = request.FILES['Ventilation_photo_ventilation']
             
             ### Refroidissement
-            Refroidissement_type = request.POST.get("Refroidissement_type")
-            Refroidissement_commentaire = request.POST.get("Refroidissement_commentaire")
+            obj.Refroidissement_type = request.POST.get("Refroidissement_type")
+            obj.Refroidissement_commentaire = request.POST.get("Refroidissement_commentaire")
             
             ### Compteur Electrique
-            Compteur_Electrique_Puissance_souscrite = request.POST.get("Compteur_Electrique_Puissance_souscrite")
-            Compteur_Electrique_type = request.POST.get("Compteur_Electrique_type")
+            obj.Compteur_Electrique_Puissance_souscrite = float(request.POST.get("Compteur_Electrique_Puissance_souscrite"))
+            obj.Compteur_Electrique_type = request.POST.get("Compteur_Electrique_type")
             #Compteur_Electrique_photo_compteur = request.FILES['Compteur_Electrique_photo_compteur']
-            Compteur_Electrique_commentaire = request.POST.get("Compteur_Electrique_commentaire")
+            obj.Compteur_Electrique_commentaire = request.POST.get("Compteur_Electrique_commentaire")
             
             ### Mur 1
             obj.Mur_1_Position = request.POST.get("Mur_1_Position")
@@ -742,73 +743,70 @@ def Kizeo_form_page(request,client_id):
             obj.Mur_2_Preuve_d_isolation = request.POST.get("Mur_2_Preuve_d_isolation")
             
             
-            obj.Facade_1_Orientation = Facade_1_Orientation
-            obj.Facade_1_Mitoyennete = Facade_1_Mitoyennete
-            obj.Facade_1_Longueur = Facade_1_Longueur
-            obj.Facade_1_Hauteur =  Facade_1_Hauteur
-            obj.Facade_1_Surface =Facade_1_Longueur * Facade_1_Hauteur 
-            #obj.Facade_1_Photo_Principale =Facade_1_Photo_Principale
+            ### Plancher bas 1
+            obj.Plancher_bas_1_Position = request.POST.get("Plancher_bas_1_Position")
+            obj.Plancher_bas_1_Composition = request.POST.get("Plancher_bas_1_Composition")
+            obj.Plancher_bas_1_Surface = float(request.POST.get("Plancher_bas_1_Surface"))
+            obj.Plancher_bas_1_Isolation = request.POST.get("Plancher_bas_1_Isolation")
+            obj.Plancher_bas_1_Epaisseur_isolant = float(request.POST.get("Plancher_bas_1_Epaisseur_isolant"))
+            obj.Plancher_bas_1_Date_d_isolation = request.POST.get("Plancher_bas_1_Date_d_isolation")
+            obj.Plancher_bas_1_Preuve_d_isolation = request.POST.get("Plancher_bas_1_Preuve_d_isolation")
+            #obj.Plancher_bas_1_Photo_plancher_bas = 
             
-            obj.Facade_2_Orientation = Facade_2_Orientation
-            obj.Facade_2_Mitoyennete = Facade_2_Mitoyennete
-            obj.Facade_2_Longueur = Facade_2_Longueur
-            obj.Facade_2_Hauteur =  Facade_2_Hauteur
-            obj.Facade_2_Surface =Facade_2_Longueur * Facade_2_Hauteur 
-            #obj.Facade_2_Photo_Principale =Facade_2_Photo_Principale
+            ### Plancher bas 2
+            obj.Plancher_bas_2_Position = request.POST.get("Plancher_bas_2_Position")
+            obj.Plancher_bas_2_Composition = request.POST.get("Plancher_bas_2_Composition")
+            obj.Plancher_bas_2_Surface = float(request.POST.get("Plancher_bas_2_Surface"))
+            obj.Plancher_bas_2_Isolation = request.POST.get("Plancher_bas_2_Isolation")
+            obj.Plancher_bas_2_Epaisseur_isolant = float(request.POST.get("Plancher_bas_2_Epaisseur_isolant"))
+            obj.Plancher_bas_2_Date_d_isolation = request.POST.get("Plancher_bas_2_Date_d_isolation")
+            obj.Plancher_bas_2_Preuve_d_isolation = request.POST.get("Plancher_bas_2_Preuve_d_isolation")
+            #obj.Plancher_bas_2_Photo_plancher_bas = 
             
-            obj.Facade_3_Orientation = Facade_3_Orientation
-            obj.Facade_3_Mitoyennete = Facade_3_Mitoyennete
-            obj.Facade_3_Longueur = Facade_3_Longueur
-            obj.Facade_3_Hauteur =  Facade_3_Hauteur
-            obj.Facade_3_Surface =Facade_3_Longueur * Facade_3_Hauteur 
-            #obj.Facade_3_Photo_Principale =Facade_3_Photo_Principale
+             ### Plancher bas 1
+            obj.Plancher_Haut_1_Type = request.POST.get("Plancher_Haut_1_Type")
+            obj.Plancher_Haut_1_Composition = request.POST.get("Plancher_Haut_1_Composition")
+            obj.Plancher_Haut_1_Surface = float(request.POST.get("Plancher_Haut_1_Surface"))
+            obj.Plancher_Haut_1_Isolation = request.POST.get("Plancher_Haut_1_Isolation")
+            obj.Plancher_Haut_1_Epaisseur_isolant = float(request.POST.get("Plancher_Haut_1_Epaisseur_isolant"))
+            obj.Plancher_Haut_1_Date_d_isolation = request.POST.get("Plancher_Haut_1_Date_d_isolation")
+            obj.Plancher_Haut_1_Preuve_d_isolation = request.POST.get("Plancher_Haut_1_Preuve_d_isolation")
+            #obj.Plancher_bas_1_Photo_plancher_bas = 
             
-            obj.Facade_4_Orientation = Facade_4_Orientation
-            obj.Facade_4_Mitoyennete = Facade_4_Mitoyennete
-            obj.Facade_4_Longueur = Facade_4_Longueur
-            obj.Facade_4_Hauteur =  Facade_4_Hauteur
-            obj.Facade_4_Surface =Facade_4_Longueur * Facade_4_Hauteur 
-            #obj.Facade_4_Photo_Principale =Facade_4_Photo_Principale
+            ### Plancher bas 2
+            obj.Plancher_Haut_2_Type = request.POST.get("Plancher_Haut_2_Type")
+            obj.Plancher_Haut_2_Composition = request.POST.get("Plancher_Haut_2_Composition")
+            obj.Plancher_Haut_2_Surface = float(request.POST.get("Plancher_Haut_2_Surface"))
+            obj.Plancher_Haut_2_Isolation = request.POST.get("Plancher_Haut_2_Isolation")
+            obj.Plancher_Haut_2_Epaisseur_isolant = float(request.POST.get("Plancher_Haut_2_Epaisseur_isolant"))
+            obj.Plancher_Haut_2_Date_d_isolation = request.POST.get("Plancher_Haut_2_Date_d_isolation")
+            obj.Plancher_Haut_2_Preuve_d_isolation = request.POST.get("Plancher_Haut_2_Preuve_d_isolation")
+            #obj.Plancher_bas_2_Photo_plancher_bas = 
             
-            ### Cauffage
-            obj.Cauffage_systeme = Cauffage_systeme
-            obj.Cauffage_annee_de_mise_en_oeuvre = Cauffage_annee_de_mise_en_oeuvre
-            #obj.Cauffage_photo_systeme_de_production = Cauffage_photo_systeme_de_production
-            #obj.Cauffage_photo_fiche_signaletique = Cauffage_photo_fiche_signaletique
-            obj.Cauffage_type_de_regulation = Cauffage_type_de_regulation
-            obj.Cauffage_system_d_appoint = Cauffage_system_d_appoint
-            #obj.Cauffage_photo_appoint = Cauffage_photo_appoint
-            obj.Cauffage_commentaire =Cauffage_commentaire
+            ### Fenetre type 1
+            obj.Fenetre_type_1_Menuiserie = request.POST.get("Fenetre_type_1_Menuiserie")
+            obj.Fenetre_type_1_Materiaux = request.POST.get("Fenetre_type_1_Materiaux")
+            obj.Fenetre_type_1_Type_de_vitrage = request.POST.get("Fenetre_type_1_Type_de_vitrage")
+            obj.Fenetre_type_1_Volets = request.POST.get("Fenetre_type_1_Volets")
+            obj.Fenetre_type_1_Nombre = int(request.POST.get("Fenetre_type_1_Nombre"))
+
+            ### Fenetre type 2
+            obj.Fenetre_type_2_Menuiserie = request.POST.get("Fenetre_type_2_Menuiserie")
+            obj.Fenetre_type_2_Materiaux = request.POST.get("Fenetre_type_2_Materiaux")
+            obj.Fenetre_type_2_Type_de_vitrage = request.POST.get("Fenetre_type_2_Type_de_vitrage")
+            obj.Fenetre_type_2_Volets = request.POST.get("Fenetre_type_2_Volets")
+            obj.Fenetre_type_2_Nombre = int(request.POST.get("Fenetre_type_2_Nombre"))
             
-            ### ECS
-            obj.ECS_type = ECS_type
-            obj.ECS_system_d_appoint = ECS_system_d_appoint
-            #obj.ECS_photo_appoint = ECS_photo_appoint
-            obj.ECS_commentaire = ECS_commentaire
+            ### Porte 1
+            obj.Porte_1_Materiaux = request.POST.get("Porte_1_Materiaux")
+            obj.Porte_1_Type_porte = request.POST.get("Porte_1_Type_porte")
+            obj.Porte_1_Nombre = float(request.POST.get("Porte_1_Nombre"))
             
-            ### Ventilation
-            obj.Ventilation_type = Ventilation_type
-            #obj.Ventilation_photo_ventilation = Ventilation_photo_ventilation
+            ### Porte 2
+            obj.Porte_2_Materiaux = request.POST.get("Porte_2_Materiaux")
+            obj.Porte_2_Type_porte = request.POST.get("Porte_2_Type_porte")
+            obj.Porte_2_Nombre = float(request.POST.get("Porte_2_Nombre"))
             
-            ### Refroidissement
-            obj.Refroidissement_type = Refroidissement_type
-            obj.Refroidissement_commentaire = Refroidissement_commentaire
-            
-            ### Compteur Electrique
-            obj.Compteur_Electrique_Puissance_souscrite = Compteur_Electrique_Puissance_souscrite
-            obj.Compteur_Electrique_type = Compteur_Electrique_type
-            #obj.Compteur_Electrique_photo_compteur = Compteur_Electrique_photo_compteur
-            obj.Compteur_Electrique_commentaire = Compteur_Electrique_commentaire
-            
-            ### Mur 1
-            #obj.Mur_1_Position = Mur_1_Position
-            #obj.Mur_1_Composition = Mur_1_Composition
-            #obj.Mur_1_Epaisseur_mur = Mur_1_Epaisseur_mur
-            #obj.Mur_1_Isolation = Mur_1_Isolation
-            #obj.Mur_1_Epaisseur_isolant = Mur_1_Epaisseur_isolant
-            #obj.Mur_1_Date_d_isolation = Mur_1_Date_d_isolation
-            #obj.Mur_1_Preuve_d_isolation = Mur_1_Preuve_d_isolation
-            #obj.Mur_1_Photo_mur = Mur_1_Photo_mur
             
             obj.save(update_fields=['Facade_1_Orientation', 'Facade_1_Mitoyennete','Facade_1_Longueur','Facade_1_Hauteur','Facade_1_Surface',#'Facade_1_Photo_Principale',
                                     'Facade_2_Orientation', 'Facade_2_Mitoyennete','Facade_2_Longueur','Facade_2_Hauteur','Facade_2_Surface',#'Facade_2_Photo_Principale',
@@ -818,22 +816,17 @@ def Kizeo_form_page(request,client_id):
                                     ### Cauffage
                                     "Cauffage_systeme",
                                     "Cauffage_annee_de_mise_en_oeuvre",
-                                    #"Cauffage_photo_systeme_de_production",
-                                    #"Cauffage_photo_fiche_signaletique",
                                     "Cauffage_type_de_regulation",
                                     "Cauffage_system_d_appoint",
-                                    #"Cauffage_photo_appoint" ,
                                     "Cauffage_commentaire" ,
                                     
                                     ### ECS
                                     "ECS_type",
                                     "ECS_system_d_appoint",
-                                    #"ECS_photo_appoint" ,
                                     "ECS_commentaire",
                                     
                                     ### Ventilation
                                     "Ventilation_type" ,
-                                    #"Ventilation_photo_ventilation" ,
                                     
                                     ### Refroidissement
                                     "Refroidissement_type" ,
@@ -842,7 +835,6 @@ def Kizeo_form_page(request,client_id):
                                     ### Compteur Electrique
                                     "Compteur_Electrique_Puissance_souscrite" ,
                                     "Compteur_Electrique_type" ,
-                                    #"Compteur_Electrique_photo_compteur" ,
                                     "Compteur_Electrique_commentaire" ,
                                     
                                     ### Mur 1
@@ -853,7 +845,6 @@ def Kizeo_form_page(request,client_id):
                                     "Mur_1_Epaisseur_isolant",
                                     "Mur_1_Date_d_isolation",
                                     "Mur_1_Preuve_d_isolation",
-                                    #"Mur_1_Photo_mur",
                                     ### Mur 2
                                     "Mur_2_Position", 
                                     "Mur_2_Composition",
@@ -863,6 +854,73 @@ def Kizeo_form_page(request,client_id):
                                     "Mur_2_Date_d_isolation",
                                     "Mur_2_Preuve_d_isolation",
                                     
+                                    ### Plancher bas 1
+                                    "Plancher_bas_1_Position",
+                                    "Plancher_bas_1_Composition" ,
+                                    "Plancher_bas_1_Isolation" ,
+                                    "Plancher_bas_1_Epaisseur_isolant" ,
+                                    "Plancher_bas_1_Date_d_isolation" ,
+                                    "Plancher_bas_1_Preuve_d_isolation" ,
+                                    "Plancher_bas_1_Photo_plancher_bas" ,
+                                    ### Plancher bas 2
+                                    "Plancher_bas_2_Position",
+                                    "Plancher_bas_2_Composition" ,
+                                    "Plancher_bas_2_Isolation" ,
+                                    "Plancher_bas_2_Epaisseur_isolant" ,
+                                    "Plancher_bas_2_Date_d_isolation" ,
+                                    "Plancher_bas_2_Preuve_d_isolation" ,
+                                    "Plancher_bas_2_Photo_plancher_bas" ,
+                                    
+                                    ### Plancher haut 1
+                                    "Plancher_Haut_1_Type",
+                                    "Plancher_Haut_1_Composition",
+                                    "Plancher_Haut_1_Surface",
+                                    "Plancher_Haut_1_Isolation" ,
+                                    "Plancher_Haut_1_Epaisseur_isolant" ,
+                                    "Plancher_Haut_1_Date_d_isolation",
+                                    "Plancher_Haut_1_Preuve_d_isolation" ,
+                                    "Plancher_Haut_1_Photo_plancher_bas" ,
+                                    ### Plancher haut 2
+                                    "Plancher_Haut_2_Type",
+                                    "Plancher_Haut_2_Composition",
+                                    "Plancher_Haut_2_Surface",
+                                    "Plancher_Haut_2_Isolation" ,
+                                    "Plancher_Haut_2_Epaisseur_isolant" ,
+                                    "Plancher_Haut_2_Date_d_isolation",
+                                    "Plancher_Haut_2_Preuve_d_isolation" ,
+                                    "Plancher_Haut_2_Photo_plancher_bas" ,
+                                    
+                                    
+                                    ### Fenetre type 1
+                                    "Fenetre_type_1_Menuiserie" ,
+                                    "Fenetre_type_1_Materiaux",
+                                    "Fenetre_type_1_Type_de_vitrage" ,
+                                    "Fenetre_type_1_Volets" ,
+                                    "Fenetre_type_1_Nombre",
+                                    "Fenetre_type_1_menuiseries" ,
+                                    ### Fenetre type 2
+                                    "Fenetre_type_2_Menuiserie" ,
+                                    "Fenetre_type_2_Materiaux",
+                                    "Fenetre_type_2_Type_de_vitrage" ,
+                                    "Fenetre_type_2_Volets" ,
+                                    "Fenetre_type_2_Nombre",
+                                    "Fenetre_type_2_menuiseries" ,
+                                    
+                                    ### Porte 1
+                                    "Porte_1_Materiaux",
+                                    "Porte_1_Type_porte",
+                                    "Porte_1_Nombre",
+                                    ### Porte 2
+                                    "Porte_2_Materiaux",
+                                    "Porte_2_Type_porte",
+                                    "Porte_2_Nombre",
+                                    
+                                    
+                                    
+                                    #'signature_data',
+
+
+    
                                 ])
 
                 
@@ -883,6 +941,19 @@ def Kizeo_form_page(request,client_id):
 
 
 
+def save_signature(request):
+    if request.method == 'POST':
+        return redirect("gggg")
+        signature_data = request.POST.get('signature', '')
+
+        # You can save the signature data to your model as an image field.
+        # Here, assume you have a model named Signature with a signature field.
+        obj = kizeo_model.objects.get(kizeo_id="4MLJMq2cj8")
+        obj.objects.create(signature_image=signature_data)
+        return JsonResponse({'message': 'Signature saved successfully.'})
+
+    
+    
 def download_K_file(request,file_id):
     obj = kizeo_model.objects.get(kizeo_id=file_id)
     template_path = 'ERapp\static\Kizeo.xlsx'  # Provide the path to your template file
