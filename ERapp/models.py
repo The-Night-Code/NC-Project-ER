@@ -307,7 +307,7 @@ class kizeo_model(models.Model):
     Fenetre_type_1_Type_de_vitrage = models.CharField(max_length=100,blank=True)
     Fenetre_type_1_Volets = models.CharField(max_length=100,blank=True)
     Fenetre_type_1_Nombre = models.IntegerField(default=0,blank=True)
-    Fenetre_type_1_menuiseries = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Fenetre_type_1_Photo = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
     
     ### Fenetre type 2
     Fenetre_type_2_Menuiserie = models.CharField(max_length=100,blank=True)
@@ -315,7 +315,7 @@ class kizeo_model(models.Model):
     Fenetre_type_2_Type_de_vitrage = models.CharField(max_length=100,blank=True)
     Fenetre_type_2_Volets = models.CharField(max_length=100,blank=True)
     Fenetre_type_2_Nombre = models.IntegerField(default=0,blank=True)
-    Fenetre_type_2_menuiseries = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Fenetre_type_2_Photo = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
     
     
     ### Porte 1

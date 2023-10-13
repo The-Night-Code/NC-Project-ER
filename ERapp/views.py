@@ -897,14 +897,14 @@ def Kizeo_form_page(request,client_id):
                                     "Fenetre_type_1_Type_de_vitrage" ,
                                     "Fenetre_type_1_Volets" ,
                                     "Fenetre_type_1_Nombre",
-                                    "Fenetre_type_1_menuiseries" ,
+                                    "Fenetre_type_1_Photo" ,
                                     ### Fenetre type 2
                                     "Fenetre_type_2_Menuiserie" ,
                                     "Fenetre_type_2_Materiaux",
                                     "Fenetre_type_2_Type_de_vitrage" ,
                                     "Fenetre_type_2_Volets" ,
                                     "Fenetre_type_2_Nombre",
-                                    "Fenetre_type_2_menuiseries" ,
+                                    "Fenetre_type_2_Photo" ,
                                     
                                     ### Porte 1
                                     "Porte_1_Materiaux",
@@ -915,27 +915,11 @@ def Kizeo_form_page(request,client_id):
                                     "Porte_2_Type_porte",
                                     "Porte_2_Nombre",
                                     
-                                    
-                                    
+
                                     #'signature_data',
 
-
-    
                                 ])
 
-                
-                
-     
-            
-            
-        
-            ######################################   WORK_SHEET_4
-            ######################################   WORK_SHEET_4
-            ######################################   WORK_SHEET_4
-        
-            
-    
-    
     data = kizeo_model.objects.get(kizeo_id=client_id)
     return render(request, 'html/formK.html',{"data":data})
 
@@ -1060,7 +1044,267 @@ def download_K_file(request,file_id):
             img_1.height = 140.16 # cell_height
             worksheet4.add_image(img_1, image_cell_1.coordinate)
     
+    
+    
+    
+    ### mur 1
+    #text_cell1 = worksheet4.merge_cells('B60:E60') 
+    #cell = text_cell1.cell(row=1, column=1) 
+    text_cell = worksheet4['B60'] 
+    text_cell.value = f"Murs - type 1 - {obj.Mur_1_Position}"
+    text_cell = worksheet4['E61']  
+    text_cell.value = obj.Mur_1_Composition
+    text_cell = worksheet4['E62'] 
+    text_cell.value = obj.Mur_1_Epaisseur_mur
+    text_cell = worksheet4['E63']  
+    text_cell.value = obj.Mur_1_Isolation
+    text_cell = worksheet4['E64']  
+    text_cell.value = obj.Mur_1_Epaisseur_isolant
+    text_cell = worksheet4['E65']  
+    text_cell.value = obj.Mur_1_Date_d_isolation
+    text_cell = worksheet4['E66']  
+    #text_cell.value = obj.
+    
+    image_cell_1 = worksheet4['B67'] 
+    image_cell_1.value = None
+    if obj.Mur_1_Photo_mur:
+        image_path_ = obj.Mur_1_Photo_mur.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = obj.Mur_1_Photo_mur.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    ### mur 2
+    #text_cell1 = worksheet4.merge_cells('B60:E60') 
+    #cell = text_cell1.cell(row=1, column=1) 
+    text_cell = worksheet4['B76'] 
+    text_cell.value = f"Murs - type 2 - {obj.Mur_2_Position}"
+    text_cell = worksheet4['E77']  
+    text_cell.value = obj.Mur_2_Composition
+    text_cell = worksheet4['E78'] 
+    text_cell.value = obj.Mur_2_Epaisseur_mur
+    text_cell = worksheet4['E79']  
+    text_cell.value = obj.Mur_2_Isolation
+    text_cell = worksheet4['E80']  
+    text_cell.value = obj.Mur_2_Epaisseur_isolant
+    text_cell = worksheet4['E81']  
+    text_cell.value = obj.Mur_2_Date_d_isolation
+    text_cell = worksheet4['E82']  
+    #text_cell.value = obj.
+    
+    image_cell_1 = worksheet4['B83'] 
+    image_cell_1.value = None
+    if obj.Mur_2_Photo_mur:
+        image_path_ = obj.Mur_2_Photo_mur.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = obj.Mur_2_Photo_mur.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    
+    
+    ### Plancher bas type1
+    text_cell = worksheet4['E92'] 
+    text_cell.value = obj.Plancher_bas_1_Position
+    text_cell = worksheet4['E93']  
+    text_cell.value = obj.Plancher_bas_1_Composition
+    text_cell = worksheet4['E94'] 
+    text_cell.value = obj.Plancher_bas_1_Isolation
+    text_cell = worksheet4['E95']  
+    text_cell.value = obj.Plancher_bas_1_Epaisseur_isolant
+    text_cell = worksheet4['E96']  
+    text_cell.value = obj.Plancher_bas_1_Date_d_isolation
+    text_cell = worksheet4['E97']  
+    text_cell.value = obj.Plancher_bas_1_Surface
+    text_cell = worksheet4['E98']  
+    #text_cell.value = obj.
+    
+    image_cell_1 = worksheet4['B99'] 
+    image_cell_1.value = None
+    if obj.Plancher_bas_1_Photo_plancher_bas:
+        image_path_ = obj.Plancher_bas_1_Photo_plancher_bas.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = obj.Plancher_bas_1_Photo_plancher_bas.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
     ################################### end Facade
+    
+    ### Plancher bas type1
+    j=108
+    for i in [obj.Plancher_bas_2_Position,obj.Plancher_bas_2_Composition,obj.Plancher_bas_2_Isolation
+              ,obj.Plancher_bas_2_Epaisseur_isolant,obj.Plancher_bas_2_Date_d_isolation,obj.Plancher_bas_2_Surface]:
+        
+        text_cell = worksheet4[f'E{j}'] 
+        text_cell.value = i
+        j+1
+        
+    image_cell_1 = worksheet4['B115'] 
+    image_cell_1.value = None
+    if obj.Plancher_bas_2_Photo_plancher_bas:
+        image_path_ = obj.Plancher_bas_2_Photo_plancher_bas.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = obj.Plancher_bas_2_Photo_plancher_bas.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    ### Plancher haut type1
+    j=124
+    for i in [obj.Plancher_Haut_1_Type,obj.Plancher_Haut_1_Composition,obj.Plancher_Haut_1_Isolation
+              ,obj.Plancher_Haut_1_Epaisseur_isolant,obj.Plancher_Haut_1_Date_d_isolation,obj.Plancher_Haut_1_Surface]:
+        
+        text_cell = worksheet4[f'E{j}'] 
+        text_cell.value = i
+        j+1
+        
+    objimage =obj.Plancher_Haut_1_Photo_plancher_bas
+    image_cell_1 = worksheet4['B131'] 
+    image_cell_1.value = None
+    if objimage:
+        image_path_ =objimage.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = objimage.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    ### Plancher haut type 2
+    j=140
+    for i in [obj.Plancher_Haut_2_Type,obj.Plancher_Haut_2_Composition,obj.Plancher_Haut_2_Isolation
+              ,obj.Plancher_Haut_2_Epaisseur_isolant,obj.Plancher_Haut_2_Date_d_isolation,obj.Plancher_Haut_2_Surface]:
+        
+        text_cell = worksheet4[f'E{j}'] 
+        text_cell.value = i
+        j+1
+        
+    objimage =obj.Plancher_Haut_2_Photo_plancher_bas
+    image_cell_1 = worksheet4['B147'] 
+    image_cell_1.value = None
+    if objimage:
+        image_path_ =objimage.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = objimage.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    ### Fenêtre 1
+    text_cell = worksheet4[f'B155'] 
+    text_cell.value = obj.Fenetre_type_1_Menuiserie
+    j=156
+    for i in [obj.Fenetre_type_1_Materiaux,obj.Fenetre_type_1_Type_de_vitrage,
+              obj.Fenetre_type_1_Volets,obj.Fenetre_type_1_Nombre]:
+        
+        text_cell = worksheet4[f'E{j}'] 
+        text_cell.value = str(i)
+        j+1
+        
+    objimage =obj.Fenetre_type_1_Photo
+    image_cell_1 = worksheet4['B160'] 
+    image_cell_1.value = None
+    if objimage:
+        image_path_ =objimage.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = objimage.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    ### Fenêtre 2
+    j=169
+    
+    text_cell = worksheet4[f'B{j}'] 
+    text_cell.value = f" {obj.Fenetre_type_1_Menuiserie}"
+    j+1
+    for i in [obj.Fenetre_type_1_Materiaux,obj.Fenetre_type_2_Type_de_vitrage,
+              obj.Fenetre_type_2_Volets,obj.Fenetre_type_2_Nombre]:
+        
+        text_cell = worksheet4[f'E{j}'] 
+        text_cell.value = i
+        j+1
+        
+    objimage =obj.Fenetre_type_2_Photo
+    image_cell_1 = worksheet4['B174'] 
+    image_cell_1.value = None
+    if objimage:
+        image_path_ =objimage.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = objimage.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    ### Porte 1
+    j=183
+    for i in [obj.Porte_1_Materiaux,
+              obj.Porte_1_Type_porte,obj.Porte_1_Nombre]:
+        
+        text_cell = worksheet4[f'E{j}'] 
+        text_cell.value = str(i)
+        j+1
+        
+    objimage =obj.Porte_1_Photo_porte
+    image_cell_1 = worksheet4['B186'] 
+    image_cell_1.value = None
+    if objimage:
+        image_path_ =objimage.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = objimage.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+            
+            
+    ### Porte 2
+    j=195
+    for i in [obj.Porte_2_Materiaux,
+              obj.Porte_2_Type_porte,obj.Porte_2_Nombre]:
+        
+        text_cell = worksheet4[f'E{j}'] 
+        text_cell.value = str(i)
+        j+1
+        
+    objimage =obj.Porte_2_Photo_porte
+    image_cell_1 = worksheet4[f'B{j}'] 
+    image_cell_1.value = None
+    if objimage:
+        image_path_ =objimage.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = objimage.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
