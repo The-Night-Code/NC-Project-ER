@@ -26,6 +26,8 @@ import string
 import openpyxl
 from openpyxl.utils import get_column_letter
 from openpyxl.drawing.image import Image
+from io import BytesIO
+
 from django.http import HttpResponse
 from .models import MyModel, UpdatedXLSXFile 
 from openpyxl.styles import NamedStyle
@@ -1330,39 +1332,25 @@ def download_K_file(request,file_id):
     
     
     
-    
-    
+
     ######################################   END WORK_SHEET_4
     ######################################   END WORK_SHEET_4
     ######################################   END WORK_SHEET_4
     
         ###################################################### save process #######################################################
     # Save the updated XLSX file temporarily
-    temp_xlsx_path = 'path_to_temp_xlsx.xlsx'  # Provide a temporary path on your server
-    workbook.save(temp_xlsx_path)
-    if UpdatedXLSXFile.objects.filter(name=file_id) :
-        pass
-    else:
-        UpdatedXLSXFile.objects.create(name=file_id)
-    # Create a new instance of your other model
-    updated_xlsx = UpdatedXLSXFile.objects.get(name=file_id)
+    # Generate the XLSX content as bytes
+# Create a BytesIO object to store the XLSX content
+    xlsx_content = BytesIO()
 
-    # Assign the XLSX file to the FileField or ImageField of the new model instance
-    updated_xlsx.xlsx_file.save( 'updated_template.xlsx', open(temp_xlsx_path, 'rb'))
+    # Save the workbook to the BytesIO object
+    workbook.save(xlsx_content)
 
-    # Save the new model instance to persist the XLSX file
-    updated_xlsx.save()
+    # Seek to the beginning of the BytesIO object
+    xlsx_content.seek(0)
 
-    
-        
-        
-        
-    # Fetch the MyFile object by its ID
-    my_file = get_object_or_404(UpdatedXLSXFile, name=file_id)
+    # Create an HttpResponse with the XLSX content for download
+    response = HttpResponse(xlsx_content.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="Kizeo.xlsx"'
 
-    # Open the file and create an HttpResponse with the file's content
-    with my_file.xlsx_file.open('rb') as f:
-        response = HttpResponse(f.read(), content_type='application/octet-stream')
-        response['Content-Disposition'] = f'attachment; filename="{my_file.xlsx_file.name}"'
-        return response
-    pass
+    return response
