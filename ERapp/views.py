@@ -940,7 +940,7 @@ def save_signature(request):
     
 def download_K_file(request,file_id):
     obj = kizeo_model.objects.get(kizeo_id=file_id)
-    template_path = 'ERapp\static\Kizeo.xlsx'  # Provide the path to your template file
+    template_path = 'ERapp\static\KiFile.xlsx'  # Provide the path to your template file
     workbook = openpyxl.load_workbook(template_path)
     
     worksheet1 = workbook["Données"]
@@ -1146,7 +1146,7 @@ def download_K_file(request,file_id):
         
         text_cell = worksheet4[f'E{j}'] 
         text_cell.value = i
-        j+1
+        j+=1
         
     image_cell_1 = worksheet4['B115'] 
     image_cell_1.value = None
@@ -1166,7 +1166,7 @@ def download_K_file(request,file_id):
         
         text_cell = worksheet4[f'E{j}'] 
         text_cell.value = i
-        j+1
+        j+=1
         
     objimage =obj.Plancher_Haut_1_Photo_plancher_bas
     image_cell_1 = worksheet4['B131'] 
@@ -1188,7 +1188,7 @@ def download_K_file(request,file_id):
         
         text_cell = worksheet4[f'E{j}'] 
         text_cell.value = i
-        j+1
+        j+=1
         
     objimage =obj.Plancher_Haut_2_Photo_plancher_bas
     image_cell_1 = worksheet4['B147'] 
@@ -1207,12 +1207,24 @@ def download_K_file(request,file_id):
     text_cell = worksheet4[f'B155'] 
     text_cell.value = obj.Fenetre_type_1_Menuiserie
     j=156
+    
+    text_cell = worksheet4[f'E{j}'] 
+    text_cell.value = obj.Fenetre_type_1_Materiaux
+    j+1
+    text_cell = worksheet4[f'E{j}'] 
+    text_cell.value = obj.Fenetre_type_2_Type_de_vitrage
+    j+1
+    text_cell = worksheet4[f'E{j}'] 
+    text_cell.value = obj.Fenetre_type_2_Volets
+    j+1
+    text_cell = worksheet4[f'E{j}'] 
+    text_cell.value = obj.Fenetre_type_2_Nombre
     for i in [obj.Fenetre_type_1_Materiaux,obj.Fenetre_type_1_Type_de_vitrage,
               obj.Fenetre_type_1_Volets,obj.Fenetre_type_1_Nombre]:
         
-        text_cell = worksheet4[f'E{j}'] 
-        text_cell.value = str(i)
-        j+1
+        #text_cell = worksheet4[f'E{j}'] 
+        #text_cell.value = str(i)
+        j+=1
         
     objimage =obj.Fenetre_type_1_Photo
     image_cell_1 = worksheet4['B160'] 
@@ -1232,14 +1244,17 @@ def download_K_file(request,file_id):
     
     text_cell = worksheet4[f'B{j}'] 
     text_cell.value = f" {obj.Fenetre_type_1_Menuiserie}"
-    j+1
+    j+=1
     for i in [obj.Fenetre_type_1_Materiaux,obj.Fenetre_type_2_Type_de_vitrage,
               obj.Fenetre_type_2_Volets,obj.Fenetre_type_2_Nombre]:
         
-        text_cell = worksheet4[f'E{j}'] 
-        text_cell.value = i
-        j+1
-        
+        #text_cell = worksheet4[f'E{j}'] 
+        #text_cell.value = i
+        j+=1
+    
+    
+    
+    
     objimage =obj.Fenetre_type_2_Photo
     image_cell_1 = worksheet4['B174'] 
     image_cell_1.value = None
@@ -1255,13 +1270,15 @@ def download_K_file(request,file_id):
     
     ### Porte 1
     j=183
-    for i in [obj.Porte_1_Materiaux,
-              obj.Porte_1_Type_porte,obj.Porte_1_Nombre]:
-        
-        text_cell = worksheet4[f'E{j}'] 
-        text_cell.value = str(i)
-        j+1
-        
+    text_cell = worksheet4[f'E{j}'] 
+    text_cell.value = obj.Porte_1_Materiaux
+    j+=1
+    text_cell = worksheet4[f'E{j}'] 
+    text_cell.value = obj.Porte_1_Type_porte
+    j+=1
+    text_cell = worksheet4[f'E{j}'] 
+    text_cell.value = obj.Porte_1_Nombre
+    j+=1    
     objimage =obj.Porte_1_Photo_porte
     image_cell_1 = worksheet4['B186'] 
     image_cell_1.value = None
@@ -1277,13 +1294,16 @@ def download_K_file(request,file_id):
             
     ### Porte 2
     j=195
-    for i in [obj.Porte_2_Materiaux,
-              obj.Porte_2_Type_porte,obj.Porte_2_Nombre]:
-        
-        text_cell = worksheet4[f'E{j}'] 
-        text_cell.value = str(i)
-        j+1
-        
+    text_cell = worksheet4[f'E{j}'] 
+    text_cell.value = obj.Porte_2_Materiaux
+    j+=1
+    text_cell = worksheet4[f'E{j}'] 
+    text_cell.value = obj.Porte_2_Type_porte
+    j+=1
+    text_cell = worksheet4[f'E{j}'] 
+    text_cell.value = obj.Porte_2_Nombre
+    j+=1
+    
     objimage =obj.Porte_2_Photo_porte
     image_cell_1 = worksheet4[f'B{j}'] 
     image_cell_1.value = None
