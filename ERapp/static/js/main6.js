@@ -11,3 +11,26 @@ function upload_image_formK_click_button(inp){
     } 
 
   }
+
+
+  function Geolocalisation(){
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var altitude = position.coords.altitude;
+
+            document.getElementById("latitude").textContent = latitude;
+            document.getElementById("longitude").textContent = longitude;
+            document.getElementById("Geolocalisation_div").style.display = "block";
+            if (altitude !== null) {
+                document.getElementById("altitude").textContent = altitude + " meters";
+            } else {
+                document.getElementById("altitude").textContent = "";
+            }
+            
+        });
+    } else {
+        alert("Geolocation is not available in your browser.");
+    }
+}
