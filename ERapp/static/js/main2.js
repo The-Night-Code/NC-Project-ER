@@ -20,24 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-//<select> with <span>badge for tfoot  
-  const selectElement = document.querySelector('.form-selectfoot');
-  const badgeElements = document.querySelectorAll('.badgefoot');
-  
-  // Function to update the badge based on the selected option
-  function updateBadgefoot() {
-      const selectedOption = selectElement.value;
-      badgeElements.forEach(badgefoot => {
-          badgefoot.style.display = 'none';
-      });
-      document.querySelector(`.badgefoot[data-badgefoot="${selectedOption}"]`).style.display = 'inline-block';
-  }
-  
-  // Initial call to set the badge based on the default selected option
-  updateBadgefoot();
-  
-  // Add event listener to update the badge when the select element changes
-  selectElement.addEventListener('change', updateBadgefoot);
 
 
 
@@ -99,3 +81,22 @@ rows3.forEach(row => {
         updateBadge(row);
     });
 });
+
+//<select> with <span>badge for tfoot  
+const selectElement = document.querySelector('.form-selectfoot');
+const badgeElements = document.querySelectorAll('.badgefoot');
+
+// Function to update the badge based on the selected option
+function updateBadgefoot() {
+    const selectedOption = selectElement.value;
+    badgeElements.forEach(badgefoot => {
+        badgefoot.style.display = 'none';
+    });
+    document.querySelector(`.badgefoot[data-badgefoot="${selectedOption}"]`).style.display = 'inline-block';
+}
+
+// Initial call to set the badge based on the default selected option
+updateBadgefoot();
+
+// Add event listener to update the badge when the select element changes
+selectElement.addEventListener('change', updateBadgefoot);

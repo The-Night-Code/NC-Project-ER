@@ -18,30 +18,38 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,table_view_edit  ,add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f
+from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,download_K_file,save_signature
+from ERapp.views import table_view_edit ,add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,chat_box_1,Kizeo_form_page
 from ERapp import views
 
+ai="ai"
+form="form"
+formK="formK"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', Home),
     path('login/', LoginU),
     path('logout/', LogoutU),
     path('profile/',ProfileU ),
-    path('formT/',table_view ),
-    path('formT1/',table_view_edit ,name="editFormTable"),#remove_file_from_auditV1
-    path('formT2/',remove_file_from_MODELS ,name="remove_file_from_MODEL"),
-    path('formT4/',add_files_to_MODELS ,name="add_files_to_model"),
+    path(f'{form}T/',table_view ),
+    path(f'{form}T1/',table_view_edit ,name="editFormTable"),#remove_file_from_auditV1
+    path(f'{form}T2/',remove_file_from_MODELS ,name="remove_file_from_MODEL"),
+    path(f'{form}T4/',add_files_to_MODELS ,name="add_files_to_model"),
     
-    path('ai/',agent_immo ),
-    path('aif/',agent_immo_f ),
+    path(f'{ai}/',agent_immo ),
+    path(f'{ai}f/',agent_immo_f ),
     
     path('change_profile_pic/',img_upload_image ),
     path('showimage/',showimage ),
     
+    path('formT5/',chat_box_1 , name="send_message_box1" ),
     
     
-   
+    #path(f'{formK}/',Kizeo_form_page  ),
+    path(f'{formK}/<str:client_id>',Kizeo_form_page  ),
+    path('download_K_file/<str:file_id>/', download_K_file, name='download_K_file'),
     
+     path('save_signature/', save_signature, name='save_signature'),
     
 ] #+static(settings.MEDIA_URL, documnet_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
