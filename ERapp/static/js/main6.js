@@ -34,3 +34,4 @@ function upload_image_formK_click_button(inp){
         alert("Geolocation is not available in your browser.");
     }
 }
+

@@ -281,35 +281,35 @@
                   
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Nom d'intervenant: </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <input type="text" class="form-control" name="Donnees_Generales_Nom_d_intervenant" value={{ data.Donnees_Generales_Nom_d_intervenant }}>
                   </div>
                   <div class="col-md-4">
-                    <label  class="form-label form-label_formK">Nom d'intervenant: </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <label  class="form-label form-label_formK">Date de visite: </label>
+                    <input type="date" class="form-control" name="Donnees_Generales_Date_de_visite" value={{ data.Donnees_Generales_Date_de_visite|date:_("Y-m-d") }}>
                   </div>
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Adresse: </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <input type="text" class="form-control" name="Donnees_Generales_Adresse" value={{ data.Donnees_Generales_Adresse }}>
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Zip Code: </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <input type="number" class="form-control" name="Donnees_Generales_Zip_Code" value={{ data.Donnees_Generales_Zip_Code }}>
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">City: </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <input type="text" class="form-control" name="Donnees_Generales_City" value={{ data.Donnees_Generales_City }}>
                   </div>
 
                   <div class="col-md-4">
                     <label class="col-form-label form-label_formK">Année de construction: </label>
-                    <select class="form-select kizeo_select_box " aria-label="Default select example" name="">
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
+                    <select class="form-select kizeo_select_box " aria-label="Default select example" name="Donnees_Generales_Annee_de_construction">
+                      <option value="" {% if data.Donnees_Generales_Annee_de_construction  == "" %}selected{% endif %}></option>
+                      <option value="" {% if data.Donnees_Generales_Annee_de_construction  == "" %}selected{% endif %}></option>
+                      <option value="" {% if data.Donnees_Generales_Annee_de_construction  == "" %}selected{% endif %}></option>
+                      <option value="" {% if data.Donnees_Generales_Annee_de_construction  == "" %}selected{% endif %}></option>
+                      <option value="" {% if data.Donnees_Generales_Annee_de_construction  == "" %}selected{% endif %}></option>
+                      <option value="" {% if data.Donnees_Generales_Annee_de_construction  == "" %}selected{% endif %}></option>
        
                     </select>
                   </div>
@@ -317,92 +317,92 @@
 
                   <div class="col-md-4">
                     <label class="col-form-label form-label_formK">Etat d'occupation: </label>
-                    <select class="form-select kizeo_select_box " aria-label="Default select example" name="">
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
+                    <select class="form-select kizeo_select_box " aria-label="Default select example" name="Donnees_Generales_Etat_d_occupation">
+                      <option value="" {% if data.Donnees_Generales_Etat_d_occupation  == "" %}selected{% endif %}></option>
+                      <option value="" {% if data.Donnees_Generales_Etat_d_occupation  == "" %}selected{% endif %}></option>
+                      <option value="" {% if data.Donnees_Generales_Etat_d_occupation  == "" %}selected{% endif %}></option>
+                      <option value="" {% if data.Donnees_Generales_Etat_d_occupation  == "" %}selected{% endif %}></option>
+                      <option value="" {% if data.Donnees_Generales_Etat_d_occupation  == "" %}selected{% endif %}></option>
+                      <option value="" {% if data.Donnees_Generales_Etat_d_occupation  == "" %}selected{% endif %}></option>
        
                     </select>
                   </div>
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Nom client : </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <input type="text" class="form-control" name="Donnees_Generales_Nom_client" value={{ data.Donnees_Generales_Nom_client }}>
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Tel. client: </label>
-                    <input type="number" class="form-control" name="" value={{ data. }}>
+                    <input type="number" class="form-control" name="Donnees_Generales_Tel_client" value={{ data.Donnees_Generales_Tel_client }}>
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Email: </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <input type="text" class="form-control" name="Donnees_Generales_Email" value={{ data.Donnees_Generales_Email }}>
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Horaire d'occupation des lieux: </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <input type="text" class="form-control" name="Donnees_Generales_Horaire_d_occupation_des_lieux" value={{ data.Donnees_Generales_Horaire_d_occupation_des_lieux }}>
                   </div>
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Destination du lieu: </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <input type="text" class="form-control" name="Donnees_Generales_Destination_du_lieu" value={{ data.Donnees_Generales_Destination_du_lieu }}>
                   </div>
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Nombre d'occupant: </label>
-                    <input type="number" class="form-control" name="" value={{ data. }}>
+                    <input type="number" class="form-control" name="Donnees_Generales_Nombre_d_occupant" value={{ data.Donnees_Generales_Nombre_d_occupant }}>
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Nombre de niveau: </label>
-                    <input type="number" class="form-control" name="" value={{ data. }}>
+                    <input type="number" class="form-control" name="Donnees_Generales_Nombre_de_niveau" value={{ data.Donnees_Generales_Nombre_de_niveau }}>
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Surface TOTALE (&#x33A1): </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <input type="text" class="form-control" name="Donnees_Generales_Surface_TOTALE" value={{ data.Donnees_Generales_Surface_TOTALE }}>
                   </div>
 
                   <div class="col-md-4">
                     <label class="col-form-label form-label_formK">Preuve Surface: </label>
-                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="">
-                      <option value="" {% if data.  == "" %}selected{% endif %}></option>
-                      <option value="Mesurée" {% if data.  == "Mesurée" %}selected{% endif %}>Mesurée</option>
-                      <option value="Documents disponsibles" {% if data.  == "Documents disponsibles" %}selected{% endif %}>Documents disponsibles</option>
+                    <select class="form-select kizeo_select_box" aria-label="Default select example" name="Donnees_Generales_Preuve_Surface">
+                      <option value="" {% if data.Donnees_Generales_Preuve_Surface  == "" %}selected{% endif %}></option>
+                      <option value="Mesurée" {% if data.Donnees_Generales_Preuve_Surface  == "Mesurée" %}selected{% endif %}>Mesurée</option>
+                      <option value="Documents disponsibles" {% if data.Donnees_Generales_Preuve_Surface  == "Documents disponsibles" %}selected{% endif %}>Documents disponsibles</option>
                     </select>
                   </div>
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Preuve Surface: </label>
-                    <input type="file" id="file-input" name="" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data..url }}"  alt="Image" width="70" >
+                    <input type="file" id="file-input" name="Donnees_Generales_Preuve_Surface_Photo" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Donnees_Generales_Preuve_Surface_Photo')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Donnees_Generales_Preuve_Surface_Photo.url }}"  alt="Image" width="70" >
                   </div>
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Surface ajouté depuis moins de 15 ans: </label>
-                    <input type="number" class="form-control" name="" value={{ data. }}>
+                    <input type="number" class="form-control" name="Donnees_Generales_Surface_ajoute_depuis_moins_de_15_ans" value={{ data.Donnees_Generales_Surface_ajoute_depuis_moins_de_15_ans }}>
                   </div>
 
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Factures: </label>
-                    <input type="file" id="file-input" name="" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data..url }}"  alt="Image" width="70" >
+                    <input type="file" id="file-input" name="Donnees_Generales_Factures" accept="image/*"> </input>
+                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Donnees_Generales_Factures')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
+                    <img src="{{ data.Donnees_Generales_Factures.url }}"  alt="Image" width="70" >
                   </div>
                   
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Besoin du client - Chauffage: </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <input type="text" class="form-control" name="Donnees_Generales_Besoin_du_client_Chauffage" value={{ data.Donnees_Generales_Besoin_du_client_Chauffage }}>
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Besoin du client - Isolation: </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <input type="text" class="form-control" name="Donnees_Generales_Besoin_du_client_Isolation" value={{ data.Donnees_Generales_Besoin_du_client_Isolation }}>
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Scénario souhaité par le client: </label>
-                    <input type="text" class="form-control" name="" value={{ data. }}>
+                    <input type="text" class="form-control" name="Donnees_Generales_Scenario_souhaite_par_le_client" value={{ data.Donnees_Generales_Scenario_souhaite_par_le_client }}>
                   </div>
                 </div>
                 

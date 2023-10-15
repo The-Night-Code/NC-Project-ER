@@ -417,7 +417,7 @@
                           
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages overflow-y-auto" style="max-height:200px;width:400px;">
                                       <li class="dropdown-header">
-                                        <input type="text" name="input_msg_1" id="input_msg_1" style="width:90%;">
+                                        <input type="text" name="input_msg_{{item.cell_id}}" id="input_msg_{{item.cell_id}}" style="width:90%;">
                                         <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="send_message_box('{{item.cell_id}}','1')" > <i class="bi bi-send" ></i></button>
                                         <a><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
                                       </li>
@@ -1712,15 +1712,17 @@
   </script>
 
   <script>
+
+    
     function send_message_box(cell_id,box) {
     
     
-      var message = document.getElementById("input_msg_1").value;
+      var message = document.getElementById("input_msg_"+cell_id).value;
       
       var x1 = document.getElementById("user_email").value;
       var x2 = document.getElementById("user_firstname").value;
       var x3 = document.getElementById("user_lastname").value;
-      
+      if (message !== null) {
         var url2="{% url 'send_message_box1' %}?"+
           "param0=" + cell_id +
           "&param1=" + x1 +
@@ -1729,8 +1731,11 @@
           "&param4=" + box +
           "&param5=" + message ;
         window.location.href = url2;
-  
-  }
+    } 
+        
+    
+    }
+
   </script>
   
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>

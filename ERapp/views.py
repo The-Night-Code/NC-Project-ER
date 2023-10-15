@@ -21,7 +21,7 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 import random
 import string
-
+from datetime import datetime
 
 import openpyxl
 from openpyxl.utils import get_column_letter
@@ -439,15 +439,15 @@ def chat_box_1(request):
     msg_id =generate_random_string(8)
     
 
-    
-    message_box_1.objects.create(
-                message_id = msg_id,
-                row_id = cell_id,
-                username =user_firstname + " , " +  user_lastname,
-                email =  user_email,
-                message =msg,
-                box =box
-            )
+    if msg and not str.isspace(msg) : 
+        message_box_1.objects.create(
+                    message_id = msg_id,
+                    row_id = cell_id,
+                    username =user_firstname + " , " +  user_lastname,
+                    email =  user_email,
+                    message =msg,
+                    box =box
+                )
     
         
     return redirect(formT)
@@ -665,6 +665,35 @@ def Kizeo_form_page(request,client_id):
         submit_to_Kizeo = request.POST.get("submit_to_Kizeo")
         if submit_to_Kizeo=="submit":
             #obj.signature_data = request.FILES.get('signatureData')
+            
+            ### Données Générales
+            obj.latitude = request.POST.get("latitude")
+            obj.longitude = request.POST.get("longitude")
+            obj.altitude = request.POST.get("altitude")
+            obj.Donnees_Generales_Nom_d_intervenant = request.POST.get("Donnees_Generales_Nom_d_intervenant")
+            
+            Donnees_Generales_Date_de_visite = request.POST.get("Donnees_Generales_Date_de_visite")
+            obj.Donnees_Generales_Date_de_visite = datetime.strptime(Donnees_Generales_Date_de_visite,'%Y-%m-%d')
+            
+            obj.Donnees_Generales_Adresse = request.POST.get("Donnees_Generales_Adresse")
+            obj.Donnees_Generales_Zip_Code = int(request.POST.get("Donnees_Generales_Zip_Code"))
+            obj.Donnees_Generales_City = request.POST.get("Donnees_Generales_City")
+            obj.Donnees_Generales_Annee_de_construction = request.POST.get("Donnees_Generales_Annee_de_construction")
+            obj.Donnees_Generales_Etat_d_occupation = request.POST.get("Donnees_Generales_Etat_d_occupation")
+            obj.Donnees_Generales_Nom_client = request.POST.get("Donnees_Generales_Nom_client")
+            obj.Donnees_Generales_Tel_client = int(request.POST.get("Donnees_Generales_Tel_client"))
+            obj.Donnees_Generales_Email = request.POST.get("Donnees_Generales_Email")
+            obj.Donnees_Generales_Horaire_d_occupation_des_lieux = request.POST.get("Donnees_Generales_Horaire_d_occupation_des_lieux")
+            obj.Donnees_Generales_Destination_du_lieu = request.POST.get("Donnees_Generales_Destination_du_lieu")
+            obj.Donnees_Generales_Nombre_d_occupant = int(request.POST.get("Donnees_Generales_Nombre_d_occupant"))
+            obj.Donnees_Generales_Nombre_de_niveau = int(request.POST.get("Donnees_Generales_Nombre_de_niveau"))
+            obj.Donnees_Generales_Surface_TOTALE = int(request.POST.get("Donnees_Generales_Surface_TOTALE"))
+            obj.Donnees_Generales_Preuve_Surface = request.POST.get("Donnees_Generales_Preuve_Surface")
+            obj.Donnees_Generales_Surface_ajoute_depuis_moins_de_15_ans = int(request.POST.get("Donnees_Generales_Surface_ajoute_depuis_moins_de_15_ans"))
+            obj.Donnees_Generales_Besoin_du_client_Chauffage = request.POST.get("Donnees_Generales_Besoin_du_client_Chauffage")
+            obj.Donnees_Generales_Besoin_du_client_Isolation = request.POST.get("Donnees_Generales_Besoin_du_client_Isolation")
+            obj.Donnees_Generales_Scenario_souhaite_par_le_client = request.POST.get("Donnees_Generales_Scenario_souhaite_par_le_client")
+            
             ### Façades
             obj.Facade_1_Orientation = request.POST.get("Facade_1_Orientation")
             obj.Facade_1_Mitoyennete = request.POST.get("Facade_1_Mitoyennete")
@@ -810,7 +839,34 @@ def Kizeo_form_page(request,client_id):
             obj.Porte_2_Nombre = float(request.POST.get("Porte_2_Nombre"))
             
             
-            obj.save(update_fields=['Facade_1_Orientation', 'Facade_1_Mitoyennete','Facade_1_Longueur','Facade_1_Hauteur','Facade_1_Surface',#'Facade_1_Photo_Principale',
+            obj.save(update_fields=[
+                                    ### Données Générales
+                                    'latitude',
+                                    'longitude',
+                                    'altitude',
+                                    'Donnees_Generales_Nom_d_intervenant',
+                                    'Donnees_Generales_Date_de_visite',
+                                    'Donnees_Generales_Adresse',
+                                    'Donnees_Generales_Zip_Code',
+                                    'Donnees_Generales_City',
+                                    'Donnees_Generales_Annee_de_construction',
+                                    'Donnees_Generales_Etat_d_occupation',
+                                    'Donnees_Generales_Nom_client',
+                                    'Donnees_Generales_Tel_client',
+                                    'Donnees_Generales_Email',
+                                    'Donnees_Generales_Horaire_d_occupation_des_lieux',
+                                    'Donnees_Generales_Destination_du_lieu',
+                                    'Donnees_Generales_Nombre_d_occupant',
+                                    'Donnees_Generales_Nombre_de_niveau',
+                                    'Donnees_Generales_Surface_TOTALE',
+                                    'Donnees_Generales_Preuve_Surface',
+                                    'Donnees_Generales_Surface_ajoute_depuis_moins_de_15_ans',
+                                    'Donnees_Generales_Besoin_du_client_Chauffage',
+                                    'Donnees_Generales_Besoin_du_client_Isolation',
+                                    'Donnees_Generales_Scenario_souhaite_par_le_client',
+                                    
+                                    ### Façades
+                                    'Facade_1_Orientation', 'Facade_1_Mitoyennete','Facade_1_Longueur','Facade_1_Hauteur','Facade_1_Surface',#'Facade_1_Photo_Principale',
                                     'Facade_2_Orientation', 'Facade_2_Mitoyennete','Facade_2_Longueur','Facade_2_Hauteur','Facade_2_Surface',#'Facade_2_Photo_Principale',
                                     'Facade_3_Orientation', 'Facade_3_Mitoyennete','Facade_3_Longueur','Facade_3_Hauteur','Facade_3_Surface',#'Facade_3_Photo_Principale',
                                     'Facade_4_Orientation', 'Facade_4_Mitoyennete','Facade_4_Longueur','Facade_4_Hauteur','Facade_4_Surface',#'Facade_4_Photo_Principale',
