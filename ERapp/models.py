@@ -5,7 +5,7 @@ from django.utils import timezone
 from PIL import Image
 import subprocess
 import os
-
+import datetime
 # Create your models here.
 
 class CustomUserManager(BaseUserManager):
@@ -190,7 +190,7 @@ class kizeo_model(models.Model):
     longitude = models.CharField(max_length=100,blank=True)
     altitude = models.CharField(max_length=100,blank=True)
     Donnees_Generales_Nom_d_intervenant = models.CharField(max_length=100,blank=True)
-    Donnees_Generales_Date_de_visite = models.DateField(null=True,blank=True)
+    Donnees_Generales_Date_de_visite = models.DateField(null=True,blank=True,default=datetime.date.today)
     Donnees_Generales_Adresse = models.CharField(max_length=100,blank=True)
     Donnees_Generales_Zip_Code = models.IntegerField(null=True,blank=True)
     Donnees_Generales_City = models.CharField(max_length=100,blank=True)
