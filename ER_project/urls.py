@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,download_K_file,save_signature,VT_Page,Kizeo_form_page
+from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,download_K_file,save_signature,VT_Page,Kizeo_form_page,VT_Page_edit_state
 from ERapp.views import table_view_edit ,add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,chat_box_1
 from ERapp import views
 
@@ -40,6 +40,7 @@ urlpatterns = [
     path(f'{ai}f/',agent_immo_f ),
     
     path('VT/', VT_Page),
+    path('VT1/', VT_Page_edit_state, name="VT_Page_edit_state"),
     
     path('change_profile_pic/',img_upload_image ),
     path('showimage/',showimage ),

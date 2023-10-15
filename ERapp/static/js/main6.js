@@ -13,7 +13,7 @@ function upload_image_formK_click_button(inp){
   }
 
 
-  function Geolocalisation(){
+function Geolocalisation(){
     if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(function(position) {
             var latitude = position.coords.latitude;
@@ -35,3 +35,5 @@ function upload_image_formK_click_button(inp){
     }
 }
 
+
+    

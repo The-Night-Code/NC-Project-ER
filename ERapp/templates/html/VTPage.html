@@ -273,22 +273,23 @@
                     <table class="table  table-hover  table-bordered  table-borderless border-info fixed-header-table" id="tableDATA_1" cellspacing="0" >  <!-- table-sm  table-responsive-->
 
                         <thead class="table-dark border-info ">
-                          <!--<th ></th>
-                          <th >id </th>-->
+                          <th style="width:10px;"></th>
+                          <!--<th >id </th>-->
                           <th>Prénom</th>  
                           <th>Nom</th> 
                           <th>Adresse</th> 
                           <th>N° de tél</th>
                           <th>Agent</th>  
                           <th>Visite technique</th> 
+                          <th style="width:100px;">Etat</th>
                         </thead>
                         <tbody id="myTable_1">
                           {% for item in data %}
                             <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             
                             <tr>
-                                <!--<td class="fixed-column fixed-column-backcolor" ><button  class="button_table_data " type="button" id="table1_edit_col" name="" value="" onclick="my_Func_edit_table_1('{{item.cell_id}}')"><i class="ri-edit-2-fill"></i></button></td>
-                                <td ><p style="width:auto;">{{ item.cell_id }}</p></td>-->
+                                <td class="fixed-column fixed-column-backcolor" ><button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="my_Func_edit_VT_State_1('{{item.cell_id}}')"><i class="ri-edit-2-fill"></i></button></td>
+
                                 <td class="td_p_cell2"><p>{{ item.firstname }}</p></td>
                                 <td class="td_p_cell2"><p>{{ item.lastname }}</p></td>
                                 <td class="td_p_cell2"><p>{{ item.address }}</p></td>
@@ -299,8 +300,16 @@
                                   <a href="{% url 'Kizeo_form_page' client_id=item.cell_id %}" class="btn btn-primary">Form</a>
                                 </td>  <!--  target="_blank"-->
                                 
-                            
+                                <td class="badge-cell" data-state="badge">
 
+                                    <span class="badge" data-badge="Fini">Fini</span>
+                                    <span class="badge" data-badge="En cours">En cours</span>
+                                    <select class="form-select" aria-label="Default select example"  id="table1_etat_vt_{{ item.cell_id }}" style="background-color:gray;">
+                                        <option value="Fini" {% if item.etat_vt  == "Fini" %}selected{% endif %}>Fini</option>
+                                        <option value="En cours"  {% if item.etat_vt  == "En cours" %}selected{% endif %} >En cours</option>
+                                    </select>
+                                </td>
+                                
 
                             </tr>
 
@@ -351,8 +360,17 @@
 
   {% endif %}
 
-  
-  
+    <script>
+        function my_Func_edit_VT_State_1(cell_id){
+
+            var state = document.getElementById("table1_etat_vt_"+cell_id).value;
+            var url2="{% url 'VT_Page_edit_state' %}?"+
+                    "param0=" + cell_id +
+                    "&param1=" + state ;
+                window.location.href = url2;
+            
+        }
+    </script>
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/chart.js/chart.umd.js' %}"></script>

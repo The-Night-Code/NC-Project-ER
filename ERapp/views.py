@@ -35,7 +35,7 @@ from openpyxl.styles import NamedStyle
 
 formT="/formT/"
 link2="/agentimmo/"
-
+VT="/VT/"
 def Home(request):
 
     
@@ -451,11 +451,25 @@ def agent_immo_f(request):
 
 
 def VT_Page(request):
+
     
     data = TableData001.objects.all()
     return render(request, 'html/VTPage.html', { 'data': data })
 
+def VT_Page_edit_state(request):
+    param_value_id = request.GET.get('param0')
+    etat_vt_value = request.GET.get('param1')
+    
+    try:
+        object = TableData001.objects.get(cell_id=str(param_value_id))
+        object.etat_vt =  etat_vt_value
+        object.save(update_fields=['etat_vt'])
 
+    except TableData001.DoesNotExist:
+        pass
+    
+    
+    return redirect(VT)
 
 
 def update_xlsx_template(request):
@@ -1070,9 +1084,63 @@ def download_K_file(request,file_id):
     ###################################### end WORK_SHEET_1
     
     
+    ###################################### start WORK_SHEET_2
+    ###################################### start WORK_SHEET_2
+    ###################################### start WORK_SHEET_2
+    
+    ###################################### end WORK_SHEET_2
+    ###################################### end WORK_SHEET_2
+    ###################################### end WORK_SHEET_2
+    
+    
+    ###################################### start WORK_SHEET_3
+    ###################################### start WORK_SHEET_3
+    ###################################### start WORK_SHEET_3
+    image_cell_1 = worksheet3['B6'] 
+    image_cell_1.value = None
+    o = obj.Donnees_Generales_Preuve_Surface_Photo
+    if o:
+        image_path_ = o.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = o.path
+            img_1 = Image(image_path1)
+            img_1.width =  382.08 #cell_width 3.98
+            img_1.height = 280.32 # cell_height 2.92
+            worksheet3.add_image(img_1, image_cell_1.coordinate)
+            
+    i=26
+    text_cell = worksheet3[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Nom_client
+    i+=1
+    text_cell = worksheet3[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Adresse
+    i+=1
+    text_cell = worksheet3[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Zip_Code
+    i+=1
+    text_cell = worksheet3[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_City
+    
+    text_cell = worksheet3['C33']  
+    text_cell.value = obj.Donnees_Generales_Date_de_visite
+    ###################################### end WORK_SHEET_3
+    ###################################### end WORK_SHEET_3
+    ###################################### end WORK_SHEET_3
+    
     ################################### start WORK_SHEET_4
     ################################### start WORK_SHEET_4
     ################################### start WORK_SHEET_4
+    text_cell = worksheet4['A7']
+    text_cell.value =f"L'audit énergétique est réalisé une maison individuelle située à {obj.Donnees_Generales_Adresse}, {obj.Donnees_Generales_Zip_Code} {obj.Donnees_Generales_City}."
+    
+    text_cell = worksheet4['E27']  
+    text_cell.value = obj.Donnees_Generales_Annee_de_construction
+    text_cell = worksheet4['E28']  
+    text_cell.value = obj.Donnees_Generales_Etat_d_occupation
+    text_cell = worksheet4['E29'] 
+    text_cell.value = obj.Donnees_Generales_Surface_TOTALE
+    
+    
     text_cell = worksheet4['A33']  
     text_cell.value = obj.Facade_1_Orientation
     text_cell = worksheet4['A34']  
@@ -1442,16 +1510,120 @@ def download_K_file(request,file_id):
             worksheet4.add_image(img_1, image_cell_1.coordinate)
     
     
+    ### Cauffage 
+    j=209
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = obj.Cauffage_systeme
+    j+=1
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = 'obj.'
+    j+=1
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = obj.Cauffage_annee_de_mise_en_oeuvre
+    j+=1
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = "obj."
+    j+=1
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = "obj."
+    j+=1
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = obj.Cauffage_type_de_regulation
+    j+=1
+    
+    #objimage =obj.
+    #image_cell_1 = worksheet4[f'B{j}'] 
+    #image_cell_1.value = None
+    #if objimage:
+    #    image_path_ =objimage.path  # Get the file path
+    #    if default_storage.exists(image_path_):
+    #        image_path1 = objimage.path
+    #        img_1 = Image(image_path1)
+    #        img_1.width =  185.28 #cell_width
+    #        img_1.height = 140.16 # cell_height
+    #        worksheet4.add_image(img_1, image_cell_1.coordinate)
     
     
+    ###  ECS
+    j=236
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = obj.ECS_type
+    j+=1
+    
+    objimage =obj.ECS_photo_appoint
+    image_cell_1 = worksheet4[f'B{j}'] 
+    image_cell_1.value = None
+    if objimage:
+        image_path_ =objimage.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = objimage.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
+    
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = obj.ECS_system_d_appoint
     
     
+    ###  Ventilation
+    j=249
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = obj.Ventilation_type
+    j+=1
+    
+    objimage =obj.Ventilation_photo_ventilation
+    image_cell_1 = worksheet4[f'B{j}'] 
+    image_cell_1.value = None
+    if objimage:
+        image_path_ =objimage.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = objimage.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
     
     
+    ###  Refroidissement
+    j=249
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = obj.Refroidissement_type
+    j+=1
+    
+    #objimage =obj.Ventilation_photo_ventilation
+    #image_cell_1 = worksheet4[f'B{j}'] 
+    #image_cell_1.value = None
+    #if objimage:
+    #    image_path_ =objimage.path  # Get the file path
+    #    if default_storage.exists(image_path_):
+    #        image_path1 = objimage.path
+    #        img_1 = Image(image_path1)
+    #        img_1.width =  185.28 #cell_width
+    #        img_1.height = 140.16 # cell_height
+    #        worksheet4.add_image(img_1, image_cell_1.coordinate)
     
     
+    ###  Compteur Electrique
+    j=269
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = obj.Compteur_Electrique_Puissance_souscrite
+    j+=1
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = obj.Compteur_Electrique_type
+    j+=1
     
-    
+    objimage =obj.Compteur_Electrique_photo_compteur
+    image_cell_1 = worksheet4[f'B{j}'] 
+    image_cell_1.value = None
+    if objimage:
+        image_path_ =objimage.path  # Get the file path
+        if default_storage.exists(image_path_):
+            image_path1 = objimage.path
+            img_1 = Image(image_path1)
+            img_1.width =  185.28 #cell_width
+            img_1.height = 140.16 # cell_height
+            worksheet4.add_image(img_1, image_cell_1.coordinate)
     
     
     

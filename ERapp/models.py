@@ -85,6 +85,7 @@ class TableData001(models.Model):
     address = models.CharField(max_length=255,blank=True)
     num = models.CharField(max_length=255,blank=True)
     vt = models.FileField(upload_to='uploads/files',blank=True)
+    etat_vt = models.CharField(max_length=255,blank=True)
     etat = models.CharField(max_length=255,blank=True)
     tp = models.CharField(max_length=255,blank=True)
     auditV1 = models.FileField(upload_to='uploads/files/%Y/%m/%d/',blank=True)
