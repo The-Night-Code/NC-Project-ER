@@ -295,7 +295,30 @@ def table_view(request): # add row
                                                   'message_box_1':message_box_01})
        
     
+def chat_box_1(request):
+    cell_id = request.GET.get('param0')
     
+    user_email = request.GET.get('param1')
+    user_firstname = request.GET.get('param2')
+    user_lastname = request.GET.get('param3')
+    box = request.GET.get('param4')
+    msg = request.GET.get('param5')
+    
+    msg_id =generate_random_string(8)
+    
+
+    if msg and not str.isspace(msg) : 
+        message_box_1.objects.create(
+                    message_id = msg_id,
+                    row_id = cell_id,
+                    username =user_firstname + " , " +  user_lastname,
+                    email =  user_email,
+                    message =msg,
+                    box =box
+                )
+    
+        
+    return redirect(formT)
 
     
 def table_view_edit(request):
@@ -427,30 +450,10 @@ def agent_immo_f(request):
     return render(request, 'html/agentimmof.html', )
 
 
-def chat_box_1(request):
-    cell_id = request.GET.get('param0')
+def VT_Page(request):
     
-    user_email = request.GET.get('param1')
-    user_firstname = request.GET.get('param2')
-    user_lastname = request.GET.get('param3')
-    box = request.GET.get('param4')
-    msg = request.GET.get('param5')
-    
-    msg_id =generate_random_string(8)
-    
-
-    if msg and not str.isspace(msg) : 
-        message_box_1.objects.create(
-                    message_id = msg_id,
-                    row_id = cell_id,
-                    username =user_firstname + " , " +  user_lastname,
-                    email =  user_email,
-                    message =msg,
-                    box =box
-                )
-    
-        
-    return redirect(formT)
+    data = TableData001.objects.all()
+    return render(request, 'html/VTPage.html', { 'data': data })
 
 
 
@@ -997,6 +1000,11 @@ def save_signature(request):
     
     
 def download_K_file(request,file_id):
+    if kizeo_model.objects.filter(kizeo_id=file_id):
+            pass
+    else:
+        kizeo_model.objects.create(kizeo_id=file_id)
+    
     obj = kizeo_model.objects.get(kizeo_id=file_id)
     template_path = 'ERapp\static\KiFile.xlsx'  # Provide the path to your template file
     workbook = openpyxl.load_workbook(template_path)
@@ -1005,7 +1013,66 @@ def download_K_file(request,file_id):
     worksheet2 = workbook["Métré"]
     worksheet3 = workbook["Garde"]
     worksheet4 = workbook["Site"]
-    ################################### start Facade
+    
+    ###################################### start WORK_SHEET_1
+    ###################################### start WORK_SHEET_1
+    ###################################### start WORK_SHEET_1
+    i=2
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Nom_d_intervenant
+    i+=1#3
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Date_de_visite
+    i+=1#4
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Adresse
+    i+=1#5
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Zip_Code
+    i+=1#6
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_City
+    i+=1#7
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Annee_de_construction
+    i+=1#8
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Nom_client
+    i+=1#9
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Tel_client
+    i+=1#10
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Email
+    i+=1#11
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = "obj."
+    i+=1#12
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = "obj."
+    i+=1#13
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Nombre_d_occupant
+    i+=1#14
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Surface_TOTALE
+    i+=1#15
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Preuve_Surface
+    i+=1#16
+    text_cell = worksheet1[f'B{i}']  
+    text_cell.value = obj.Donnees_Generales_Surface_ajoute_depuis_moins_de_15_ans
+    
+    
+    
+    ###################################### end WORK_SHEET_1
+    ###################################### end WORK_SHEET_1
+    ###################################### end WORK_SHEET_1
+    
+    
+    ################################### start WORK_SHEET_4
+    ################################### start WORK_SHEET_4
+    ################################### start WORK_SHEET_4
     text_cell = worksheet4['A33']  
     text_cell.value = obj.Facade_1_Orientation
     text_cell = worksheet4['A34']  

@@ -183,7 +183,7 @@ class UpdatedXLSXFile(models.Model):
 class kizeo_model(models.Model):
     kizeo_id = models.CharField(max_length=100,blank=True)
     
-        
+    
     ### Données Générales
     latitude = models.CharField(max_length=100,blank=True)
     longitude = models.CharField(max_length=100,blank=True)
@@ -191,21 +191,21 @@ class kizeo_model(models.Model):
     Donnees_Generales_Nom_d_intervenant = models.CharField(max_length=100,blank=True)
     Donnees_Generales_Date_de_visite = models.DateField(null=True,blank=True)
     Donnees_Generales_Adresse = models.CharField(max_length=100,blank=True)
-    Donnees_Generales_Zip_Code = models.IntegerField(default=0,blank=True)
+    Donnees_Generales_Zip_Code = models.IntegerField(null=True,blank=True)
     Donnees_Generales_City = models.CharField(max_length=100,blank=True)
     Donnees_Generales_Annee_de_construction = models.CharField(max_length=100,blank=True)
     Donnees_Generales_Etat_d_occupation = models.CharField(max_length=100,blank=True)
     Donnees_Generales_Nom_client = models.CharField(max_length=100,blank=True)
-    Donnees_Generales_Tel_client = models.IntegerField(default=0,blank=True)
+    Donnees_Generales_Tel_client = models.IntegerField(null=True,blank=True)
     Donnees_Generales_Email = models.CharField(max_length=100,blank=True)
     Donnees_Generales_Horaire_d_occupation_des_lieux = models.CharField(max_length=100,blank=True)
     Donnees_Generales_Destination_du_lieu = models.CharField(max_length=100,blank=True)
-    Donnees_Generales_Nombre_d_occupant = models.IntegerField(default=0,blank=True)
-    Donnees_Generales_Nombre_de_niveau = models.IntegerField(default=0,blank=True)
-    Donnees_Generales_Surface_TOTALE = models.IntegerField(default=0,blank=True)
+    Donnees_Generales_Nombre_d_occupant = models.IntegerField(null=True,blank=True)
+    Donnees_Generales_Nombre_de_niveau = models.IntegerField(null=True,blank=True)
+    Donnees_Generales_Surface_TOTALE = models.IntegerField(null=True,blank=True)
     Donnees_Generales_Preuve_Surface = models.CharField(max_length=100,blank=True)
     Donnees_Generales_Preuve_Surface_Photo = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/db/blank-white.jpg")
-    Donnees_Generales_Surface_ajoute_depuis_moins_de_15_ans = models.IntegerField(default=0,blank=True)
+    Donnees_Generales_Surface_ajoute_depuis_moins_de_15_ans = models.IntegerField(null=True,blank=True)
     Donnees_Generales_Factures = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/db/blank-white.jpg")
     Donnees_Generales_Besoin_du_client_Chauffage = models.CharField(max_length=100,blank=True)
     Donnees_Generales_Besoin_du_client_Isolation = models.CharField(max_length=100,blank=True)
@@ -363,3 +363,7 @@ class kizeo_model(models.Model):
     
     signature_data = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
     
+    
+    
+    def __str__(self):
+        return f'{self.kizeo_id} {self.Donnees_Generales_Nom_client}'

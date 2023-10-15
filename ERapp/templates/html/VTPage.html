@@ -1,0 +1,375 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title></title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"> 
+  
+
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/quill/quill.snow.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
+  <script>
+    
+      
+    
+    </script>
+    
+</head>
+
+<body onload="load()">
+  {% if user.is_authenticated %}
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="/home" class="logo d-flex align-items-center">
+        <!--<img src="{% static 'image\default_user_avatar.png' %}" alt="">-->
+        <span class="d-none d-lg-block">Énergie Renouvelable</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn " id="click_side_bar"></i>
+    </div><!-- End Logo -->
+
+    <!-- <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div> -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="{{ user.profile_pic.url }}"  alt="Image">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ user.first_name }} {{ user.last_name }} </span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>{{ user.first_name }} {{ user.last_name }}</h6>
+              <span></span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/profile/">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/logout/">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar =================================================================================================================================================================== -->
+  <!-- ======= Sidebar =================================================================================================================================================================== -->
+
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="index.html">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="components-alerts.html">
+              <i class="bi bi-circle"></i><span>Alerts</span>
+            </a>
+          </li>
+          <li>
+            <a href="components-accordion.html">
+              <i class="bi bi-circle"></i><span>Accordion</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="forms-elements.html">
+              <i class="bi bi-circle"></i><span>Form Elements</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-layouts.html">
+              <i class="bi bi-circle"></i><span>Form Layouts</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-editors.html">
+              <i class="bi bi-circle"></i><span>Form Editors</span>
+            </a>
+          </li>
+          <li>
+            <a href="forms-validation.html">
+              <i class="bi bi-circle"></i><span>Form Validation</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Forms Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="tables-general.html">
+              <i class="bi bi-circle"></i><span>General Tables</span>
+            </a>
+          </li>
+          <li>
+            <a href="tables-data.html">
+              <i class="bi bi-circle"></i><span>Data Tables</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
+
+      <li class="nav-heading">Pages</li>
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-faq.html">
+          <i class="bi bi-question-circle"></i>
+          <span>F.A.Q</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="pages-contact.html">
+          <i class="bi bi-envelope"></i>
+          <span>Contact</span>
+        </a>
+      </li><!-- End Contact Page Nav -->
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+  <!-- End Sidebar ==========================================================================================================================-->
+
+
+  <!-- main Page ========================================================================================================================================     -->
+  <main id="main" class="main">
+    <div style="display:;">
+    <form id="fileUploadForm" enctype="multipart/form-data" method="POST" >
+      {% csrf_token %}
+      <input type="file" id="fileInput" name="fileInput" style="display:none" multiple>
+      <input type="text" name="file_id" id="file_id" style="display:none">
+      <input type="text" name="column" id="column" style="display:none">
+      <button id="submit_add_file_to_model" type="submit" style="display:none"></button>
+    </form>
+
+  </div>
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+
+        
+
+
+         <!--  ======================================================== start table 1 ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
+         <!--  ======================================================== start table 1 ===============================================================  -->
+
+            <!-- Recent Sales -->
+          <div class="row">
+           
+            <div class="col-12">
+              <div class="card recent-sales">
+                <!--<div class="reduce_div">
+                  <button class="reduce_table_size" type="button" style="width:40px;height:40px;"><i class=" ri-arrow-down-s-line fa-3x" ></i></butoon>
+                </div>-->
+
+                <div class="card-body">
+                  <h5 class="card-title">Title <span>| title</span></h5>
+
+                  <input class="form-control" type="text" id="filterInput_1" placeholder="Search..." style="width:30%;min-width:100px;">
+                  <div class="overflow-auto" style="padding:1px;">
+                  
+                  <form method="post"  enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="myid1" id="myid1">
+                    <input type="hidden" name="col_type1" id="col_type1">
+                    <input type="hidden" name="mybutton1" id="mybutton1">
+
+                    <table class="table  table-hover  table-bordered  table-borderless border-info fixed-header-table" id="tableDATA_1" cellspacing="0" >  <!-- table-sm  table-responsive-->
+
+                        <thead class="table-dark border-info ">
+                          <!--<th ></th>
+                          <th >id </th>-->
+                          <th>Prénom</th>  
+                          <th>Nom</th> 
+                          <th>Adresse</th> 
+                          <th>N° de tél</th>
+                          <th>Agent</th>  
+                          <th>Visite technique</th> 
+                        </thead>
+                        <tbody id="myTable_1">
+                          {% for item in data %}
+                            <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
+                            
+                            <tr>
+                                <!--<td class="fixed-column fixed-column-backcolor" ><button  class="button_table_data " type="button" id="table1_edit_col" name="" value="" onclick="my_Func_edit_table_1('{{item.cell_id}}')"><i class="ri-edit-2-fill"></i></button></td>
+                                <td ><p style="width:auto;">{{ item.cell_id }}</p></td>-->
+                                <td class="td_p_cell2"><p>{{ item.firstname }}</p></td>
+                                <td class="td_p_cell2"><p>{{ item.lastname }}</p></td>
+                                <td class="td_p_cell2"><p>{{ item.address }}</p></td>
+                                <td class="td_p_cell2"><p>{{ item.num }}</p></td>  
+                                <td class="td_p_cell2"><p>{{ item.agent }}</p></td>  
+
+                                <td class="td_input_files_cell" > <!-- VT-->
+                                  <a href="{% url 'Kizeo_form_page' client_id=item.cell_id %}" class="btn btn-primary">Form</a>
+                                </td>  <!--  target="_blank"-->
+                                
+                            
+
+
+                            </tr>
+
+                          {% endfor %}
+                        </tbody>
+                        
+                    </table>
+                    <!--{} form.as_p -->
+                    <!--<button class="btn ri-add-fill"></button>-->
+                    
+                </form>
+                
+              </div>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+                <!-- redirect with param -->
+                
+                  <!-- end redirect with param -->
+
+                </div>
+              </div>
+            </div><!-- End Recent Sales -->
+          </div>
+          <!--  ======================================================== end table 1 ===============================================================  -->
+          <!--  ======================================================== end table 1 ===============================================================  -->
+          <!--  ======================================================== end table 1 ===============================================================  -->
+
+
+        
+          
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  {% else %}
+      
+  <div class=""style="padding:10% 30% 10% 30%;"> <!-- overflow hidden for iPad mini landscape view-->
+    <div class="templatemo-content-widget white-bg templatemo-overflow-hidden">
+          <h1 class="text-center" style="font-weight:bold;margin-bottom:20px;">You are not logged in</h1>
+          <h3 class="text-center" style="margin-bottom:10px;"><a href="/login">Click here</a> to login</h2>
+          <!-- <h3 class="text-center">If you have not registered please <a href="/signup">click here</a></h2>
+            
+            Pie chart div <div id="pie_chart_div" class="templatemo-chart"></div> -->
+    </div>
+</div>
+
+  {% endif %}
+
+  
+  
+  <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/chart.js/chart.umd.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/echarts/echarts.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/quill/quill.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/simple-datatables/simple-datatables.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/tinymce/tinymce.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+
+  
+
+  <!-- Template Main JS File -->
+  <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main2.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main3.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main4.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main5.js'%}"></script>
+</body>
+
+</html>
