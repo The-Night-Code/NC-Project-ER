@@ -1112,6 +1112,7 @@ def download_K_file(request,file_id):
         kizeo_model.objects.create(kizeo_id=file_id)
     
     obj = kizeo_model.objects.get(kizeo_id=file_id)
+    obj2 = kizeo_model_Pieces.objects.filter(kizeo_id=file_id)
     template_path = 'ERapp\static\KiFile.xlsx'  # Provide the path to your template file
     workbook = openpyxl.load_workbook(template_path)
     
@@ -1180,6 +1181,96 @@ def download_K_file(request,file_id):
     ###################################### start WORK_SHEET_2
     ###################################### start WORK_SHEET_2
     
+    
+    ### Pieces
+    j=3
+    for item in obj2:
+        image_cell_1 = worksheet2[f'A{j}'] 
+        image_cell_1.value = None
+        o = item.Pieces_image_1
+        if o:
+            image_path_ = o.path  # Get the file path
+            if default_storage.exists(image_path_):
+                image_path1 = o.path
+                img_1 = Image(image_path1)
+                img_1.width =  185.28 #cell_width
+                img_1.height = 140.16 # cell_height
+                worksheet2.add_image(img_1, image_cell_1.coordinate)
+            
+        image_cell_1 = worksheet2[f'B{j}'] 
+        image_cell_1.value = None
+        o = item.Pieces_image_2
+        if o:
+            image_path_ = o.path  # Get the file path
+            if default_storage.exists(image_path_):
+                image_path1 = o.path
+                img_1 = Image(image_path1)
+                img_1.width =  185.28 #cell_width
+                img_1.height = 140.16 # cell_height
+                worksheet2.add_image(img_1, image_cell_1.coordinate)
+                
+        image_cell_1 = worksheet2[f'C{j}'] 
+        image_cell_1.value = None
+        o = item.Pieces_image_3
+        if o:
+            image_path_ = o.path  # Get the file path
+            if default_storage.exists(image_path_):
+                image_path1 = o.path
+                img_1 = Image(image_path1)
+                img_1.width =  185.28 #cell_width
+                img_1.height = 140.16 # cell_height
+                worksheet2.add_image(img_1, image_cell_1.coordinate)
+                
+                
+        text_cell = worksheet2[f'D{j}'] 
+        text_cell.value = item.Pieces
+        text_cell = worksheet2[f'E{j}'] 
+        text_cell.value = item.Chauffage
+        text_cell = worksheet2[f'F{j}'] 
+        text_cell.value = item.Mansardee
+        text_cell = worksheet2[f'G{j}'] 
+        text_cell.value = item.HSP
+        
+        text_cell = worksheet2[f'H{j}'] 
+        text_cell.value = item.Longueur
+        text_cell = worksheet2[f'I{j}'] 
+        text_cell.value = item.Largeur
+        text_cell = worksheet2[f'J{j}'] 
+        text_cell.value = item.Surface
+        
+        text_cell = worksheet2[f'K{j}'] 
+        text_cell.value = item.HSF
+        text_cell = worksheet2[f'L{j}'] 
+        text_cell.value = item.HPP
+        text_cell = worksheet2[f'M{j}'] 
+        text_cell.value = item.LP
+        text_cell = worksheet2[f'N{j}'] 
+        text_cell.value = item.S_rampants_1
+        text_cell = worksheet2[f'O{j}'] 
+        text_cell.value = item.S_rampants_2
+        
+        text_cell = worksheet2[f'P{j}'] 
+        text_cell.value = item.Decrochement_Longueur
+        text_cell = worksheet2[f'Q{j}'] 
+        text_cell.value = item.Decrochement_Largeur
+        text_cell = worksheet2[f'R{j}'] 
+        text_cell.value = item.Decrochement_Surface
+        
+        text_cell = worksheet2[f'S{j}'] 
+        text_cell.value = item.Surface_nette
+        
+        text_cell = worksheet2[f'T{j}'] 
+        text_cell.value = item.Menuiseries_F
+        text_cell = worksheet2[f'U{j}'] 
+        text_cell.value = item.Menuiseries_L
+        text_cell = worksheet2[f'V{j}'] 
+        text_cell.value = item.Menuiseries_H
+        text_cell = worksheet2[f'W{j}'] 
+        text_cell.value = item.Menuiseries_N
+        
+        j+=1
+        
+        
     ###################################### end WORK_SHEET_2
     ###################################### end WORK_SHEET_2
     ###################################### end WORK_SHEET_2
@@ -1717,9 +1808,23 @@ def download_K_file(request,file_id):
             img_1.height = 140.16 # cell_height
             worksheet4.add_image(img_1, image_cell_1.coordinate)
     
-    
-    
-
+    ### Pieces
+    j=284
+    for item in obj2:
+        
+        text_cell = worksheet4[f'A{j}'] 
+        text_cell.value = item.Pieces
+        text_cell = worksheet4[f'B{j}'] 
+        text_cell.value = item.Chauffage
+        text_cell = worksheet4[f'C{j}'] 
+        text_cell.value = item.Niveau
+        text_cell = worksheet4[f'D{j}'] 
+        text_cell.value = item.HSP
+        text_cell = worksheet4[f'F{j}'] 
+        text_cell.value = F"{item.Longueur}x{item.Largeur}"
+        text_cell = worksheet4[f'G{j}'] 
+        text_cell.value = item.Surface
+        j+=1
     ######################################   END WORK_SHEET_4
     ######################################   END WORK_SHEET_4
     ######################################   END WORK_SHEET_4
