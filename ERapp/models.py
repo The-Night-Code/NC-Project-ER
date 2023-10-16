@@ -368,3 +368,41 @@ class kizeo_model(models.Model):
     
     def __str__(self):
         return f'{self.kizeo_id} {self.Donnees_Generales_Nom_client}'
+    
+class kizeo_model_Pieces(models.Model):
+    Pieces_index = models.AutoField(primary_key=True)
+    kizeo_id = models.CharField(max_length=100,blank=True)
+    Pieces_image_1 = models.ImageField(upload_to='uploads/data/kizeo',blank=True,null=True)
+    Pieces_image_2 = models.ImageField(upload_to='uploads/data/kizeo',blank=True,null=True)
+    Pieces_image_3 = models.ImageField(upload_to='uploads/data/kizeo',blank=True,null=True)
+    Niveau = models.CharField(max_length=100,blank=True)
+
+    Pieces = models.CharField(max_length=100,blank=True)
+    Chauffage = models.CharField(max_length=100,blank=True)
+    Mansardee = models.CharField(max_length=100,blank=True)
+    HSP = models.FloatField(default=0.0,blank=True)
+    
+    Longueur = models.FloatField(default=0.0,blank=True)
+    Largeur  = models.FloatField(default=0.0,blank=True)
+    Surface = models.FloatField(default=0.0,blank=True)
+    
+    IF_mansardee= models.BooleanField(default=False) 
+    HSF = models.FloatField(default=0.0,blank=True)
+    HPP = models.FloatField(default=0.0,blank=True)
+    LP = models.FloatField(default=0.0,blank=True)
+    S_rampants_1 = models.FloatField(default=0.0,blank=True)
+    S_rampants_2 = models.FloatField(default=0.0,blank=True)
+    
+    Decrochement_Longueur = models.FloatField(default=0.0,blank=True)
+    Decrochement_Largeur  = models.FloatField(default=0.0,blank=True)
+    Decrochement_Surface = models.FloatField(default=0.0,blank=True)
+    
+    Surface_nette = models.FloatField(default=0.0,blank=True)
+    
+    Menuiseries_F = models.CharField(max_length=1000,blank=True)
+    Menuiseries_L = models.FloatField(default=0.0,blank=True)
+    Menuiseries_H = models.FloatField(default=0.0,blank=True)
+    Menuiseries_N = models.IntegerField(default=0,null=True,blank=True)
+    
+    def __str__(self):
+        return f'{self.kizeo_id} {self.Pieces_index}'

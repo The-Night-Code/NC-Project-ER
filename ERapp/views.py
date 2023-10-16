@@ -8,9 +8,8 @@ from django.contrib.auth import authenticate, login , logout
 
 from django.views.generic.edit import CreateView
 
-
-
-from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1
+from django.db.models import Max
+from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1,kizeo_model_Pieces
 from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal
 
 from django.core.mail import send_mail
@@ -994,10 +993,103 @@ def Kizeo_form_page(request,client_id):
                                     #'signature_data',
 
                                 ])
-
+    Pieces_index_add = kizeo_model_Pieces.objects.filter(kizeo_id=client_id).aggregate(Max('Pieces_index'))['Pieces_index__max']
+    if not Pieces_index_add:
+        Pieces_index_add = 1
+    else: 
+        Pieces_index_add+=1
+    pieces=kizeo_model_Pieces.objects.filter(kizeo_id=client_id)
     data = kizeo_model.objects.get(kizeo_id=client_id)
-    return render(request, 'html/formK.html',{"data":data})
+    return render(request, 'html/formK.html',{"data":data,"pieces":pieces,'Pieces_index_add':Pieces_index_add})
 
+
+
+def kizeo_form_Pieces(request,client_id,piece_id):
+    if kizeo_model_Pieces.objects.filter(kizeo_id=client_id,Pieces_index=piece_id):
+        pass
+    else:
+        kizeo_model_Pieces.objects.create(kizeo_id=client_id)
+    
+    if request.method == 'POST':
+        
+                      
+        obj = kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id)  
+            
+
+        
+        obj.Niveau = request.POST.get("Niveau")
+        
+        obj.Pieces = request.POST.get("Pieces")
+        
+        obj.Chauffage ="Non"
+        Chauffage = request.POST.get("Chauffage")
+        if Chauffage:
+            obj.Chauffage ="Oui"
+            
+            
+        Mansardee = request.POST.get("Mansardee")
+        obj.Mansardee ="Non"
+        obj.IF_mansardee = False
+        if Mansardee:
+            obj.IF_mansardee = True
+            obj.HSF = float(request.POST.get("HSF"))
+            obj.HPP = float(request.POST.get("HPP"))
+            obj.LP = float(request.POST.get("LP"))
+            obj.S_rampants_1 = float(request.POST.get("S_rampants_1"))
+            obj.S_rampants_2 = float(request.POST.get("S_rampants_2"))
+            obj.save(update_fields=[
+                                'HSF',
+                                'HPP',
+                                'LP',
+                                'S_rampants_1',
+                                'S_rampants_2',])
+            obj.Mansardee ="Oui"
+        
+        obj.HSP = float(request.POST.get("HSP"))
+        
+        obj.Longueur = float(request.POST.get("Longueur"))
+        obj.Largeur = float(request.POST.get("Largeur"))
+        obj.Surface = float(request.POST.get("Longueur"))*float(request.POST.get("Largeur"))
+        
+        obj.Decrochement_Longueur = float(request.POST.get("Decrochement_Longueur"))
+        obj.Decrochement_Largeur = float(request.POST.get("Decrochement_Largeur"))
+        obj.Decrochement_Surface = float(request.POST.get("Decrochement_Longueur")) * float(request.POST.get("Decrochement_Largeur"))
+        
+        obj.Surface_nette = float(request.POST.get("Surface_nette"))
+        
+        obj.Menuiseries_F = request.POST.get("Menuiseries_F")
+        obj.Menuiseries_L = float(request.POST.get("Menuiseries_L"))
+        obj.Menuiseries_H = float(request.POST.get("Menuiseries_H"))
+        obj.Menuiseries_N = int(request.POST.get("Menuiseries_N"))
+        
+        obj.save(update_fields=[
+                                'Niveau',
+        
+                                'Pieces',
+                                'Chauffage',
+                                'Mansardee',
+                                'HSP',
+                                
+                                'Longueur',
+                                'Largeur',
+                                'Surface',
+                                
+                                'IF_mansardee',
+                                
+                                'Decrochement_Longueur',
+                                'Decrochement_Largeur',
+                                'Decrochement_Surface',
+                                
+                                'Surface_nette',
+                                
+                                'Menuiseries_F',
+                                'Menuiseries_L',
+                                'Menuiseries_H',
+                                'Menuiseries_N',
+            ])
+                                 
+    data = kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id)
+    return render(request, 'html/formK_Pieces.html',{'data':data})
 
 
 def save_signature(request):

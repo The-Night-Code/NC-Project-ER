@@ -305,12 +305,13 @@
                     <label class="col-form-label form-label_formK">Année de construction: </label>
                     <select class="form-select kizeo_select_box " aria-label="Default select example" name="Donnees_Generales_Annee_de_construction">
                       <option value="" {% if data.Donnees_Generales_Annee_de_construction  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.Donnees_Generales_Annee_de_construction  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.Donnees_Generales_Annee_de_construction  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.Donnees_Generales_Annee_de_construction  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.Donnees_Generales_Annee_de_construction  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.Donnees_Generales_Annee_de_construction  == "" %}selected{% endif %}></option>
-       
+                      <option value="Avant 1948" {% if data.Donnees_Generales_Annee_de_construction  == "Avant 1948" %}selected{% endif %}>Avant 1948</option>
+                      <option value="Entre 1949 et 1974" {% if data.Donnees_Generales_Annee_de_construction  == "Entre 1949 et 1974" %}selected{% endif %}>Entre 1949 et 1974</option>
+                      <option value="Entre 1975 et 1977" {% if data.Donnees_Generales_Annee_de_construction  == "Entre 1975 et 1977" %}selected{% endif %}>Entre 1975 et 1977</option>
+                      <option value="Entre 1978 et 1982" {% if data.Donnees_Generales_Annee_de_construction  == "Entre 1978 et 1982" %}selected{% endif %}>Entre 1978 et 1982</option>
+                      <option value="Entre 1983 et 1988" {% if data.Donnees_Generales_Annee_de_construction  == "Entre 1983 et 1988" %}selected{% endif %}>Entre 1983 et 1988</option>
+                      <option value="Entre 1989 et 2000" {% if data.Donnees_Generales_Annee_de_construction  == "Entre 1989 et 2000" %}selected{% endif %}>Entre 1989 et 2000</option>
+                      <option value="Après 2000" {% if data.Donnees_Generales_Annee_de_construction  == "Après 2000" %}selected{% endif %}>Après 2000</option>
                     </select>
                   </div>
                   
@@ -319,11 +320,10 @@
                     <label class="col-form-label form-label_formK">Etat d'occupation: </label>
                     <select class="form-select kizeo_select_box " aria-label="Default select example" name="Donnees_Generales_Etat_d_occupation">
                       <option value="" {% if data.Donnees_Generales_Etat_d_occupation  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.Donnees_Generales_Etat_d_occupation  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.Donnees_Generales_Etat_d_occupation  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.Donnees_Generales_Etat_d_occupation  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.Donnees_Generales_Etat_d_occupation  == "" %}selected{% endif %}></option>
-                      <option value="" {% if data.Donnees_Generales_Etat_d_occupation  == "" %}selected{% endif %}></option>
+                      <option value="Moins d'une année" {% if data.Donnees_Generales_Etat_d_occupation  == "Moins d'une année" %}selected{% endif %}>Moins d'une année</option>
+                      <option value="Plus d'une année" {% if data.Donnees_Generales_Etat_d_occupation  == "Plus d'une année" %}selected{% endif %}>Plus d'une année</option>
+                      <option value="Plus de 2 ans" {% if data.Donnees_Generales_Etat_d_occupation  == "Plus de 2 ans" %}selected{% endif %}>Plus de 2 ans</option>
+                      <option value="En rénovation" {% if data.Donnees_Generales_Etat_d_occupation  == "En rénovation" %}selected{% endif %}>En rénovation</option>
        
                     </select>
                   </div>
@@ -1816,9 +1816,18 @@
               <!-- General Form Elements -->
               <div class=""  id="show_div_17" >
                 <div class="row g-3">
+                  {% if pieces %}
+                    {% for i in pieces %}
+                    
+                    <div class="col-md-12">
+                      <label  class="form-label form-label_formK">{{i.Pieces}}</label>
+                      <a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=i.Pieces_index %}" class="btn btn-primary">modifier</a>
+                    </div>
+                    
+                    {% endfor %}
+                  {% endif %}
 
-                  
-
+                  <a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=Pieces_index_add %}" class="btn btn-primary">Ajouter</a>
                 </div>
           </div>
         </div>

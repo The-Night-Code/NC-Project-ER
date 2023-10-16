@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,download_K_file,save_signature,VT_Page,Kizeo_form_page,VT_Page_edit_state
+from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,VT_Page_edit_state
+from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces
 from ERapp.views import table_view_edit ,add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,chat_box_1
 from ERapp import views
 
@@ -51,6 +52,7 @@ urlpatterns = [
     #path(f'{formK}/',Kizeo_form_page  ),
     path(f'{formK}/<str:client_id>',Kizeo_form_page  ,name='Kizeo_form_page'),
     path('download_K_file/<str:file_id>/', download_K_file, name='download_K_file'),
+    path(f'{formK}/<str:client_id>/<str:piece_id>/',kizeo_form_Pieces  ,name='kizeo_form_Pieces'),
     
     path('save_signature/', save_signature, name='save_signature'),
     
