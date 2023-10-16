@@ -1030,20 +1030,22 @@ def kizeo_form_Pieces(request,client_id,piece_id):
         Mansardee = request.POST.get("Mansardee")
         obj.Mansardee ="Non"
         obj.IF_mansardee = False
-        if Mansardee:
-            obj.IF_mansardee = True
-            obj.HSF = float(request.POST.get("HSF"))
-            obj.HPP = float(request.POST.get("HPP"))
-            obj.LP = float(request.POST.get("LP"))
-            obj.S_rampants_1 = float(request.POST.get("S_rampants_1"))
-            obj.S_rampants_2 = float(request.POST.get("S_rampants_2"))
-            obj.save(update_fields=[
-                                'HSF',
-                                'HPP',
-                                'LP',
-                                'S_rampants_1',
-                                'S_rampants_2',])
-            obj.Mansardee ="Oui"
+        
+        Pieces_image_1=request.FILES.get('Pieces_image_1')
+        if Pieces_image_1:
+            obj.Pieces_image_1 = Pieces_image_1
+            obj.save(update_fields=['Pieces_image_1'])
+            
+        Pieces_image_2=request.FILES.get('Pieces_image_2')
+        if Pieces_image_2:
+            obj.Pieces_image_2 = Pieces_image_2
+            obj.save(update_fields=['Pieces_image_2'])
+            
+        Pieces_image_3=request.FILES.get('Pieces_image_3')
+        if Pieces_image_3:
+            obj.Pieces_image_3 = Pieces_image_3
+            obj.save(update_fields=['Pieces_image_1'])
+            
         
         obj.HSP = float(request.POST.get("HSP"))
         
