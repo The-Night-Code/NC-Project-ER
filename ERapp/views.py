@@ -1029,7 +1029,16 @@ def kizeo_form_Pieces(request,client_id,piece_id):
             
         Mansardee = request.POST.get("Mansardee")
         obj.Mansardee ="Non"
+        
         obj.IF_mansardee = False
+        if request.POST.get("IF_mansardee"):
+            obj.IF_mansardee = True
+            obj.HSF = request.POST.get("HSF")
+            obj.HPP = request.POST.get("HPP")
+            obj.LP = request.POST.get("LP")
+            obj.S_rampants_1 = request.POST.get("S_rampants_1")
+            obj.S_rampants_2 = request.POST.get("S_rampants_2")
+            obj.save(update_fields=['HSF','HPP','LP','S_rampants_1','S_rampants_2'])
         
         Pieces_image_1=request.FILES.get('Pieces_image_1')
         if Pieces_image_1:
@@ -1228,8 +1237,8 @@ def download_K_file(request,file_id):
         text_cell.value = item.Pieces
         text_cell = worksheet2[f'E{j}'] 
         text_cell.value = item.Chauffage
-        text_cell = worksheet2[f'F{j}'] 
-        text_cell.value = item.Mansardee
+        
+        
         text_cell = worksheet2[f'G{j}'] 
         text_cell.value = item.HSP
         
@@ -1240,16 +1249,20 @@ def download_K_file(request,file_id):
         text_cell = worksheet2[f'J{j}'] 
         text_cell.value = item.Surface
         
-        text_cell = worksheet2[f'K{j}'] 
-        text_cell.value = item.HSF
-        text_cell = worksheet2[f'L{j}'] 
-        text_cell.value = item.HPP
-        text_cell = worksheet2[f'M{j}'] 
-        text_cell.value = item.LP
-        text_cell = worksheet2[f'N{j}'] 
-        text_cell.value = item.S_rampants_1
-        text_cell = worksheet2[f'O{j}'] 
-        text_cell.value = item.S_rampants_2
+        text_cell = worksheet2[f'F{j}'] 
+        text_cell.value = "Non"
+        if item.IF_mansardee:
+            text_cell.value = 'Oui'
+            text_cell = worksheet2[f'K{j}'] 
+            text_cell.value = item.HSF
+            text_cell = worksheet2[f'L{j}'] 
+            text_cell.value = item.HPP
+            text_cell = worksheet2[f'M{j}'] 
+            text_cell.value = item.LP
+            text_cell = worksheet2[f'N{j}'] 
+            text_cell.value = item.S_rampants_1
+            text_cell = worksheet2[f'O{j}'] 
+            text_cell.value = item.S_rampants_2
         
         text_cell = worksheet2[f'P{j}'] 
         text_cell.value = item.Decrochement_Longueur
@@ -1734,7 +1747,9 @@ def download_K_file(request,file_id):
     text_cell = worksheet4[f'D{j}'] 
     text_cell.value = obj.ECS_type
     j+=1
-    
+    text_cell = worksheet4[f'D{j}'] 
+    text_cell.value = "obj."
+    j+=1
     objimage =obj.ECS_photo_appoint
     image_cell_1 = worksheet4[f'B{j}'] 
     image_cell_1.value = None
@@ -1747,7 +1762,7 @@ def download_K_file(request,file_id):
             img_1.height = 140.16 # cell_height
             worksheet4.add_image(img_1, image_cell_1.coordinate)
     
-    text_cell = worksheet4[f'D{j}'] 
+    text_cell = worksheet4['D245'] 
     text_cell.value = obj.ECS_system_d_appoint
     
     

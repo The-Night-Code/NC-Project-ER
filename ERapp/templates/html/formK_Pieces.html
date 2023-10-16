@@ -230,9 +230,8 @@
       <h1>Form Elements</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Elements</li>
+          <li class="breadcrumb-item"><a href="{% url 'Kizeo_form_page' client_id=data.kizeo_id %}">Kizeo</a></li>
+          <li class="breadcrumb-item active">Pièce</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -310,14 +309,11 @@
                         <label  class="form-label form-label_formK">Pièce: </label>
                         <input type="text" class="form-control" name="Pieces" value={{ data.Pieces }}>
                     </div>
-                    <div class="col-md-3">
-                        <label  class="form-label form-label_formK">Chauffée: </label>
-                        <input type="text" class="form-control" name="Chauffage" value={{ data.Chauffage }}>
-                    </div>
+                    
 
                     <div class="col-md-3">
-                        <label  class="form-label form-label_formK">Mansardée: </label>
-                        <input class="form-check-input" type="checkbox"  name="Mansardee" {% if Mansardee %}checked {% endif %} >
+                        <label  class="form-label form-label_formK">Chauffée: </label>
+                        <input class="form-check-input" type="checkbox"  name="Chauffage" {% if data.Chauffage %}checked {% endif %} >
 
                     </div>
                     <div class="col-md-3">
@@ -347,7 +343,7 @@
 
                     <h5 class="card-title card-title_inside">Si pièce mansardée</h5>
                     <div class="form-check form-switch" style="margin:0px 10px 30px 10px;">
-                        <input class="form-check-input" type="checkbox" id="disableDivCheckbox" name="IF_mansardee" {% if IF_mansardee %}checked {% endif %} >
+                        <input class="form-check-input" type="checkbox" id="disableDivCheckbox" name="IF_mansardee" {% if data.IF_mansardee %}checked {% endif %} >
                     </div>
                     <div id="myDiv" class="row col-md-12  disable-on-uncheck">
                         <div class="col-md-2" >
