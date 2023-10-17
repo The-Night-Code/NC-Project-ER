@@ -45,3 +45,25 @@ function filterTable(myTable,filterInput) {
   document.getElementById("filterInput_3").addEventListener("keyup", function () {
     filterTable("myTable_3", "filterInput_3");
   });
+
+  document.getElementById("filterInput_4").addEventListener("keyup", function () {
+    filterTable("myTable_4", "filterInput_4");
+  });
+  document.getElementById("filterInput_5").addEventListener("keyup", function () {
+    filterTable("myTable_5", "filterInput_5");
+  });
+  document.getElementById("filterInput_6").addEventListener("keyup", function () {
+    filterTable("myTable_6", "filterInput_6");
+  });
+
+  document.getElementById("filterInput_7").addEventListener("keyup", function () {
+    filterTable("myTable_7", "filterInput_7");
+  });
+
+  document.getElementById("filterInput_8").addEventListener("keyup", function () {
+    filterTable("myTable_8", "filterInput_8");
+  });
+
+  document.getElementById("filterInput_9").addEventListener("keyup", function () {
+    filterTable("myTable_9", "filterInput_9");
+  });

@@ -283,6 +283,24 @@ def table_view(request): # add row
     datafiles_AuditV3 = file_table_auditV3.objects.all()
     datafiles_AuditFinal = file_table_auditFinal.objects.all()
     message_box_01 = message_box_1.objects.all()
+    
+    table_index=[{1:""},{2:""},{3:""},{4:""},{5:""},{6:""},{7:""},{8:""},{9:""}]
+    table_index={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:""}
+    table_index=[1,2,3,4,5,6,7,8,9]
+    table_state_ = ["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]
+    table_index={"index":[1,2,3,4,5,6,7,8,9],
+                 "state":["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]}
+    
+    table_index=[{'index':1,'state':"A realiser"},
+                 {'index':2,'state':"En cours"},
+                 {'index':3,'state':"A modifier"},
+                 {'index':4,'state':"Modification Faite"},
+                 {'index':5,'state':"Reclamation"},
+                 {'index':6,'state':"Reclamation Faite"},
+                 {'index':7,'state':"Envoye"},
+                 {'index':8,'state':"Annule"},
+                 {'index':9,'state':"Fini"}]
+    
     return render(request, 'html/formPage.html', { 'data': data ,
                                                   'col_count':col_count ,
                                                   'column_names': column_names,
@@ -291,7 +309,8 @@ def table_view(request): # add row
                                                   'datafiles_AuditV2': datafiles_AuditV2 ,
                                                   'datafiles_AuditV3': datafiles_AuditV3 ,
                                                   'datafiles_AuditFinal':datafiles_AuditFinal,
-                                                  'message_box_1':message_box_01})
+                                                  'message_box_1':message_box_01,
+                                                  'table_index':table_index})
        
     
 def chat_box_1(request):

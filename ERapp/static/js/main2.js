@@ -21,7 +21,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+initializeTable('tableDATA_1');
+initializeTable('tableDATA_2');
+initializeTable('tableDATA_3');
+initializeTable('tableDATA_4');
+initializeTable('tableDATA_5');
+initializeTable('tableDATA_6');
+initializeTable('tableDATA_7');
+initializeTable('tableDATA_8');
+initializeTable('tableDATA_9');
 
+function initializeTable(tableId) {
+    const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+    rows.forEach(row => {
+        const selectElement = row.querySelector('.form-select');
+
+        // Initial call to set the badge based on the default selected option in each row
+        updateBadge(row);
+
+        selectElement.addEventListener('change', () => {
+            updateBadge(row);
+        });
+    });
+}
 
 
 // <select> with <span>badge for tbody
@@ -40,47 +62,7 @@ function updateBadge(row) {
     });
 }
 
-// Add event listener for each row in tableDATA1
-const rows1 = document.querySelectorAll('#tableDATA_1 tbody tr');
 
-rows1.forEach(row => {
-    const selectElement = row.querySelector('.form-select');
-
-    // Initial call to set the badge based on the default selected option in each row
-    updateBadge(row);
-
-    selectElement.addEventListener('change', () => {
-        updateBadge(row);
-    });
-});
-
-// Add event listener for each row in tableDATA2
-const rows2 = document.querySelectorAll('#tableDATA_2 tbody tr');
-
-rows2.forEach(row => {
-    const selectElement = row.querySelector('.form-select');
-
-    // Initial call to set the badge based on the default selected option in each row
-    updateBadge(row);
-
-    selectElement.addEventListener('change', () => {
-        updateBadge(row);
-    });
-});
-
-// Add event listener for each row in tableDATA3
-const rows3 = document.querySelectorAll('#tableDATA_3 tbody tr');
-
-rows3.forEach(row => {
-    const selectElement = row.querySelector('.form-select');
-
-    // Initial call to set the badge based on the default selected option in each row
-    updateBadge(row);
-
-    selectElement.addEventListener('change', () => {
-        updateBadge(row);
-    });
-});
 
 //<select> with <span>badge for tfoot  
 const selectElement = document.querySelector('.form-selectfoot');
@@ -100,3 +82,15 @@ updateBadgefoot();
 
 // Add event listener to update the badge when the select element changes
 selectElement.addEventListener('change', updateBadgefoot);
+
+
+
+
+
+
+
+
+// Initialize tables with different IDs
+
+// Add more tables as needed
+

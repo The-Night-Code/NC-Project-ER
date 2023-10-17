@@ -125,36 +125,55 @@
 
 #tableDATA_1,
 #tableDATA_2,
-#tableDATA_3 {
+#tableDATA_3 ,
+#tableDATA_4 ,
+#tableDATA_5 ,
+#tableDATA_6 ,
+#tableDATA_7 ,
+#tableDATA_8 ,
+#tableDATA_9 {
   margin-bottom: 60px;
 }
 
 #tableDATA_1 th, td,
 #tableDATA_2 th, td,
-#tableDATA_3 th, td {
+#tableDATA_3 th, td,
+#tableDATA_4 th, td,
+#tableDATA_5 th, td, 
+#tableDATA_6 th, td, 
+#tableDATA_7 th, td, 
+#tableDATA_8 th, td, 
+#tableDATA_9 th, td{
   white-space: nowrap;
   
 }
 
 #tableDATA_1 td,
 #tableDATA_2 td,
-#tableDATA_3 td{
+#tableDATA_3 td,
+#tableDATA_4 td,
+#tableDATA_5 td,
+#tableDATA_6 td,
+#tableDATA_7 td,
+#tableDATA_8 td,
+#tableDATA_9 td{
   height:100%;
   
 }
 #tableDATA_1 td select,
 #tableDATA_2 td select,
-#tableDATA_3 td select{
+#tableDATA_3 td select,
+#tableDATA_4 td select,
+#tableDATA_5 td select,
+#tableDATA_6 td select,
+#tableDATA_7 td select,
+#tableDATA_8 td select,
+#tableDATA_9 td select{
   height:0px;
-  
+   width:100px;
 }
 
-#tableDATA_1 td select,
-#tableDATA_2 td select,
-#tableDATA_3 td select{
-  width:100px;
-  
-}
+
 
 
 .badge-cell select , .badge-cellfoot select  {
