@@ -374,8 +374,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Preuve Surface: </label>
                     <input type="file" id="file-input" name="Donnees_Generales_Preuve_Surface_Photo" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Donnees_Generales_Preuve_Surface_Photo')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Donnees_Generales_Preuve_Surface_Photo.url }}"  alt="Image" width="70" >
+                    {% if data.Donnees_Generales_Preuve_Surface_Photo %}<img src="{{ data.Donnees_Generales_Preuve_Surface_Photo.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
 
                   <div class="col-md-4">
@@ -387,8 +386,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Factures: </label>
                     <input type="file" id="file-input" name="Donnees_Generales_Factures" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Donnees_Generales_Factures')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Donnees_Generales_Factures.url }}"  alt="Image" width="70" >
+                    {% if data.Donnees_Generales_Factures %}<img src="{{ data.Donnees_Generales_Factures.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
                   
                   <div class="col-md-4">
@@ -414,7 +412,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section"> 
       <div class="row" >
           <div class="card" >
             <!-- ================================== -->
@@ -477,8 +475,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
                     <input type="file" id="file-input" name="Facade_1_Photo_Principale" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK_id" onclick="upload_image_formK_click_button('Facade_1_Photo_Principale')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Facade_1_Photo_Principale.url }}"  alt="Image" width="70">
+                    {% if data.Facade_1_Photo_Principale %}<img src="{{ data.Facade_1_Photo_Principale.url }}"  alt="Image" width="70">{% endif %}
                   </div>
 
                 </div>
@@ -527,8 +524,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
                     <input type="file" id="file-input" name="Facade_2_Photo_Principale" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Facade_2_Photo_Principale')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Facade_2_Photo_Principale.url }}"  alt="Image" alt="Image" width="70">
+                    {% if data.Facade_2_Photo_Principale %}<img src="{{ data.Facade_2_Photo_Principale.url }}"  alt="Image" alt="Image" width="70">{% endif %}
                   </div>
 
                 </div>
@@ -580,8 +576,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
                     <input type="file" id="file-input" name="Facade_3_Photo_Principale" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Facade_3_Photo_Principale')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Facade_3_Photo_Principale.url }}"  alt="Image" width="70" >
+                    {% if data.Facade_3_Photo_Principale %}<img src="{{ data.Facade_3_Photo_Principale.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
 
                 </div>
@@ -634,8 +629,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo Façade Principale:  </label>
                     <input type="file" id="file-input" name="Facade_4_Photo_Principale" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Facade_4_Photo_Principale')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Facade_4_Photo_Principale.url }}"  alt="Image" width="70" >                  
+                    {% if data.Facade_4_Photo_Principale %}<img src="{{ data.Facade_4_Photo_Principale.url }}"  alt="Image" width="70" >     {% endif %}             
                   </div>
 
                 </div>
@@ -664,7 +658,7 @@
                   <button type="button"  class="border_none style_background_transparent" onclick="myFunction_show_div('2')" >
                     <i class="ri-arrow-down-s-line ms-auto  fa-2x card-title_outside" id="show_div_i_2" ></i>
                   </button> 
-                  Cauffage</h5>
+                  Chauffage</h5>
                 </div>
               </div>
 
@@ -700,16 +694,14 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo système de production:  </label>
                     <input type="file" id="file-input" name="Cauffage_photo_systeme_de_production" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Cauffage_photo_systeme_de_production')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Cauffage_photo_systeme_de_production.url }}"  alt="Image" width="70" >
+                    {% if data.Cauffage_photo_systeme_de_production %}<img src="{{ data.Cauffage_photo_systeme_de_production.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
 
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo fiche signalétique:  </label>
                     <input type="file" id="file-input" name="Cauffage_photo_fiche_signaletique" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Cauffage_photo_fiche_signaletique')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Cauffage_photo_fiche_signaletique.url }}"  alt="Image" width="70" >
+                    {% if data.Cauffage_photo_fiche_signaletique %}<img src="{{ data.Cauffage_photo_fiche_signaletique.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
 
                   <div class="col-md-8">
@@ -731,8 +723,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo appoint </label>
                     <input type="file" id="file-input" name="Cauffage_photo_appoint" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Cauffage_photo_appoint')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Cauffage_photo_appoint.url }}"  alt="Image" width="70" >
+                    {% if data.Cauffage_photo_appoint %}<img src="{{ data.Cauffage_photo_appoint.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
 
                   <div class="col-md-12">
@@ -795,8 +786,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo appoint: </label>
                     <input type="file" id="file-input" name="ECS_photo_appoint" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('ECS_photo_appoint')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.ECS_photo_appoint.url }}"  alt="Image" width="70" >
+                    {% if data.ECS_photo_appoint %}<img src="{{ data.ECS_photo_appoint.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
 
                   <div class="col-md-12">
@@ -849,8 +839,7 @@
                     <div class="col-md-12">
                       <label  class="form-label form-label_formK">Photo ventilation: </label>
                       <input type="file" id="file-input" name="Ventilation_photo_ventilation" accept="image/*"> </input>
-                      <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Ventilation_photo_ventilation')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                      <img src="{{ data.Ventilation_photo_ventilation.url }}"  alt="Image" width="70" >
+                      {% if data.Ventilation_photo_ventilation %}<img src="{{ data.Ventilation_photo_ventilation.url }}"  alt="Image" width="70" >{% endif %}
                     </div>
   
 
@@ -944,8 +933,7 @@
                     <div class="col-md-12">
                       <label  class="form-label form-label_formK">Photo compteur: </label>
                       <input type="file" id="file-input" name="Compteur_Electrique_photo_compteur" accept="image/*"> </input>
-                      <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Compteur_Electrique_photo_compteur')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                      <img src="{{ data.Compteur_Electrique_photo_compteur.url }}"  alt="Image" width="70" >
+                      {% if data.Compteur_Electrique_photo_compteur %}<img src="{{ data.Compteur_Electrique_photo_compteur.url }}"  alt="Image" width="70" >{% endif %}
                     </div>
                     <div class="col-md-12">
                       <label  class="form-label form-label_formK">Commentaire: </label>
@@ -1049,8 +1037,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo mur: </label>
                     <input type="file" id="file-input" name="Mur_1_Photo_mur" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Mur_1_Photo_mur')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Mur_1_Photo_mur.url }}"  alt="Image" width="70" >
+                    {% if data.Mur_1_Photo_mur %}<img src="{{ data.Mur_1_Photo_mur.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
 
                 </div>
@@ -1143,8 +1130,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo mur: </label>
                     <input type="file" id="file-input" name="Mur_2_Photo_mur" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Mur_2_Photo_mur')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Mur_2_Photo_mur.url }}"  alt="Image" width="70" >
+                    {% if data.Mur_2_Photo_mur %}<img src="{{ data.Mur_2_Photo_mur.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
 
 
@@ -1242,8 +1228,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo plancher bas: </label>
                     <input type="file" id="file-input" name="Plancher_bas_1_Photo_plancher_bas" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Plancher_bas_1_Photo_plancher_bas')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Plancher_bas_1_Photo_plancher_bas.url }}"  alt="Image" width="70" >
+                    {% if data.Plancher_bas_1_Photo_plancher_bas %}<img src="{{ data.Plancher_bas_1_Photo_plancher_bas.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
 
                 </div>
@@ -1339,8 +1324,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo plancher bas: </label>
                     <input type="file" id="file-input" name="Plancher_bas_2_Photo_plancher_bas" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Plancher_bas_2_Photo_plancher_bas')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Plancher_bas_2_Photo_plancher_bas.url }}"  alt="Image" width="70" >
+                    {% if data.Plancher_bas_2_Photo_plancher_bas %}<img src="{{ data.Plancher_bas_2_Photo_plancher_bas.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
 
 
@@ -1432,8 +1416,7 @@
                 <div class="col-md-12">
                   <label  class="form-label form-label_formK">Photo plancher bas: </label>
                   <input type="file" id="file-input" name="Plancher_Haut_1_Photo_plancher_bas" accept="image/*"> </input>
-                  <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Plancher_Haut_1_Photo_plancher_bas')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                  <img src="{{ data.Plancher_Haut_1_Photo_plancher_bas.url }}"  alt="Image" width="70" >
+                  {% if data.Plancher_Haut_1_Photo_plancher_bas %}<img src="{{ data.Plancher_Haut_1_Photo_plancher_bas.url }}"  alt="Image" width="70" >{% endif %}
                 </div>
 
 
@@ -1525,8 +1508,7 @@
                 <div class="col-md-12">
                   <label  class="form-label form-label_formK">Photo plancher bas: </label>
                   <input type="file" id="file-input" name="Plancher_Haut_2_Photo_plancher_bas" accept="image/*"> </input>
-                  <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Plancher_Haut_2_Photo_plancher_bas')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                  <img src="{{ data.Plancher_Haut_2_Photo_plancher_bas.url }}"  alt="Image" width="70" >
+                  {% if data.Plancher_Haut_2_Photo_plancher_bas %}<img src="{{ data.Plancher_Haut_2_Photo_plancher_bas.url }}"  alt="Image" width="70" >{% endif %}
                 </div>
 
                 </div>
@@ -1601,8 +1583,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo menuiseries: </label>
                     <input type="file" id="file-input" name="Fenetre_type_1_Photo" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Fenetre_type_1_Photo')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Fenetre_type_1_Photo.url }}"  alt="Image" width="70" >
+                    {% if data.Fenetre_type_1_Photo %}<img src="{{ data.Fenetre_type_1_Photo.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
                 </div>
           </div>
@@ -1676,8 +1657,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo menuiseries: </label>
                     <input type="file" id="file-input" name="Fenetre_type_2_Photo" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Fenetre_type_2_Photo')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Fenetre_type_2_Photo.url }}"  alt="Image" width="70" >
+                    {% if data.Fenetre_type_2_Photo %}<img src="{{ data.Fenetre_type_2_Photo.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
                 </div>
           </div>
@@ -1733,8 +1713,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo porte: </label>
                     <input type="file" id="file-input" name="Porte_1_Photo_porte" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Porte_1_Photo_porte')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Porte_1_Photo_porte.url }}"  alt="Image" width="70" >
+                    {% if data.Porte_1_Photo_porte %}<img src="{{ data.Porte_1_Photo_porte.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
                 </div>
           </div>
@@ -1789,8 +1768,7 @@
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Photo porte: </label>
                     <input type="file" id="file-input" name="Porte_2_Photo_porte" accept="image/*"> </input>
-                    <button type="button" id="upload_image_formK" onclick="upload_image_formK_click_button('Porte_2_Photo_porte')" class="btn btn-primary"><i class="bi bi-upload"></i></button>
-                    <img src="{{ data.Porte_2_Photo_porte.url }}"  alt="Image" width="70" >
+                    {% if data.Porte_2_Photo_porte %}<img src="{{ data.Porte_2_Photo_porte.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
 
                 </div>
