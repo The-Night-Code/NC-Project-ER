@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
@@ -68,15 +68,15 @@
     
                       <div class="pt-4 pb-2">
                         <h5 class="card-title text-center pb-0 fs-4">Connectez-vous à votre compte</h5>
-                        <p class="text-center small">Entrez votre nom d'utilisateur et votre mot de passe pour vous connecter</p>
+                        <p class="text-center small">Entrez votre email et votre mot de passe pour vous connecter</p>
                       </div>
     
                       <form class="row g-3 " method="POST" enctype="multipart/form-data"><!--novalidate-->
                         {% csrf_token %}
                         <div class="col-12">
-                          <label for="yourUsername" class="form-label">Nom d'utilisateur</label>
+                          <label for="yourUsername" class="form-label">E-mail</label>
                           <div class="input-group has-validation">
-                            <span class="input-group-text" id="inputGroupPrepend">@</span>
+                            <!--<span class="input-group-text" id="inputGroupPrepend">@</span>-->
                             <input type="text" name="username" class="form-control"  required>
                             <div class="invalid-feedback">S'il vous plaît entrez votre nom d'utilisateur.</div>
                           </div>

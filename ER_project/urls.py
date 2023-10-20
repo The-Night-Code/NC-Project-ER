@@ -31,7 +31,7 @@ urlpatterns = [
     path('', LoginU,name="not_logged_in"),
     path('', LoginU,name="main_page"),
     path('admin/', admin.site.urls),
-    path('home/', Home),
+
 
     path('logout/', LogoutU),
     path('profile/',ProfileU ),

@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
@@ -46,7 +46,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
     
     <div class="d-flex align-items-center justify-content-between">
-      <a href="/home" class="logo d-flex align-items-center">
+      <a href="{% url 'main_page' %}" class="logo d-flex align-items-center">
         <!--<img src="{% static 'image\default_user_avatar.png' %}" alt="">-->
         <span class="d-none d-lg-block">Énergie Renouvelable</span>
       </a>
