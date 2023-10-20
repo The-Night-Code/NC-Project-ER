@@ -493,6 +493,12 @@ def VT_Page_edit_state(request):
     
     return redirect(VT)
 
+def create_acc_1(request):
+    return render(request, 'html/create_acc.html')
+    
+
+def files_history(request):
+    return render(request, 'html/files_history.html')
 
 def update_xlsx_template(request):
     # Load your XLSX template

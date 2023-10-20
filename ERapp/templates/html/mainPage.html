@@ -32,6 +32,12 @@
 </head>
 {% if user.is_authenticated %}
 
+{% if  "w1" in user.role %}
+<script>
+    window.location.href = "{% url 'fT' %}";
+</script>
+{% endif %}
+
 {% if "VT" in user.role  %}
 <script>
     window.location.href = "{% url 'VT' %}";
@@ -44,11 +50,7 @@
 </script>
 {% endif %}
 
-{% if  "w1" in user.role %}
-<script>
-    window.location.href = "{% url 'fT' %}";
-</script>
-{% endif %}
+
 
 {% else %}
 <body  style="background-image: url('{% static "image/bg_image.jpg" %}');background-size: cover;background-repeat: no-repeat;background-attachment: fixed;background-position: center center;">
@@ -101,7 +103,7 @@
                         </div>
 
                         <div class="col-12">
-                          <p class="small mb-0">Don't have account? <a href="pages-register.html">Create an account</a></p>
+                          <p class="small mb-0"><a href="#">Mot de passe oublié ?</a></p>
                         </div>
 
                       </form>
