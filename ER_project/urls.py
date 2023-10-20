@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,VT_Page_edit_state
+from ERapp.views import main_Page,Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,VT_Page_edit_state
 from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces
 from ERapp.views import table_view_edit ,add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,chat_box_1
 from ERapp import views
@@ -27,26 +27,33 @@ ai="ai"
 form="form"
 formK="formK"
 urlpatterns = [
+    
+    path('', LoginU,name="not_logged_in"),
+    path('', LoginU,name="main_page"),
     path('admin/', admin.site.urls),
     path('home/', Home),
-    path('login/', LoginU),
+
     path('logout/', LogoutU),
     path('profile/',ProfileU ),
-    path(f'{form}T/',table_view ),
+    
+    
+    path(f'{form}T/',table_view ,name="fT"),
     path(f'{form}T1/',table_view_edit ,name="editFormTable"),#remove_file_from_auditV1
     path(f'{form}T2/',remove_file_from_MODELS ,name="remove_file_from_MODEL"),
     path(f'{form}T4/',add_files_to_MODELS ,name="add_files_to_model"),
+    path('formT5/',chat_box_1 , name="send_message_box1" ),
     
-    path(f'{ai}/',agent_immo ),
+    
+    path(f'{ai}/',agent_immo ,name="ai"),
     path(f'{ai}f/',agent_immo_f ),
     
-    path('VT/', VT_Page),
+    path('VT/', VT_Page,name="VT"),
     path('VT1/', VT_Page_edit_state, name="VT_Page_edit_state"),
     
     path('change_profile_pic/',img_upload_image ),
     path('showimage/',showimage ),
     
-    path('formT5/',chat_box_1 , name="send_message_box1" ),
+    
     
     
     #path(f'{formK}/',Kizeo_form_page  ),

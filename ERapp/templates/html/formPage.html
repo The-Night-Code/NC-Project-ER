@@ -39,6 +39,11 @@
       
     
     </script>
+
+  <style>
+
+
+  </style>
     
 </head>
 
@@ -54,7 +59,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="/home" class="logo d-flex align-items-center">
         <!--<img src="{% static 'image\default_user_avatar.png' %}" alt="">-->
-        <span class="d-none d-lg-block">Énergie Renouvelable</span>
+        <span class="d-none d-lg-block">Énergie </span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn " id="click_side_bar"></i>
     </div><!-- End Logo -->
@@ -238,15 +243,7 @@
     </form>
 
   </div>
-    <div class="pagetitle">
-      <h1>Dashboard</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+
 
     <section class="section dashboard">
       <div class="row">
@@ -770,15 +767,9 @@
   <!-- ======= Footer ======= -->
   {% else %}
       
-  <div class=""style="padding:10% 30% 10% 30%;"> <!-- overflow hidden for iPad mini landscape view-->
-    <div class="templatemo-content-widget white-bg templatemo-overflow-hidden">
-          <h1 class="text-center" style="font-weight:bold;margin-bottom:20px;">You are not logged in</h1>
-          <h3 class="text-center" style="margin-bottom:10px;"><a href="/login">Click here</a> to login</h2>
-          <!-- <h3 class="text-center">If you have not registered please <a href="/signup">click here</a></h2>
-            
-            Pie chart div <div id="pie_chart_div" class="templatemo-chart"></div> -->
-    </div>
-</div>
+  <script>
+    window.location.href = "{% url 'not_logged_in' %}";
+  </script>
 
   {% endif %}
 

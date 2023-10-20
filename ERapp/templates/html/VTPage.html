@@ -40,17 +40,17 @@
     
 </head>
 
-<body onload="load()">
-  {% if user.is_authenticated %}
+<body >
+  {% if user.is_authenticated and "VT" in user.role %}
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     
     <div class="d-flex align-items-center justify-content-between">
-      <a href="/home" class="logo d-flex align-items-center">
+      <a  href="{% url 'main_page' %}" class="logo d-flex align-items-center">
         <!--<img src="{% static 'image\default_user_avatar.png' %}" alt="">-->
-        <span class="d-none d-lg-block">Énergie Renouvelable</span>
+        <span class="d-none d-lg-block">Énergie </span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn " id="click_side_bar"></i>
+      
     </div><!-- End Logo -->
 
     <!-- <div class="search-bar">
@@ -117,111 +117,10 @@
 
   </header><!-- End Header -->
 
-  <!-- ======= Sidebar =================================================================================================================================================================== -->
-  <!-- ======= Sidebar =================================================================================================================================================================== -->
-
-  <aside id="sidebar" class="sidebar">
-
-    <ul class="sidebar-nav" id="sidebar-nav">
-
-      <li class="nav-item">
-        <a class="nav-link " href="index.html">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-          
-        </ul>
-      </li><!-- End Components Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>Form Elements</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Form Layouts</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Forms Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>General Tables</span>
-            </a>
-          </li>
-          <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
-
-
-      <li class="nav-heading">Pages</li>
-
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Contact</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
-
-    </ul>
-
-  </aside><!-- End Sidebar-->
-  <!-- End Sidebar ==========================================================================================================================-->
-
+  
 
   <!-- main Page ========================================================================================================================================     -->
-  <main id="main" class="main">
+  <main id="main2" class="main">
     <div style="display:;">
     <form id="fileUploadForm" enctype="multipart/form-data" method="POST" >
       {% csrf_token %}
@@ -237,18 +136,14 @@
       
     </div><!-- End Page Title -->
 
-    <section class="section dashboard">
+    <section class="section dashboard" >
       <div class="row">
-
-        
-
-
          <!--  ======================================================== start table 1 ===============================================================  -->
          <!--  ======================================================== start table 1 ===============================================================  -->
          <!--  ======================================================== start table 1 ===============================================================  -->
          <!--  ======================================================== start table 1 ===============================================================  -->
          <!--  ======================================================== start table 1 ===============================================================  -->
-
+         {% for k  in table_index %}
             <!-- Recent Sales -->
           <div class="row">
            
@@ -259,9 +154,9 @@
                 </div>-->
 
                 <div class="card-body">
-                  <h5 class="card-title">Title <span>| title</span></h5>
+                  <h5 class="card-title">État <span>| En cours</span></h5>
 
-                  <input class="form-control" type="text" id="filterInput_1" placeholder="Search..." style="width:30%;min-width:100px;">
+                  <input class="form-control" type="text" id="filterInput_{{ k.index }}" placeholder="Search..." style="width:30%;min-width:100px;">
                   <div class="overflow-auto" style="padding:1px;">
                   
                   <form method="post"  enctype="multipart/form-data">
@@ -281,10 +176,11 @@
                           <th>N° de tél</th>
                           <th>Agent</th>  
                           <th>Visite technique</th> 
-                          <th style="width:100px;">Etat</th>
+                          <th style="width:100px;">État</th>
                         </thead>
-                        <tbody id="myTable_1">
+                        <tbody id="myTable_{{k.index}}">
                           {% for item in data %}
+                          {% if item.etat_vt == k.state %}
                             <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             
                             <tr>
@@ -312,7 +208,7 @@
                                 
 
                             </tr>
-
+                            {% endif %}
                           {% endfor %}
                         </tbody>
                         
@@ -333,6 +229,7 @@
               </div>
             </div><!-- End Recent Sales -->
           </div>
+          {% endfor %}
           <!--  ======================================================== end table 1 ===============================================================  -->
           <!--  ======================================================== end table 1 ===============================================================  -->
           <!--  ======================================================== end table 1 ===============================================================  -->
@@ -348,16 +245,10 @@
   <!-- ======= Footer ======= -->
   {% else %}
       
-  <div class=""style="padding:10% 30% 10% 30%;"> <!-- overflow hidden for iPad mini landscape view-->
-    <div class="templatemo-content-widget white-bg templatemo-overflow-hidden">
-          <h1 class="text-center" style="font-weight:bold;margin-bottom:20px;">You are not logged in</h1>
-          <h3 class="text-center" style="margin-bottom:10px;"><a href="/login">Click here</a> to login</h2>
-          <!-- <h3 class="text-center">If you have not registered please <a href="/signup">click here</a></h2>
-            
-            Pie chart div <div id="pie_chart_div" class="templatemo-chart"></div> -->
-    </div>
-</div>
 
+    <script>
+      window.location.href = "{% url 'not_logged_in' %}";
+    </script>
   {% endif %}
 
     <script>

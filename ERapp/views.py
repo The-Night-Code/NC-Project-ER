@@ -35,6 +35,9 @@ from openpyxl.styles import NamedStyle
 formT="/formT/"
 link2="/agentimmo/"
 VT="/VT/"
+
+def main_Page(request):
+    return render(request,'html/mainPage.html')
 def Home(request):
 
     
@@ -68,7 +71,7 @@ def LoginU(request):
      #   if emailU=="night" :
       #      return HttpResponseRedirect('/home')  
     
-    return render(request,'html/login.html')
+    return render(request,'html/mainPage.html')
 
 
 
@@ -118,7 +121,7 @@ def SignupU(request):
     
 def LogoutU(request):
     logout(request)
-    return redirect("/login/")
+    return redirect("main_page")
     #return render(request,'html/login.html')
     
     
@@ -470,9 +473,10 @@ def agent_immo_f(request):
 
 def VT_Page(request):
 
-    
+    table_index=[{'index':1,'state':"En cours"},
+                 {'index':2,'state':"Fini"}]
     data = TableData001.objects.all()
-    return render(request, 'html/VTPage.html', { 'data': data })
+    return render(request, 'html/VTPage.html', { 'data': data,'table_index':table_index })
 
 def VT_Page_edit_state(request):
     param_value_id = request.GET.get('param0')

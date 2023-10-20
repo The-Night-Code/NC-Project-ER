@@ -41,7 +41,7 @@
 </head>
 
 <body onload="load()">
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and "ai" in user.role %}
  <!-- ======= Header ======= -->
  <header id="header" class="header fixed-top d-flex align-items-center">
     
@@ -329,15 +329,9 @@
   <!-- ======= Footer ======= -->
   {% else %}
       
-  <div class=""style="padding:10% 30% 10% 30%;"> <!-- overflow hidden for iPad mini landscape view-->
-    <div class="templatemo-content-widget white-bg templatemo-overflow-hidden">
-          <h1 class="text-center" style="font-weight:bold;margin-bottom:20px;">You are not logged in</h1>
-          <h3 class="text-center" style="margin-bottom:10px;"><a href="/login">Click here</a> to login</h2>
-          <!-- <h3 class="text-center">If you have not registered please <a href="/signup">click here</a></h2>
-            
-            Pie chart div <div id="pie_chart_div" class="templatemo-chart"></div> -->
-    </div>
-</div>
+  <script>
+    window.location.href = "{% url 'not_logged_in' %}";
+  </script>
 
   {% endif %}
 
