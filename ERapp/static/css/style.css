@@ -358,8 +358,8 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 
 
-.error_404_page_h{color:white;}
-.error_404_page_a{background-color:rgba(255,255,255,.1);}
+.error_404_page_h{color:white!important;}
+.error_404_page_a{background-color:rgba(255,255,255,.1)!important;}
 
 /* Initially, the div is not disabled when the checkbox is checked */
 #myDiv {
