@@ -120,7 +120,6 @@
 
 
 
-
   <!-- ======= Sidebar =================================================================================================================================================================== -->
   <!-- ======= Sidebar =================================================================================================================================================================== -->
 
@@ -129,18 +128,32 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link collapsed" href="">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
+      
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'create_acc' %}">
+          <i class="bi bi-person-add"></i>
+          <span>Create account</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'files_history' %}">
+          <i class="bi bi-file-earmark-x"></i>
+          <span>Historique des fichiers</span>
+        </a>
+      </li>
 
     </ul>
 
   </aside><!-- End Sidebar-->
   <!-- End Sidebar ==========================================================================================================================-->
-
 
   <main id="main" class="main">
 

@@ -494,7 +494,48 @@ def VT_Page_edit_state(request):
     return redirect(VT)
 
 def create_acc_1(request):
-    return render(request, 'html/create_acc.html')
+    acc_state = False
+    if request.method == 'POST': 
+        if request.POST.get('create_acc_button') == "submit":
+            
+            firstname = request.POST.get('firstname')
+            lastname = request.POST.get('lastname')
+            email = request.POST.get('email')
+            Num = int(request.POST.get('num'))
+            Agent = request.POST.get('agent')
+            acc_for = request.POST.get('role1')
+            user_id = generate_random_string(10)
+            password = generate_random_string(12)
+            while USER.objects.filter(user_id__contains = user_id):
+                user_id = generate_random_string(10)
+                
+            user_checker=USER.objects.filter(email__icontains = email).exists()
+            if not user_checker:
+                
+                subject = 'Votre compte a été créé avec succès'
+                message = f'Email: {email} Mot de passe: {password} '
+                from_email = 'guhgi155@gmail.com'
+                recipient_list = ['lazariatik@gmail.com']
+
+                send_mail(subject, message, from_email, recipient_list) 
+                USER.objects.create(first_name=firstname,
+                                    last_name=lastname,
+                                    email=email,
+                                    num=Num,
+                                    role=acc_for, 
+                                    password=password)
+                acc_state = True
+            
+                if acc_for == "ai":
+                    obj=USER.objects.get(email=email,firstname=firstname,lastname=lastname,num=Num)
+                    obj.agent=str(Agent)
+                    obj.save(update_fields=['agent'])
+                
+                           
+        
+
+    
+    return render(request, 'html/create_acc.html',{'acc_state':acc_state})
     
 
 def files_history(request):

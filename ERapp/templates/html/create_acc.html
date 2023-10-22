@@ -129,106 +129,46 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link collapsed" href="index.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-          
-        </ul>
-      </li><!-- End Components Nav -->
+      
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link " href="{% url 'create_acc' %}">
+          <i class="bi bi-person-add"></i>
+          <span>Create account</span>
         </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>Form Elements</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Form Layouts</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Forms Nav -->
+      </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="{% url 'files_history' %}">
+          <i class="bi bi-file-earmark-x"></i>
+          <span>Historique des fichiers</span>
         </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>General Tables</span>
-            </a>
-          </li>
-          <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
-
-
-      <li class="nav-heading">Pages</li>
-
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Contact</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
+      </li>
 
     </ul>
 
   </aside><!-- End Sidebar-->
   <!-- End Sidebar ==========================================================================================================================-->
 
-
   <main id="main" class="main">
+    {% if acc_state %}
+    <script>
+      
+      alert("Le compte a été créé","");
+      
+    </script>
+    {% endif %}
 
-
-
+    
     <section class="section">
+      <form  enctype="multipart/form-data" method="POST" >
+        {% csrf_token %}
       <div class="row" style="margin-left:15%;margin-right:15%;">
         
 
@@ -252,15 +192,15 @@
                   </div>
                 </div>
 
-                <div class="row mb-3">
+                <!--<div class="row mb-3">
                   <label for="inputPassword" class="col-sm-2 col-form-label">Adresse</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" name="address" required>
                   </div>
-                </div>
+                </div>-->
                 
                 <div class="row mb-3">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">Email</label>
+                    <label for="inputPassword" class="col-sm-2 col-form-label">E-mail</label>
                     <div class="col-sm-10">
                       <input type="email" class="form-control" name="email" required>
                     </div>
@@ -276,7 +216,7 @@
                 <div class="row mb-3">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Agent</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="agent" required>
+                      <input type="text" class="form-control" name="agent" >
                     </div>
                 </div>
 
@@ -285,7 +225,7 @@
                     <label class="col-sm-2 col-form-label">Compte pour</label>
                     <div class="col-sm-3">
                       <select class="form-select" aria-label="Default select example" name="role1">
-                        <option value=".."></option>
+
                         <option value="VT">Visite technique</option>
                         <option value="ai">Agent immobilier</option>
                       </select>
@@ -297,7 +237,7 @@
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label"></label>
                   <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">Submit Form</button>
+                    <button type="submit" class="btn btn-primary" name="create_acc_button" value="submit">créer un compte</button>
                   </div>
                 </div>
 
@@ -310,6 +250,7 @@
 
         
       </div>
+    </form>
     </section>
 
   </main>
