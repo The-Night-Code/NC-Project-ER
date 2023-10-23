@@ -132,7 +132,7 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-    <form  action="" method="post" enctype="multipart/form-data">
+    <form  method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div>
     <input  type="hidden" name="input_value" id="input_value" >
@@ -215,7 +215,7 @@
                     </div>
                     <div class="col-md-3">
                         <label  class="form-label form-label_formK">HSP: </label>
-                        <input type="number" class="form-control" name="HSP" value={{ data.HSP }} step="0.01">
+                        <input type="number" class="form-control" name="HSP" value={{ data.HSP|floatformat:"-2" }} step="0.01">
                     </div>
 
 
@@ -223,11 +223,11 @@
 
                     <div class="col-md-3">
                         <label  class="form-label form-label_formK">Longueur: </label>
-                        <input type="number" class="form-control" name="Longueur" value={{ data.Longueur }} step="0.01">
+                        <input type="number" class="form-control" name="Longueur" value={{ data.Longueur|floatformat:"-2" }} step="0.01">
                     </div>
                     <div class="col-md-3">
                         <label  class="form-label form-label_formK">Largeur: </label>
-                        <input type="number" class="form-control" name="Largeur" value={{ data.Largeur }} step="0.01">
+                        <input type="number" class="form-control" name="Largeur" value={{ data.Largeur|floatformat:"-2" }} step="0.01">
                     </div>
                     <!--
                     <div class="col-md-4">
@@ -245,25 +245,25 @@
                     <div id="myDiv" class="row col-md-12  disable-on-uncheck">
                         <div class="col-md-2" >
                             <label  class="form-label form-label_formK">HSF: </label>
-                            <input type="number" class="form-control" name="HSF" value={{ data.HSF }} step="0.01">
+                            <input type="number" class="form-control" name="HSF" value={{ data.HSF|floatformat:"-2" }} step="0.01">
                         </div>
                         <div class="col-md-2">
                             <label  class="form-label form-label_formK">HPP: </label>
-                            <input type="number" class="form-control" name="HPP" value={{ data.HPP }} step="0.01">
+                            <input type="number" class="form-control" name="HPP" value={{ data.HPP|floatformat:"-2" }} step="0.01">
                         </div>
                         
                         <div class="col-md-2">
                             <label  class="form-label form-label_formK">LP: </label>
-                            <input type="number" class="form-control" name="LP" value={{ data.LP }} step="0.01">
+                            <input type="number" class="form-control" name="LP" value={{ data.LP|floatformat:"-2" }} step="0.01">
                             
                         </div>
                         <div class="col-md-2">
                             <label  class="form-label form-label_formK">Srampants 1: </label>
-                            <input type="number" class="form-control" name="S_rampants_1" value={{ data.S_rampants_1 }} step="0.01">
+                            <input type="number" class="form-control" name="S_rampants_1" value={{ data.S_rampants_1|floatformat:"-2" }} step="0.01">
                         </div>
                         <div class="col-md-2">
                           <label  class="form-label form-label_formK">Srampants 2: </label>
-                          <input type="number" class="form-control" name="S_rampants_2" value={{ data.S_rampants_2 }} step="0.01">
+                          <input type="number" class="form-control" name="S_rampants_2" value={{ data.S_rampants_2|floatformat:"-2" }} step="0.01">
                       </div>
                     </div> 
 
@@ -272,22 +272,22 @@
                     <h5 class="card-title card-title_inside">Décrochement</h5>
                     <div class="col-md-4">
                         <label  class="form-label form-label_formK">Longueur: </label>
-                        <input type="number" class="form-control" name="Decrochement_Longueur" value={{ data.Decrochement_Longueur }} step="0.01">
+                        <input type="number" class="form-control" name="Decrochement_Longueur" value={{ data.Decrochement_Longueur|floatformat:"-2" }} step="0.01">
                     </div>
                     <div class="col-md-4">
                         <label  class="form-label form-label_formK">Largeur: </label>
-                        <input type="number" class="form-control" name="Decrochement_Largeur" value={{ data.Decrochement_Largeur }} step="0.01">
+                        <input type="number" class="form-control" name="Decrochement_Largeur" value={{ data.Decrochement_Largeur|floatformat:"-2" }} step="0.01">
                     </div>
                     <div class="col-md-4">
                         <label  class="form-label form-label_formK">Surface: </label>
-                        <input type="number" class="form-control" name="Decrochement_Surface" value={{ data.Decrochement_Surface }} step="0.01">
+                        <input type="number" class="form-control" name="Decrochement_Surface" value={{ data.Decrochement_Surface|floatformat:"-2" }} step="0.01">
                     </div>
 
                     <hr/>
 
                     <div class="col-md-4">
                         <label  class="form-label form-label_formK">Surface nette (&#x33A1): </label>
-                        <input type="number" class="form-control" name="Surface_nette" value={{ data.Surface_nette }} step="0.01">
+                        <input type="number" class="form-control" name="Surface_nette" value={{ data.Surface_nette|floatformat:"-2" }} step="0.01">
                     </div>
 
                     <hr/>
@@ -299,17 +299,17 @@
                     </div>
                     <div class="col-md-3">
                         <label  class="form-label form-label_formK">L: </label>
-                        <input type="number" class="form-control" name="Menuiseries_L" value={{ data.Menuiseries_L }} step="0.01">
+                        <input type="number" class="form-control" name="Menuiseries_L" value={{ data.Menuiseries_L|floatformat:"-2" }} step="0.01">
                     </div>
                     
                     <div class="col-md-3">
                         <label  class="form-label form-label_formK">H: </label>
-                        <input type="number" class="form-control" name="Menuiseries_H" value={{ data.Menuiseries_H }} step="0.01">
+                        <input type="number" class="form-control" name="Menuiseries_H" value={{ data.Menuiseries_H|floatformat:"-2" }} step="0.01">
                         
                     </div>
                     <div class="col-md-3">
                         <label  class="form-label form-label_formK">N: </label>
-                        <input type="number" class="form-control" name="Menuiseries_N" value={{ data.Menuiseries_N }}>
+                        <input type="number" class="form-control" name="Menuiseries_N" value={{ data.Menuiseries_N|floatformat:"-2" }}>
                     </div>
 
                     <hr/>
@@ -336,15 +336,7 @@
 
 
  
-  <!-- ======= Footer ======= -->
-  {% else %}
-      
-  <script>
-    window.location.href = "{% url 'not_logged_in' %}";
-  </script>
-
-  {% endif %}
-  
+ 
   <script>
     const checkbox = document.getElementById('disableDivCheckbox');
     const divToDisable = document.getElementById('myDiv');
@@ -365,6 +357,7 @@
 
     // Listen for changes to the checkbox state
     checkbox.addEventListener('change', updateDivState);
+
   </script>
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -383,6 +376,16 @@
   <script type="text/javascript" src="{% static 'js/main3.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main4.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main6.js'%}"></script>
+
+   <!-- ======= Footer ======= -->
+   {% else %}
+      
+   <script>
+     window.location.href = "{% url 'not_logged_in' %}";
+   </script>
+ 
+   {% endif %}
+   
 </body>
 
 </html>

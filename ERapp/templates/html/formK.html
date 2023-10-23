@@ -357,11 +357,11 @@
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Longueur:</label>
-                    <input type="number" class="form-control" name="Facade_1_Longueur" value={{ data.Facade_1_Longueur }}  step="0.01">
+                    <input type="number" class="form-control" name="Facade_1_Longueur" value={{ data.Facade_1_Longueur|floatformat:"-2" }}  step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Hauteur:</label>
-                    <input type="number" class="form-control" name="Facade_1_Hauteur" value={{ data.Facade_1_Hauteur }}  step="0.01" >
+                    <input type="number" class="form-control" name="Facade_1_Hauteur" value={{ data.Facade_1_Hauteur|floatformat:"-2" }}  step="0.01" >
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Surface:</label>
@@ -406,11 +406,11 @@
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Longueur:</label>
-                    <input type="number" class="form-control" name="Facade_2_Longueur" value={{ data.Facade_2_Longueur }} step="0.01">
+                    <input type="number" class="form-control" name="Facade_2_Longueur" value={{ data.Facade_2_Longueur|floatformat:"-2" }} step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Hauteur:</label>
-                    <input type="number" class="form-control" name="Facade_2_Hauteur" value={{ data.Facade_2_Hauteur }} step="0.01">
+                    <input type="number" class="form-control" name="Facade_2_Hauteur" value={{ data.Facade_2_Hauteur|floatformat:"-2" }} step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Surface:</label>
@@ -458,11 +458,11 @@
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Longueur:</label>
-                    <input type="number" class="form-control" name="Facade_3_Longueur" value={{ data.Facade_3_Longueur }} step="0.01">
+                    <input type="number" class="form-control" name="Facade_3_Longueur" value={{ data.Facade_3_Longueur|floatformat:"-2" }} step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Hauteur:</label>
-                    <input type="number" class="form-control" name="Facade_3_Hauteur" value={{ data.Facade_3_Hauteur }} step="0.01">
+                    <input type="number" class="form-control" name="Facade_3_Hauteur" value={{ data.Facade_3_Hauteur|floatformat:"-2" }} step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Surface:</label>
@@ -511,11 +511,11 @@
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Longueur:</label>
-                    <input type="number" class="form-control" name="Facade_4_Longueur" value={{ data.Facade_4_Longueur }} step="0.01">
+                    <input type="number" class="form-control" name="Facade_4_Longueur" value={{ data.Facade_4_Longueur|floatformat:"-2" }} step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Hauteur:</label>
-                    <input type="number" class="form-control" name="Facade_4_Hauteur" value={{ data.Facade_4_Hauteur }} step="0.01">
+                    <input type="number" class="form-control" name="Facade_4_Hauteur" value={{ data.Facade_4_Hauteur|floatformat:"-2" }} step="0.01">
                   </div>
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Surface:</label>
@@ -584,7 +584,7 @@
 
                   <div class="col-md-4">
                     <label  class="form-label form-label_formK">Année de mise en oeuvre: </label>
-                    <input type="number" class="form-control" name="Cauffage_annee_de_mise_en_oeuvre" value={{ data.Cauffage_annee_de_mise_en_oeuvre }} step="0.01">
+                    <input type="number" class="form-control" name="Cauffage_annee_de_mise_en_oeuvre" value={{ data.Cauffage_annee_de_mise_en_oeuvre|floatformat:"-2" }} step="0.01">
                   </div>
 
                   <div class="col-md-12">
@@ -815,7 +815,7 @@
                 <div class="row g-3">
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Puissance souscrite (kVA) </label>
-                    <input type="number" class="form-control" name="Compteur_Electrique_Puissance_souscrite" value={{ data.Compteur_Electrique_Puissance_souscrite }} step="0.01">
+                    <input type="number" class="form-control" name="Compteur_Electrique_Puissance_souscrite" value={{ data.Compteur_Electrique_Puissance_souscrite|floatformat:"-2" }} step="0.01">
                   </div>
                   <div class="row g-3">
                     <div class="col-md-12">
@@ -891,7 +891,7 @@
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Epaisseur mur: </label>
-                    <input type="number" class="form-control" name="Mur_1_Epaisseur_mur" value={{ data.Mur_1_Epaisseur_mur }} step="0.01">
+                    <input type="number" class="form-control" name="Mur_1_Epaisseur_mur" value={{ data.Mur_1_Epaisseur_mur|floatformat:"-2" }} step="0.01">
                   </div>
 
                   <div class="col-md-12">
@@ -907,7 +907,7 @@
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Epaisseur isolant: </label>
-                    <input type="number" class="form-control" name="Mur_1_Epaisseur_isolant" value={{ data.Mur_1_Epaisseur_isolant }} step="0.01">
+                    <input type="number" class="form-control" name="Mur_1_Epaisseur_isolant" value={{ data.Mur_1_Epaisseur_isolant|floatformat:"-2" }} step="0.01">
                   </div>
 
                   <div class="col-md-12">
@@ -984,7 +984,7 @@
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Epaisseur mur: </label>
-                    <input type="number" class="form-control" name="Mur_2_Epaisseur_mur" value={{ data.Mur_2_Epaisseur_mur }} step="0.01">
+                    <input type="number" class="form-control" name="Mur_2_Epaisseur_mur" value={{ data.Mur_2_Epaisseur_mur|floatformat:"-2" }} step="0.01">
                   </div>
 
                   <div class="col-md-12">
@@ -1000,7 +1000,7 @@
 
                   <div class="col-md-12">
                     <label  class="form-label form-label_formK">Epaisseur isolant: </label>
-                    <input type="number" class="form-control" name="Mur_2_Epaisseur_isolant" value={{ data.Mur_2_Epaisseur_isolant }} step="0.01">
+                    <input type="number" class="form-control" name="Mur_2_Epaisseur_isolant" value={{ data.Mur_2_Epaisseur_isolant|floatformat:"-2" }} step="0.01">
                   </div>
 
                   <div class="col-md-12">
@@ -1083,7 +1083,7 @@
 
                   <div class="col-md-6">
                     <label  class="form-label form-label_formK">Surface: </label>
-                    <input type="number" class="form-control" name="Plancher_bas_1_Surface" value={{ data.Plancher_bas_1_Surface }} step="0.01">
+                    <input type="number" class="form-control" name="Plancher_bas_1_Surface" value={{ data.Plancher_bas_1_Surface|floatformat:"-2" }} step="0.01">
                   </div>
 
                   <div class="col-md-6">
@@ -1179,7 +1179,7 @@
 
                   <div class="col-md-6">
                     <label  class="form-label form-label_formK">Surface: </label>
-                    <input type="number" class="form-control" name="Plancher_bas_2_Surface" value={{ data.Plancher_bas_2_Surface }} step="0.01">
+                    <input type="number" class="form-control" name="Plancher_bas_2_Surface" value={{ data.Plancher_bas_2_Surface|floatformat:"-2" }} step="0.01">
                   </div>
 
                   <div class="col-md-6">
@@ -1196,7 +1196,7 @@
 
                   <div class="col-md-6">
                     <label  class="form-label form-label_formK">Epaisseur isolant: </label>
-                    <input type="number" class="form-control" name="Plancher_bas_2_Epaisseur_isolant" value={{ data.Plancher_bas_2_Epaisseur_isolant }} step="0.01">
+                    <input type="number" class="form-control" name="Plancher_bas_2_Epaisseur_isolant" value={{ data.Plancher_bas_2_Epaisseur_isolant|floatformat:"-2" }} step="0.01">
                   </div>
 
                   <div class="col-md-6">
@@ -1271,7 +1271,7 @@
 
                 <div class="col-md-6">
                   <label  class="form-label form-label_formK">Surface: </label>
-                  <input type="number" class="form-control" name="Plancher_Haut_1_Surface" value={{ data.Plancher_Haut_1_Surface }} step="0.01">
+                  <input type="number" class="form-control" name="Plancher_Haut_1_Surface" value={{ data.Plancher_Haut_1_Surface|floatformat:"-2" }} step="0.01">
                 </div>
 
                 <div class="col-md-6">
@@ -1363,7 +1363,7 @@
 
                 <div class="col-md-6">
                   <label  class="form-label form-label_formK">Surface: </label>
-                  <input type="number" class="form-control" name="Plancher_Haut_2_Surface" value={{ data.Plancher_Haut_2_Surface }} step="0.01">
+                  <input type="number" class="form-control" name="Plancher_Haut_2_Surface" value={{ data.Plancher_Haut_2_Surface|floatformat:"-2" }} step="0.01">
                 </div>
 
                 <div class="col-md-6">
@@ -1709,7 +1709,7 @@
               </br>
                 <div class="col-md-4">
                   <label  class="form-label form-label_formK">Surface Mesurée: </label>
-                  <input type="number" class="form-control" name="Saisie_par_piece_Surface_Mesuree" value={{ data.Saisie_par_piece_Surface_Mesuree }} step="0.01">
+                  <input type="number" class="form-control" name="Saisie_par_piece_Surface_Mesuree" value={{ data.Saisie_par_piece_Surface_Mesuree|floatformat:"-2" }} step="0.01">
                 </div>
 
                 <div class="col-md-12">
