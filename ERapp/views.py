@@ -4,7 +4,9 @@ from django.forms import inlineformset_factory
 from django.contrib.auth.models import User
 
 from django.shortcuts import redirect , get_object_or_404
-from django.contrib.auth import authenticate, login , logout
+from django.contrib.auth import authenticate, login , logout,update_session_auth_hash
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from django.views.generic.edit import CreateView
 
@@ -124,17 +126,16 @@ def LogoutU(request):
     return redirect("main_page")
     #return render(request,'html/login.html')
     
-    
+@login_required
 def ProfileU(request):
+    change_password_state=False
     #user_Id="3"
-    user_L=USER.objects.get(email="night@gmail.com") 
-    
+    user_L=request.user
     Submit_Upload_image=request.POST.get("Submit_Upload_image")
     remove_profile_image=request.POST.get("remove_profile_image")
-    
+    change_password_button = request.POST.get("change_password")
     # Upload Profile Image
     if request.method == 'POST' :
-        user_L = USER.objects.get(email="night@gmail.com")
         if Submit_Upload_image=="Submit_Upload_image" and request.FILES['my_uploaded_image']:
             imagefile = request.FILES['my_uploaded_image']
             user_L.profile_pic =imagefile 
@@ -142,20 +143,60 @@ def ProfileU(request):
             
         if remove_profile_image=="remove_profile_image":
             
-            user_L.profile_pic =None 
+            user_L.profile_pic = 'uploads/default_user_avatar.png'
             user_L.save(update_fields=['profile_pic'])
             
-        return redirect("/profile/")
-        
-    
-    
+        if change_password_button == "submit":
+            newPassword = str(request.POST.get("newPassword"))
+            renewPassword = str(request.POST.get("renewPassword"))
+            if newPassword == renewPassword:
+                subject = 'Votre mot de passe a été changé'
+                message = f'Email: {user_L.email} Mot de passe: {newPassword} '
+                from_email = 'Night'
+                recipient_list = ['lazariatik@gmail.com']
+                send_mail(subject, message, from_email, recipient_list) 
+                
+                user_= request.user
+                user_.set_password(newPassword)
+                user_.save()
+                update_session_auth_hash(request, user_)
+                change_password_state=True
+                
+            
+            
+            
+
+
     profile_image =user_L.profile_pic
     if profile_image :
         #profile_image="{% static 'image/default_user_avatar.png' %}"
         profile_image =user_L.profile_pic.url
     
 
-    return render(request,'html/profileU.html',{'profile_image':profile_image})
+    return render(request,'html/profileU.html',{'profile_image':profile_image,'change_password_state':change_password_state})
+
+def forgot_password(request):
+    msg = False
+    email = request.POST.get('email')
+    if request.method == 'POST' :
+        if USER.objects.get(email=email):
+            user_L=USER.objects.get(email=email)
+            newPassword = generate_random_string(12)
+            
+            subject = 'Votre mot de passe a été changé'
+            message = f'Email: {user_L.email} Mot de passe: {newPassword} '
+            from_email = 'Night'
+            recipient_list = ['lazariatik@gmail.com']
+            send_mail(subject, message, from_email, recipient_list) 
+            
+            user_= request.user
+            user_.set_password(newPassword)
+            user_.save()
+            update_session_auth_hash(request, user_)
+            change_password_state=True
+
+    
+    return render(request,'html/forgot_password.html',{'change_password_state': change_password_state})
 
 def showimage(request):
     profile_img = ImageModel.objects.get(user_id="n123") 
@@ -180,7 +221,8 @@ def generate_random_string(length):
     random_string=random_string.replace("%20","")
     random_string=random_string.replace(" ","")
     return random_string
-    
+
+@login_required 
 def table_view(request): # add row
     
     
@@ -315,7 +357,7 @@ def table_view(request): # add row
                                                   'message_box_1':message_box_01,
                                                   'table_index':table_index})
        
-    
+   
 def chat_box_1(request):
     cell_id = request.GET.get('param0')
     
@@ -341,7 +383,7 @@ def chat_box_1(request):
         
     return redirect(formT)
 
-    
+@login_required 
 def table_view_edit(request):
     param_value_id = request.GET.get('param0')
     param1_value = request.GET.get('param1')
@@ -383,7 +425,7 @@ def ModelByColumn(model_by_column):
         return file_table_auditV3
     if model_by_column == "auditFinal":
         return file_table_auditFinal
-    
+@login_required   
 def remove_file_from_MODELS(request):
     file_id = request.GET.get('param0')
     index = request.GET.get('param1')
@@ -399,7 +441,7 @@ def remove_file_from_MODELS(request):
     f_table_audit_v1.delete()
     return redirect(formT)
 
-
+@login_required
 def add_files_to_MODELS(request):
     
     return redirect("/tt/")
@@ -446,7 +488,7 @@ def add_files_to_MODELS(request):
     
     return redirect(formT)
 
-
+@login_required
 def agent_immo(request):
 
     data = TableData001.objects.all()
@@ -464,20 +506,20 @@ def agent_immo(request):
                                                   'column_names': column_names,
                                                   'datafiles_VT': datafiles_VT ,
                                                   'datafiles_AuditFinal':datafiles_AuditFinal})
-
+@login_required
 def agent_immo_f(request):
     
 
     return render(request, 'html/agentimmof.html', )
 
-
+@login_required
 def VT_Page(request):
 
     table_index=[{'index':1,'state':"En cours"},
                  {'index':2,'state':"Fini"}]
     data = TableData001.objects.all()
     return render(request, 'html/VTPage.html', { 'data': data,'table_index':table_index })
-
+@login_required
 def VT_Page_edit_state(request):
     param_value_id = request.GET.get('param0')
     etat_vt_value = request.GET.get('param1')
@@ -492,7 +534,7 @@ def VT_Page_edit_state(request):
     
     
     return redirect(VT)
-
+@login_required
 def create_acc_1(request):
     acc_state = False
     if request.method == 'POST': 
@@ -506,6 +548,7 @@ def create_acc_1(request):
             acc_for = request.POST.get('role1')
             user_id = generate_random_string(10)
             password = generate_random_string(12)
+            profile_pic="uploads/default_user_avatar.png"
             while USER.objects.filter(user_id__contains = user_id):
                 user_id = generate_random_string(10)
                 
@@ -514,22 +557,26 @@ def create_acc_1(request):
                 
                 subject = 'Votre compte a été créé avec succès'
                 message = f'Email: {email} Mot de passe: {password} '
-                from_email = 'guhgi155@gmail.com'
+                from_email = 'Night'
                 recipient_list = ['lazariatik@gmail.com']
-
                 send_mail(subject, message, from_email, recipient_list) 
-                USER.objects.create(first_name=firstname,
+                
+                USER.objects.create_user(first_name=firstname,
                                     last_name=lastname,
                                     email=email,
                                     num=Num,
                                     role=acc_for, 
-                                    password=password)
+                                    password=password,
+                                    profile_pic=profile_pic)
                 acc_state = True
             
                 if acc_for == "ai":
                     obj=USER.objects.get(email=email,firstname=firstname,lastname=lastname,num=Num)
                     obj.agent=str(Agent)
                     obj.save(update_fields=['agent'])
+                    
+                
+                
                 
                            
         
@@ -537,10 +584,10 @@ def create_acc_1(request):
     
     return render(request, 'html/create_acc.html',{'acc_state':acc_state})
     
-
+@login_required
 def files_history(request):
     return render(request, 'html/files_history.html')
-
+@login_required
 def update_xlsx_template(request):
     # Load your XLSX template
     
@@ -730,7 +777,7 @@ class table_index_image:
         self.index=index
         self.obj_image=obj_image
         
-        
+@login_required        
 def Kizeo_form_page(request,client_id):
 
     if kizeo_model.objects.filter(kizeo_id=client_id):
@@ -739,6 +786,7 @@ def Kizeo_form_page(request,client_id):
         kizeo_model.objects.create(kizeo_id=client_id)
     
     obj = kizeo_model.objects.get(kizeo_id=client_id)
+    
     if request.method == 'POST':
         
         myButton = request.POST.get("mybutton1")
@@ -1106,17 +1154,22 @@ def Kizeo_form_page(request,client_id):
         Pieces_index_add = 1
     else: 
         Pieces_index_add+=1
+        
+    Pieces_index_add = kizeo_model_Pieces.objects.aggregate(Max('pk'))['pk__max']
+    Pieces_index_add+=1
+    
     pieces=kizeo_model_Pieces.objects.filter(kizeo_id=client_id)
     data = kizeo_model.objects.get(kizeo_id=client_id)
     return render(request, 'html/formK.html',{"data":data,"pieces":pieces,'Pieces_index_add':Pieces_index_add})
 
 
-
+@login_required
 def kizeo_form_Pieces(request,client_id,piece_id):
     if kizeo_model_Pieces.objects.filter(kizeo_id=client_id,Pieces_index=piece_id):
         pass
     else:
-        kizeo_model_Pieces.objects.create(kizeo_id=client_id)
+        Pieces_index_add = kizeo_model_Pieces.objects.filter(kizeo_id=client_id).aggregate(Max('Pieces_index'))['Pieces_index__max']
+        kizeo_model_Pieces.objects.create(kizeo_id=client_id,)
     
     if request.method == 'POST':
         
@@ -1210,7 +1263,7 @@ def kizeo_form_Pieces(request,client_id,piece_id):
     data = kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id)
     return render(request, 'html/formK_Pieces.html',{'data':data})
 
-
+@login_required
 def save_signature(request):
     if request.method == 'POST':
         return redirect("gggg")
@@ -1223,7 +1276,7 @@ def save_signature(request):
         return JsonResponse({'message': 'Signature saved successfully.'})
 
     
-    
+@login_required   
 def download_K_file(request,file_id):
     if kizeo_model.objects.filter(kizeo_id=file_id):
             pass

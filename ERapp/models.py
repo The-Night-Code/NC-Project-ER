@@ -42,12 +42,12 @@ class USER(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     
     
-    profile_pic = models.ImageField(blank=True, upload_to='uploads/profilePic',default='static/image/default_user_avatar.png')
+    profile_pic = models.ImageField(blank=True, upload_to='uploads/profilePic',default='uploads/default_user_avatar.png')
     date_joined = models.DateTimeField(default=timezone.now)
     last_login = models.DateTimeField(blank=True, null=True)
     
     user_id = models.CharField(max_length=255,blank=True, null=True)
-    profile_pic = models.ImageField(blank=True,upload_to='uploads/profilePic')
+    
 
    
     

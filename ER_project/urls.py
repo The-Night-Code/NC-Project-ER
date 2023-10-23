@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import main_Page,Home, LoginU, LogoutU ,table_view, ProfileU ,img_upload_image,showimage,VT_Page_edit_state
+from ERapp.views import main_Page,Home, LoginU, LogoutU ,table_view, ProfileU,forgot_password ,img_upload_image,showimage,VT_Page_edit_state
 from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,create_acc_1,files_history
 from ERapp.views import table_view_edit ,add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,chat_box_1
 from ERapp import views
@@ -35,7 +35,7 @@ urlpatterns = [
 
     path('logout/', LogoutU),
     path('profile/',ProfileU ),
-    
+    path('forgot_password/',forgot_password ),
     
     path(f'{form}T/',table_view ,name="fT"),
     path(f'{form}T1/',table_view_edit ,name="editFormTable"),#remove_file_from_auditV1

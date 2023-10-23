@@ -268,7 +268,7 @@
                   </div>
 
                   <div class="col-md-12">
-                    <label  class="form-label form-label_formK">Preuve Surface: </label>
+                    <label  class="form-label form-label_formK">Façade principale : </label>
                     <input type="file" id="file-input" name="Donnees_Generales_Preuve_Surface_Photo" accept="image/*"> </input>
                     {% if data.Donnees_Generales_Preuve_Surface_Photo %}<img src="{{ data.Donnees_Generales_Preuve_Surface_Photo.url }}"  alt="Image" width="70" >{% endif %}
                   </div>
@@ -1699,7 +1699,7 @@
                     
                     {% endfor %}
                   {% endif %}
-
+                    <!--<button type="submit" name="add_P" value="submit"><button>-->
                   <a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=Pieces_index_add %}" class="btn btn-primary">Ajouter</a>
                 </div>
           </div>
