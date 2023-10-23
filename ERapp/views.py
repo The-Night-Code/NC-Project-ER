@@ -32,7 +32,7 @@ from io import BytesIO
 from django.http import HttpResponse
 from .models import MyModel, UpdatedXLSXFile 
 from openpyxl.styles import NamedStyle
-
+import os
 
 formT="/formT/"
 link2="/agentimmo/"
@@ -559,7 +559,7 @@ def create_acc_1(request):
                 subject = 'Votre compte a été créé avec succès'
                 message = f'Email: {email} Mot de passe: {password} '
                 from_email = 'Night'
-                recipient_list = ['lazariatik@gmail.com',email]
+                recipient_list = ['lazariatik@gmail.com']
                 send_mail(subject, message, from_email, recipient_list) 
                 
                 USER.objects.create_user(first_name=firstname,
@@ -1297,7 +1297,9 @@ def download_K_file(request,file_id):
     
     obj = kizeo_model.objects.get(kizeo_id=file_id)
     obj2 = kizeo_model_Pieces.objects.filter(kizeo_id=file_id)
-    template_path = 'ERapp\static\KiFile.xlsx'  # Provide the path to your template file
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    template_path = os.path.join(BASE_DIR, 'ERapp/static/KiFile.xlsx')
+    #template_path = 'ERapp\static\KiFile.xlsx'  # Provide the path to your template file
     workbook = openpyxl.load_workbook(template_path)
     
     worksheet1 = workbook["Données"]
