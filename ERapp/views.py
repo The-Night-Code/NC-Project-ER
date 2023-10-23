@@ -559,7 +559,7 @@ def create_acc_1(request):
                 subject = 'Votre compte a été créé avec succès'
                 message = f'Email: {email} Mot de passe: {password} '
                 from_email = 'Night'
-                recipient_list = ['lazariatik@gmail.com']
+                recipient_list = ['lazariatik@gmail.com',email]
                 send_mail(subject, message, from_email, recipient_list) 
                 
                 USER.objects.create_user(first_name=firstname,
