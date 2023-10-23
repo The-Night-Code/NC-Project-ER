@@ -178,6 +178,7 @@ def ProfileU(request):
 def forgot_password(request):
     msg = False
     email = request.POST.get('email')
+    change_password_state = False
     if request.method == 'POST' :
         if USER.objects.get(email=email):
             user_L=USER.objects.get(email=email)
@@ -189,7 +190,7 @@ def forgot_password(request):
             recipient_list = ['lazariatik@gmail.com']
             send_mail(subject, message, from_email, recipient_list) 
             
-            user_= request.user
+            user_= USER.objects.get(email=email)
             user_.set_password(newPassword)
             user_.save()
             update_session_auth_hash(request, user_)
