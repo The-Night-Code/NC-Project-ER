@@ -825,7 +825,9 @@ def Kizeo_form_page(request,client_id):
                 'Fenetre_type_1_Photo',
                 'Fenetre_type_2_Photo',
                 'Porte_1_Photo_porte',
-                'Porte_2_Photo_porte'
+                'Porte_2_Photo_porte',
+                'Saisie_par_piece_Signature_intervenant',
+                'Saisie_par_piece_Signature_client'
                 ]
             
             
@@ -1010,6 +1012,9 @@ def Kizeo_form_page(request,client_id):
             obj.Porte_2_Type_porte = request.POST.get("Porte_2_Type_porte")
             obj.Porte_2_Nombre = float(request.POST.get("Porte_2_Nombre"))
             
+            ###  Saisie par pièce
+            obj.Saisie_par_piece_Surface_Mesuree = float(request.POST.get("Saisie_par_piece_Surface_Mesuree"))
+            
             
             obj.save(update_fields=[
                                     ### Données Générales
@@ -1145,6 +1150,9 @@ def Kizeo_form_page(request,client_id):
                                     "Porte_2_Type_porte",
                                     "Porte_2_Nombre",
                                     
+                                    ###  Saisie par pièce
+                                    'Saisie_par_piece_Surface_Mesuree',
+                                    
 
                                     #'signature_data',
 
@@ -1163,13 +1171,15 @@ def Kizeo_form_page(request,client_id):
     return render(request, 'html/formK.html',{"data":data,"pieces":pieces,'Pieces_index_add':Pieces_index_add})
 
 
+
+
 @login_required
 def kizeo_form_Pieces(request,client_id,piece_id):
-    if kizeo_model_Pieces.objects.filter(kizeo_id=client_id,Pieces_index=piece_id):
-        pass
-    else:
+    try:
+        data=kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id)
+    except:
         Pieces_index_add = kizeo_model_Pieces.objects.filter(kizeo_id=client_id).aggregate(Max('Pieces_index'))['Pieces_index__max']
-        kizeo_model_Pieces.objects.create(kizeo_id=client_id,)
+        kizeo_model_Pieces.objects.create(kizeo_id=client_id,Pieces_index=piece_id)
     
     if request.method == 'POST':
         
@@ -1260,7 +1270,8 @@ def kizeo_form_Pieces(request,client_id,piece_id):
                                 'Menuiseries_N',
             ])
                                  
-    data = kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id)
+    data = kizeo_model_Pieces.objects.get(kizeo_id=client_id,pk=piece_id)
+    
     return render(request, 'html/formK_Pieces.html',{'data':data})
 
 @login_required

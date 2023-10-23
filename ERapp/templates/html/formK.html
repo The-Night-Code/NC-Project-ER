@@ -1689,18 +1689,38 @@
               <!-- General Form Elements -->
               <div class=""  id="show_div_17" >
                 <div class="row g-3">
+
+                  
+
+
                   {% if pieces %}
                     {% for i in pieces %}
                     
                     <div class="col-md-12">
                       <label  class="form-label form-label_formK">{{i.Pieces}}</label>
-                      <a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=i.Pieces_index %}" class="btn btn-primary">modifier</a>
+                      <a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=i.Pieces_index %}" class="btn btn-secondary rounded-pill">modifier</a>
                     </div>
                     
                     {% endfor %}
                   {% endif %}
                     <!--<button type="submit" name="add_P" value="submit"><button>-->
-                  <a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=Pieces_index_add %}" class="btn btn-primary">Ajouter</a>
+                  <a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=Pieces_index_add %}" class="btn btn-dark rounded-pill col-md-2 ">Ajouter</a>
+                </div>
+              </br>
+                <div class="col-md-4">
+                  <label  class="form-label form-label_formK">Surface Mesurée: </label>
+                  <input type="number" class="form-control" name="Saisie_par_piece_Surface_Mesuree" value={{ data.Saisie_par_piece_Surface_Mesuree }} step="0.01">
+                </div>
+
+                <div class="col-md-12">
+                  <label  class="form-label form-label_formK">Signature intervenant: </label>
+                  <input type="file" id="file-input" name="Saisie_par_piece_Signature_intervenant" accept="image/*"> </input>
+                  {% if data.Saisie_par_piece_Signature_intervenant %}<img src="{{ data.Saisie_par_piece_Signature_intervenant.url }}"  alt="Image" width="70" >{% endif %}
+                </div>
+                <div class="col-md-12">
+                  <label  class="form-label form-label_formK">Signature client: </label>
+                  <input type="file" id="file-input" name="Saisie_par_piece_Signature_client" accept="image/*"> </input>
+                  {% if data.Saisie_par_piece_Signature_client %}<img src="{{ data.Saisie_par_piece_Signature_client.url }}"  alt="Image" width="70" >{% endif %}
                 </div>
           </div>
         </div>

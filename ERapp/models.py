@@ -365,8 +365,9 @@ class kizeo_model(models.Model):
     
     
     signature_data = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
-    
-    
+    Saisie_par_piece_Surface_Mesuree = models.FloatField(default=0.0,blank=True)
+    Saisie_par_piece_Signature_intervenant = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Saisie_par_piece_Signature_client = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
     
     def __str__(self):
         return f'{self.kizeo_id} {self.Donnees_Generales_Nom_client}'
