@@ -1270,7 +1270,7 @@ def kizeo_form_Pieces(request,client_id,piece_id):
                                 'Menuiseries_N',
             ])
                                  
-    data = kizeo_model_Pieces.objects.get(kizeo_id=client_id,pk=piece_id)
+    data = kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id)
     
     return render(request, 'html/formK_Pieces.html',{'data':data})
 
