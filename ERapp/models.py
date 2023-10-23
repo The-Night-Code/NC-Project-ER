@@ -354,13 +354,13 @@ class kizeo_model(models.Model):
     ### Porte 1
     Porte_1_Materiaux = models.CharField(max_length=100,blank=True)
     Porte_1_Type_porte = models.CharField(max_length=100,blank=True)
-    Porte_1_Nombre = models.FloatField(default=0.0,blank=True)
+    Porte_1_Nombre = models.IntegerField(default=0,blank=True)
     Porte_1_Photo_porte = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
         
     ### Porte 2
     Porte_2_Materiaux = models.CharField(max_length=100,blank=True)
     Porte_2_Type_porte = models.CharField(max_length=100,blank=True)
-    Porte_2_Nombre = models.FloatField(default=0.0,blank=True)
+    Porte_2_Nombre = models.IntegerField(default=0,blank=True)
     Porte_2_Photo_porte = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
     
     
