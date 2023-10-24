@@ -35,7 +35,7 @@ urlpatterns = [
 
     path('logout/', LogoutU),
     path('profile/',ProfileU ),
-    path('forgot_password/',forgot_password ),
+    path('forgot_password/',forgot_password,name="forgot_password"),
     
     path(f'{form}T/',table_view ,name="fT"),
     path(f'{form}T1/',table_view_edit ,name="editFormTable"),#remove_file_from_auditV1
