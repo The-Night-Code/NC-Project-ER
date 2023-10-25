@@ -346,6 +346,14 @@ def table_view(request): # add row
                  {'index':7,'state':"Envoye"},
                  {'index':8,'state':"Annule"},
                  {'index':9,'state':"Fini"}]
+    auditeur=[]
+    for audi in USER.objects.all():
+        if "auditeur" in audi.role:
+            auditeur+=[{'profile_pic':audi.profile_pic,'email':audi.email,'first_name':audi.first_name,'last_name':audi.last_name},]
+            
+    a=[]
+    for email_audi in TableData001.objects.all():
+        a+=[{'email':email_audi.auditeur}]
     
     return render(request, 'html/formPage.html', { 'data': data ,
                                                   'col_count':col_count ,
@@ -356,7 +364,9 @@ def table_view(request): # add row
                                                   'datafiles_AuditV3': datafiles_AuditV3 ,
                                                   'datafiles_AuditFinal':datafiles_AuditFinal,
                                                   'message_box_1':message_box_01,
-                                                  'table_index':table_index})
+                                                  'table_index':table_index,
+                                                  'auditeur':auditeur,
+                                                  'a':a})
        
    
 def chat_box_1(request):

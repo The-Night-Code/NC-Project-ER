@@ -136,9 +136,9 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="{% url 'main_page' %}">
           <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
+          <span>Tous les tableaux</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
@@ -147,7 +147,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'create_acc' %}">
           <i class="bi bi-person-add"></i>
-          <span>Create account</span>
+          <span>Créer un compte</span>
         </a>
       </li>
 
@@ -206,7 +206,7 @@
                   </div>
   
                   <div class="card-body">
-                    <h5 class="card-title">État <span>| {{k.state}}</span></h5>
+                    <h5 class="card-title">État | <span class="badge" data-badge="{{k.state}}"> {{k.state}}</span> </h5>
   
                     
                     
@@ -222,10 +222,10 @@
   
                           <thead class="table-dark border-info">
                             <th class="fixed-column" ></th><!--style="width:auto;"-->
-                            <th data-sortable="true" data-column="id"  >id <span class="sortable-icon"  data-column="id"></span></th>
+                            
                             <th>Prénom</th>  
                             <th>Nom</th> 
-                            <th data-sortable="true" data-column="adresse">Adresse <span class="sortable-icon"  data-column="adresse"></th> 
+                            <th data-sortable="true" data-column="adresse">Adresse </th> 
                             <th>N° de tél</th> 
                             <th colspan=2>Visite technique</th> 
                             <th >État</th> 
@@ -236,12 +236,13 @@
                             <th>Audit fin</th> 
                             
                             
-                            <th>Coffrac</th> 
+                            <th>Cofrac</th> 
                             <th>Paiement</th>
                             <th>Agent</th>
                             <th>Auditeur</th>
                             <th>Commenter</th>
                             <th>Date de création</th>
+                            <th data-sortable="true" data-column="id"  >id </span></th>
                           </thead>
                           <tbody id="myTable_{{k.index}}">
                               {% for item in data %}
@@ -249,8 +250,8 @@
                               {% if item.etat == k.state %}
                               <input class="input_table_data" type="hidden" name="cell_data0" id="table{{k.index}}_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             <tr>
-                                <td class="fixed-column fixed-column-backcolor"><button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="" value="" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') "><i class="ri-edit-2-fill"></i></button></td>
-                                <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
+                                <td class="fixed-column fixed-column-backcolor  "><button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="" value="" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') "><i class="ri-checkbox-circle-fill fa-2x color-red"></i></button></td>
+                                
                                 <td class="td_input_cell" ><input class="input_table_data" type="text" name="table{{k.index}}_firstname" id="table{{k.index}}_firstname{{ item.cell_id }}" value="{{ item.firstname }}"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="table{{k.index}}_lastname" id="table{{k.index}}_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="table{{k.index}}_address" id="table{{k.index}}_address{{ item.cell_id }}" value="{{ item.address }}"  ></td>
@@ -557,19 +558,37 @@
                                 <td class="td_input_cell"><input class="input_table_data" type="text"></td>
   
                                   
-                                <td class="td_input_cell td-form-check-checkbox" >
-  
+                                <td class="td_input_cell td-form-check-checkbox" > <!--paiement-->
                                   <input class="form-check-input form-check-checkbox" type="checkbox" value="True" id="table{{k.index}}_paiement{{ item.cell_id }}" {% if  item.paiement %}  checked  {% endif %}>
                                 </td>
   
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="cell_data4add" ></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="" ></td>
+
+                                <td class="td_input_cell"><!--auditeur-->
+
+                                  <select class="form-select" name="auditeur" id="auditeur" style="height:55px!important;width:250px!important;">
+                                    {% for audi in auditeur %}
+                                      <option value="{{ audi.email }}" {% if audi.email == data.auditeur %} selected {% endif %} style="background-image:url(male.png);"
+                                        {% if audi.profile_pic %}  
+                                        style="background-image:url({{ audi.profile_pic.url }});"
+                                        {% else %}
+                                        style="background-image:url(image/default_user_avatar.png);" 
+                                        {% endif %}
+                                        >
+                                        {{ audi.last_name }} {{ audi.first_name }}
+                                      </option>
+
+                                    {% endfor %}
+                                  </select>
+
+                                </td>
+
                                 <td class="td_input_cell">
                                 
                                   <nav class="header-nav ms-auto" >
                                    <li class="nav-item dropdown" style="list-style-type: none;">
                                     
-                                     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                                     <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
                                        <i class="bi bi-chat-left-text"></i>
                                        
                                      </a><!-- End Messages Icon -->
@@ -613,7 +632,7 @@
                                  
                                  </td>
                                 <td><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
-  
+                                <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
                               </tr>
                               {% endif %}
                               {% endfor %}
