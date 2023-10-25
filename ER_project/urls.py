@@ -19,7 +19,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from ERapp.views import main_Page,Home, LoginU, LogoutU ,table_view, ProfileU,forgot_password ,img_upload_image,showimage,VT_Page_edit_state
-from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,create_acc_1,files_history
+from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_1,files_history
 from ERapp.views import table_view_edit ,add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,chat_box_1
 from ERapp import views
 
@@ -62,7 +62,7 @@ urlpatterns = [
     path(f'{formK}/<str:client_id>',Kizeo_form_page  ,name='Kizeo_form_page'),
     path('download_K_file/<str:file_id>/', download_K_file, name='download_K_file'),
     path(f'{formK}/<str:client_id>/<str:piece_id>/',kizeo_form_Pieces  ,name='kizeo_form_Pieces'),
-    
+    path(f'{formK}2/<str:client_id>/<str:piece_id>/',kizeo_form_Pieces_delete  ,name='kizeo_form_Pieces_del'),
     path('save_signature/', save_signature, name='save_signature'),
     
 ] #+static(settings.MEDIA_URL, documnet_root=settings.MEDIA_ROOT)

@@ -250,7 +250,7 @@
                               {% if item.etat == k.state %}
                               <input class="input_table_data" type="hidden" name="cell_data0" id="table{{k.index}}_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             <tr>
-                                <td class="fixed-column fixed-column-backcolor  "><button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="" value="" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') "><i class="ri-checkbox-circle-fill fa-2x color-red"></i></button></td>
+                                <td class="fixed-column table-secondary"><button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="" value="" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') "><i class="ri-checkbox-circle-fill fa-2x color-red "></i></button></td>
                                 
                                 <td class="td_input_cell" ><input class="input_table_data" type="text" name="table{{k.index}}_firstname" id="table{{k.index}}_firstname{{ item.cell_id }}" value="{{ item.firstname }}"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="table{{k.index}}_lastname" id="table{{k.index}}_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
@@ -568,12 +568,13 @@
 
                                   <select class="form-select" name="auditeur" id="auditeur" style="height:55px!important;width:250px!important;">
                                     {% for audi in auditeur %}
-                                      <option value="{{ audi.email }}" {% if audi.email == data.auditeur %} selected {% endif %} style="background-image:url(male.png);"
+                                      <option value="{{ audi.email }}" {% if audi.email == item.auditeur %} selected {% endif %} style="background-image:url(male.png);"
                                         {% if audi.profile_pic %}  
-                                        style="background-image:url({{ audi.profile_pic.url }});"
-                                        {% else %}
-                                        style="background-image:url(image/default_user_avatar.png);" 
+                                        style="background:url('{{ audi.profile_pic.url }}')no-repeat; width:100px; height:100px;"
+                                        
                                         {% endif %}
+                                        style="background:url('image/default_user_avatar.png') no-repeat !important; width:100px; height:100px ;" 
+                                        
                                         >
                                         {{ audi.last_name }} {{ audi.first_name }}
                                       </option>

@@ -1699,12 +1699,14 @@
                     <div class="col-md-12">
                       <label  class="form-label form-label_formK">{{i.Pieces}}</label>
                       <a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=i.Pieces_index %}" class="btn btn-secondary rounded-pill">modifier</a>
+                      <a href="{% url 'kizeo_form_Pieces_del' client_id=data.kizeo_id piece_id=i.Pieces_index %}" class="btn btn-secondary rounded-pill">Supprimer</a>
                     </div>
                     
                     {% endfor %}
                   {% endif %}
                     <!--<button type="submit" name="add_P" value="submit"><button>-->
                   <a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=Pieces_index_add %}" class="btn btn-dark rounded-pill col-md-2 ">Ajouter</a>
+                  
                 </div>
               </br>
                 <div class="col-md-4">

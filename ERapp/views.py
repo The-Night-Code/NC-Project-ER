@@ -35,6 +35,7 @@ from openpyxl.styles import NamedStyle
 import os
 
 formT="/formT/"
+formK="/formK/"
 link2="/agentimmo/"
 VT="/VT/"
 
@@ -1285,6 +1286,18 @@ def kizeo_form_Pieces(request,client_id,piece_id):
     
     return render(request, 'html/formK_Pieces.html',{'data':data})
 
+
+@login_required
+def kizeo_form_Pieces_delete(request,client_id,piece_id):
+    user_= request.user
+    user_role= user_.role
+    if  "VT" in user_role:
+        kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id).delete()
+        return redirect(f"{formK}{client_id}")
+    
+    return redirect(f"{formT}")
+    
+    
 @login_required
 def save_signature(request):
     if request.method == 'POST':

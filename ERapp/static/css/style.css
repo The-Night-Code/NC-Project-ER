@@ -109,7 +109,7 @@
 
 
 .card-body{height:auto;
-  max-height:800px;}
+  }
 
 
 .dropdown-menu-for-showFils {
@@ -429,6 +429,7 @@ h6 {
 
 .color-red{color:red!important;}
 .bg-color-red{background-color:red!important;}
+.bg-color-white{background-color:white!important;}
 /*--------------------------------------------------------------
 # Page Title
 --------------------------------------------------------------*/
