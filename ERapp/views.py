@@ -37,6 +37,8 @@ import os
 formT="/formT/"
 formK="/formK/"
 link2="/agentimmo/"
+FROM_EMAIL="guhgi155@gmail.com"
+
 VT="/VT/"
 
 def main_Page(request):
@@ -521,8 +523,65 @@ def agent_immo(request):
 @login_required
 def agent_immo_f(request):
     
-
     return render(request, 'html/agentimmof.html', )
+
+
+
+@login_required
+def BE_Page(request):
+
+    data = TableData001.objects.all()
+    
+    col_count = data.count()
+    # Get unique column names from the TableData model
+    column_names = TableData001._meta.get_fields()
+    datafiles_VT = file_table_vt.objects.all()
+    datafiles_AuditFinal = file_table_auditFinal.objects.all()
+    return render(request, 'html/BE_page.html', { 'data': data ,
+                                                  'col_count':col_count ,
+                                                  'column_names': column_names,
+                                                  'datafiles_VT': datafiles_VT ,
+                                                  'datafiles_AuditFinal':datafiles_AuditFinal})
+@login_required
+def BE_Page_f(request):
+    user_= request.user
+    user_role= user_.role
+    if  "be" in user_role:
+        
+        change_password_state = False
+        if request.method == 'POST' :
+            cell_id =generate_random_string(10)
+            while TableData001.objects.filter(cell_id=cell_id).exists():
+                cell_id =generate_random_string(10)
+                
+            firstname = request.POST.get('firstname')
+            lastname = request.POST.get('lastname')
+            address = request.POST.get('address')
+            email = request.POST.get('email')
+            num = request.POST.get('num')
+            precaite = request.POST.get('precaite')
+            TableData001.objects.create(first_name=firstname,
+                                        last_name=lastname,
+                                        address=address,
+                                        email=email,
+                                        num=num,
+                                        precaite=precaite,
+                                        be=True)
+            
+            for file in  request.FILES.getlist('vt'):
+
+                file_table_vt.objects.create(file_id=cell_id,
+                                            file_name=file.name,
+                                            file_save=file,
+                                            file_format=file.name.split(".")[1]
+                                            )
+                
+
+                
+                
+        return render(request, 'html/BEform.html', )
+
+
 
 @login_required
 def VT_Page(request):
@@ -547,7 +606,7 @@ def VT_Page_edit_state(request):
     
     return redirect(VT)
 @login_required
-def create_acc_1(request):
+def create_acc_ai(request):
     acc_state = False
     if request.method == 'POST': 
         if request.POST.get('create_acc_button') == "submit":
@@ -579,6 +638,8 @@ def create_acc_1(request):
                                     num=Num,
                                     role=acc_for, 
                                     password=password,
+                                    ai=True,
+                                    com_name=Agent,
                                     profile_pic=profile_pic)
                 acc_state = True
             
@@ -594,7 +655,66 @@ def create_acc_1(request):
         
 
     
-    return render(request, 'html/create_acc.html',{'acc_state':acc_state})
+    return render(request, 'html/create_acc_ai.html',{'acc_state':acc_state})
+    
+@login_required
+def create_acc_be(request):
+    acc_state = False
+    if request.method == 'POST': 
+        if request.POST.get('create_acc_button') == "submit":
+            
+            firstname = request.POST.get('firstname')
+            lastname = request.POST.get('lastname')
+            email = request.POST.get('email')
+            Num = int(request.POST.get('num'))
+            Agent = request.POST.get('agent')
+            acc_for = request.POST.get('role1')
+            
+            Bureau_etude = request.POST.get('Bureau_etude')
+            
+            user_id = generate_random_string(10)
+            
+            password = generate_random_string(12)
+            profile_pic="uploads/default_user_avatar.png"
+            while USER.objects.filter(user_id__contains = user_id):
+                user_id = generate_random_string(10)
+                
+            user_checker=USER.objects.filter(email__icontains = email).exists()
+            if not user_checker:
+                
+                subject = 'Votre compte a été créé avec succès'
+                message = f'Email: {email}  ||   Mot de passe: {password} '
+                from_email = f'{FROM_EMAIL}'
+                recipient_list = [email]
+                send_mail(subject, message, from_email, recipient_list) 
+                
+                USER.objects.create_user(first_name=firstname,
+                                    last_name=lastname,
+                                    email=email,
+                                    num=Num,
+                                    role=acc_for, 
+                                    password=password,
+                                    be=True,
+                                    com_name=Bureau_etude,
+                                    profile_pic=profile_pic)
+                acc_state = True
+            
+                if acc_for == "ai":
+                    obj=USER.objects.get(email=email,firstname=firstname,lastname=lastname,num=Num)
+                    obj.agent=str(Agent)
+                    obj.save(update_fields=['agent'])
+                    
+                
+                
+                
+                           
+        
+
+    
+    return render(request, 'html/create_acc_be.html',{'acc_state':acc_state})
+    
+    
+       
     
 @login_required
 def files_history(request):
@@ -2061,3 +2181,10 @@ def download_K_file(request,file_id):
     response['Content-Disposition'] = 'attachment; filename="Kizeo.xlsx"'
 
     return response
+
+
+
+
+
+
+

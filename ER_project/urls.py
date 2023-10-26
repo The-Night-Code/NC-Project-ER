@@ -19,13 +19,15 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from ERapp.views import main_Page,Home, LoginU, LogoutU ,table_view, ProfileU,forgot_password ,img_upload_image,showimage,VT_Page_edit_state
-from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_1,files_history
-from ERapp.views import table_view_edit ,add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,chat_box_1
+from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,files_history
+from ERapp.views import table_view_edit ,add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,chat_box_1,BE_Page_f,BE_Page
 from ERapp import views
 
 ai="ai"
 form="form"
 formK="formK"
+be="be"
+
 urlpatterns = [
     
     path('', LoginU,name="not_logged_in"),
@@ -43,11 +45,16 @@ urlpatterns = [
     path(f'{form}T4/',add_files_to_MODELS ,name="add_files_to_model"),
     path('formT5/',chat_box_1 , name="send_message_box1" ),
     
-    path('create_account/', create_acc_1, name="create_acc" ),
+    path('create_account_for_ai/', create_acc_ai, name="create_acc_for_AI" ),
+    path('create_account_for_be/', create_acc_be, name="create_acc_for_BE" ),
     path('historique_des_fichiers/', files_history, name="files_history" ),
     
     path(f'{ai}/',agent_immo ,name="ai"),
     path(f'{ai}f/',agent_immo_f ),
+    
+    path(f'{be}/',BE_Page ,name="be"),
+    path(f'{be}f/',BE_Page_f ),
+    
     
     path('VT/', VT_Page,name="VT"),
     path('VT1/', VT_Page_edit_state, name="VT_Page_edit_state"),

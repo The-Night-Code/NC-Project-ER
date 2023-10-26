@@ -138,10 +138,24 @@
       
 
       <li class="nav-item">
-        <a class="nav-link " href="{% url 'create_acc' %}">
-          <i class="bi bi-person-add"></i>
-          <span>Créer un compte</span>
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-person-add"></i><span>Créer un compte</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'create_acc_for_AI' %}">
+              <i class="bi bi-person-add fa-10x"></i>
+              <span>Pour l'agent immobilier</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'create_acc_for_BE' %}">
+              <i class="bi bi-person-add"></i>
+              <span>Pour Bureau d'étude</span>
+            </a>
+          </li>
+
+        </ul>
       </li>
 
       <li class="nav-item">
@@ -157,6 +171,16 @@
   <!-- End Sidebar ==========================================================================================================================-->
 
   <main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Créer un compte pour Bureau d'étude</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
+            <li class="breadcrumb-item active">Forms</li>
+          </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
     {% if acc_state %}
     <script>
       
@@ -214,23 +238,14 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">Agent</label>
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Bureau d'étude</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" name="agent" >
+                      <input type="text" class="form-control" name="Bureau_etude" >
                     </div>
                 </div>
 
 
-                <div class="row mb-3">
-                    <label class="col-sm-2 col-form-label">Compte pour</label>
-                    <div class="col-sm-3">
-                      <select class="form-select" aria-label="Default select example" name="role1">
-
-                        <option value="VT">Visite technique</option>
-                        <option value="ai">Agent immobilier</option>
-                      </select>
-                    </div>
-                </div>
+                
 
                 
 

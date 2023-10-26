@@ -41,14 +41,14 @@
 </head>
 
 <body onload="load()">
-  {% if user.is_authenticated and "ai" in user.role %}
+  {% if user.is_authenticated and "be" in user.role %}
  <!-- ======= Header ======= -->
  <header id="header" class="header fixed-top d-flex align-items-center">
     
   <div class="d-flex align-items-center justify-content-between">
     <a href="{% url 'main_page' %}"  class="logo d-flex align-items-center">
       <!--<img src="{% static 'image\default_user_avatar.png' %}" alt="">-->
-      <span class="d-none d-lg-block">Énergie Renouvelable</span>
+      <span class="d-none d-lg-block">Énergie </span>
     </a>
     <i class="bi bi-list toggle-sidebar-btn " id="click_side_bar"></i>
   </div><!-- End Logo -->
@@ -227,12 +227,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Form Elements</h1>
+      <h1>Ajouter un client</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Accueil</a></li>
-          <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Elements</li>
+          <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
+          <li class="breadcrumb-item active">Forms</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -243,7 +242,7 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">General Form Elements</h5>
+              <h5 class="card-title">Ajouter un client</h5>
 
               <!-- General Form Elements -->
               <form method="post"  enctype="multipart/form-data">
@@ -268,7 +267,12 @@
                     <input type="text" class="form-control" id="address" required>
                   </div>
                 </div>
-
+                <div class="row mb-3">
+                  <label for="inputPassword" class="col-sm-2 col-form-label">E-mail</label>
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" required>
+                  </div>
+                </div>
                 <div class="row mb-3">
                   <label for="inputNumber" class="col-sm-2 col-form-label">N° de tél</label>
                   <div class="col-sm-10">
@@ -277,9 +281,14 @@
                 </div>
 
                 <div class="row mb-3">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">Agent</label>
+                    <label for="inputPassword" class="col-sm-2 col-form-label"></label><!--précaite-->
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="agent" required>
+                      <select class="form-select" aria-label="Default select example" name="precaite">
+                        <option value="Blue" >Blue</option>
+                        <option value="Jaune">Jaune</option>
+                        <option value="Violet">Violet</option>
+                        <option value="Rose">Rose</option>
+                      </select>
                     </div>
                 </div>
 
@@ -287,23 +296,10 @@
                 <div class="row mb-3">
                   <label for="inputNumber" class="col-sm-2 col-form-label">Visite technique</label>
                   <div class="col-sm-10">
-                    <input class="form-control" type="file" id="vt" multiple required>
+                    <input class="form-control" type="file" id="vt" name="vt" multiple required>
                   </div>
                 </div>
 
-                <div class="row mb-3">
-                    <label for="inputNumber" class="col-sm-2 col-form-label">Apporteur d'affaire</label>
-                    <div class="col-sm-10">
-                      <input class="form-control" type="file" id="AdA" multiple required>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                <label for="inputNumber" class="col-sm-2 col-form-label">Commercial</label>
-                <div class="col-sm-10">
-                    <input class="form-control" type="file" id="comm" multiple required>
-                </div>
-                </div>
 
                 
 

@@ -142,14 +142,28 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
-      
-
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'create_acc' %}">
-          <i class="bi bi-person-add"></i>
-          <span>Créer un compte</span>
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-person-add"></i><span>Créer un compte</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'create_acc_for_AI' %}">
+              <i class="bi bi-person-add fa-10x"></i>
+              <span>Pour l'agent immobilier</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'create_acc_for_BE' %}">
+              <i class="bi bi-person-add"></i>
+              <span>Pour Bureau d'étude</span>
+            </a>
+          </li>
+
+        </ul>
       </li>
+
+      
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'files_history' %}">
@@ -201,9 +215,9 @@
               <div class="col-12">
                 
                 <div class="card recent-sales">
-                  <div class="reduce_div">
+                  <!--<div class="reduce_div">
                     <button class="reduce_table_size" type="button" style="width:40px;height:40px;"><i class=" ri-arrow-down-s-line fa-3x" ></i></butoon>
-                  </div>
+                  </div>-->
   
                   <div class="card-body">
                     <h5 class="card-title">État | <span class="badge" data-badge="{{k.state}}"> {{k.state}}</span> </h5>

@@ -48,7 +48,9 @@ class USER(AbstractBaseUser, PermissionsMixin):
     
     user_id = models.CharField(max_length=255,blank=True, null=True)
     
-
+    be = models.BooleanField(default=False)
+    ai = models.BooleanField(default=False)
+    com_name = models.CharField(max_length=255,blank=True, null=True)
    
     
     # Add any additional fields you need for your user model
@@ -85,7 +87,9 @@ class TableData001(models.Model):
     firstname = models.CharField(max_length=255,blank=True)
     lastname = models.CharField(max_length=255,blank=True)
     address = models.CharField(max_length=255,blank=True)
+    email = models.CharField(max_length=255,blank=True)
     num = models.CharField(max_length=255,blank=True)
+    precaite = models.CharField(max_length=255,blank=True)
     vt = models.FileField(upload_to='uploads/files',blank=True)
     etat_vt = models.CharField(max_length=255,blank=True)
     etat = models.CharField(max_length=255,blank=True)
@@ -97,6 +101,9 @@ class TableData001(models.Model):
     paiement = models.BooleanField(default=False)
     auditeur = models.CharField(max_length=255,blank=True)
     agent= models.CharField(max_length=255,blank=True,null=True)
+    
+    be = models.BooleanField(default=False)
+    ai = models.BooleanField(default=False)
     
     creation_time =models.DateTimeField(auto_now_add=True, blank = True)
     def __str__(self):

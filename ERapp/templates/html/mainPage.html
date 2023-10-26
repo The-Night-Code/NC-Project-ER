@@ -50,7 +50,11 @@
 </script>
 {% endif %}
 
-
+{% if  "be" in user.role %}
+<script>
+    window.location.href = "{% url 'be' %}";
+</script>
+{% endif %}
 
 {% else %}
 <body  style="background-image: url('{% static "image/bg_image.jpg" %}');background-size: cover;background-repeat: no-repeat;background-attachment: fixed;background-position: center center;">
