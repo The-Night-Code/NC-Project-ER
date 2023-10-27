@@ -125,10 +125,12 @@
     <div class="pagetitle">
       <h1>Form Elements</h1>
       <nav>
+        
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href=""></a></li>
-          <li class="breadcrumb-item active">Kizeo</li>
+          <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
+          <li class="breadcrumb-item active">Forms</li>
         </ol>
+        
       </nav>
     </div><!-- End Page Title -->
     <form  action="" method="post" enctype="multipart/form-data">
@@ -192,7 +194,7 @@
                     <input type="number" class="form-control" name="Donnees_Generales_Zip_Code" value={{ data.Donnees_Generales_Zip_Code }}>
                   </div>
                   <div class="col-md-4">
-                    <label  class="form-label form-label_formK">City: </label>
+                    <label  class="form-label form-label_formK">Ville: </label>
                     <input type="text" class="form-control" name="Donnees_Generales_City" value={{ data.Donnees_Generales_City }}>
                   </div>
 

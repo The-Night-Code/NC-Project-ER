@@ -6,6 +6,7 @@ from PIL import Image
 import subprocess
 import os
 import datetime
+from django.db import models
 # Create your models here.
 
 class CustomUserManager(BaseUserManager):
@@ -179,7 +180,7 @@ class message_box_1(models.Model):
     
     
     
-from django.db import models
+
 
 class MyModel(models.Model):
     text_field = models.CharField(max_length=100,blank=True)

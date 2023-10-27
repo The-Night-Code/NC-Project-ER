@@ -124,10 +124,12 @@
   <main id="main2" class="main">
 
     <div class="pagetitle">
-      <h1>Form Elements</h1>
+      <h1>Pièce: {{ data.Pieces }}</h1>
       <nav>
+
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'Kizeo_form_page' client_id=data.kizeo_id %}">Kizeo</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
+          <li class="breadcrumb-item "><a href="{% url 'Kizeo_form_page'  data.kizeo_id %}">Forms</a></li>
           <li class="breadcrumb-item active">Pièce</li>
         </ol>
       </nav>

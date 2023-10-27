@@ -935,41 +935,41 @@ def Kizeo_form_page(request,client_id):
         
         submit_to_Kizeo = request.POST.get("submit_to_Kizeo")
         if submit_to_Kizeo=="submit":
-            #obj.Donnees_Generales_Preuve_Surface_Photo = request.FILES.get('Donnees_Generales_Preuve_Surface_Photo')
+            #obj. = request.FILES.get('Donnees_Generales_Preuve_Surface_Photo')
             
-            table_index=['Donnees_Generales_Factures',
-                'Facade_1_Photo_Principale',
-                'Facade_2_Photo_Principale',
-                'Facade_3_Photo_Principale',
-                'Facade_4_Photo_Principale',
-                'Cauffage_photo_systeme_de_production',
-                'Cauffage_photo_fiche_signaletique',
-                'Cauffage_photo_appoint',
-                'ECS_photo_appoint',
-                'Ventilation_photo_ventilation',
-                'Compteur_Electrique_photo_compteur',
-                'Mur_1_Photo_mur',
-                'Mur_2_Photo_mur',
-                'Plancher_bas_1_Photo_plancher_bas',
-                'Plancher_bas_2_Photo_plancher_bas',
-                'Plancher_Haut_1_Photo_plancher_bas',
-                'Plancher_Haut_2_Photo_plancher_bas',
-                'Fenetre_type_1_Photo',
-                'Fenetre_type_2_Photo',
-                'Porte_1_Photo_porte',
-                'Porte_2_Photo_porte',
-                'Saisie_par_piece_Signature_intervenant',
-                'Saisie_par_piece_Signature_client'
+            table_index=['Donnees_Generales_Preuve_Surface_Photo',
+                         'Donnees_Generales_Factures',
+                        'Facade_1_Photo_Principale',
+                        'Facade_2_Photo_Principale',
+                        'Facade_3_Photo_Principale',
+                        'Facade_4_Photo_Principale',
+                        'Cauffage_photo_systeme_de_production',
+                        'Cauffage_photo_fiche_signaletique',
+                        'Cauffage_photo_appoint',
+                        'ECS_photo_appoint',
+                        'Ventilation_photo_ventilation',
+                        'Compteur_Electrique_photo_compteur',
+                        'Mur_1_Photo_mur',
+                        'Mur_2_Photo_mur',
+                        'Plancher_bas_1_Photo_plancher_bas',
+                        'Plancher_bas_2_Photo_plancher_bas',
+                        'Plancher_Haut_1_Photo_plancher_bas',
+                        'Plancher_Haut_2_Photo_plancher_bas',
+                        'Fenetre_type_1_Photo',
+                        'Fenetre_type_2_Photo',
+                        'Porte_1_Photo_porte',
+                        'Porte_2_Photo_porte',
+                        'Saisie_par_piece_Signature_intervenant',
+                        'Saisie_par_piece_Signature_client'
                 ]
-            
-            
             for lis in table_index:
                 img_get= request.FILES.get(lis)
-                if hasattr(obj, lis):
-                    # Check if the field exists in the model
-                    setattr(obj, lis, img_get)
-                    obj.save()  
-                
+                if img_get:
+                    if hasattr(obj, lis):
+                        # Check if the field exists in the model
+                        setattr(obj, lis, img_get)
+                        obj.save()  
+                    
                 
 
             ### Données Générales
