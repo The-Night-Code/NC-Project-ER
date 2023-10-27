@@ -19,12 +19,15 @@ function Geolocalisation(){
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
             var altitude = position.coords.altitude;
-
+            
             document.getElementById("latitude").textContent = latitude;
             document.getElementById("longitude").textContent = longitude;
+            document.getElementById("latitude_input").value = latitude;
+            document.getElementById("longitude_input").value = longitude;
             document.getElementById("Geolocalisation_div").style.display = "block";
             if (altitude !== null) {
                 document.getElementById("altitude").textContent = altitude + " meters";
+                document.getElementById("altitude_input").value = altitude + " meters";
             } else {
                 document.getElementById("altitude").textContent = "";
             }

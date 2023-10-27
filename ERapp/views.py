@@ -231,9 +231,35 @@ def table_view(request): # add row
     
     
     if request.method == 'POST' :
-        
         myID1=request.POST.get("myid1")
         column1=request.POST.get("col_type1")
+        
+        button_edit_data_on_table=request.POST.get("button_edit_data_on_table")
+        if button_edit_data_on_table:
+
+            table_row_id = request.POST.get(f"table{button_edit_data_on_table}_id_{button_edit_data_on_table}") 
+            try:
+                get_col_by_id = TableData001.objects.get(cell_id=str(button_edit_data_on_table))
+                
+            except TableData001.DoesNotExist:
+                pass
+            get_col_by_id = TableData001.objects.get(cell_id=str(button_edit_data_on_table))
+            if get_col_by_id:
+                
+                get_col_by_id.firstname = request.POST.get(f"table_firstname_{button_edit_data_on_table}") 
+                get_col_by_id.lastname = request.POST.get(f"table_lastname_{button_edit_data_on_table}")
+                get_col_by_id.address = request.POST.get(f"table_address_{button_edit_data_on_table}")
+                get_col_by_id.num = request.POST.get(f"table_num_{button_edit_data_on_table}")
+                
+                get_col_by_id.etat =  request.POST.get(f"table_etat_{button_edit_data_on_table}")
+                paiement= False
+                if  request.POST.get(f"table_paiement_{button_edit_data_on_table}") == True:
+                    paiement= True
+                get_col_by_id.paiement = paiement
+                #get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','vt','etat'])
+                get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat','paiement'])
+                #return redirect("/VT/")
+        
         
         l1="table1_input_files_to_"+str(myID1)
         #return redirect(f"/{myID}_{column}/")
@@ -399,6 +425,7 @@ def chat_box_1(request):
 
 @login_required 
 def table_view_edit(request):
+    return redirect(formT)
     param_value_id = request.GET.get('param0')
     param1_value = request.GET.get('param1')
     param2_value = request.GET.get('param2')
@@ -423,7 +450,7 @@ def table_view_edit(request):
         get_col_by_id.paiement = param7_value
         #get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','vt','etat'])
         get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat','paiement'])
-    return redirect(formT)
+    
 
        
     
@@ -936,7 +963,6 @@ def Kizeo_form_page(request,client_id):
         submit_to_Kizeo = request.POST.get("submit_to_Kizeo")
         if submit_to_Kizeo=="submit":
             #obj. = request.FILES.get('Donnees_Generales_Preuve_Surface_Photo')
-            
             table_index=['Donnees_Generales_Preuve_Surface_Photo',
                          'Donnees_Generales_Factures',
                         'Facade_1_Photo_Principale',
@@ -973,9 +999,9 @@ def Kizeo_form_page(request,client_id):
                 
 
             ### Données Générales
-            obj.latitude = request.POST.get("latitude")
-            obj.longitude = request.POST.get("longitude")
-            obj.altitude = request.POST.get("altitude")
+            obj.latitude = request.POST.get("latitude_input")
+            obj.longitude = request.POST.get("longitude_input")
+            obj.altitude = request.POST.get("altitude_input")
             obj.Donnees_Generales_Nom_d_intervenant = request.POST.get("Donnees_Generales_Nom_d_intervenant")
             
             Donnees_Generales_Date_de_visite = request.POST.get("Donnees_Generales_Date_de_visite")
