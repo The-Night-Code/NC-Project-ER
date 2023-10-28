@@ -21,30 +21,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-function send_message_box(cell_id,box,redirect_next_page) {
-    
-    
-    var message = document.getElementById("input_msg_"+cell_id).value;
-    
-    var x1 = document.getElementById("user_email").value;
-    var x2 = document.getElementById("user_firstname").value;
-    var x3 = document.getElementById("user_lastname").value;
-    if (message !== null) {
-      var url = "/formT5/?param0="+ encodeURIComponent(cell_id) +
-        "&param1=" + encodeURIComponent(x1) +
-        "&param2=" + encodeURIComponent(x2) +
-        "&param3=" + encodeURIComponent(x3) +
-        "&param4=" + encodeURIComponent(box) +
-        "&param5=" + encodeURIComponent(message)+
-        "&param6="+redirect_next_page;
-      window.location.href = url;
-  } 
-      
-  
-  }
+function sendMessage(cellId, box, redirectNextPage) {
+    var message = document.getElementById("input_msg_" + cellId).value;
 
+    if (message !== '') {
+        var csrfToken = $("[name=csrfmiddlewaretoken]").val();
 
+        $.ajax({
+            url: "/send-message/",
+            type: "POST",
+            data: {
+                message: message,
+                box:box,
+                redirectNextPage:redirectNextPage,
+                cellId:cellId,
+                csrfmiddlewaretoken: csrfToken
+            },
+            success: function (data) {
+                document.getElementById("input_msg_" + cellId).value = ''; // Clear the input field
+                var newMessage = `
+                    <li class="message-item">
+                        <a>
+                            <img src="${data.userProfilePic}" alt="Image" class="rounded-circle">
+                            <div>
+                                <h3>${data.username}</h3>
+                                <h4>${data.message}</h4>
+                                <p> quelques secondes </p>  <!-- Use the naturaltime filter here -->
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                `;
 
+                // Append the new message to the chat box
+                $("#chat-messages-container").prepend(newMessage);
+
+                document.getElementById("input_msg_" + cellId).value = '';
+
+            },
+        });
+    }
+}
+
+function preventSubmit(event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // Prevent the form submission
+    }
+}
 
 
 

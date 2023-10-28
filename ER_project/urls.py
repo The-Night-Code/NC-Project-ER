@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from ERapp.views import main_Page,Home, LoginU, LogoutU , ProfileU,forgot_password ,img_upload_image,showimage,VT_Page_edit_state
 from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,files_history
-from ERapp.views import  add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,chat_box_1,BE_Page_f,BE_Page,BE_audit_ALL,BE_audit_BY_A
+from ERapp.views import  add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,send_message,BE_Page_f,BE_Page,BE_audit_ALL,BE_audit_BY_A
 from ERapp import views
 
 ai="ai"
@@ -47,7 +47,9 @@ urlpatterns = [
     
     
     path(f'{form}T4/',add_files_to_MODELS ,name="add_files_to_model"),
-    path('formT5/',chat_box_1 , name="send_message_box1" ),
+    #path('formT5/',chat_box_1 , name="send_message_box1" ),
+    path('send-message/',send_message , name="send_message" ),
+    
     
     path('create_account_for_ai/', create_acc_ai, name="create_acc_for_AI" ),
     path('create_account_for_be/', create_acc_be, name="create_acc_for_BE" ),

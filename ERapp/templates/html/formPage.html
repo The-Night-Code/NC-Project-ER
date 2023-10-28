@@ -223,7 +223,7 @@
                     
                     <input class="form-control" type="text" id="filterInput_{{ k.index }}" placeholder="Search..." style="width:30%;min-width:100px;">
                       <div class="overflow-auto" style="padding:1px;">
-                      <form method="post"  enctype="multipart/form-data">
+                      <form method="post"  enctype="multipart/form-data" id="myForm" >
                       {% csrf_token %}
                       <input type="hidden" name="myid{{ k.index }}" id="myid{{ k.index }}">
                       <input type="hidden" name="col_type{{ k.index }}" id="col_type{{ k.index }}">
@@ -605,15 +605,17 @@
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
                                       <li class="dropdown-header">
-                                        <input type="text" name="input_msg_{{item.cell_id}}" id="input_msg_{{item.cell_id}}" style="width:90%;">
-                                        <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="send_message_box('{{item.cell_id}}','1','{{redirect_next_page}}')" > <i class="bi bi-send" ></i></button>
+                                        <input type="text" name="input_msg_{{item.cell_id}}" id="input_msg_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
+                                        <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}')" > <i class="bi bi-send" ></i></button>
                                         <a><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
                                       </li>
                                       <li>
                                         <hr class="dropdown-divider">
                                       </li>
+                                      <div id="chat-messages-container">
                                       {% for msg in message_box_1 reversed  %}
                                       {% if item.cell_id == msg.row_id %}
+
                                         <li class="message-item">
                                           <a>
                                             {% if user.profile_pic %}  
@@ -622,8 +624,22 @@
                                               <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
                                             {% endif %}
                                             <div>
-                                              <h4>{{ msg.username }}</h4>
-                                              <p>{{ msg.message }}</p>
+                                              <h3>{{ msg.username }}</h3>
+                                              
+                                              {% if msg_box_tagged.1 in msg.message %}
+                                                        <h4 class="color-red">{{ msg.message }}</h4>
+                                              {% else %}
+                                                {% if msg_box_tagged.2 in msg.message %}
+                                                    <h4 class="color-red">{{ msg.message }}</h4>
+                                                {% else %}
+                                                  {% if msg_box_tagged.3 in msg.message %}
+                                                    <h4 class="color-red">{{ msg.message }}</h4>
+                                                  {% else %}
+                                                    <h4>{{ msg.message }}</h4>
+                                                  {% endif%}
+                                                {% endif%}
+                                              {% endif%}
+
                                               <p>{{ msg.message_date|naturaltime }}</p>
                                             </div>
                                           </a>
@@ -633,6 +649,7 @@
                                         </li>
                                         {% endif %}
                                       {% endfor %}
+                                    </div>
                                   </ul>
                                  </td>
 

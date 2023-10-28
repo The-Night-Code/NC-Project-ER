@@ -350,6 +350,7 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 /* start chat_box_ul_style */
 .chat_box_ul_style{width:97%!important;max-width:420px!important; height:auto!important; max-height:500px!important;}
+.chat_box_ul_style h3 {font-size: 18px!important;}
 /* end chat_box_ul_style */
 
 .border_none, .input_table_data,.button_table_data,.style_none_border{border: none !important;}

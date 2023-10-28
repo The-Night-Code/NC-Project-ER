@@ -13,6 +13,7 @@ from django.views.generic.edit import CreateView
 from django.db.models import Max
 from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1,kizeo_model_Pieces
 from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal
+from django.template.loader import render_to_string
 
 from django.core.mail import send_mail
 from django.core.files.storage import default_storage
@@ -351,7 +352,8 @@ def BE_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,c
     a=[]
     for email_audi in TableData001.objects.all():
         a+=[{'email':email_audi.auditeur}]
-    
+    user_=request.user
+    msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
     return render(request, 'html/formPage.html', { 'data': data ,
                                                   'col_count':col_count ,
                                                   'column_names': column_names,
@@ -364,7 +366,8 @@ def BE_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,c
                                                   'table_index':table_index,
                                                   'auditeur':auditeur,
                                                   'a':a,
-                                                  'redirect_next_page':redirect_page})
+                                                  'redirect_next_page':redirect_page,
+                                                  'msg_box_tagged':msg_box_tagged})
 
 
 
@@ -412,7 +415,9 @@ def BE_audit_BY_A(request):
     a=[]
     for email_audi in TableData001.objects.all():
         a+=[{'email':email_audi.auditeur}]
-
+        
+    user_=request.user
+    msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
     return render(request, 'html/BE_audit.html', { 'data': data ,
                                                   'col_count':col_count ,
                                                   'column_names': column_names,
@@ -425,35 +430,37 @@ def BE_audit_BY_A(request):
                                                   'table_index':table_index,
                                                   'auditeur':auditeur,
                                                   'a':a,
-                                                  'redirect_next_page':redirect_page})
+                                                  'redirect_next_page':redirect_page,
+                                                  'msg_box_tagged':msg_box_tagged})
        
 
 
-def chat_box_1(request):
-    cell_id = request.GET.get('param0')
-    
-    user_email = request.GET.get('param1')
-    user_firstname = request.GET.get('param2')
-    user_lastname = request.GET.get('param3')
-    box = request.GET.get('param4')
-    msg = request.GET.get('param5')
-    redirect_next_page = request.GET.get('param6')
-    msg_id =generate_random_string(8)
-    
-
-    if msg and not str.isspace(msg) : 
-        message_box_1.objects.create(
-                    message_id = msg_id,
-                    row_id = cell_id,
-                    username =user_firstname + " , " +  user_lastname,
-                    email =  user_email,
-                    message =msg,
-                    box =box
-                )
-    
-        
-    return redirect(redirect_next_page)
-
+@login_required
+def send_message(request):
+    if request.method == 'POST':
+        message = request.POST.get('message')
+        redirectNextPage = request.POST.get('redirectNextPage')
+        box = request.POST.get('box')
+        cellId = request.POST.get('cellId')
+        msg_id=generate_random_string(10)
+        if message:
+            
+            new_message = message_box_1.objects.create(
+                                                       
+                                                        message_id = msg_id,
+                                                        row_id = cellId,
+                                                        username =request.user.first_name + "  " +  request.user.last_name,
+                                                        email =  request.user.email,
+                                                        message =message,
+                                                        box = box)
+            response_data = {
+                'username': new_message.username,
+                'message': new_message.message,
+                #'messageDate': new_message.timestamp,
+                'userProfilePic': request.user.profile_pic.url if request.user.profile_pic else ''  # Adjust this to your User model
+            }
+            return JsonResponse(response_data)
+    return JsonResponse({'status': 'error'})
 
     
 
