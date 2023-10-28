@@ -98,11 +98,11 @@ class TableData001(models.Model):
     auditV1 = models.FileField(upload_to='uploads/files/%Y/%m/%d/',blank=True)
     auditV2 = models.FileField(upload_to='uploads/files/%Y/%m/%d/',blank=True)
     auditV3 = models.FileField(upload_to='uploads/files/%Y/%m/%d/',blank=True)
-    coffrac = models.CharField(max_length=255,blank=True)
+    cofrac = models.CharField(max_length=255,blank=True)
     paiement = models.BooleanField(default=False)
     auditeur = models.CharField(max_length=255,blank=True)
     agent= models.CharField(max_length=255,blank=True,null=True)
-    
+    bureau_d_etude = models.CharField(max_length=255,blank=True,null=True)
     be = models.BooleanField(default=False)
     ai = models.BooleanField(default=False)
     

@@ -254,7 +254,7 @@
                             
                             <th>Cofrac</th> 
                             <th>Paiement</th>
-                            <th>Agent</th>
+                            <th>Bureau d'étude</th>
                             <th>Auditeur</th>
                             <th>Commenter</th>
                             <th>Date de création</th>
@@ -263,7 +263,7 @@
                           <tbody id="myTable_{{k.index}}">
                               {% for item in data %}
 
-                              {% if item.etat == k.state  and item.ai %}
+                              {% if item.etat == k.state and item.be == True %}
                               <input class="input_table_data" type="hidden" name="table{{k.index}}_id_{{ item.cell_id }}" id="table{{k.index}}_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             <tr>
                                 <td class="fixed-column table-secondary"><button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') "><i class="ri-checkbox-circle-fill fa-2x color-red "></i></button></td>
@@ -357,7 +357,7 @@
   
   
                                 <td class="td_input_cell"><!-- Travaux à preconise -->
-                                  <input class="input_table_data" type="text"  name="table_tp_{{ item.cell_id }}"  value="{{item.tp}}" >
+                                  <input class="input_table_data" type="text"  name="table_tp_{{ item.cell_id }}" value="{{item.tp}}" >
                                 </td>
   
   
@@ -573,14 +573,17 @@
                                 </nav>
                               </td>
   
-                                <td class="td_input_cell"><input class="input_table_data" type="text"  name="table_cofrac_{{ item.cell_id }}"  value="{{item.cofrac}}"></td>
+                                <td class="td_input_cell"><!-- Bureau d'étude -->
+                                  <input class="input_table_data" type="text" name="table_cofrac_{{ item.cell_id }}" value="{{item.cofrac}}">
+                                  
+                                </td>
   
                                   
                                 <td class="td_input_cell td-form-check-checkbox" > <!--paiement-->
                                   <input class="form-check-input form-check-checkbox" type="checkbox" value="True" name="table_paiement_{{ item.cell_id }}" id="table{{k.index}}_paiement{{ item.cell_id }}" {% if  item.paiement %}  checked  {% endif %}>
                                 </td>
   
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table_agent_{{ item.cell_id }}"  value="{{item.agent}}"></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table_be_{{ item.cell_id }}"  value="{{item.bureau_d_etude}}"></td>
 
                                 <td class="td_input_cell"><!--auditeur-->
 
