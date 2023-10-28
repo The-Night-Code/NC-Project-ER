@@ -1,4 +1,12 @@
+  // table1_remove_file_from_model
+function remove_file_from_m(id, index, column, redirect_next_page) {
+    var url = "/remove_file_from_MODELS/?param0=" + encodeURIComponent(id) +
+                "&param1=" + encodeURIComponent(index) +
+                "&param2=" + encodeURIComponent(column) +
+                "&param3=" + encodeURIComponent(redirect_next_page);
 
+    window.location.href = url;
+}
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -13,7 +21,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
+function send_message_box(cell_id,box,redirect_next_page) {
+    
+    
+    var message = document.getElementById("input_msg_"+cell_id).value;
+    
+    var x1 = document.getElementById("user_email").value;
+    var x2 = document.getElementById("user_firstname").value;
+    var x3 = document.getElementById("user_lastname").value;
+    if (message !== null) {
+      var url = "/formT5/?param0="+ encodeURIComponent(cell_id) +
+        "&param1=" + encodeURIComponent(x1) +
+        "&param2=" + encodeURIComponent(x2) +
+        "&param3=" + encodeURIComponent(x3) +
+        "&param4=" + encodeURIComponent(box) +
+        "&param5=" + encodeURIComponent(message)+
+        "&param6="+redirect_next_page;
+      window.location.href = url;
+  } 
+      
+  
+  }
 
 
 

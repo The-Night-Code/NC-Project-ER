@@ -10,7 +10,7 @@
 # General
 --------------------------------------------------------------*/
 /* Style the sorting icons */
-
+.td_input_cell .dropdown-menu-for-showFils{height: auto;max-height:700px; padding:10px;}
 .container_draw_image {
   height: 100%;
   display: flex;
@@ -348,6 +348,9 @@ table.dataTable thead .sorting_desc_disabled:before {
   scroll-behavior: smooth;
 }
 
+/* start chat_box_ul_style */
+.chat_box_ul_style{width:97%!important;max-width:420px!important; height:auto!important; max-height:500px!important;}
+/* end chat_box_ul_style */
 
 .border_none, .input_table_data,.button_table_data,.style_none_border{border: none !important;}
 .input_table_data,.button_table_data , .td_input_cell,  .icoon_table_data ,.style_background_transparent{padding:1px; background: transparent !important; }

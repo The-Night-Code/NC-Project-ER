@@ -227,26 +227,45 @@ def generate_random_string(length):
     random_string=random_string.replace(" ","")
     return random_string
 
-@login_required 
-def table_view(request): # add row
-    
-    
-    if request.method == 'POST' :
+
+@login_required
+def add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table):
+    l1=f"table_{column_name_type}_{button_edit_data_on_table}"
+    file_table = ModelByColumn(column_name_type)
+    for file in request.FILES.getlist(l1):
+        format_file=file.name.split(".")[1]
+        if format_file in ['jpg','png','jpeg','heic']:
+            format_file="image"
+        if format_file in ['doc','docx']:
+            format_file="word"
+        if format_file in ['xls','xlsm']:
+            format_file="excel" 
+        if not file_table.objects.filter(file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name):
+            file_table.objects.create(
+                    file_id = button_edit_data_on_table,
+                    file_name = file.name,
+                    file_save = file,
+                    file_format =format_file
+                )
+
+@login_required
+def table_view(request,redirect_page):
+    if request.method == 'POST':
         myID1=request.POST.get("myid1")
         column1=request.POST.get("col_type1")
         
         button_edit_data_on_table=request.POST.get("button_edit_data_on_table")
         if button_edit_data_on_table:
 
-            table_row_id = request.POST.get(f"table{button_edit_data_on_table}_id_{button_edit_data_on_table}") 
             try:
                 get_col_by_id = TableData001.objects.get(cell_id=str(button_edit_data_on_table))
-                
-            except TableData001.DoesNotExist:
-                pass
-            get_col_by_id = TableData001.objects.get(cell_id=str(button_edit_data_on_table))
-            if get_col_by_id:
-                
+                if get_col_by_id.ai:
+                    get_col_by_id.agent =  request.POST.get(f"table_agent_{button_edit_data_on_table}")
+                    get_col_by_id.save(update_fields=['agent'])
+                if get_col_by_id.be:
+                    get_col_by_id.bureau_d_etude = request.POST.get(f"table_be_{button_edit_data_on_table}")
+                    get_col_by_id.save(update_fields=['bureau_d_etude'])                                  
+                                                      
                 get_col_by_id.firstname = request.POST.get(f"table_firstname_{button_edit_data_on_table}") 
                 get_col_by_id.lastname = request.POST.get(f"table_lastname_{button_edit_data_on_table}")
                 get_col_by_id.address = request.POST.get(f"table_address_{button_edit_data_on_table}")
@@ -254,101 +273,47 @@ def table_view(request): # add row
                 get_col_by_id.etat =  request.POST.get(f"table_etat_{button_edit_data_on_table}")
                 get_col_by_id.tp = request.POST.get(f"table_tp_{button_edit_data_on_table}")
                 get_col_by_id.cofrac = request.POST.get(f"table_cofrac_{button_edit_data_on_table}")
-                get_col_by_id.agent =  request.POST.get(f"table_agent_{button_edit_data_on_table}")
+                
+                get_col_by_id.auditeur = request.POST.get(f"table_auditeur_{button_edit_data_on_table}")
                 paiement= request.POST.get(f"table_paiement_{button_edit_data_on_table}")
+                
                 if not paiement :
                     paiement= False
                 get_col_by_id.paiement = paiement
-                #get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','vt','etat'])
-                get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat','tp','cofrac','agent','paiement'])
-                #return redirect("/VT/")
+                get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat','tp','cofrac','auditeur','paiement'])
         
-        
-        l1="table1_input_files_to_"+str(myID1)
-        #return redirect(f"/{myID}_{column}/")
-        if request.POST.get("mybutton1") == 'clicked':
-            inp_files=request.FILES.getlist(l1)  
-            #inp_files=request.FILES["table1_input_files_to_"+str(myID)]
-            file_table = ModelByColumn(column1)
+            except TableData001.DoesNotExist:
+                pass
+            get_col_by_id = TableData001.objects.get(cell_id=str(button_edit_data_on_table))
+            
 
-            for file in request.FILES.getlist(l1):
-                format_file=file.name.split(".")[1]
-                if format_file in ['jpg','png','jpeg','heic']:
-                    format_file="image"
-                if format_file in ['doc','docx']:
-                    format_file="word"
-                    
-                if format_file in ['xls','xlsm']:
-                    format_file="excel"  
+            column_name_type="VT"   
+            if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
+                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table)
                 
-                file_table.objects.create(
-                    file_id = myID1,
-                    file_name = file.name,
-                    file_save = file,
-                    file_format =format_file
-                
-                )
-        
-        
-        myID2=request.POST.get("myid2")
-        column2=request.POST.get("col_type2")
-        
-        l2="table2_input_files_to_"+str(myID2)
-        #return redirect(f"/{myID}_{column}/")
-        if request.POST.get("mybutton2") == 'clicked':
-            inp_files=request.FILES.getlist(l2)  
-            #inp_files=request.FILES["table1_input_files_to_"+str(myID)]
-            file_table = ModelByColumn(column2)
 
-            for file in request.FILES.getlist(l2):
-                format_file=file.name.split(".")[1]
-                if format_file in ['jpg','png','jpeg','heic']:
-                    format_file="image"
-                if format_file in ['doc','docx']:
-                    format_file="word"
-                    
-                if format_file in ['xls','xlsm']:
-                    format_file="excel"  
-                
-                file_table.objects.create(
-                    file_id = myID2,
-                    file_name = file.name,
-                    file_save = file,
-                    file_format =format_file
-                
-                )
-      
-        myID3=request.POST.get("myid3")
-        column3=request.POST.get("col_type3")
-        l3="table3_input_files_to_"+str(myID3)
-        
-        if request.POST.get("mybutton3") == 'clicked':
-            inp_files=request.FILES.getlist(l3)  
-            #inp_files=request.FILES["table1_input_files_to_"+str(myID)]
-            file_table = ModelByColumn(column3)
+            column_name_type="auditV1"
+            if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
+                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table)
+            column_name_type="auditV2"
+            if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
+                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table)
+            column_name_type="auditV3"
+            if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
+                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table)
+            column_name_type="auditFinal"
+            if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
+                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table)
 
-            for file in request.FILES.getlist(l3):
-                format_file=file.name.split(".")[1]
-                if format_file in ['jpg','png','jpeg','heic']:
-                    format_file="image"
-                if format_file in ['doc','docx']:
-                    format_file="word"
-                    
-                if format_file in ['xls','xlsm']:
-                    format_file="excel"  
-                
-                file_table.objects.create(
-                    file_id = myID3,
-                    file_name = file.name,
-                    file_save = file,
-                    file_format =format_file
-                
-                )
-                
-        
-        return redirect(formT)
-    
-    
+        return redirect(redirect_page)
+
+
+
+
+@login_required 
+def BE_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
+    redirect_page=formT
+    table_view(request,redirect_page)
 
     data = TableData001.objects.all()
     
@@ -398,9 +363,72 @@ def table_view(request): # add row
                                                   'message_box_1':message_box_01,
                                                   'table_index':table_index,
                                                   'auditeur':auditeur,
-                                                  'a':a})
+                                                  'a':a,
+                                                  'redirect_next_page':redirect_page})
+
+
+
+@login_required
+def BE_audit_BY_A(request):
+    redirect_page="/beaudit/"
+    table_view(request,redirect_page)
+    
+    
+    
+
+    data = TableData001.objects.all()
+    
+    col_count = data.count()
+    # Get unique column names from the TableData model
+    column_names = TableData001._meta.get_fields()
+    datafiles_VT = file_table_vt.objects.all()
+    datafiles_AuditV1 = file_table_auditV1.objects.all()
+    datafiles_AuditV2 = file_table_auditV2.objects.all()
+    datafiles_AuditV3 = file_table_auditV3.objects.all()
+    datafiles_AuditFinal = file_table_auditFinal.objects.all()
+    message_box_01 = message_box_1.objects.all()
+    
+    table_index=[{1:""},{2:""},{3:""},{4:""},{5:""},{6:""},{7:""},{8:""},{9:""}]
+    table_index={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:""}
+    table_index=[1,2,3,4,5,6,7,8,9]
+    table_state_ = ["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]
+    table_index={"index":[1,2,3,4,5,6,7,8,9],
+                 "state":["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]}
+    
+    table_index=[{'index':1,'state':"A realiser"},
+                 {'index':2,'state':"En cours"},
+                 {'index':3,'state':"A modifier"},
+                 {'index':4,'state':"Modification Faite"},
+                 {'index':5,'state':"Reclamation"},
+                 {'index':6,'state':"Reclamation Faite"},
+                 {'index':7,'state':"Envoye"},
+                 {'index':8,'state':"Annule"},
+                 {'index':9,'state':"Fini"}]
+    auditeur=[]
+    for audi in USER.objects.all():
+        if "auditeur" in audi.role:
+            auditeur+=[{'profile_pic':audi.profile_pic,'email':audi.email,'first_name':audi.first_name,'last_name':audi.last_name},]
+            
+    a=[]
+    for email_audi in TableData001.objects.all():
+        a+=[{'email':email_audi.auditeur}]
+
+    return render(request, 'html/BE_audit.html', { 'data': data ,
+                                                  'col_count':col_count ,
+                                                  'column_names': column_names,
+                                                  'datafiles_VT': datafiles_VT ,
+                                                  'datafiles_AuditV1': datafiles_AuditV1 ,
+                                                  'datafiles_AuditV2': datafiles_AuditV2 ,
+                                                  'datafiles_AuditV3': datafiles_AuditV3 ,
+                                                  'datafiles_AuditFinal':datafiles_AuditFinal,
+                                                  'message_box_1':message_box_01,
+                                                  'table_index':table_index,
+                                                  'auditeur':auditeur,
+                                                  'a':a,
+                                                  'redirect_next_page':redirect_page})
        
-   
+
+
 def chat_box_1(request):
     cell_id = request.GET.get('param0')
     
@@ -409,7 +437,7 @@ def chat_box_1(request):
     user_lastname = request.GET.get('param3')
     box = request.GET.get('param4')
     msg = request.GET.get('param5')
-    
+    redirect_next_page = request.GET.get('param6')
     msg_id =generate_random_string(8)
     
 
@@ -424,42 +452,13 @@ def chat_box_1(request):
                 )
     
         
-    return redirect(formT)
+    return redirect(redirect_next_page)
 
-@login_required 
-def table_view_edit(request):
-    return redirect(formT)
-    param_value_id = request.GET.get('param0')
-    param1_value = request.GET.get('param1')
-    param2_value = request.GET.get('param2')
-    param3_value = request.GET.get('param3')
-    param4_value = request.GET.get('param4')
-    #param5_value = request.FILES.getlist('param5')
-    param6_value = request.GET.get('param6')
-    param7_value = request.GET.get('param7')
-    #if param2_value or param3_value:
-    try:
-        get_col_by_id = TableData001.objects.get(cell_id=str(param_value_id))
-    except TableData001.DoesNotExist:
-        pass
-     
-    if get_col_by_id:
-        get_col_by_id.firstname =  param1_value 
-        get_col_by_id.lastname = param2_value
-        get_col_by_id.address = param3_value
-        get_col_by_id.num = param4_value
-       
-        get_col_by_id.etat = param6_value 
-        get_col_by_id.paiement = param7_value
-        #get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','vt','etat'])
-        get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat','paiement'])
-    
 
-       
     
 
 def ModelByColumn(model_by_column):
-    if model_by_column == "vt":
+    if model_by_column == "VT" or model_by_column == "vt":
         return file_table_vt
     if model_by_column == "auditV1":
         return file_table_auditV1
@@ -471,19 +470,22 @@ def ModelByColumn(model_by_column):
         return file_table_auditFinal
 @login_required   
 def remove_file_from_MODELS(request):
+
+    user_ = request.user
+    user_role= user_.role
+    #if  "auditeur" in user_role:
     file_id = request.GET.get('param0')
     index = request.GET.get('param1')
     model_by_column = request.GET.get('param2')
+    redirect_to_next_page = request.GET.get('param3')
     file_table=ModelByColumn(model_by_column)
-    
-
     try:
         f_table_audit_v1 =file_table.objects.get(file_id=str(file_id),file_index=str(index))
     except file_table.DoesNotExist:
         pass
     
     f_table_audit_v1.delete()
-    return redirect(formT)
+    return redirect(redirect_to_next_page)
 
 @login_required
 def add_files_to_MODELS(request):
@@ -558,179 +560,7 @@ def agent_immo_f(request):
 
 
 
-@login_required
-def BE_audit(request):
-        
-    
-    if request.method == 'POST' :
-        myID1=request.POST.get("myid1")
-        column1=request.POST.get("col_type1")
-        
-        button_edit_data_on_table=request.POST.get("button_edit_data_on_table")
-        if button_edit_data_on_table:
 
-            table_row_id = request.POST.get(f"table{button_edit_data_on_table}_id_{button_edit_data_on_table}") 
-            try:
-                get_col_by_id = TableData001.objects.get(cell_id=str(button_edit_data_on_table))
-                
-            except TableData001.DoesNotExist:
-                pass
-            get_col_by_id = TableData001.objects.get(cell_id=str(button_edit_data_on_table))
-            if get_col_by_id:
-                
-                get_col_by_id.firstname = request.POST.get(f"table_firstname_{button_edit_data_on_table}") 
-                get_col_by_id.lastname = request.POST.get(f"table_lastname_{button_edit_data_on_table}")
-                get_col_by_id.address = request.POST.get(f"table_address_{button_edit_data_on_table}")
-                get_col_by_id.num = request.POST.get(f"table_num_{button_edit_data_on_table}")
-                get_col_by_id.etat =  request.POST.get(f"table_etat_{button_edit_data_on_table}")
-                get_col_by_id.tp = request.POST.get(f"table_tp_{button_edit_data_on_table}")
-                get_col_by_id.bureau_d_etude = request.POST.get(f"table_be_{button_edit_data_on_table}")
-                get_col_by_id.cofrac = request.POST.get(f"table_cofrac_{button_edit_data_on_table}")
-                paiement= request.POST.get(f"table_paiement_{button_edit_data_on_table}")
-                if not paiement :
-                    paiement= False
-                get_col_by_id.paiement = paiement
-                #get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','vt','etat'])
-                get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat','tp','bureau_d_etude','cofrac','paiement'])
-                #return redirect("/VT/")
-        
-        
-        l1="table1_input_files_to_"+str(myID1)
-        #return redirect(f"/{myID}_{column}/")
-        if request.POST.get("mybutton1") == 'clicked':
-            inp_files=request.FILES.getlist(l1)  
-            #inp_files=request.FILES["table1_input_files_to_"+str(myID)]
-            file_table = ModelByColumn(column1)
-
-            for file in request.FILES.getlist(l1):
-                format_file=file.name.split(".")[1]
-                if format_file in ['jpg','png','jpeg','heic']:
-                    format_file="image"
-                if format_file in ['doc','docx']:
-                    format_file="word"
-                    
-                if format_file in ['xls','xlsm']:
-                    format_file="excel"  
-                
-                file_table.objects.create(
-                    file_id = myID1,
-                    file_name = file.name,
-                    file_save = file,
-                    file_format =format_file
-                
-                )
-        
-        
-        myID2=request.POST.get("myid2")
-        column2=request.POST.get("col_type2")
-        
-        l2="table2_input_files_to_"+str(myID2)
-        #return redirect(f"/{myID}_{column}/")
-        if request.POST.get("mybutton2") == 'clicked':
-            inp_files=request.FILES.getlist(l2)  
-            #inp_files=request.FILES["table1_input_files_to_"+str(myID)]
-            file_table = ModelByColumn(column2)
-
-            for file in request.FILES.getlist(l2):
-                format_file=file.name.split(".")[1]
-                if format_file in ['jpg','png','jpeg','heic']:
-                    format_file="image"
-                if format_file in ['doc','docx']:
-                    format_file="word"
-                    
-                if format_file in ['xls','xlsm']:
-                    format_file="excel"  
-                
-                file_table.objects.create(
-                    file_id = myID2,
-                    file_name = file.name,
-                    file_save = file,
-                    file_format =format_file
-                
-                )
-      
-        myID3=request.POST.get("myid3")
-        column3=request.POST.get("col_type3")
-        l3="table3_input_files_to_"+str(myID3)
-        
-        if request.POST.get("mybutton3") == 'clicked':
-            inp_files=request.FILES.getlist(l3)  
-            #inp_files=request.FILES["table1_input_files_to_"+str(myID)]
-            file_table = ModelByColumn(column3)
-
-            for file in request.FILES.getlist(l3):
-                format_file=file.name.split(".")[1]
-                if format_file in ['jpg','png','jpeg','heic']:
-                    format_file="image"
-                if format_file in ['doc','docx']:
-                    format_file="word"
-                    
-                if format_file in ['xls','xlsm']:
-                    format_file="excel"  
-                
-                file_table.objects.create(
-                    file_id = myID3,
-                    file_name = file.name,
-                    file_save = file,
-                    file_format =format_file
-                
-                )
-                
-        
-        return redirect(beaudit)
-    
-    
-
-    data = TableData001.objects.all()
-    
-    col_count = data.count()
-    # Get unique column names from the TableData model
-    column_names = TableData001._meta.get_fields()
-    datafiles_VT = file_table_vt.objects.all()
-    datafiles_AuditV1 = file_table_auditV1.objects.all()
-    datafiles_AuditV2 = file_table_auditV2.objects.all()
-    datafiles_AuditV3 = file_table_auditV3.objects.all()
-    datafiles_AuditFinal = file_table_auditFinal.objects.all()
-    message_box_01 = message_box_1.objects.all()
-    
-    table_index=[{1:""},{2:""},{3:""},{4:""},{5:""},{6:""},{7:""},{8:""},{9:""}]
-    table_index={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:""}
-    table_index=[1,2,3,4,5,6,7,8,9]
-    table_state_ = ["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]
-    table_index={"index":[1,2,3,4,5,6,7,8,9],
-                 "state":["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]}
-    
-    table_index=[{'index':1,'state':"A realiser"},
-                 {'index':2,'state':"En cours"},
-                 {'index':3,'state':"A modifier"},
-                 {'index':4,'state':"Modification Faite"},
-                 {'index':5,'state':"Reclamation"},
-                 {'index':6,'state':"Reclamation Faite"},
-                 {'index':7,'state':"Envoye"},
-                 {'index':8,'state':"Annule"},
-                 {'index':9,'state':"Fini"}]
-    auditeur=[]
-    for audi in USER.objects.all():
-        if "auditeur" in audi.role:
-            auditeur+=[{'profile_pic':audi.profile_pic,'email':audi.email,'first_name':audi.first_name,'last_name':audi.last_name},]
-            
-    a=[]
-    for email_audi in TableData001.objects.all():
-        a+=[{'email':email_audi.auditeur}]
-    
-    return render(request, 'html/BE_audit.html', { 'data': data ,
-                                                  'col_count':col_count ,
-                                                  'column_names': column_names,
-                                                  'datafiles_VT': datafiles_VT ,
-                                                  'datafiles_AuditV1': datafiles_AuditV1 ,
-                                                  'datafiles_AuditV2': datafiles_AuditV2 ,
-                                                  'datafiles_AuditV3': datafiles_AuditV3 ,
-                                                  'datafiles_AuditFinal':datafiles_AuditFinal,
-                                                  'message_box_1':message_box_01,
-                                                  'table_index':table_index,
-                                                  'auditeur':auditeur,
-                                                  'a':a})
-       
 @login_required
 def BE_Page(request):
 
@@ -796,16 +626,19 @@ def VT_Page(request):
     return render(request, 'html/VTPage.html', { 'data': data,'table_index':table_index })
 @login_required
 def VT_Page_edit_state(request):
-    param_value_id = request.GET.get('param0')
-    etat_vt_value = request.GET.get('param1')
-    
-    try:
-        object = TableData001.objects.get(cell_id=str(param_value_id))
-        object.etat_vt =  etat_vt_value
-        object.save(update_fields=['etat_vt'])
+    user_ = request.user
+    user_role= user_.role
+    if  "VT" in user_role:
+        param_value_id = request.GET.get('param0')
+        etat_vt_value = request.GET.get('param1')
+        
+        try:
+            object = TableData001.objects.get(cell_id=str(param_value_id))
+            object.etat_vt =  etat_vt_value
+            object.save(update_fields=['etat_vt'])
 
-    except TableData001.DoesNotExist:
-        pass
+        except TableData001.DoesNotExist:
+            pass
     
     
     return redirect(VT)

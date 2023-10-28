@@ -8,6 +8,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+  <link rel="shortcut icon" type="image/png" href="{% static 'image/icon.png' %}">
   <title></title>
   <meta content="" name="description">
   <meta content="" name="keywords">
@@ -76,11 +77,6 @@
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li><!-- End Search Icon-->
 
         <li class="nav-item dropdown pe-3">
 
@@ -143,6 +139,28 @@
           <span>Tous les tableaux</span>
         </a>
       </li><!-- End Dashboard Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-person-add"></i><span>Tableau pour Bureau d'étude</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a class="nav-link collapsed" >
+              <i class="bi bi-person-add fa-10x"></i>
+              <span>Tous les tableaux</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" ><!--href="{ % url '' % }"-->
+              <i class="bi bi-person-add"></i>
+              <span>Tableaux par auditeur</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
@@ -305,7 +323,7 @@
                                             {{ F.file_name }}
                                               
                                           <li class="list-inline-item">
-                                            <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','vt')">
+                                            <button  class="button_table_data" type="button" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','vt','{{redirect_next_page}}')">
                                               <i class="ri-delete-bin-2-fill" style="color:red;"></i>
                                             </button>
                                           </li>
@@ -315,9 +333,9 @@
                                       {% endfor %}
   
                                       <hr class="dropdown-divider">
-                                      <li><input class="input_table_data" type="file" id="table{{k.index}}_input_files_to_{{ item.cell_id }}" name="table{{k.index}}_input_files_to_{{ item.cell_id }}" multiple></li>
+
+                                      <li><input class="input_table_data" type="file" name="table_VT_{{ item.cell_id }}" multiple></li>
                                       <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table{{ k.index }}('{{item.cell_id}}','table{{k.index}}','vt')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
                                       <li></li>
                                       
                       
@@ -394,7 +412,7 @@
                                            {{ F.file_name }}
                                              
                                          <li class="list-inline-item">
-                                           <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV1')">
+                                           <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV1','{{redirect_next_page}}')">
                                              <i class="ri-delete-bin-2-fill" style="color:red;"></i>
                                            </button>
                                          </li>
@@ -403,9 +421,8 @@
                                         {% endif %}
                                      {% endfor %}
                                      <hr class="dropdown-divider">
-                                      <li><input class="input_table_data" type="file" id="table{{k.index}}_input_files_to_{{ item.cell_id }}" name="table{{k.index}}_input_files_to_{{ item.cell_id }}" multiple></li>
+                                      <li><input class="input_table_data" type="file" name="table_auditV1_{{ item.cell_id }}" multiple></li>
                                       <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table{{k.index}}('{{item.cell_id}}','table{{k.index}}','auditV1')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
                                       <li></li>
                                       
                                     
@@ -448,7 +465,7 @@
                                         {{ F.file_name }}
                                           
                                       <li class="list-inline-item">
-                                        <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV2')">
+                                        <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV2',{{redirect_next_page}})">
                                           <i class="ri-delete-bin-2-fill" style="color:red;"></i>
                                         </button>
                                       </li>
@@ -457,9 +474,8 @@
                                      {% endif %}
                                   {% endfor %}
                                   <hr class="dropdown-divider">
-                                   <li><input class="input_table_data" type="file" id="table{{k.index}}_input_files_to_{{ item.cell_id }}" name="table{{k.index}}_input_files_to_{{ item.cell_id }}" multiple></li>
+                                   <li><input class="input_table_data" type="file" name="table_auditV2_{{ item.cell_id }}" multiple></li>
                                    <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                   <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table{{k.index}}('{{item.cell_id}}','table2','auditV2')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
                                    <li></li>
                                    
                                  
@@ -501,7 +517,7 @@
                                         {{ F.file_name }}
                                           
                                       <li class="list-inline-item">
-                                        <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV3')">
+                                        <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV3','{{redirect_next_page}}')">
                                           <i class="ri-delete-bin-2-fill" style="color:red;"></i>
                                         </button>
                                       </li>
@@ -510,9 +526,8 @@
                                      {% endif %}
                                   {% endfor %}
                                   <hr class="dropdown-divider">
-                                   <li><input class="input_table_data" type="file" id="table{{k.index}}_input_files_to_{{ item.cell_id }}" name="table{{k.index}}_input_files_to_{{ item.cell_id }}" multiple></li>
+                                   <li><input class="input_table_data" type="file"  name="table_auditV3_{{ item.cell_id }}" multiple></li>
                                    <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                   <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table{{k.index}}('{{item.cell_id}}','table{{k.index}}','auditV3')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
                                    <li></li>
                  
                                </ul>
@@ -553,7 +568,7 @@
                                         {{ F.file_name }}
                                           
                                       <li class="list-inline-item">
-                                        <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditFinal')">
+                                        <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditFinal','{{redirect_next_page}}')">
                                           <i class="ri-delete-bin-2-fill" style="color:red;"></i>
                                         </button>
                                       </li>
@@ -562,9 +577,8 @@
                                      {% endif %}
                                   {% endfor %}
                                   <hr class="dropdown-divider">
-                                   <li><input class="input_table_data" type="file" id="table{{k.index}}_input_files_to_{{ item.cell_id }}" name="table{{k.index}}_input_files_to_{{ item.cell_id }}" multiple></li>
+                                   <li><input class="input_table_data" type="file" name="table_auditFinal_{{ item.cell_id }}" multiple></li>
                                    <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                   <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table{{k.index}}('{{item.cell_id}}','table{{k.index}}','auditFinal')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
                                    <li></li>
                  
                                </ul>
@@ -583,11 +597,13 @@
                                   <input class="form-check-input form-check-checkbox" type="checkbox" value="True" name="table_paiement_{{ item.cell_id }}" id="table{{k.index}}_paiement{{ item.cell_id }}" {% if  item.paiement %}  checked  {% endif %}>
                                 </td>
   
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table_be_{{ item.cell_id }}"  value="{{item.bureau_d_etude}}"></td>
+                                <td class="td_input_cell"> <!-- Bureau d'Etude -->
+                                  <input class="input_table_data" type="text" name="table_be_{{ item.cell_id }}"  value="{{item.bureau_d_etude}}">
+                                </td>
 
                                 <td class="td_input_cell"><!--auditeur-->
 
-                                  <select class="form-select" name="table{{k.index}}_auditeur_{{ item.cell_id }}" id="auditeur" style="height:55px!important;width:250px!important;">
+                                  <select class="form-select" name="table_auditeur_{{ item.cell_id }}" id="auditeur" style="height:55px!important;width:250px!important;">
                                     {% for audi in auditeur %}
                                       <option value="{{ audi.email }}" {% if audi.email == item.auditeur %} selected {% endif %} style="background-image:url(male.png);"
                                         {% if audi.profile_pic %}  
@@ -605,54 +621,45 @@
 
                                 </td>
 
-                                <td class="td_input_cell">
-                                
+                                <td class="td_input_cell"><!--cemmenter-->
                                   <nav class="header-nav ms-auto" >
-                                   <li class="nav-item dropdown" style="list-style-type: none;">
-                                    
-                                     <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
-                                       <i class="bi bi-chat-left-text"></i>
-                                       
-                                     </a><!-- End Messages Icon -->
-                           
-                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages overflow-y-auto" style="max-height:200px;width:400px;">
-                                       <li class="dropdown-header">
-                                         <input type="text" name="input_msg_{{item.cell_id}}" id="input_msg_{{item.cell_id}}" style="width:90%;">
-                                         <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="send_message_box('{{item.cell_id}}','1')" > <i class="bi bi-send" ></i></button>
-                                         <a><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                                       </li>
-                                       <li>
-                                         <hr class="dropdown-divider">
-                                       </li>
-                                       {% for msg in message_box_1 reversed  %}
-                                       {% if item.cell_id == msg.row_id %}
-                                         <li class="message-item">
-                                           <a>
-                                             {% if user.profile_pic %}  
-                                               <img src="{{ user.profile_pic.url }}" alt="Image"  class="rounded-circle">  <!-- alt="image.title"-->
-                                             {% else %}
-                                               <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
-                                             {% endif %}
-                                             <div>
-                                               <h4>{{ msg.username }}</h4>
-                                               <p>{{ msg.message }}</p>
-                                               <p>{{ msg.message_date|naturaltime }}</p>
-                                             </div>
-                                           </a>
-                                         </li>
-                                         <li>
-                                           <hr class="dropdown-divider">
-                                         </li>
-                                         {% endif %}
-                                       {% endfor %}
-                           
-                                     </ul><!-- End Messages Dropdown Items -->
-                           
-                                   </li><!-- End Messages Nav -->
-                                 </nav>
-                                 
-                                 
+                                    <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
+                                      <i class="bi bi-chat-left-text"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
+                                      <li class="dropdown-header">
+                                        <input type="text" name="input_msg_{{item.cell_id}}" id="input_msg_{{item.cell_id}}" style="width:90%;">
+                                        <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="send_message_box('{{item.cell_id}}','1','{{redirect_next_page}}')" > <i class="bi bi-send" ></i></button>
+                                        <a><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                                      </li>
+                                      <li>
+                                        <hr class="dropdown-divider">
+                                      </li>
+                                      {% for msg in message_box_1 reversed  %}
+                                      {% if item.cell_id == msg.row_id %}
+                                        <li class="message-item">
+                                          <a>
+                                            {% if user.profile_pic %}  
+                                              <img src="{{ user.profile_pic.url }}" alt="Image"  class="rounded-circle">  <!-- alt="image.title"-->
+                                            {% else %}
+                                              <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
+                                            {% endif %}
+                                            <div>
+                                              <h4>{{ msg.username }}</h4>
+                                              <p>{{ msg.message }}</p>
+                                              <p>{{ msg.message_date|naturaltime }}</p>
+                                            </div>
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <hr class="dropdown-divider">
+                                        </li>
+                                        {% endif %}
+                                      {% endfor %}
+                                  </ul>
                                  </td>
+
+                                 
                                 <td><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
                                 <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
                               </tr>
@@ -669,58 +676,7 @@
                   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
                   <!-- redirect with param -->
-                  <script>
-                          
-                    function MY_Func_e_tab(id,k) {
-                      
-                      var x0 = document.getElementById("table"+k+"_hidden_id"+id).value;
-                      var x1 = document.getElementById("table"+k+"_firstname"+id).value;
-                      var x2 = document.getElementById("table"+k+"_lastname"+id).value;
-                      var x3 = document.getElementById("table"+k+"_address"+id).value;
-                      var x4 = document.getElementById("table"+k+"_num"+id).value;
-                      
-  
-                      var selectElement = document.querySelector("#table"+k+"_etat"+id);
-                      var x6 = selectElement.value;
-                      var x7 = document.getElementById("table"+k+"_paiement"+id);
-                        //var x7 = document.getElementById("cell_data7edit"+id).value;
-                        //var x8 = document.getElementById("cell_data8edit"+id).value;
-                        //var x9 = document.getElementById("cell_data9edit"+id).value;
-                        //var x10 = document.getElementById("cell_data10edit"+id).value;
-                      
-                        if (x7.checked) {
-                          x7="True";
-                        } else {
-                          x7="False";
-                        }
-                        var url2="{% url 'editFormTable' %}?"+
-                          "param=" + encodeURIComponent(x0) +
-                          "&param0=" + x0 +
-                          "&param1=" + encodeURIComponent(x1) +
-                          "&param2=" + encodeURIComponent(x2)+
-                          "&param3=" + encodeURIComponent(x3)+
-                          "&param4=" + encodeURIComponent(x4)+
-                          "&param6=" + encodeURIComponent(x6)+
-                          "&param7=" + encodeURIComponent(x7);
-                          
-                        window.location.href = url2;
-  
-                    }
-                    function my_Func_edit_table_1(id) {MY_Func_e_tab(id,1)}
-                    function my_Func_edit_table_2(id) {MY_Func_e_tab(id,2)}
-                    function my_Func_edit_table_3(id) {MY_Func_e_tab(id,3)}
-                    function my_Func_edit_table_4(id) {MY_Func_e_tab(id,4)}
-                    function my_Func_edit_table_5(id) {MY_Func_e_tab(id,5)}
-                    function my_Func_edit_table_6(id) {MY_Func_e_tab(id,6)}
-                    function my_Func_edit_table_7(id) {MY_Func_e_tab(id,7)}
-                    function my_Func_edit_table_8(id) {MY_Func_e_tab(id,8)}
-                    function my_Func_edit_table_9(id) {MY_Func_e_tab(id,9)}
-                    </script>
 
-                    <script>
-                          
-                    
-                    </script>
                     <!-- end redirect with param -->
   
                   </div>
@@ -747,106 +703,7 @@
 
   {% endif %}
 
-  <script>
-      // table1_remove_file_from_model
-    function remove_file_from_m(id,index,column) {
-        
-      var url2="{% url 'remove_file_from_MODEL' %}?"+
-        "param0=" + encodeURIComponent(id) +
-        "&param1=" + encodeURIComponent(index)+
-        "&param2=" + encodeURIComponent(column); 
-      window.location.href = url2;
 
-      }
-      function table1_remove_file_from_model(id1,index1,column) {
-      remove_file_from_m(id1,index1,column);
-      }
-      function table2_remove_file_from_model(id1,index1,column) {
-      remove_file_from_m(id1,index1,column);
-      }
-      function table3_remove_file_from_model(id1,index1,column) {
-      remove_file_from_m(id1,index1,column);    
-      }
-  </script>
-
-
-  <script>
-  function add_files_to_table(fileId, table, col_type) {
-    
-    // Set the values of the hidden input fields in the form
-    document.getElementById("myid1").value = fileId;
-    //document.getElementById("table1").value = table;
-    document.getElementById("col_type1").value = col_type;
-    document.getElementById("mybutton1").value = "clicked";
-  }
-  
-  </script>
-  <script>
-    function add_files_to_table1(fileId, table, col_type) {
-      
-      // Set the values of the hidden input fields in the form
-      document.getElementById("myid1").value = fileId;
-      //document.getElementById("table").value = table;
-      document.getElementById("col_type1").value = col_type;
-      document.getElementById("mybutton1").value = "clicked";
-    }
-    </script>
-  <script>
-    function add_files_to_table2(fileId, table, col_type) {
-      
-      // Set the values of the hidden input fields in the form
-      document.getElementById("myid2").value = fileId;
-      //document.getElementById("table").value = table;
-      document.getElementById("col_type2").value = col_type;
-      document.getElementById("mybutton2").value = "clicked";
-    }
-    </script>
-  <script>
-  function add_files_to_table3(fileId, table, col_type) {
-    
-    // Set the values of the hidden input fields in the form
-    document.getElementById("myid3").value = fileId;
-    //document.getElementById("table").value = table;
-    document.getElementById("col_type3").value = col_type;
-    document.getElementById("mybutton3").value = "clicked";
-  }
-  </script>
-  <script>
-    function add_files_to_table4(fileId, table, col_type) {
-      
-      // Set the values of the hidden input fields in the form
-      document.getElementById("myid4").value = fileId;
-      //document.getElementById("table").value = table;
-      document.getElementById("col_type4").value = col_type;
-      document.getElementById("mybutton4").value = "clicked";
-    }
-    </script>
-  <script>
-
-    
-    function send_message_box(cell_id,box) {
-    
-    
-      var message = document.getElementById("input_msg_"+cell_id).value;
-      
-      var x1 = document.getElementById("user_email").value;
-      var x2 = document.getElementById("user_firstname").value;
-      var x3 = document.getElementById("user_lastname").value;
-      if (message !== null) {
-        var url2="{% url 'send_message_box1' %}?"+
-          "param0=" + cell_id +
-          "&param1=" + x1 +
-          "&param2=" + x2 +
-          "&param3=" + x3 +
-          "&param4=" + box +
-          "&param5=" + message ;
-        window.location.href = url2;
-    } 
-        
-    
-    }
-
-  </script>
   
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
