@@ -23,7 +23,7 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 import random
 import string
-from datetime import datetime
+from datetime import datetime, date
 
 import openpyxl
 from openpyxl.utils import get_column_letter
@@ -309,9 +309,33 @@ def table_view(request,redirect_page):
 
         return redirect(redirect_page)
 
+
 @login_required
 def Auditeur_Accueil(request):
-    return render(request, "html/Auditeur_main_page.html")
+    data = TableData001.objects.all()
+
+    today = date.today()
+    first_day_of_year = date(today.year, 1, 1)
+    first_day_of_month = date(today.year, today.month, 1)
+
+    client_count_added_today = TableData001.objects.filter(creation_time__date=today).count()
+    client_count_added_month = TableData001.objects.filter(creation_time__range=(first_day_of_month, datetime.now())).count()
+    client_count_added_year= TableData001.objects.filter(creation_time__range=(first_day_of_year, datetime.now())).count()
+
+    client_count_fini_today = TableData001.objects.filter(fini_time__date=today).count()
+    client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month, datetime.now())).count()
+    client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now())).count()
+
+
+
+    return render(request, "html/Auditeur_main_page.html",{'data':data,
+                                                           
+                                                           'client_count_added_today':client_count_added_today,
+                                                           'client_count_added_month':client_count_added_month,
+                                                           'client_count_added_year':client_count_added_year,
+                                                           'client_count_fini_today':client_count_fini_today,
+                                                           'client_count_fini_month':client_count_fini_month,
+                                                           'client_count_fini_year':client_count_fini_year})
 
 @login_required
 def audit_pages(request,redirect_page,html_page):
@@ -475,6 +499,7 @@ def remove_file_from_MODELS(request):
         f_table_audit_v1 =file_table.objects.get(file_id=str(file_id),file_index=str(index))
         if f_table_audit_v1.file_removed == True:
             f_table_audit_v1.delete()
+            
         else:
             
             f_table_audit_v1.file_removed = True

@@ -105,7 +105,8 @@ class TableData001(models.Model):
     be = models.BooleanField(default=False)
     ai = models.BooleanField(default=False)
     
-    creation_time =models.DateTimeField(auto_now_add=True, blank = True)
+    creation_time = models.DateTimeField(auto_now_add=True, blank = True)
+    fini_time = models.DateTimeField( blank = True,null=True)
     def __str__(self):
         return f'{self.cell_id} {self.firstname} {self.lastname}'
     

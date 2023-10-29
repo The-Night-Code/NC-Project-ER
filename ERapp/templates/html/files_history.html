@@ -130,7 +130,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'main_page' %}">
           <i class="bi bi-grid"></i>
-          <span>Tous les tableaux</span>
+          <span>Accueil</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
@@ -228,15 +228,15 @@
               <form>
                 <table class="table  table-hover datatable datatable-table" id="tableDATA_{{model_type.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
   
-                  <thead class="table-dark">
+                  <thead class="table-dark text-center">
                     <th></th><!--style="width:auto;"-->
-                    <th>Client ID</th> 
-                    <th>File ID</th> 
-                    <th>File Name</th>  
-                    <th>Email</th> 
-                    <th>User</th> 
+                    <th>Client: ID</th> 
+                    <th>Ficher: ID</th> 
+                    <th>Ficher</th>  
+                    <th colspan=2 class="text-center">Utilisateur</th> 
                     
-                    <th colspan=2>removed Date</th> 
+                    
+                    <th colspan=2 class="text-center">Date de retrait</th> 
                     <th></th>
                   </thead>
                   <tbody  id="myTable_{{model_type.index}}">
