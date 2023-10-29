@@ -14,13 +14,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from ERapp.views import main_Page,Home, LoginU, LogoutU , ProfileU,forgot_password ,img_upload_image,showimage,VT_Page_edit_state
 from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,files_history
-from ERapp.views import  add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,send_message,BE_Page_f,BE_Page,BE_audit_ALL,BE_audit_BY_A
+from ERapp.views import add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,send_message
+from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
 from ERapp import views
 
 ai="ai"
@@ -39,7 +41,11 @@ urlpatterns = [
     path('profile/',ProfileU ),
     path('forgot_password/',forgot_password,name="forgot_password"),
     
-    path(f'{form}T/',BE_audit_ALL ,name="fT"),
+    path('Accueil/',Auditeur_Accueil ,name="Auditeur_main_page"),
+    path('BE_audit_ALL/',BE_audit_ALL ,name="BE_audit_ALL"),
+    path('BE_audit_BY_A/',BE_audit_BY_A ,name="BE_audit_BY_A"),
+    path('AI_audit_ALL/',AI_audit_ALL ,name="AI_audit_ALL"),
+    path('AI_audit_BY_A/',AI_audit_BY_A ,name="AI_audit_BY_A"),
     #path(f'{form}T1/',table_view_edit ,name="editFormTable"),#remove_file_from_auditV1
     #path(f'{form}T2/',remove_file_from_MODELS ,name="remove_file_from_MODEL"),
     
@@ -58,7 +64,7 @@ urlpatterns = [
     path(f'{ai}/',agent_immo ,name="ai"),
     path(f'{ai}f/',agent_immo_f ),
     
-    path(f'{be}audit/',BE_audit_BY_A ,name="be_audit"),
+    
     path(f'{be}/',BE_Page ,name="be"),
     path(f'{be}f/',BE_Page_f ),
     

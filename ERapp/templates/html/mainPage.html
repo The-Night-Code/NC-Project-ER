@@ -33,9 +33,9 @@
 </head>
 {% if user.is_authenticated %}
 
-{% if  "w1" in user.role %}
+{% if  "auditeur" in user.role %}
 <script>
-    window.location.href = "{% url 'fT' %}";
+    window.location.href = "{% url 'Auditeur_main_page' %}";
 </script>
 {% endif %}
 

@@ -67,7 +67,9 @@ class USER(AbstractBaseUser, PermissionsMixin):
         return self.email
     
 
-
+class AI_or_AGENT(models.Model):
+    AI_or_AGENT_id = models.CharField(max_length=255,blank=True)
+    AI_or_AGENT_name = models.CharField(max_length=255,blank=True)
 
 
 
@@ -420,3 +422,13 @@ class kizeo_model_Pieces(models.Model):
     def __str__(self):
         return f'{self.kizeo_id} {self.Pieces_index}'
     
+
+
+class Activities_audit(models.Model):
+    Activity_id = models.CharField(max_length=255,blank=True)
+    Activity_user = models.CharField(max_length=255,blank=True)
+    Activity_table = models.CharField(max_length=255,blank=True)
+    Activity_date = models.DateTimeField(default=timezone.now)
+    Activity_in = models.CharField(max_length=255,blank=True)
+    Activity_before = models.CharField(max_length=255,blank=True)
+    Activity_after = models.CharField(max_length=255,blank=True)

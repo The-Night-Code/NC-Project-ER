@@ -12,7 +12,7 @@ from django.views.generic.edit import CreateView
 
 from django.db.models import Max
 from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1,kizeo_model_Pieces
-from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal
+from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal,Activities_audit
 from django.template.loader import render_to_string
 
 from django.core.mail import send_mail
@@ -251,6 +251,8 @@ def add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table
 
 @login_required
 def table_view(request,redirect_page):
+    #Activity_id,Activity_user,Activity_table,Activity_in,Activity_before,Activity_after
+    
     if request.method == 'POST':
         myID1=request.POST.get("myid1")
         column1=request.POST.get("col_type1")
@@ -291,6 +293,7 @@ def table_view(request,redirect_page):
             column_name_type="VT"   
             if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
                 add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table)
+                Activities_audit.objects.create()
                 
 
             column_name_type="auditV1"
@@ -308,130 +311,113 @@ def table_view(request,redirect_page):
 
         return redirect(redirect_page)
 
+@login_required
+def Auditeur_Accueil(request):
+    return render(request, "html/Auditeur_main_page.html")
+
+@login_required
+def audit_pages(request,redirect_page,html_page):
+    redirect_page=redirect_page
+    table_view(request,redirect_page)
+
+    data = TableData001.objects.all()
+    
+    col_count = data.count()
+    # Get unique column names from the TableData model
+    column_names = TableData001._meta.get_fields()
+    datafiles_VT = file_table_vt.objects.all()
+    datafiles_AuditV1 = file_table_auditV1.objects.all()
+    datafiles_AuditV2 = file_table_auditV2.objects.all()
+    datafiles_AuditV3 = file_table_auditV3.objects.all()
+    datafiles_AuditFinal = file_table_auditFinal.objects.all()
+    message_box_01 = message_box_1.objects.all()
+    
+    table_index=[{1:""},{2:""},{3:""},{4:""},{5:""},{6:""},{7:""},{8:""},{9:""}]
+    table_index={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:""}
+    table_index=[1,2,3,4,5,6,7,8,9]
+    table_state_ = ["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]
+    table_index={"index":[1,2,3,4,5,6,7,8,9],
+                 "state":["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]}
+    
+    table_index=[{'index':1,'state':"A realiser"},
+                 {'index':2,'state':"En cours"},
+                 {'index':3,'state':"A modifier"},
+                 {'index':4,'state':"Modification Faite"},
+                 {'index':5,'state':"Reclamation"},
+                 {'index':6,'state':"Reclamation Faite"},
+                 {'index':7,'state':"Envoye"},
+                 {'index':8,'state':"Annule"},
+                 {'index':9,'state':"Fini"}]
+    auditeur=[]
+    for audi in USER.objects.all():
+        if "auditeur" in audi.role:
+            auditeur+=[{'profile_pic':audi.profile_pic,'email':audi.email,'first_name':audi.first_name,'last_name':audi.last_name},]
+            
+    a=[]
+    for email_audi in TableData001.objects.all():
+        a+=[{'email':email_audi.auditeur}]
+    user_=request.user
+    msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
+    Audi=user_.email
+    list={ 'data': data ,
+                                                  'col_count':col_count ,
+                                                  'column_names': column_names,
+                                                  'datafiles_VT': datafiles_VT ,
+                                                  'datafiles_AuditV1': datafiles_AuditV1 ,
+                                                  'datafiles_AuditV2': datafiles_AuditV2 ,
+                                                  'datafiles_AuditV3': datafiles_AuditV3 ,
+                                                  'datafiles_AuditFinal':datafiles_AuditFinal,
+                                                  'message_box_1':message_box_01,
+                                                  'table_index':table_index,
+                                                  'auditeur':auditeur,
+                                                  'Audi':Audi,
+                                                  'a':a,
+                                                  'redirect_next_page':redirect_page,
+                                                  'msg_box_tagged':msg_box_tagged}
+    return list
+
+@login_required 
+def AI_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
+    redirect_page="/beaudit/"
+    html_page="AI_audit_ALL.html"
+    table_view(request,redirect_page)
+
+    list=audit_pages(request,redirect_page,html_page)
+    return render(request, f"html/{html_page}", list)
+
+
+@login_required 
+def AI_audit_BY_A(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
+    redirect_page="/beaudit/"
+    html_page="AI_audit_BY_A.html"
+    table_view(request,redirect_page)
+    
+    list=audit_pages(request,redirect_page,html_page)
+    return render(request, f"html/{html_page}", list)
 
 
 
 @login_required 
 def BE_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
-    redirect_page=formT
+    redirect_page="/beaudit/"
+    html_page="BE_audit_ALL.html"
     table_view(request,redirect_page)
-
-    data = TableData001.objects.all()
     
-    col_count = data.count()
-    # Get unique column names from the TableData model
-    column_names = TableData001._meta.get_fields()
-    datafiles_VT = file_table_vt.objects.all()
-    datafiles_AuditV1 = file_table_auditV1.objects.all()
-    datafiles_AuditV2 = file_table_auditV2.objects.all()
-    datafiles_AuditV3 = file_table_auditV3.objects.all()
-    datafiles_AuditFinal = file_table_auditFinal.objects.all()
-    message_box_01 = message_box_1.objects.all()
-    
-    table_index=[{1:""},{2:""},{3:""},{4:""},{5:""},{6:""},{7:""},{8:""},{9:""}]
-    table_index={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:""}
-    table_index=[1,2,3,4,5,6,7,8,9]
-    table_state_ = ["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]
-    table_index={"index":[1,2,3,4,5,6,7,8,9],
-                 "state":["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]}
-    
-    table_index=[{'index':1,'state':"A realiser"},
-                 {'index':2,'state':"En cours"},
-                 {'index':3,'state':"A modifier"},
-                 {'index':4,'state':"Modification Faite"},
-                 {'index':5,'state':"Reclamation"},
-                 {'index':6,'state':"Reclamation Faite"},
-                 {'index':7,'state':"Envoye"},
-                 {'index':8,'state':"Annule"},
-                 {'index':9,'state':"Fini"}]
-    auditeur=[]
-    for audi in USER.objects.all():
-        if "auditeur" in audi.role:
-            auditeur+=[{'profile_pic':audi.profile_pic,'email':audi.email,'first_name':audi.first_name,'last_name':audi.last_name},]
-            
-    a=[]
-    for email_audi in TableData001.objects.all():
-        a+=[{'email':email_audi.auditeur}]
-    user_=request.user
-    msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
-    return render(request, 'html/formPage.html', { 'data': data ,
-                                                  'col_count':col_count ,
-                                                  'column_names': column_names,
-                                                  'datafiles_VT': datafiles_VT ,
-                                                  'datafiles_AuditV1': datafiles_AuditV1 ,
-                                                  'datafiles_AuditV2': datafiles_AuditV2 ,
-                                                  'datafiles_AuditV3': datafiles_AuditV3 ,
-                                                  'datafiles_AuditFinal':datafiles_AuditFinal,
-                                                  'message_box_1':message_box_01,
-                                                  'table_index':table_index,
-                                                  'auditeur':auditeur,
-                                                  'a':a,
-                                                  'redirect_next_page':redirect_page,
-                                                  'msg_box_tagged':msg_box_tagged})
-
+    list=audit_pages(request,redirect_page,html_page)
+    return render(request, f"html/{html_page}", list)
 
 
 @login_required
 def BE_audit_BY_A(request):
     redirect_page="/beaudit/"
+    html_page="BE_audit_BY_A.html"
     table_view(request,redirect_page)
     
     
+    list=audit_pages(request,redirect_page,html_page)
+    return render(request, f"html/{html_page}", list)
     
-
-    data = TableData001.objects.all()
     
-    col_count = data.count()
-    # Get unique column names from the TableData model
-    column_names = TableData001._meta.get_fields()
-    datafiles_VT = file_table_vt.objects.all()
-    datafiles_AuditV1 = file_table_auditV1.objects.all()
-    datafiles_AuditV2 = file_table_auditV2.objects.all()
-    datafiles_AuditV3 = file_table_auditV3.objects.all()
-    datafiles_AuditFinal = file_table_auditFinal.objects.all()
-    message_box_01 = message_box_1.objects.all()
-    
-    table_index=[{1:""},{2:""},{3:""},{4:""},{5:""},{6:""},{7:""},{8:""},{9:""}]
-    table_index={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:""}
-    table_index=[1,2,3,4,5,6,7,8,9]
-    table_state_ = ["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]
-    table_index={"index":[1,2,3,4,5,6,7,8,9],
-                 "state":["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]}
-    
-    table_index=[{'index':1,'state':"A realiser"},
-                 {'index':2,'state':"En cours"},
-                 {'index':3,'state':"A modifier"},
-                 {'index':4,'state':"Modification Faite"},
-                 {'index':5,'state':"Reclamation"},
-                 {'index':6,'state':"Reclamation Faite"},
-                 {'index':7,'state':"Envoye"},
-                 {'index':8,'state':"Annule"},
-                 {'index':9,'state':"Fini"}]
-    auditeur=[]
-    for audi in USER.objects.all():
-        if "auditeur" in audi.role:
-            auditeur+=[{'profile_pic':audi.profile_pic,'email':audi.email,'first_name':audi.first_name,'last_name':audi.last_name},]
-            
-    a=[]
-    for email_audi in TableData001.objects.all():
-        a+=[{'email':email_audi.auditeur}]
-        
-    user_=request.user
-    msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
-    return render(request, 'html/BE_audit.html', { 'data': data ,
-                                                  'col_count':col_count ,
-                                                  'column_names': column_names,
-                                                  'datafiles_VT': datafiles_VT ,
-                                                  'datafiles_AuditV1': datafiles_AuditV1 ,
-                                                  'datafiles_AuditV2': datafiles_AuditV2 ,
-                                                  'datafiles_AuditV3': datafiles_AuditV3 ,
-                                                  'datafiles_AuditFinal':datafiles_AuditFinal,
-                                                  'message_box_1':message_box_01,
-                                                  'table_index':table_index,
-                                                  'auditeur':auditeur,
-                                                  'a':a,
-                                                  'redirect_next_page':redirect_page,
-                                                  'msg_box_tagged':msg_box_tagged})
        
 
 

@@ -42,7 +42,7 @@
 </head>
 
 <body onload="load()">
-  {% if user.is_authenticated and "w1" in user.role %}
+  {% if user.is_authenticated and "auditeur" in user.role %}
  <!-- ======= Header ======= -->
  <header id="header" class="header fixed-top d-flex align-items-center">
     
@@ -133,6 +133,48 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#BE_ul" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-person-add"></i><span>Bureau d'étude</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="BE_ul" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'BE_audit_ALL' %}">
+              <i class="bi bi-person-add fa-10x"></i>
+              <span>Toutes les colonnes</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'BE_audit_BY_A' %}"><!--href="{ % url '' % }"-->
+              <i class="bi bi-person-add"></i>
+              <span>Par auditeur</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#AI_ul" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-person-add"></i><span>Agent immobilier</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="AI_ul" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'AI_audit_ALL' %}">
+              <i class="bi bi-person-add fa-10x"></i>
+              <span>Toutes les colonnes</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'AI_audit_BY_A' %}"><!--href="{ % url '' % }"-->
+              <i class="bi bi-person-add"></i>
+              <span>Par auditeur</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
       
 
       <li class="nav-item">
