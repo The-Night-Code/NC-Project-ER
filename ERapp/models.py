@@ -81,9 +81,6 @@ class ImageModel(models.Model):
     imageTitle =models.CharField(max_length=255)
     image = models.ImageField(upload_to='uploads/profilePic')
     
-
-
-
     
 class TableData001(models.Model):
     cell_id = models.CharField(max_length=255,blank=True)
@@ -112,8 +109,15 @@ class TableData001(models.Model):
     def __str__(self):
         return f'{self.cell_id} {self.firstname} {self.lastname}'
     
-class file_table_auditV1(models.Model):
     
+    
+    
+class file_table_auditV1(models.Model):
+    file_removed_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    file_removed_user_email = models.CharField(max_length=255,blank=True)
+    file_removed_user_FN = models.CharField(max_length=255,blank=True)
+    file_removed_user_LN = models.CharField(max_length=255,blank=True) 
+    file_removed = models.BooleanField(default=False) 
     file_index = models.AutoField(primary_key=True)
     file_id = models.CharField(max_length=255,blank=True)
     file_name = models.CharField(max_length=255,blank=True)
@@ -121,12 +125,13 @@ class file_table_auditV1(models.Model):
     file_format = models.CharField(max_length=255,blank=True)
     
     def __str__(self):
-        return f'{self.file_id} {self.file_index} {self.file_name}'
-    
-    
-
+        return f'{self.file_id} {self.file_index} {self.file_name} {self.file_removed}'
 class file_table_auditV2(models.Model):
-    
+    file_removed_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    file_removed_user_email = models.CharField(max_length=255,blank=True)
+    file_removed_user_FN = models.CharField(max_length=255,blank=True)
+    file_removed_user_LN = models.CharField(max_length=255,blank=True)
+    file_removed = models.BooleanField(default=False) 
     file_index = models.AutoField(primary_key=True)
     file_id = models.CharField(max_length=255,blank=True)
     file_name = models.CharField(max_length=255,blank=True)
@@ -134,10 +139,13 @@ class file_table_auditV2(models.Model):
     file_format = models.CharField(max_length=255,blank=True)
     
     def __str__(self):
-        return f'{self.file_id} {self.file_index} {self.file_name}'
-    
+        return f'{self.file_id} {self.file_index} {self.file_name} {self.file_removed}'
 class file_table_auditV3(models.Model):
-    
+    file_removed_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    file_removed_user_email = models.CharField(max_length=255,blank=True)
+    file_removed_user_FN = models.CharField(max_length=255,blank=True)
+    file_removed_user_LN = models.CharField(max_length=255,blank=True)
+    file_removed = models.BooleanField(default=False) 
     file_index = models.AutoField(primary_key=True)
     file_id = models.CharField(max_length=255,blank=True)
     file_name = models.CharField(max_length=255,blank=True)
@@ -145,9 +153,13 @@ class file_table_auditV3(models.Model):
     file_format = models.CharField(max_length=255,blank=True)
     
     def __str__(self):
-        return f'{self.file_id} {self.file_index} {self.file_name}'
+        return f'{self.file_id} {self.file_index} {self.file_name} {self.file_removed}'
 class file_table_auditFinal(models.Model):
-    
+    file_removed_date = models.DateTimeField(auto_now=True,null=True,blank=True)
+    file_removed_user_email = models.CharField(max_length=255,blank=True)
+    file_removed_user_FN = models.CharField(max_length=255,blank=True)
+    file_removed_user_LN = models.CharField(max_length=255,blank=True)
+    file_removed = models.BooleanField(default=False) 
     file_index = models.AutoField(primary_key=True)
     file_id = models.CharField(max_length=255,blank=True)
     file_name = models.CharField(max_length=255,blank=True)
@@ -155,9 +167,13 @@ class file_table_auditFinal(models.Model):
     file_format = models.CharField(max_length=255,blank=True)
     
     def __str__(self):
-        return f'{self.file_id} {self.file_index} {self.file_name}'
+        return f'{self.file_id} {self.file_index} {self.file_name} {self.file_removed}'
 class file_table_vt(models.Model):
-    
+    file_removed_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    file_removed_user_email = models.CharField(max_length=255,blank=True)
+    file_removed_user_FN = models.CharField(max_length=255,blank=True)
+    file_removed_user_LN = models.CharField(max_length=255,blank=True)
+    file_removed = models.BooleanField(default=False) 
     file_index = models.AutoField(primary_key=True)
     file_id = models.CharField(max_length=255,blank=True)
     file_name = models.CharField(max_length=255,blank=True)
@@ -165,7 +181,7 @@ class file_table_vt(models.Model):
     file_format = models.CharField(max_length=255,blank=True)
     
     def __str__(self):
-        return f'{self.file_id} {self.file_index} {self.file_name}'
+        return f'{self.file_id} {self.file_index} {self.file_name} {self.file_removed}'
     
     
 class message_box_1(models.Model):
@@ -401,7 +417,7 @@ class kizeo_model_Pieces(models.Model):
     Largeur  = models.FloatField(default=0.0,blank=True)
     Surface = models.FloatField(default=0.0,blank=True)
     
-    IF_mansardee= models.BooleanField(default=False) 
+    IF_mansardee = models.BooleanField(default=False) 
     HSF = models.FloatField(default=0.0,blank=True)
     HPP = models.FloatField(default=0.0,blank=True)
     LP = models.FloatField(default=0.0,blank=True)

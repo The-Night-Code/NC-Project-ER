@@ -35,16 +35,7 @@
   <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
-  <script>
-    
-      
-    
-    </script>
 
-  <style>
-
-
-  </style>
     
 </head>
 
@@ -465,7 +456,7 @@
                                     <!-- for i in datafiles  if item.cell_id == i.file_id -->
                                     {% for F in datafiles_AuditV2 %}
                                    
-                                    {% if F.file_id == item.cell_id %}
+                                    {% if F.file_id == item.cell_id  and not F.file_removed %}
                                     <li>
                                       <li class="list-inline-item">
                                         {% if F.file_format == "excel" %}

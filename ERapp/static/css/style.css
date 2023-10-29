@@ -512,8 +512,10 @@ h6 {
   }
 }
 
-
-.color-red{color:red!important;}
+.color_green{color:green!important;}  
+.color_blue_2{color:rgb(0, 84, 209)!important;}
+.color_blue{color:blue!important;}
+.color-red , .color_red {color:red!important;}
 .bg-color-red{background-color:red!important;}
 .bg-color-white{background-color:white!important;}
 /*--------------------------------------------------------------

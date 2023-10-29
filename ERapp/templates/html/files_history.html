@@ -1,4 +1,6 @@
 {% load static %}
+{% load l10n %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -132,7 +134,48 @@
         </a>
       </li><!-- End Dashboard Nav -->
 
-      
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#BE_ul" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-person-add"></i><span>Bureau d'étude</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="BE_ul" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'BE_audit_ALL' %}">
+              <i class="bi bi-person-add fa-10x"></i>
+              <span>Toutes les colonnes</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'BE_audit_BY_A' %}"><!--href="{ % url '' % }"-->
+              <i class="bi bi-person-add"></i>
+              <span>Par auditeur</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#AI_ul" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-person-add"></i><span>Agent immobilier</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="AI_ul" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'AI_audit_ALL' %}">
+              <i class="bi bi-person-add fa-10x"></i>
+              <span>Toutes les colonnes</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'AI_audit_BY_A' %}"><!--href="{ % url '' % }"-->
+              <i class="bi bi-person-add"></i>
+              <span>Par auditeur</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
@@ -170,18 +213,68 @@
   <main id="main" class="main">
 
 
-
+    {% for model_type in model_type %}
     <section class="section">
       <div class="row" >
         
         <div class="card ">
         <div class="overflow-auto">
             <div class="card-body">
-              <h5 class="card-title">Historique des fichiers</h5>
-                <hr/>
-              <!-- General Form Elements -->
-              <form>
+              <h5 class="card-title ">{{model_type.name}}</h5>
                 
+              <!-- General Form Elements -->
+              <input class="form-control" type="text" id="filterInput_{{ model_type.index }}" placeholder="Search..." style="width:30%;min-width:100px;">
+              </br>
+              <form>
+                <table class="table  table-hover datatable datatable-table" id="tableDATA_{{model_type.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
+  
+                  <thead class="table-dark">
+                    <th></th><!--style="width:auto;"-->
+                    <th>Client ID</th> 
+                    <th>File ID</th> 
+                    <th>File Name</th>  
+                    <th>Email</th> 
+                    <th>User</th> 
+                    
+                    <th colspan=2>removed Date</th> 
+                    <th></th>
+                  </thead>
+                  <tbody  id="myTable_{{model_type.index}}">
+                    {% for F in model_type.model|dictsortreversed:"file_removed_date" %}
+
+                    <tr>
+                        <td class="">
+                          {% if F.file_format == "excel" %}
+                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line fa-2x color_green" ></i></a>
+                          {% elif F.file_format == "pdf" %}
+                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf fa-2x color_red" ></i></a>
+                          {% elif F.file_format == "image" %}
+                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image fa-2x color_blue" ></i></a>
+                          {% elif F.file_format == "word" %}
+                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word fa-2x color_blue_2" ></i></a>
+                          {% elif F.file_format == "pz2" %}
+                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt fa-2x " ></i></a>
+                          {% else %}
+                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line fa-2x" ></i></a>
+                          {% endif %}
+                        </td>
+                        <td class=""><p>{{ F.file_id }}</p></td>
+                        <td class=""><p>{{ F.file_index }}</p></td>
+                        <td class=""><p>{{ F.file_name }}</p></td>
+                        <td class=""><p>{{ F.file_removed_user_email }}</p></td>
+                        <td class=""><p>{{ F.file_removed_user_LN }} {{ F.file_removed_user_FN }}</p></td>
+                        <td class=""><p>{{ F.file_removed_date|date:_("d m Y H:i") }}</p></td>
+                        <td class=""><p>{{ F.file_removed_date|naturaltime }}</p></td>
+                        <td class="">
+                          <button  class="button_table_data " type="button" id="" name="" value="" onclick="remove_file_from_m('{{F.file_id}}','{{F.file_index}}','{{model_type.name}}',{{redirect_next_page}})">
+                            <i class="ri-delete-bin-2-fill fa-2x" style="color:red;"></i>
+                          </button>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+
+                  </table>
 
               </form><!-- End General Form Elements -->
 
@@ -190,26 +283,9 @@
 
         </div>
 
-
-        <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Historique des fichiers</h5>
-              <hr/>
-              <!-- General Form Elements -->
-              <form>
-                
-
-              </form><!-- End General Form Elements -->
-
-            </div>
-          
-
-        </div>
-
-        
       </div>
     </section>
-
+    {% endfor %}
   </main>
 
   <!-- ======= Footer ======= -->

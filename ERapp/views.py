@@ -209,8 +209,6 @@ def showimage(request):
     return render(request,'html/showimage.html',{'profile_image': profile_img})
 
 
-    
-    
 def img_upload_image(request):
     
     return redirect('/profileU/')
@@ -317,7 +315,7 @@ def Auditeur_Accueil(request):
 
 @login_required
 def audit_pages(request,redirect_page,html_page):
-    redirect_page=redirect_page
+    
     table_view(request,redirect_page)
 
     data = TableData001.objects.all()
@@ -325,11 +323,12 @@ def audit_pages(request,redirect_page,html_page):
     col_count = data.count()
     # Get unique column names from the TableData model
     column_names = TableData001._meta.get_fields()
-    datafiles_VT = file_table_vt.objects.all()
-    datafiles_AuditV1 = file_table_auditV1.objects.all()
-    datafiles_AuditV2 = file_table_auditV2.objects.all()
-    datafiles_AuditV3 = file_table_auditV3.objects.all()
-    datafiles_AuditFinal = file_table_auditFinal.objects.all()
+    
+    datafiles_VT = file_table_vt.objects.filter(file_removed=False)
+    datafiles_AuditV1 = file_table_auditV1.objects.filter(file_removed=False)
+    datafiles_AuditV2 = file_table_auditV2.objects.filter(file_removed=False)
+    datafiles_AuditV3 = file_table_auditV3.objects.filter(file_removed=False)
+    datafiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False)
     message_box_01 = message_box_1.objects.all()
     
     table_index=[{1:""},{2:""},{3:""},{4:""},{5:""},{6:""},{7:""},{8:""},{9:""}]
@@ -378,7 +377,7 @@ def audit_pages(request,redirect_page,html_page):
 
 @login_required 
 def AI_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
-    redirect_page="/beaudit/"
+    redirect_page="/AI_audit_ALL/"
     html_page="AI_audit_ALL.html"
     table_view(request,redirect_page)
 
@@ -388,7 +387,7 @@ def AI_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,c
 
 @login_required 
 def AI_audit_BY_A(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
-    redirect_page="/beaudit/"
+    redirect_page="/AI_audit_BY_A/"
     html_page="AI_audit_BY_A.html"
     table_view(request,redirect_page)
     
@@ -399,7 +398,7 @@ def AI_audit_BY_A(request): # add row (,firstname,lastname,addressm,num,etat,tp,
 
 @login_required 
 def BE_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
-    redirect_page="/beaudit/"
+    redirect_page="/BE_audit_ALL/"
     html_page="BE_audit_ALL.html"
     table_view(request,redirect_page)
     
@@ -409,7 +408,7 @@ def BE_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,c
 
 @login_required
 def BE_audit_BY_A(request):
-    redirect_page="/beaudit/"
+    redirect_page="/BE_audit_BY_A/"
     html_page="BE_audit_BY_A.html"
     table_view(request,redirect_page)
     
@@ -463,7 +462,7 @@ def ModelByColumn(model_by_column):
         return file_table_auditFinal
 @login_required   
 def remove_file_from_MODELS(request):
-
+    
     user_ = request.user
     user_role= user_.role
     #if  "auditeur" in user_role:
@@ -474,11 +473,23 @@ def remove_file_from_MODELS(request):
     file_table=ModelByColumn(model_by_column)
     try:
         f_table_audit_v1 =file_table.objects.get(file_id=str(file_id),file_index=str(index))
+        if f_table_audit_v1.file_removed == True:
+            f_table_audit_v1.delete()
+        else:
+            
+            f_table_audit_v1.file_removed = True
+            #f_table_audit_v1.file_removed_date = 
+            f_table_audit_v1.file_removed_user_email = user_.email
+            f_table_audit_v1.file_removed_user_FN = user_.first_name
+            f_table_audit_v1.file_removed_user_LN = user_.last_name
+            f_table_audit_v1.file_removed_date=datetime.now()
+            f_table_audit_v1.save(update_fields=['file_removed', 'file_removed_user_email', 'file_removed_user_FN', 'file_removed_user_LN','file_removed_date' ])
     except file_table.DoesNotExist:
         pass
     
-    f_table_audit_v1.delete()
+    #
     return redirect(redirect_to_next_page)
+
 
 @login_required
 def add_files_to_MODELS(request):
@@ -748,7 +759,25 @@ def create_acc_be(request):
     
 @login_required
 def files_history(request):
-    return render(request, 'html/files_history.html')
+    redirect_page="/historique_des_fichiers/"
+    datafiles_VT = file_table_vt.objects.filter(file_removed=True)
+    datafiles_AuditV1 = file_table_auditV1.objects.filter(file_removed=True)
+    datafiles_AuditV2 = file_table_auditV2.objects.filter(file_removed=True)
+    datafiles_AuditV3 = file_table_auditV3.objects.filter(file_removed=True)
+    datafiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=True)
+    #model_type=['vt','auditV1','auditV2','auditV3','auditFinal']
+    model_type=[{'index':1,'model':datafiles_VT,'name':"vt"},
+                {'index':2,'model':datafiles_AuditV1,'name':"auditV1"},
+                {'index':3,'model':datafiles_AuditV2,'name':"auditV2"},
+                {'index':4,'model':datafiles_AuditV3,'name':"auditV3"},
+                {'index':5,'model':datafiles_AuditFinal,'name':"auditFinal"}]
+    return render(request, 'html/files_history.html',{'datafiles_VT': datafiles_VT ,
+                                                  'datafiles_AuditV1': datafiles_AuditV1 ,
+                                                  'datafiles_AuditV2': datafiles_AuditV2 ,
+                                                  'datafiles_AuditV3': datafiles_AuditV3 ,
+                                                  'datafiles_AuditFinal':datafiles_AuditFinal,
+                                                  'redirect_next_page':redirect_page,
+                                                  'model_type':model_type})
 @login_required
 def update_xlsx_template(request):
     # Load your XLSX template
