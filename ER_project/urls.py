@@ -46,14 +46,10 @@ urlpatterns = [
     path('BE_audit_BY_A/',BE_audit_BY_A ,name="BE_audit_BY_A"),
     path('AI_audit_ALL/',AI_audit_ALL ,name="AI_audit_ALL"),
     path('AI_audit_BY_A/',AI_audit_BY_A ,name="AI_audit_BY_A"),
-    #path(f'{form}T1/',table_view_edit ,name="editFormTable"),#remove_file_from_auditV1
-    #path(f'{form}T2/',remove_file_from_MODELS ,name="remove_file_from_MODEL"),
-    
+
     path('remove_file_from_MODELS/',remove_file_from_MODELS ,name="remove_file_from_MODEL"),
-    
-    
     path(f'{form}T4/',add_files_to_MODELS ,name="add_files_to_model"),
-    #path('formT5/',chat_box_1 , name="send_message_box1" ),
+
     path('send-message/',send_message , name="send_message" ),
     
     

@@ -364,6 +364,9 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 
 .logo_with_button{width:100px;}
+/*  Activities_audit */
+.Activities_audit_p{font-size:16px;;}
+/*  end Activities_audit */
 
 
 /*  Kizeo form */
@@ -516,6 +519,7 @@ h6 {
 .color_blue_2{color:rgb(0, 84, 209)!important;}
 .color_blue{color:blue!important;}
 .color-red , .color_red {color:red!important;}
+.color_gray_dark{color:rgba(54, 54, 54, 0.733)!important;}
 .bg-color-red{background-color:red!important;}
 .bg-color-white{background-color:white!important;}
 /*--------------------------------------------------------------

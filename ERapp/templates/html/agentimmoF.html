@@ -7,7 +7,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <link rel="shortcut icon" type="image/png" href="{% static 'image/icon.png' %}">
-  <title></title>
+  <title>Formulaire</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -221,7 +221,14 @@
 
   </aside><!-- End Sidebar-->
   <!-- End Sidebar ==========================================================================================================================-->
-
+  {% if acc_state %}
+  <script>
+    
+    alert("Le client a été ajouté");
+    
+  </script>
+  {% endif %}
+  
 
   <main id="main" class="main">
 
@@ -242,65 +249,72 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">General Form Elements</h5>
+              <h5 class="card-title">Formulaire</h5>
 
               <!-- General Form Elements -->
               <form method="post"  enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Nom</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="lastname" required>
+                  <label for="inputText" class="col-sm-3 col-form-label">Nom</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" name="lastname" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="inputEmail" class="col-sm-2 col-form-label">Prénom</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="firstname" required>
+                  <label for="inputEmail" class="col-sm-3 col-form-label">Prénom</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" name="firstname" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="inputPassword" class="col-sm-2 col-form-label">Adresse</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="address" required>
+                  <label for="inputPassword" class="col-sm-3 col-form-label">Adresse</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" name="address" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="inputNumber" class="col-sm-2 col-form-label">N° de tél</label>
-                  <div class="col-sm-10">
-                    <input type="number" class="form-control" id="num" required>
+                  <label for="inputNumber" class="col-sm-3 col-form-label">N° de tél</label>
+                  <div class="col-sm-8">
+                    <input type="number" class="form-control" name="num" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">Agent</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" id="agent" required>
+                  <label for="inputPassword" class="col-sm-3 col-form-label">E-mail</label>
+                  <div class="col-sm-8">
+                    <input type="email" class="form-control" name="email" required>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="inputPassword" class="col-sm-3 col-form-label">Agent</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" name="agent" required>
                     </div>
                 </div>
 
 
                 <div class="row mb-3">
-                  <label for="inputNumber" class="col-sm-2 col-form-label">Visite technique</label>
-                  <div class="col-sm-10">
-                    <input class="form-control" type="file" id="vt" multiple required>
+                  <label for="inputNumber" class="col-sm-3 col-form-label">Visite technique</label>
+                  <div class="col-sm-8">
+                    <input class="form-control" type="file" name="vt" multiple >
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                    <label for="inputNumber" class="col-sm-2 col-form-label">Apporteur d'affaire</label>
-                    <div class="col-sm-10">
-                      <input class="form-control" type="file" id="AdA" multiple required>
+                    <label for="inputNumber" class="col-sm-3 col-form-label">Apporteur d'affaire</label>
+                    <div class="col-sm-8">
+                      <input class="form-control" type="file" name="AdA" multiple >
                     </div>
                 </div>
 
                 <div class="row mb-3">
-                <label for="inputNumber" class="col-sm-2 col-form-label">Commercial</label>
-                <div class="col-sm-10">
-                    <input class="form-control" type="file" id="comm" multiple required>
+                <label for="inputNumber" class="col-sm-3 col-form-label">Commercial</label>
+                <div class="col-sm-8">
+                    <input class="form-control" type="file" name="comm" multiple >
                 </div>
                 </div>
 
@@ -308,7 +322,7 @@
 
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label"></label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-8">
                     <button type="submit" class="btn btn-primary">Submit Form</button>
                   </div>
                 </div>

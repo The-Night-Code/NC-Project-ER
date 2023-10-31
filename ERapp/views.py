@@ -12,7 +12,7 @@ from django.views.generic.edit import CreateView
 
 from django.db.models import Max
 from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1,kizeo_model_Pieces
-from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal,Activities_audit
+from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal,Activities_audit,file_table_AdA,file_table_comm
 from django.template.loader import render_to_string
 
 from django.core.mail import send_mail
@@ -228,7 +228,7 @@ def generate_random_string(length):
 
 
 @login_required
-def add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table):
+def add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table):
     l1=f"table_{column_name_type}_{button_edit_data_on_table}"
     file_table = ModelByColumn(column_name_type)
     for file in request.FILES.getlist(l1):
@@ -239,7 +239,20 @@ def add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table
             format_file="word"
         if format_file in ['xls','xlsm']:
             format_file="excel" 
+            
+        
+        
         if not file_table.objects.filter(file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name):
+            Activities_audit.objects.create(
+                    Activity_id=generate_random_string(10),
+                    Activity_user = f"{request.user.last_name} {request.user.first_name}",
+                    Activity_user_email = request.user.email,
+                    Activity_table=Activity_table,
+                    Activity_project_id = button_edit_data_on_table,
+                    Activity_before =f"le fichier {file.name}" ,
+                    Activity_after = column_name_type ,
+                    Activity_add=True
+                )
             file_table.objects.create(
                     file_id = button_edit_data_on_table,
                     file_name = file.name,
@@ -250,62 +263,126 @@ def add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table
 @login_required
 def table_view(request,redirect_page):
     #Activity_id,Activity_user,Activity_table,Activity_in,Activity_before,Activity_after
-    
+    user_=request.user
     if request.method == 'POST':
         myID1=request.POST.get("myid1")
         column1=request.POST.get("col_type1")
-        
+        Activity_table=''
         button_edit_data_on_table=request.POST.get("button_edit_data_on_table")
         if button_edit_data_on_table:
 
             try:
-                get_col_by_id = TableData001.objects.get(cell_id=str(button_edit_data_on_table))
-                if get_col_by_id.ai:
-                    get_col_by_id.agent =  request.POST.get(f"table_agent_{button_edit_data_on_table}")
-                    get_col_by_id.save(update_fields=['agent'])
-                if get_col_by_id.be:
-                    get_col_by_id.bureau_d_etude = request.POST.get(f"table_be_{button_edit_data_on_table}")
-                    get_col_by_id.save(update_fields=['bureau_d_etude'])                                  
-                                                      
-                get_col_by_id.firstname = request.POST.get(f"table_firstname_{button_edit_data_on_table}") 
-                get_col_by_id.lastname = request.POST.get(f"table_lastname_{button_edit_data_on_table}")
-                get_col_by_id.address = request.POST.get(f"table_address_{button_edit_data_on_table}")
-                get_col_by_id.num = request.POST.get(f"table_num_{button_edit_data_on_table}")
-                get_col_by_id.etat =  request.POST.get(f"table_etat_{button_edit_data_on_table}")
-                get_col_by_id.tp = request.POST.get(f"table_tp_{button_edit_data_on_table}")
-                get_col_by_id.cofrac = request.POST.get(f"table_cofrac_{button_edit_data_on_table}")
+                obj_by_id = get_object_or_404(TableData001,cell_id=str(button_edit_data_on_table))  # TableData001.objects.get(cell_id=str(button_edit_data_on_table))
+
+                table_index=[   {'column_name':'firstname','name2':'Prénom'},
+                                {'column_name':'lastname', 'name2':'Nom'},
+                                {'column_name':'address',  'name2':'Adresse'},
+                                {'column_name':'num',      'name2':'N° de tél'},
+                                {'column_name':'etat',     'name2':'État'},
+                                {'column_name':'tp',       'name2':'Travaux à préconiser'},
+                                {'column_name':'cofrac',   'name2':'Cofrac'},
+                                {'column_name':'auditeur', 'name2':'Auditeur'},
+                                {'column_name':'paiement', 'name2':'Paiement'}]
                 
-                get_col_by_id.auditeur = request.POST.get(f"table_auditeur_{button_edit_data_on_table}")
-                paiement= request.POST.get(f"table_paiement_{button_edit_data_on_table}")
                 
-                if not paiement :
-                    paiement= False
-                get_col_by_id.paiement = paiement
-                get_col_by_id.save(update_fields=['firstname', 'lastname','address','num','etat','tp','cofrac','auditeur','paiement'])
-        
+                if obj_by_id.be:
+                    Activity_table="Bureau d'étude"
+                elif obj_by_id.ai:
+                    Activity_table="Agent immobilier"
+                
+                for l in table_index :
+                    name = l['column_name']
+                    name2 = l['name2']
+
+                    
+                    
+                    if name == 'paiement':
+                        #Activity_before = str()
+                        Activity_after = str(request.POST.get(f"table_{name}_{button_edit_data_on_table}"))
+                        Activity_before_=""
+                        Activity_after_=""
+                        Activity_after_="impayé"
+                        AF_af = False
+                        
+                        if Activity_after == "True":
+                            Activity_after_="payé"
+                            AF_af = True
+                        else: 
+                            if not Activity_after == "True":
+                                Activity_after_="impayé"
+                                AF_af = False
+                            
+                        if getattr(obj_by_id, name) is True:
+                            Activity_before_="payé"
+                        else  :
+                            Activity_before_="impayé"
+                
+                        if Activity_before_ != Activity_after_:
+                            Activities_audit.objects.create(Activity_id=generate_random_string(10),
+                                                            Activity_user=f"{user_.last_name} {user_.first_name}",
+                                                            Activity_user_email=user_.email,
+                                                            Activity_table=Activity_table,
+                                                            Activity_project_id=str(button_edit_data_on_table),
+                                                            Activity_name=name2,
+                                                            Activity_before=Activity_before_,
+                                                            Activity_after=Activity_after_,
+                                                            Activity_edit=True)
+                        setattr(obj_by_id, 'paiement', AF_af)
+                        obj_by_id.save()
+                    else:
+                        Activity_before = getattr(obj_by_id, name)
+                        Activity_after = request.POST.get(f"table_{name}_{button_edit_data_on_table}")
+                        if Activity_before != Activity_after:
+                            Activities_audit.objects.create(Activity_id=generate_random_string(10),
+                                                            Activity_user=f"{user_.last_name} {user_.first_name}",
+                                                            Activity_user_email=user_.email,
+                                                            Activity_table=Activity_table,
+                                                            Activity_project_id=str(button_edit_data_on_table),
+                                                            Activity_name=name2,
+                                                            Activity_before=Activity_before,
+                                                            Activity_after=Activity_after,
+                                                            Activity_edit=True)
+
+                            
+                        setattr(obj_by_id, name, Activity_after)
+                        obj_by_id.save()
+                    
+                    
+
+                
+                if request.POST.get(f"table_etat_{button_edit_data_on_table}") == "Envoye" and not obj_by_id.Envoye_time_checker :
+                    obj_by_id.Envoye_time_checker = True
+                    obj_by_id.Envoye_time = datetime.now()
+                    obj_by_id.save(update_fields=['Envoye_time_checker','Envoye_time'])
+                
+                if request.POST.get(f"table_etat_{button_edit_data_on_table}") =="Fini" and not obj_by_id.fini_time_checker :
+                    obj_by_id.fini_time_checker = True
+                    obj_by_id.fini_time = datetime.now()
+                    obj_by_id.save(update_fields=['fini_time_checker','fini_time'])
+                    
+                    
             except TableData001.DoesNotExist:
                 pass
-            get_col_by_id = TableData001.objects.get(cell_id=str(button_edit_data_on_table))
             
 
             column_name_type="VT"   
             if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table)
-                Activities_audit.objects.create()
+                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
+                
                 
 
             column_name_type="auditV1"
             if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table)
+                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
             column_name_type="auditV2"
             if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table)
+                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
             column_name_type="auditV3"
             if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table)
+                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
             column_name_type="auditFinal"
             if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table)
+                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
 
         return redirect(redirect_page)
 
@@ -313,7 +390,7 @@ def table_view(request,redirect_page):
 @login_required
 def Auditeur_Accueil(request):
     data = TableData001.objects.all()
-
+    activities_audit = Activities_audit.objects.order_by("-Activity_date")[:6]
     today = date.today()
     first_day_of_year = date(today.year, 1, 1)
     first_day_of_month = date(today.year, today.month, 1)
@@ -322,20 +399,28 @@ def Auditeur_Accueil(request):
     client_count_added_month = TableData001.objects.filter(creation_time__range=(first_day_of_month, datetime.now())).count()
     client_count_added_year= TableData001.objects.filter(creation_time__range=(first_day_of_year, datetime.now())).count()
 
+    client_count_envoye_today = TableData001.objects.filter(Envoye_time__date=today).count()
+    client_count_envoye_month = TableData001.objects.filter(Envoye_time__range=(first_day_of_month, datetime.now())).count()
+    client_count_envoye_year= TableData001.objects.filter(Envoye_time__range=(first_day_of_year, datetime.now())).count()
+    
     client_count_fini_today = TableData001.objects.filter(fini_time__date=today).count()
     client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month, datetime.now())).count()
     client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now())).count()
 
 
-
     return render(request, "html/Auditeur_main_page.html",{'data':data,
-                                                           
-                                                           'client_count_added_today':client_count_added_today,
-                                                           'client_count_added_month':client_count_added_month,
-                                                           'client_count_added_year':client_count_added_year,
-                                                           'client_count_fini_today':client_count_fini_today,
-                                                           'client_count_fini_month':client_count_fini_month,
-                                                           'client_count_fini_year':client_count_fini_year})
+                                                        'activities_audit':activities_audit,
+                                                        'client_count_added_today':client_count_added_today,
+                                                        'client_count_added_month':client_count_added_month,
+                                                        'client_count_added_year':client_count_added_year,
+                                                        
+                                                        'client_count_envoye_today':client_count_envoye_today,
+                                                        'client_count_envoye_month':client_count_envoye_month,
+                                                        'client_count_envoye_year':client_count_envoye_year,
+                                                        
+                                                        'client_count_fini_today':client_count_fini_today,
+                                                        'client_count_fini_month':client_count_fini_month,
+                                                        'client_count_fini_year':client_count_fini_year})
 
 @login_required
 def audit_pages(request,redirect_page,html_page):
@@ -355,13 +440,7 @@ def audit_pages(request,redirect_page,html_page):
     datafiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False)
     message_box_01 = message_box_1.objects.all()
     
-    table_index=[{1:""},{2:""},{3:""},{4:""},{5:""},{6:""},{7:""},{8:""},{9:""}]
-    table_index={1:"",2:"",3:"",4:"",5:"",6:"",7:"",8:"",9:""}
-    table_index=[1,2,3,4,5,6,7,8,9]
-    table_state_ = ["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]
-    table_index={"index":[1,2,3,4,5,6,7,8,9],
-                 "state":["A realiser","En cours","A modifier","Modification Faite","Reclamation","Reclamation Faite","Envoye","Annule","Fini"]}
-    
+
     table_index=[{'index':1,'state':"A realiser"},
                  {'index':2,'state':"En cours"},
                  {'index':3,'state':"A modifier"},
@@ -484,6 +563,13 @@ def ModelByColumn(model_by_column):
         return file_table_auditV3
     if model_by_column == "auditFinal":
         return file_table_auditFinal
+    
+    if model_by_column == "AdA":
+        return file_table_AdA
+    
+    if model_by_column == "comm":
+        return file_table_comm
+    
 @login_required   
 def remove_file_from_MODELS(request):
     
@@ -495,10 +581,19 @@ def remove_file_from_MODELS(request):
     model_by_column = request.GET.get('param2')
     redirect_to_next_page = request.GET.get('param3')
     file_table=ModelByColumn(model_by_column)
+    
     try:
         f_table_audit_v1 =file_table.objects.get(file_id=str(file_id),file_index=str(index))
+        Activity_table_object = get_object_or_404(TableData001,cell_id=str(file_id))
+            
+        if getattr(Activity_table_object,"be"):
+                    Activity_table="Bureau d'étude"
+        elif getattr(Activity_table_object,"ai"):
+                    Activity_table="Agent immobilier"
+                    
         if f_table_audit_v1.file_removed == True:
             f_table_audit_v1.delete()
+            
             
         else:
             
@@ -509,6 +604,16 @@ def remove_file_from_MODELS(request):
             f_table_audit_v1.file_removed_user_LN = user_.last_name
             f_table_audit_v1.file_removed_date=datetime.now()
             f_table_audit_v1.save(update_fields=['file_removed', 'file_removed_user_email', 'file_removed_user_FN', 'file_removed_user_LN','file_removed_date' ])
+            if model_by_column == "vt":
+                model_by_column="Visite technique"
+            Activities_audit.objects.create(Activity_id=generate_random_string(10),
+                                                        Activity_user=f"{user_.last_name} {user_.first_name}",
+                                                        Activity_user_email=user_.email,
+                                                        Activity_table=Activity_table,
+                                                        Activity_project_id=str(file_id),
+                                                        Activity_before=getattr(f_table_audit_v1,"file_name"),
+                                                        Activity_after = model_by_column ,
+                                                        Activity_delete=True)
     except file_table.DoesNotExist:
         pass
     
@@ -581,10 +686,67 @@ def agent_immo(request):
                                                   'column_names': column_names,
                                                   'datafiles_VT': datafiles_VT ,
                                                   'datafiles_AuditFinal':datafiles_AuditFinal})
+
+@login_required
+def add_files_to_project_1(request,project_id,file_input_name,model_name):
+    file_table = ModelByColumn(model_name)
+    for file in request.FILES.getlist(file_input_name):
+        format_file=file.name.split(".")[1]
+        if format_file in ['jpg','png','jpeg','heic']:
+            format_file="image"
+        if format_file in ['doc','docx']:
+            format_file="word"
+        if format_file in ['xls','xlsm']:
+            format_file="excel" 
+        if not file_table.objects.filter(file_id=project_id, file_format=format_file,file_name=file.name):
+            file_table.objects.create(
+                    file_id = project_id,
+                    file_name = file.name,
+                    file_save = file,
+                    file_format =format_file
+                )
+
 @login_required
 def agent_immo_f(request):
-    
-    return render(request, 'html/agentimmof.html', )
+    acc_state=False
+    user_ = request.user
+    if "VT" in user_.role:
+        
+        if request.method == 'POST':
+            
+            project_id=generate_random_string(10)
+            while TableData001.objects.filter(cell_id__contains = project_id):
+                project_id = generate_random_string(10)
+                
+            #myButton = request.POST.get("")
+            firstname = request.POST.get("firstname")
+            lastname = request.POST.get("lastname")
+            address = request.POST.get("address")
+            num = request.POST.get("num")
+            agent = request.POST.get("agent")
+            email = request.POST.get("email")
+            TableData001.objects.create(cell_id=project_id,firstname=firstname,lastname=lastname,address=address,num=num,email=email,agent=agent,ai=True)
+            acc_state=True
+            column_name_type="VT"   
+            if request.FILES.getlist("vt"):
+                add_files_to_project_1(request,project_id,"vt",column_name_type)
+                
+            column_name_type="AdA"   
+            if request.FILES.getlist("AdA"):
+                add_files_to_project_1(request,project_id,"AdA",column_name_type)
+            column_name_type="comm"   
+            
+            if request.FILES.getlist("comm"):
+                add_files_to_project_1(request,project_id,"comm",column_name_type)
+                
+            
+            
+                
+                
+                        
+                        
+                        
+    return render(request, 'html/agentimmof.html',{"acc_state":acc_state} )
 
 
 

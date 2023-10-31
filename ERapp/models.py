@@ -91,8 +91,8 @@ class TableData001(models.Model):
     num = models.CharField(max_length=255,blank=True)
     precaite = models.CharField(max_length=255,blank=True)
     vt = models.FileField(upload_to='uploads/files',blank=True)
-    etat_vt = models.CharField(max_length=255,blank=True)
-    etat = models.CharField(max_length=255,blank=True)
+    etat_vt = models.CharField(default="En cours",max_length=255,blank=True)
+    etat = models.CharField(default="A realiser",max_length=255,blank=True)
     tp = models.CharField(max_length=255,blank=True)
     auditV1 = models.FileField(upload_to='uploads/files/%Y/%m/%d/',blank=True)
     auditV2 = models.FileField(upload_to='uploads/files/%Y/%m/%d/',blank=True)
@@ -106,7 +106,12 @@ class TableData001(models.Model):
     ai = models.BooleanField(default=False)
     
     creation_time = models.DateTimeField(auto_now_add=True, blank = True)
-    fini_time = models.DateTimeField( blank = True,null=True)
+    
+    Envoye_time = models.DateTimeField(null=True, blank=True, default=None)
+    Envoye_time_checker = models.BooleanField(default=False)
+    fini_time = models.DateTimeField(null=True, blank=True, default=None)
+    fini_time_checker = models.BooleanField(default=False)
+    
     def __str__(self):
         return f'{self.cell_id} {self.firstname} {self.lastname}'
     
@@ -183,7 +188,35 @@ class file_table_vt(models.Model):
     
     def __str__(self):
         return f'{self.file_id} {self.file_index} {self.file_name} {self.file_removed}'
+class file_table_AdA(models.Model):
+    file_removed_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    file_removed_user_email = models.CharField(max_length=255,blank=True)
+    file_removed_user_FN = models.CharField(max_length=255,blank=True)
+    file_removed_user_LN = models.CharField(max_length=255,blank=True)
+    file_removed = models.BooleanField(default=False) 
+    file_index = models.AutoField(primary_key=True)
+    file_id = models.CharField(max_length=255,blank=True)
+    file_name = models.CharField(max_length=255,blank=True)
+    file_save = models.FileField(upload_to=f'uploads/data/vt',blank=True ,unique=True)
+    file_format = models.CharField(max_length=255,blank=True)
     
+    def __str__(self):
+        return f'{self.file_id} {self.file_index} {self.file_name} {self.file_removed}'
+class file_table_comm(models.Model):
+    file_removed_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    file_removed_user_email = models.CharField(max_length=255,blank=True)
+    file_removed_user_FN = models.CharField(max_length=255,blank=True)
+    file_removed_user_LN = models.CharField(max_length=255,blank=True)
+    file_removed = models.BooleanField(default=False) 
+    file_index = models.AutoField(primary_key=True)
+    file_id = models.CharField(max_length=255,blank=True)
+    file_name = models.CharField(max_length=255,blank=True)
+    file_save = models.FileField(upload_to=f'uploads/data/vt',blank=True ,unique=True)
+    file_format = models.CharField(max_length=255,blank=True)
+    
+    def __str__(self):
+        return f'{self.file_id} {self.file_index} {self.file_name} {self.file_removed}'
+        
     
 class message_box_1(models.Model):
     message_id= models.CharField(max_length=255,blank=True)
@@ -444,8 +477,18 @@ class kizeo_model_Pieces(models.Model):
 class Activities_audit(models.Model):
     Activity_id = models.CharField(max_length=255,blank=True)
     Activity_user = models.CharField(max_length=255,blank=True)
+    Activity_user_email = models.CharField(max_length=255,blank=True)
     Activity_table = models.CharField(max_length=255,blank=True)
     Activity_date = models.DateTimeField(default=timezone.now)
-    Activity_in = models.CharField(max_length=255,blank=True)
+    Activity_project_id = models.CharField(max_length=255,blank=True)
+    
+    Activity_name = models.CharField(max_length=255,blank=True)
     Activity_before = models.CharField(max_length=255,blank=True)
     Activity_after = models.CharField(max_length=255,blank=True)
+    
+    Activity_add = models.BooleanField(default=False) 
+    Activity_edit = models.BooleanField(default=False) 
+    Activity_delete = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f'id:{self.Activity_id} || user:{self.Activity_user} || table:{self.Activity_table} || pID:{self.Activity_project_id} || before:{self.Activity_before} || after:{self.Activity_after}'

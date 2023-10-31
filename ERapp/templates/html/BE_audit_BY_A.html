@@ -221,6 +221,16 @@
 
   <!-- main Page ========================================================================================================================================     -->
   <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Bureau d'étude <i class="h5">(Par auditeur)</i></h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
+          <li class="breadcrumb-item active">Bureau d'étude</li>
+        </ol>
+      </nav>
+    </div>
+
     <div style="display:;">
     <form id="fileUploadForm" enctype="multipart/form-data" method="POST" >
       {% csrf_token %}
@@ -625,6 +635,7 @@
                                 <td class="td_input_cell"><!--auditeur-->
 
                                   <select class="form-select" name="table_auditeur_{{ item.cell_id }}" id="auditeur" style="height:55px!important;width:250px!important;">
+                                    <option value="" ></option>
                                     {% for audi in auditeur %}
                                       <option value="{{ audi.email }}" {% if audi.email == item.auditeur %} selected {% endif %} style="background-image:url(male.png);"
                                         {% if audi.profile_pic %}  
