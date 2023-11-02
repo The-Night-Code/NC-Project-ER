@@ -220,7 +220,18 @@
           </ol>
         </nav>
     </div><!-- End Page Title -->
-
+    </br>
+      <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+        <li class="nav-item flex-fill" role="presentation">
+          <button class="nav-link w-100 tablinks " id="TAB-1" type="button" onclick="open_form(event, 'tab_id_1')">1</button>
+        </li>
+        <li class="nav-item flex-fill" role="presentation">
+          <button class="nav-link w-100 tablinks" id="TAB-2" type="button"  onclick="open_form(event, 'tab_id_2')">2</button>
+        </li>
+        
+      </ul>
+    </div>
+    </br>
     {% if acc_state %}
     <script>
       
@@ -229,85 +240,88 @@
     </script>
     {% endif %}
 
-    
-    <section class="section">
-      <form  enctype="multipart/form-data" method="POST" >
-        {% csrf_token %}
-      <div class="row" style="margin-left:15%;margin-right:15%;">
-        
-
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Créer un compte</h5>
-
-              <!-- General Form Elements -->
-              <form>
-                <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Nom</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" name="lastname" required>
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="inputEmail" class="col-sm-2 col-form-label">Prénom</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" name="firstname" required>
-                  </div>
-                </div>
-
-                <!--<div class="row mb-3">
-                  <label for="inputPassword" class="col-sm-2 col-form-label">Adresse</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" name="address" required>
-                  </div>
-                </div>-->
-                
-                <div class="row mb-3">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">E-mail</label>
-                    <div class="col-sm-10">
-                      <input type="email" class="form-control" name="email" required>
-                    </div>
-                  </div>
-
-                <div class="row mb-3">
-                  <label for="inputNumber" class="col-sm-2 col-form-label">N° de tél</label>
-                  <div class="col-sm-10">
-                    <input type="number" class="form-control" name="num" required>
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">Bureau d'étude</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" name="Bureau_etude" >
-                    </div>
-                </div>
-
-
-                
-
-                
-
-                <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label"></label>
-                  <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary" name="create_acc_button" value="submit">créer un compte</button>
-                  </div>
-                </div>
-
-              </form><!-- End General Form Elements -->
-
-            </div>
+    <div class="tab_content_onclick" id="tab_id_1">
+      <section class="section">
+        <form  enctype="multipart/form-data" method="POST" >
+          {% csrf_token %}
+        <div class="row" style="margin-left:15%;margin-right:15%;">
           
 
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Créer un compte</h5>
+
+                <!-- General Form Elements -->
+                <form>
+                  <div class="row mb-3">
+                    <label for="inputText" class="col-sm-2 col-form-label">Nom</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="lastname" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Prénom</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="firstname" required>
+                    </div>
+                  </div>
+
+                  <!--<div class="row mb-3">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Adresse</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="address" required>
+                    </div>
+                  </div>-->
+                  
+                  <div class="row mb-3">
+                      <label for="inputPassword" class="col-sm-2 col-form-label">E-mail</label>
+                      <div class="col-sm-10">
+                        <input type="email" class="form-control" name="email" required>
+                      </div>
+                    </div>
+
+                  <div class="row mb-3">
+                    <label for="inputNumber" class="col-sm-2 col-form-label">N° de tél</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" name="num" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                      <label for="inputPassword" class="col-sm-2 col-form-label">Bureau d'étude</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="Bureau_etude" >
+                      </div>
+                  </div>
+
+
+                  
+
+                  
+
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                      <button type="submit" class="btn btn-primary" name="create_acc_button" value="submit">créer un compte</button>
+                    </div>
+                  </div>
+
+                </form><!-- End General Form Elements -->
+
+              </div>
+            
+
+          </div>
+
+          
         </div>
+        </form>
+      </section>
+    </div>
 
-        
-      </div>
-    </form>
-    </section>
-
+    <div class="tab_content_onclick" id="tab_id_2">
+    </div>
   </main>
 
   <!-- ======= Footer ======= -->
@@ -338,6 +352,7 @@
   <script type="text/javascript" src="{% static 'js/main2.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main3.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main4.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main5.js'%}"></script>
 </body>
 
 </html>

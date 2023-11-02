@@ -209,7 +209,15 @@
   <!-- End Sidebar ==========================================================================================================================-->
 
   <main id="main" class="main">
-    
+    <div class="pagetitle">
+      <h1>Créer un compte pour l'agent immobilier</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
+          <li class="breadcrumb-item active">Forms</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
     <div class="tab_button">
 
       </br>
@@ -225,15 +233,7 @@
     </div>
     </br>
 
-    <div class="pagetitle">
-      <h1>Créer un compte pour l'agent immobilier</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
-          <li class="breadcrumb-item active">Forms</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+    
     {% if acc_state %}
     <script>
       
@@ -241,17 +241,9 @@
       
     </script>
     {% endif %}
-
+    
     <div class="tab_content_onclick" id="tab_id_1">
-      <div class="pagetitle">
-        <h1>Créer un compte pour l'agent immobilier</h1>
-        <nav>
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
-            <li class="breadcrumb-item active">Forms</li>
-          </ol>
-        </nav>
-      </div><!-- End Page Title -->
+      
       <section class="section"  >
         <form  enctype="multipart/form-data" method="POST" >
           {% csrf_token %}
@@ -330,7 +322,7 @@
     </div>
 
     <div class="tab_content_onclick" id="tab_id_2">
-      test
+      
     </div>
   </main>
 
@@ -362,6 +354,7 @@
   <script type="text/javascript" src="{% static 'js/main2.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main3.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main4.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main5.js'%}"></script>
 </body>
 
 </html>

@@ -69,7 +69,9 @@ class USER(AbstractBaseUser, PermissionsMixin):
 
 class AI_or_AGENT(models.Model):
     AI_or_AGENT_id = models.CharField(max_length=255,blank=True)
-    AI_or_AGENT_name = models.CharField(max_length=255,blank=True)
+    comp_name = models.CharField(max_length=255,blank=True)
+    ai = models.BooleanField(default=False)
+    be = models.BooleanField(default=False)
 
 
 
@@ -492,3 +494,7 @@ class Activities_audit(models.Model):
     
     def __str__(self):
         return f'id:{self.Activity_id} || user:{self.Activity_user} || table:{self.Activity_table} || pID:{self.Activity_project_id} || before:{self.Activity_before} || after:{self.Activity_after}'
+    
+    
+    
+    
