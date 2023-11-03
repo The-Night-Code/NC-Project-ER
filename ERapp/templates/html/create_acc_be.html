@@ -220,13 +220,14 @@
           </ol>
         </nav>
     </div><!-- End Page Title -->
-    </br>
+    <div class="tab_button">
+      </br>
       <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
         <li class="nav-item flex-fill" role="presentation">
-          <button class="nav-link w-100 tablinks " id="TAB-1" type="button" onclick="open_form(event, 'tab_id_1')">1</button>
+          <button class="nav-link w-100 tablinks " id="TAB-1" type="button" onclick="open_form(event, 'tab_id_1')">Ajouter un compte</button>
         </li>
         <li class="nav-item flex-fill" role="presentation">
-          <button class="nav-link w-100 tablinks" id="TAB-2" type="button"  onclick="open_form(event, 'tab_id_2')">2</button>
+          <button class="nav-link w-100 tablinks" id="TAB-2" type="button"  onclick="open_form(event, 'tab_id_2')">Ajouter un bureau d'études</button>
         </li>
         
       </ul>
@@ -288,13 +289,22 @@
                     </div>
                   </div>
 
-                  <div class="row mb-3">
-                      <label for="inputPassword" class="col-sm-2 col-form-label">Bureau d'étude</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" name="Bureau_etude" >
-                      </div>
-                  </div>
+                  
 
+                  <div class="row mb-3">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Bureau d'étude</label>
+                    <div class="col-sm-6">
+                      <select class="form-select" aria-label="Default select example" name="Bureau_etude">
+                        <option value=""></option>
+                        {% for comp in comp %}
+                          {% if comp.ai %}
+                            <option value="{{comp.comp_name}}">{{comp.comp_name}}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  </br>
 
                   
 
@@ -321,6 +331,71 @@
     </div>
 
     <div class="tab_content_onclick" id="tab_id_2">
+      
+      <section class="section"  >
+        <form  enctype="multipart/form-data" method="POST" >
+          {% csrf_token %}
+        <div class="row" style="margin-left:15%;margin-right:15%;">
+          
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"></h5>
+
+                <!-- General Form Elements -->
+                <form>
+                  <div class="row mb-3">
+                    <label for="inputText" class="col-sm-2 col-form-label">Nom</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="nom" required>
+                    </div>
+                  </div>
+
+
+                  
+
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                      <button type="submit" class="btn btn-primary" name="add_com" value="submit">Ajouter un agent immobilier</button>
+                    </div>
+                  </div>
+
+                </form><!-- End General Form Elements -->
+
+              </div>
+            
+
+          </div>
+
+          
+        </div>
+        </form>
+      </section>
+
+
+      <div class="row justify-content-center " style="margin-left:15%;margin-right:15%;">
+            <!-- Active Table -->
+        <table class="table table-bordered w-auto text-lg-center " >
+          <thead class="table-dark ">
+            <tr>
+              <th scope="col" class="text-lg-center">Agent immobilier</th>
+
+            </tr>
+          </thead>
+          <tbody class="table-light ">
+            {% for comp in comp %}
+              {% if comp.be %}
+                <tr>
+                  <th scope="row">{{comp.comp_name}}</th>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+    <!-- End Tables without borders -->
+      </div>
+
     </div>
   </main>
 

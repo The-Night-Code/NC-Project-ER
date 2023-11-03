@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
 
 from django.db.models import Max
-from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1,kizeo_model_Pieces
+from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1,kizeo_model_Pieces,AI_or_AGENT
 from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal,Activities_audit,file_table_AdA,file_table_comm
 from django.template.loader import render_to_string
 
@@ -836,7 +836,25 @@ def VT_Page_edit_state(request):
 @login_required
 def create_acc_ai(request):
     acc_state = False
+    user_=request.user
     if request.method == 'POST': 
+        if request.POST.get('add_com') == "submit":
+            nom = request.POST.get('nom')
+            AI_or_AGENT_id = generate_random_string(10)
+            while AI_or_AGENT.objects.filter(AI_or_AGENT_id = AI_or_AGENT_id):
+                AI_or_AGENT_id = generate_random_string(10)
+            AI_or_AGENT.objects.create(AI_or_AGENT_id=AI_or_AGENT_id,
+                                       comp_name=nom,
+                                       ai=True)
+            Activities_audit.objects.create(
+                    Activity_id=generate_random_string(10),
+                    Activity_user = f"{user_.last_name} {user_.first_name}",
+                    Activity_user_email = user_.email,
+                    Activity_before = f"un agent immobilier ( {nom} )",
+                    Activity_add_2=True
+                )
+            return redirect("/create_account_for_ai/")
+            
         if request.POST.get('create_acc_button') == "submit":
             
             firstname = request.POST.get('firstname')
@@ -880,15 +898,33 @@ def create_acc_ai(request):
                 
                 
                            
-        
-
+    comp = AI_or_AGENT.objects.all()
     
-    return render(request, 'html/create_acc_ai.html',{'acc_state':acc_state})
+    return render(request, 'html/create_acc_ai.html',{'acc_state':acc_state,
+                                                      'comp':comp})
     
 @login_required
 def create_acc_be(request):
     acc_state = False
+    user_=request.user
     if request.method == 'POST': 
+        if request.POST.get('add_com') == "submit":
+            nom = request.POST.get('nom')
+            AI_or_AGENT_id = generate_random_string(10)
+            while AI_or_AGENT.objects.filter(AI_or_AGENT_id = AI_or_AGENT_id):
+                AI_or_AGENT_id = generate_random_string(10)
+            AI_or_AGENT.objects.create(AI_or_AGENT_id=AI_or_AGENT_id,
+                                       comp_name=nom,
+                                       be=True)
+            Activities_audit.objects.create(
+                    Activity_id=generate_random_string(10),
+                    Activity_user = f"{user_.last_name} {user_.first_name}",
+                    Activity_user_email = user_.email,
+                    Activity_before = f"un bureau d'études ( {nom} )",
+                    Activity_add_2=True
+                )
+            return redirect("/create_account_for_be/")
+        
         if request.POST.get('create_acc_button') == "submit":
             
             firstname = request.POST.get('firstname')
@@ -938,8 +974,9 @@ def create_acc_be(request):
                            
         
 
-    
-    return render(request, 'html/create_acc_be.html',{'acc_state':acc_state})
+    comp = AI_or_AGENT.objects.all()
+    return render(request, 'html/create_acc_be.html',{'acc_state':acc_state,
+                                                      'comp':comp})
     
     
        

@@ -621,16 +621,18 @@
                                 <td class="td_input_cell"><!-- Bureau d'étude -->
                                   <input class="input_table_data" type="text" name="table_cofrac_{{ item.cell_id }}" value="{{item.cofrac}}">
                                   
+                                  
                                 </td>
-  
+
                                   
                                 <td class="td_input_cell td-form-check-checkbox" > <!--paiement-->
                                   <input class="form-check-input form-check-checkbox" type="checkbox" value="True" name="table_paiement_{{ item.cell_id }}" id="table{{k.index}}_paiement{{ item.cell_id }}" {% if  item.paiement %}  checked  {% endif %}>
                                 </td>
   
                                 <td class="td_input_cell"> <!-- Bureau d'Etude -->
-                                  <input class="input_table_data" type="text" name="table_be_{{ item.cell_id }}"  value="{{item.bureau_d_etude}}">
+                                  <p>{{item.bureau_d_etude}}</p>
                                 </td>
+
 
                                 <td class="td_input_cell"><!--auditeur-->
 

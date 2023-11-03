@@ -489,6 +489,7 @@ class Activities_audit(models.Model):
     Activity_after = models.CharField(max_length=255,blank=True)
     
     Activity_add = models.BooleanField(default=False) 
+    Activity_add_2 = models.BooleanField(default=False) 
     Activity_edit = models.BooleanField(default=False) 
     Activity_delete = models.BooleanField(default=False)
     
