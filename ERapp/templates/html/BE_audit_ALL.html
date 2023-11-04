@@ -9,7 +9,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <link rel="shortcut icon" type="image/png" href="{% static 'image/icon.png' %}">
-  <title></title>
+  <title>Bureau d'étude</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -282,6 +282,7 @@
                             <th>Nom</th> 
                             <th data-sortable="true" data-column="adresse">Adresse </th> 
                             <th>N° de tél</th> 
+                            <th>E-mail</th>
                             <th colspan=2>Visite technique</th> 
                             <th >État</th> 
                             <th>Travaux à préconiser</th> <!--Travaux à preconise-->
@@ -311,7 +312,8 @@
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="table_lastname_{{ item.cell_id }}" id="table{{k.index}}_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="table_address_{{ item.cell_id }}" id="table{{k.index}}_address{{ item.cell_id }}" value="{{ item.address }}"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="table_num_{{ item.cell_id }}" id="table{{k.index}}_num{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
-                                
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table_email_{{ item.cell_id }}" id="table{{k.index}}_email{{ item.cell_id }}" value="{{ item.email }}"  ></td>  
+
                                 <td class="td_input_cell" > <!-- VT-->
                                   <nav class="header-nav ms-auto" >
                                     <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">

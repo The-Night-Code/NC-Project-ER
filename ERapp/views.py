@@ -125,7 +125,6 @@ def SignupU(request):
     
     
     
-    
 def LogoutU(request):
     logout(request)
     return redirect("main_page")
@@ -209,15 +208,9 @@ def showimage(request):
     return render(request,'html/showimage.html',{'profile_image': profile_img})
 
 
-def img_upload_image(request):
-    
-    return redirect('/profileU/')
-    
-    
-    
-    
 
-    
+
+
 
 def generate_random_string(length):
     characters = string.ascii_letters + string.digits  # You can customize this for your needs
@@ -487,7 +480,6 @@ def AI_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,c
     list=audit_pages(request,redirect_page,html_page)
     return render(request, f"html/{html_page}", list)
 
-
 @login_required 
 def AI_audit_BY_A(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
     redirect_page="/AI_audit_BY_A/"
@@ -496,7 +488,6 @@ def AI_audit_BY_A(request): # add row (,firstname,lastname,addressm,num,etat,tp,
     
     list=audit_pages(request,redirect_page,html_page)
     return render(request, f"html/{html_page}", list)
-
 
 
 @login_required 
@@ -671,7 +662,7 @@ def add_files_to_MODELS(request):
 @login_required
 def agent_immo(request):
 
-    data = TableData001.objects.all()
+    data = TableData001.objects.filter(ai=True)
     
     col_count = data.count()
     # Get unique column names from the TableData model
@@ -715,7 +706,7 @@ def agent_immo_f(request):
         if request.method == 'POST':
             
             project_id=generate_random_string(10)
-            while TableData001.objects.filter(cell_id__contains = project_id):
+            while TableData001.objects.filter(cell_id__contains = project_id,ai=True):
                 project_id = generate_random_string(10)
                 
             #myButton = request.POST.get("")
@@ -755,7 +746,7 @@ def agent_immo_f(request):
 @login_required
 def BE_Page(request):
 
-    data = TableData001.objects.all()
+    data = TableData001.objects.filter(be=True)
     
     col_count = data.count()
     # Get unique column names from the TableData model
@@ -778,20 +769,26 @@ def BE_Page_f(request):
             cell_id =generate_random_string(10)
             while TableData001.objects.filter(cell_id=cell_id).exists():
                 cell_id =generate_random_string(10)
-                
+            
             firstname = request.POST.get('firstname')
             lastname = request.POST.get('lastname')
             address = request.POST.get('address')
             email = request.POST.get('email')
             num = request.POST.get('num')
             precaite = request.POST.get('precaite')
-            TableData001.objects.create(first_name=firstname,
-                                        last_name=lastname,
+            bureau_d_etude = user_.com_name
+            
+            TableData001.objects.create(cell_id=cell_id,
+                                        firstname=firstname,
+                                        lastname=lastname,
                                         address=address,
                                         email=email,
                                         num=num,
                                         precaite=precaite,
-                                        be=True)
+                                        be=True,
+                                        bureau_d_etude=bureau_d_etude)
+            kizeo_model.objects.create(kizeo_id=cell_id,)
+            
             
             for file in  request.FILES.getlist('vt'):
 

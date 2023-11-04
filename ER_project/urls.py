@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import main_Page,Home, LoginU, LogoutU , ProfileU,forgot_password ,img_upload_image,showimage,VT_Page_edit_state
+from ERapp.views import main_Page,Home, LoginU, LogoutU , ProfileU,forgot_password ,showimage,VT_Page_edit_state
 from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,files_history
 from ERapp.views import add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,send_message
 from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
@@ -32,8 +32,8 @@ be="be"
 
 urlpatterns = [
     
-    path('', LoginU,name="not_logged_in"),
-    path('', LoginU,name="main_page"),
+    path('', LoginU, name="not_logged_in"),
+    path('', LoginU, name="main_page"),
     path('admin/', admin.site.urls),
 
 
@@ -68,7 +68,6 @@ urlpatterns = [
     path('VT/', VT_Page,name="VT"),
     path('VT1/', VT_Page_edit_state, name="VT_Page_edit_state"),
     
-    path('change_profile_pic/',img_upload_image ),
     path('showimage/',showimage ),
     
     
