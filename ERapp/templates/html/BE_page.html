@@ -234,7 +234,7 @@
 
   </div>
     <div class="pagetitle">
-      <h1>les tableaux</h1>
+      <h1></h1>
       
     </div><!-- End Page Title -->
 
@@ -260,7 +260,7 @@
                 </div>-->
 
                 <div class="card-body">
-                  <h5 class="card-title">Title <span>| title</span></h5>
+                  <!--<h5 class="card-title">Title <span>| title</span></h5>-->
 
                   <input class="form-control" type="text" id="filterInput_1" placeholder="Search..." style="width:30%;min-width:100px;">
                   <div class="overflow-auto" style="padding:1px;">
@@ -282,7 +282,7 @@
                           <th>N° de tél</th>
                           <th>E-mail</th> 
                           <th colspan="2">Visite technique</th> 
-                          <th >Précaite</th> 
+                          <th>Précaite</th> 
                           <th>Date de création</th>
                         </thead>
                         <tbody id="myTable_1">
@@ -350,11 +350,6 @@
                                   </td>
 
 
-                                  
-
-
-                                  
-
                                   <td class="td_p_dateTime_cell2"><p>{{ item.precaite}} </p></td>
 
 
@@ -376,46 +371,7 @@
               </div>
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-                <!-- redirect with param -->
-                <script>
-                        
-                  function my_Func_edit_table_1(id) {
-                    
-                    var x0 = document.getElementById("table1_hidden_id"+id).value;
-                    var x1 = document.getElementById("table1_firstname"+id).value;
-                    var x2 = document.getElementById("table1_lastname"+id).value;
-                    var x3 = document.getElementById("table1_address"+id).value;
-                    var x4 = document.getElementById("table1_num"+id).value;
 
-                    var selectElement = document.querySelector('#table1_etat'+id);
-                    var x6 = selectElement.value;
-                    var x7 = document.getElementById("paiement"+id);
-                      //var x7 = document.getElementById("cell_data7edit"+id).value;
-                      //var x8 = document.getElementById("cell_data8edit"+id).value;
-                      //var x9 = document.getElementById("cell_data9edit"+id).value;
-                      //var x10 = document.getElementById("cell_data10edit"+id).value;
-                    
-                      if (x7.checked) {
-                        x7="True";
-                      } else {
-                        x7="False";
-                      }
-                      var url2=//"{ %  u r l 'editFormTable' % }?"+
-                        "param=" + encodeURIComponent(x0) +
-                        "&param0=" + x0 +
-                        "&param1=" + encodeURIComponent(x1) +
-                        "&param2=" + encodeURIComponent(x2)+
-                        "&param3=" + encodeURIComponent(x3)+
-                        "&param4=" + encodeURIComponent(x4)+
-                        "&param6=" + encodeURIComponent(x6)+
-                        "&param7=" + encodeURIComponent(x7);
-
-                        
-                      //window.location.href = url2;
-
-                  }
-                  </script>
-                  <!-- end redirect with param -->
 
                 </div>
               </div>
@@ -441,119 +397,7 @@
 
   {% endif %}
 
-  <script>
-      // table1_remove_file_from_model
-    function remove_file_from_m(id,index,column) {
-        
-      var url2="{% url 'remove_file_from_MODEL' %}?"+
-        "param0=" + encodeURIComponent(id) +
-        "&param1=" + encodeURIComponent(index)+
-        "&param2=" + encodeURIComponent(column); 
-      window.location.href = url2;
-
-      }
-      function table1_remove_file_from_model(id1,index1,column) {
-      remove_file_from_m(id1,index1,column);
-      }
-      function table2_remove_file_from_model(id1,index1,column) {
-      remove_file_from_m(id1,index1,column);
-      }
-      function table3_remove_file_from_model(id1,index1,column) {
-      remove_file_from_m(id1,index1,column);    
-      }
-  </script>
-
-
-  <script>
-  function add_files_to_table(fileId, table, col_type) {
-    
-    // Set the values of the hidden input fields in the form
-    document.getElementById("myid1").value = fileId;
-    //document.getElementById("table1").value = table;
-    document.getElementById("col_type1").value = col_type;
-    document.getElementById("mybutton1").value = "clicked";
-  }
-  </script>
-  <script>
-  function add_files_to_table2(fileId, table, col_type) {
-    
-    // Set the values of the hidden input fields in the form
-    document.getElementById("myid2").value = fileId;
-    //document.getElementById("table").value = table;
-    document.getElementById("col_type2").value = col_type;
-    document.getElementById("mybutton2").value = "clicked";
-    }
-  </script>
-  <script>
-  function add_files_to_table3(fileId, table, col_type) {
-    
-    // Set the values of the hidden input fields in the form
-    document.getElementById("myid3").value = fileId;
-    //document.getElementById("table").value = table;
-    document.getElementById("col_type3").value = col_type;
-    document.getElementById("mybutton3").value = "clicked";
-  }
-  </script>
-  
-
-  <script>
-    function updateBadge(row) {
-        const selectElement = row.querySelector('.form-select');
-        const badgeElements = row.querySelectorAll('.badge');
-        const selectedOption = selectElement.value;
-    
-        badgeElements.forEach(badge => {
-            if (badge.getAttribute('data-badge') === selectedOption) {
-                badge.style.display = 'inline-block';
-            } else {
-                badge.style.display = 'none';
-            }
-        });
-    }
-    
-    // Add event listener for each row in tableDATA1
-    const rows1 = document.querySelectorAll('#tableDATA_1 tbody tr');
-    
-    rows1.forEach(row => {
-        const selectElement = row.querySelector('.form-select');
-    
-        // Initial call to set the badge based on the default selected option in each row
-        updateBadge(row);
-    
-        selectElement.addEventListener('change', () => {
-            updateBadge(row);
-        });
-    });
-    
-    // Add event listener for each row in tableDATA2
-    const rows2 = document.querySelectorAll('#tableDATA_2 tbody tr');
-    
-    rows2.forEach(row => {
-        const selectElement = row.querySelector('.form-select');
-    
-        // Initial call to set the badge based on the default selected option in each row
-        updateBadge(row);
-    
-        selectElement.addEventListener('change', () => {
-            updateBadge(row);
-        });
-    });
-    
-    // Add event listener for each row in tableDATA3
-    const rows3 = document.querySelectorAll('#tableDATA_3 tbody tr');
-    
-    rows3.forEach(row => {
-        const selectElement = row.querySelector('.form-select');
-    
-        // Initial call to set the badge based on the default selected option in each row
-        updateBadge(row);
-    
-        selectElement.addEventListener('change', () => {
-            updateBadge(row);
-        });
-    });
-    
-  </script>
+ 
   
   
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
@@ -573,6 +417,7 @@
   <script type="text/javascript" src="{% static 'js/main3.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main4.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main5.js'%}"></script>
+
 </body>
 
 </html>

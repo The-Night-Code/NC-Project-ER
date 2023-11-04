@@ -275,7 +275,8 @@ def table_view(request,redirect_page):
                                 {'column_name':'tp',       'name2':'Travaux à préconiser'},
                                 {'column_name':'cofrac',   'name2':'Cofrac'},
                                 {'column_name':'auditeur', 'name2':'Auditeur'},
-                                {'column_name':'paiement', 'name2':'Paiement'}]
+                                {'column_name':'paiement', 'name2':'Paiement'},
+                                {'column_name':'precaite', 'name2':'Précaite'}]
                 
                 
                 if obj_by_id.be:
@@ -745,8 +746,9 @@ def agent_immo_f(request):
 
 @login_required
 def BE_Page(request):
-
-    data = TableData001.objects.filter(be=True)
+    user_ = request.user
+    bureau_d_etude = user_.com_name
+    data = TableData001.objects.filter(be=True,bureau_d_etude=bureau_d_etude).order_by('creation_time')
     
     col_count = data.count()
     # Get unique column names from the TableData model
@@ -787,6 +789,7 @@ def BE_Page_f(request):
                                         precaite=precaite,
                                         be=True,
                                         bureau_d_etude=bureau_d_etude)
+            
             kizeo_model.objects.create(kizeo_id=cell_id,)
             
             
