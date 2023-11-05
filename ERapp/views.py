@@ -324,8 +324,8 @@ def table_view(request,redirect_page):
                         setattr(obj_by_id, 'paiement', AF_af)
                         obj_by_id.save()
                     else:
-                        Activity_before = getattr(obj_by_id, name)
-                        Activity_after = request.POST.get(f"table_{name}_{button_edit_data_on_table}")
+                        Activity_before = str(getattr(obj_by_id, name) )+ ""
+                        Activity_after = str(request.POST.get(f"table_{name}_{button_edit_data_on_table}"))+ ""
                         if Activity_before != Activity_after:
                             Activities_audit.objects.create(Activity_id=generate_random_string(10),
                                                             Activity_user=f"{user_.last_name} {user_.first_name}",
@@ -421,7 +421,7 @@ def audit_pages(request,redirect_page,html_page):
     
     table_view(request,redirect_page)
 
-    data = TableData001.objects.all()
+    data = TableData001.objects.all().order_by('-creation_time')
     
     col_count = data.count()
     # Get unique column names from the TableData model
@@ -748,7 +748,7 @@ def agent_immo_f(request):
 def BE_Page(request):
     user_ = request.user
     bureau_d_etude = user_.com_name
-    data = TableData001.objects.filter(be=True,bureau_d_etude=bureau_d_etude).order_by('creation_time')
+    data = TableData001.objects.filter(be=True,bureau_d_etude=bureau_d_etude).order_by('-creation_time')
     
     col_count = data.count()
     # Get unique column names from the TableData model

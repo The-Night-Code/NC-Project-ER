@@ -285,31 +285,33 @@
   
                       <table class="table  table-hover   table-bordered  table-borderless border-info " id="tableDATA_{{k.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
   
-                          <thead class="table-dark border-info">
-                            <th class="fixed-column" ></th><!--style="width:auto;"-->
-                            
-                            <th>Prénom</th>  
-                            <th>Nom</th> 
-                            <th data-sortable="true" data-column="adresse">Adresse </th> 
-                            <th>N° de tél</th> 
-                            <th>E-mail</th>
-                            <th colspan=2>Visite technique</th> 
-                            <th >État</th> 
-                            <th>Travaux à préconiser</th> <!--Travaux à preconise-->
-                            <th>Audit v1</th> 
-                            <th>Audit v2</th> 
-                            <th>Audit v3</th> 
-                            <th>Audit fin</th> 
-                            
-                            
-                            <th>Cofrac</th> 
-                            <th>Paiement</th>
-                            <th>Bureau d'étude</th>
-                            <th>Auditeur</th>
-                            <th>Commenter</th>
-                            <th>Date de création</th>
-                            <th data-sortable="true" data-column="id"  >id </span></th>
-                          </thead>
+                        <thead class="table-dark border-info">
+                          <tr>
+                          <th class="fixed-column" ></th><!--style="width:auto;"-->
+                          
+                          <th onclick="sortTable('tableDATA_{{k.index}}',2)">Prénom</th>  
+                          <th onclick="sortTable('tableDATA_{{k.index}}',3)" >Nom </th> 
+                          <th onclick="sortTable('tableDATA_{{k.index}}',4)" >Adresse </th> 
+                          <th onclick="sortTable('tableDATA_{{k.index}}',5)">N° de tél</th> 
+                          <th onclick="sortTable('tableDATA_{{k.index}}',6)">E-mail </th>
+                          <th colspan=2>Visite technique</th> 
+                          <th >État</th> 
+                          <th >Travaux à préconiser</th> <!--Travaux à preconise-->
+                          <th>Audit v1</th> 
+                          <th>Audit v2</th> 
+                          <th>Audit v3</th> 
+                          <th>Audit fin</th> 
+                          
+                          
+                          <th onclick="sortTable('tableDATA_{{k.index}}',14)">Cofrac</th> 
+                          <th >Paiement</th>
+                          <th onclick="sortTable('tableDATA_{{k.index}}',16)">Bureau d'étude</th>
+                          <th onclick="sortTable('tableDATA_{{k.index}}',17)">Auditeur</th>
+                          <th>Commenter</th>
+                          <th onclick="sortTable_date('tableDATA_{{k.index}}',19)" >Date de création</th>
+                          <th onclick="sortTable('tableDATA_{{k.index}}',20)" >id </span></th>
+                          </tr>
+                        </thead>
                           <tbody id="myTable_{{k.index}}">
                               {% for item in data %}
 
