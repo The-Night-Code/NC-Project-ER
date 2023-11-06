@@ -139,53 +139,53 @@ selectElement.addEventListener('change', updateBadgefoot);
 
 
 
-function sortTable(table_id,n) {
+function sortTable12(table_id, n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById(table_id);
     switching = true;
-    //Set the sorting direction to ascending:
+    // Set the sorting direction to ascending:
     dir = "asc"; 
-    /*Make a loop that will continue until
-    no switching has been done:*/
+    /* Make a loop that will continue until
+    no switching has been done: */
     while (switching) {
-      //start by saying: no switching is done:
+      // Start by saying: no switching is done:
       switching = false;
       rows = table.rows;
-      /*Loop through all table rows (except the
-      first, which contains table headers):*/
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
       for (i = 1; i < (rows.length - 1); i++) {
-        //start by saying there should be no switching:
+        // Start by saying there should be no switching:
         shouldSwitch = false;
-        /*Get the two elements you want to compare,
-        one from current row and one from the next:*/
-        x = rows[i].getElementsByTagName("TD")[n];
-        y = rows[i + 1].getElementsByTagName("TD")[n];
-        /*check if the two rows should switch place,
-        based on the direction, asc or desc:*/
+        /* Get the two elements you want to compare,
+        one from the current row and one from the next: */
+        x = rows[i].getElementsByTagName("TD")[n].textContent;
+        y = rows[i + 1].getElementsByTagName("TD")[n].textContent;
+        /* Check if the two rows should switch place,
+        based on the direction, asc or desc: */
         if (dir == "asc") {
-          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-            //if so, mark as a switch and break the loop:
-            shouldSwitch= true;
+          if (x.toLowerCase() > y.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
+            shouldSwitch = true;
             break;
           }
         } else if (dir == "desc") {
-          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-            //if so, mark as a switch and break the loop:
+          if (x.toLowerCase() < y.toLowerCase()) {
+            // If so, mark as a switch and break the loop:
             shouldSwitch = true;
             break;
           }
         }
       }
       if (shouldSwitch) {
-        /*If a switch has been marked, make the switch
-        and mark that a switch has been done:*/
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
         rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
         switching = true;
-        //Each time a switch is done, increase this count by 1:
-        switchcount ++;      
+        // Each time a switch is done, increase this count by 1:
+        switchcount++;
       } else {
-        /*If no switching has been done AND the direction is "asc",
-        set the direction to "desc" and run the while loop again.*/
+        /* If no switching has been done AND the direction is "asc",
+        set the direction to "desc" and run the while loop again. */
         if (switchcount == 0 && dir == "asc") {
           dir = "desc";
           switching = true;
@@ -194,8 +194,7 @@ function sortTable(table_id,n) {
     }
   }
 
-
-function sortTable_date(table_id,n) {
+function sortTable(table_id,n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById(table_id);
     switching = true;
@@ -214,20 +213,59 @@ function sortTable_date(table_id,n) {
 
         for (i = 1; i < (rows.length - 1); i++) {
             shouldSwitch = false;
-            x = rows[i].getElementsByTagName("TD")[n];
-            y = rows[i + 1].getElementsByTagName("TD")[n];
 
-            // Convert the innerHTML to Date objects
-            const dateX = parseDateTime(x.innerHTML);
-            const dateY = parseDateTime(y.innerHTML);
+                            
+            var tdElementx = rows[i].getElementsByTagName("TD")[n];
+            var tdElementy = rows[i + 1].getElementsByTagName("TD")[n];
+            
+
+            if (tdElementx.querySelector('input') !== null) {
+                var inputElementx = tdElementx.querySelector('input');
+                var inputValuex = inputElementx.value;
+
+            } else {
+                if (tdElementx.querySelector('p') !== null){
+                    var inputElementx = tdElementx.querySelector('p');
+                    var inputValuex = inputElementx.textContent;
+                } else {
+                    if (tdElementx.querySelector('select') !== null){
+                        var inputElementx = tdElementx.querySelector('select');
+                        var inputValuex = inputElementx.value;
+                    } else {
+                        var inputValuex = tdElementx.textContent;
+                    }
+                }
+            }
+
+            if (tdElementy.querySelector('input') !== null) {
+                var inputElementy = tdElementy.querySelector('input');
+                var inputValuey = inputElementy.value;
+
+            } else { 
+                if (tdElementy.querySelector('p') !== null) {
+                    var inputElementy = tdElementy.querySelector('p');
+                    var inputValuey = inputElementy.textContent;
+                } else {
+                    
+                    if (tdElementy.querySelector('select') !== null) {
+                        var inputElementy = tdElementy.querySelector('select');
+                        var inputValuey = inputElementy.value;
+                    } else {
+                        
+                        var inputValuey =  tdElementy.textContent;
+                        
+                    }
+                }
+            }
+
 
             if (dir == "asc") {
-                if (dateX > dateY) {
+                if (inputValuex.toLowerCase() > inputValuey.toLowerCase()) {
                     shouldSwitch = true;
                     break;
                 }
             } else if (dir == "desc") {
-                if (dateX < dateY) {
+                if (inputValuex.toLowerCase() < inputValuey.toLowerCase()) {
                     shouldSwitch = true;
                     break;
                 }

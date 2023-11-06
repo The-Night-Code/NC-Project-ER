@@ -21,7 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from ERapp.views import main_Page,Home, LoginU, LogoutU , ProfileU,forgot_password ,showimage,VT_Page_edit_state
 from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,files_history
-from ERapp.views import add_files_to_MODELS,remove_file_from_MODELS,agent_immo,agent_immo_f,send_message
+from ERapp.views import remove_file_from_MODELS,agent_immo,agent_immo_f,send_message
 from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
 from ERapp import views
 
@@ -48,7 +48,6 @@ urlpatterns = [
     path('AI_audit_BY_A/',AI_audit_BY_A ,name="AI_audit_BY_A"),
 
     path('remove_file_from_MODELS/',remove_file_from_MODELS ,name="remove_file_from_MODEL"),
-    path(f'{form}T4/',add_files_to_MODELS ,name="add_files_to_model"),
 
     path('send-message/',send_message , name="send_message" ),
     

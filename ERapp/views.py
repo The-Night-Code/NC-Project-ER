@@ -35,7 +35,7 @@ from .models import MyModel, UpdatedXLSXFile
 from openpyxl.styles import NamedStyle
 import os
 
-formT="/formT/"
+formT="/"
 formK="/formK/"
 link2="/agentimmo/"
 beaudit="/beaudit/"
@@ -165,7 +165,7 @@ def ProfileU(request):
                 user_.save()
                 update_session_auth_hash(request, user_)
                 change_password_state=True
-                
+               
             
             
             
@@ -270,6 +270,7 @@ def table_view(request,redirect_page):
                 table_index=[   {'column_name':'firstname','name2':'Prénom'},
                                 {'column_name':'lastname', 'name2':'Nom'},
                                 {'column_name':'address',  'name2':'Adresse'},
+                                {'column_name':'email',    'name2':'Email'},
                                 {'column_name':'num',      'name2':'N° de tél'},
                                 {'column_name':'etat',     'name2':'État'},
                                 {'column_name':'tp',       'name2':'Travaux à préconiser'},
@@ -613,52 +614,6 @@ def remove_file_from_MODELS(request):
     return redirect(redirect_to_next_page)
 
 
-@login_required
-def add_files_to_MODELS(request):
-    
-    return redirect("/tt/")
-    file_id = request.POST.get('file_id') 
-    column = request.POST.get('column')
-    files = request.FILES.getlist('fileInput') #table1_input_files_to_
-   
-    
-    add_files_to_model =file_table_auditV1()
-
-    if str(column)=="auditV1":
-        try:
-            add_files_to_model =file_table_auditV1()
-        except add_files_to_model.DoesNotExist:
-            pass
-    elif str(column)=="auditV2":
-        try:
-            add_files_to_model =file_table_auditV2()
-        except add_files_to_model.DoesNotExist:
-            pass
-    elif str(column)=="auditV3":
-        try:
-            add_files_to_model =file_table_auditV3()
-        except add_files_to_model.DoesNotExist:
-            pass
-    elif str(column)=="vt":
-        try:
-            add_files_to_model =file_table_vt()
-        except add_files_to_model.DoesNotExist:
-            pass
-    
-    
-    
-    #if files:
-    for file in files:
-        file_table_auditV1.objects.create(
-            file_id = file_id,
-            file_name = file.name.split("/")[1],
-            file_save = file,
-            file_format =file.name.split(".")[1]
-            
-        )
-            
-    
-    return redirect(formT)
 
 @login_required
 def agent_immo(request):
@@ -1206,7 +1161,7 @@ def Kizeo_form_page(request,client_id):
         
         myButton = request.POST.get("mybutton1")
         if myButton=="mybutton1":
-            #return redirect(formT)
+
             input_cell_name = request.POST.get("input_value")
             img_get= request.FILES[input_cell_name]
         
@@ -1697,7 +1652,7 @@ def kizeo_form_Pieces_delete(request,client_id,piece_id):
         kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id).delete()
         return redirect(f"{formK}{client_id}")
     
-    return redirect(f"{formT}")
+    return redirect("/")
     
     
 @login_required
