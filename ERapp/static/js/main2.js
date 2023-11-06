@@ -194,7 +194,7 @@ function sortTable12(table_id, n) {
     }
   }
 
-function sortTable(table_id,n) {
+function sortTable(table_id,n,Date_Time_TD) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById(table_id);
     switching = true;
@@ -258,18 +258,37 @@ function sortTable(table_id,n) {
                 }
             }
 
+            if (Date_Time_TD){
+                var inputValuex = parseDateTime(inputValuex);
+                var inputValuey = parseDateTime(inputValuey);
 
-            if (dir == "asc") {
-                if (inputValuex.toLowerCase() > inputValuey.toLowerCase()) {
-                    shouldSwitch = true;
-                    break;
-                }
-            } else if (dir == "desc") {
-                if (inputValuex.toLowerCase() < inputValuey.toLowerCase()) {
-                    shouldSwitch = true;
-                    break;
+                if (dir == "asc") {
+                    if (inputValuex > inputValuey) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (inputValuex < inputValuey) {
+                        shouldSwitch = true;
+                        break;
+                    }
                 }
             }
+            else{
+
+                if (dir == "asc") {
+                    if (inputValuex.toLowerCase() > inputValuey.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (inputValuex.toLowerCase() < inputValuey.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            
         }
 
         if (shouldSwitch) {
