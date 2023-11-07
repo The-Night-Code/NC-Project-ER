@@ -7,7 +7,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <link rel="shortcut icon" type="image/png" href="{% static 'image/icon.png' %}">
-  <title></title>
+  <title>Ajouter un client</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -152,7 +152,7 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
-          <li class="breadcrumb-item active">Forms</li>
+          <li class="breadcrumb-item active">Ajouter un client</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -163,7 +163,7 @@
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Ajouter un client</h5>
+              <h5 class="card-title">Formulaire</h5>
 
               <!-- General Form Elements -->
               <form method="post"  enctype="multipart/form-data">
@@ -205,6 +205,7 @@
                     <label for="inputPassword" class="col-sm-2 col-form-label">Précaite</label><!--précaite-->
                     <div class="col-sm-10">
                       <select class="form-select" aria-label="Default select example" name="precaite">
+                        <option value="" >...</option>
                         <option value="Blue" >Blue</option>
                         <option value="Jaune">Jaune</option>
                         <option value="Violet">Violet</option>
