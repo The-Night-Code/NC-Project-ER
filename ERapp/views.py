@@ -72,12 +72,7 @@ def LoginU(request):
         user = authenticate(username=usernameU,password=passwordU)
         if user is not None:
             login(request,user)
-            return HttpResponseRedirect(formT) 
 
-    #if loginU:
-     #   if emailU=="night" :
-      #      return HttpResponseRedirect('/home')  
-    
     return render(request,'html/mainPage.html')
 
 
@@ -618,7 +613,7 @@ def remove_file_from_MODELS(request):
 @login_required
 def agent_immo(request):
 
-    data = TableData001.objects.filter(ai=True)
+    data = TableData001.objects.filter(ai=True).order_by('-creation_time')
     
     col_count = data.count()
     # Get unique column names from the TableData model
@@ -670,7 +665,7 @@ def agent_immo_f(request):
             lastname = request.POST.get("lastname")
             address = request.POST.get("address")
             num = request.POST.get("num")
-            agent = request.POST.get("agent")
+            agent = user_.com_name
             email = request.POST.get("email")
             TableData001.objects.create(cell_id=project_id,firstname=firstname,lastname=lastname,address=address,num=num,email=email,agent=agent,ai=True)
             acc_state=True
@@ -686,12 +681,7 @@ def agent_immo_f(request):
             if request.FILES.getlist("comm"):
                 add_files_to_project_1(request,project_id,"comm",column_name_type)
                 
-            
-            
-                
-                
-                        
-                        
+   
                         
     return render(request, 'html/agentimmof.html',{"acc_state":acc_state} )
 

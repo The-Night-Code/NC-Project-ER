@@ -126,94 +126,18 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="index.html">
+        <a class="nav-link " href="{% url 'main_page' %}">
           <i class="bi bi-grid"></i>
-          <span>les tableaux</span>
+          <span>Accueil</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="{% url 'aif' %}">
+          <i class="ri-file-add-line"></i>
+          <span>Ajouter un client</span>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-          
-        </ul>
-      </li><!-- End Components Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>Form Elements</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Form Layouts</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Forms Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>General Tables</span>
-            </a>
-          </li>
-          <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
-
-
-      <li class="nav-heading">Pages</li>
-
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Contact</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
+      </li><!-- End Dashboard Nav -->
 
     </ul>
 
@@ -260,7 +184,7 @@
                 </div>-->
 
                 <div class="card-body">
-                  <h5 class="card-title">Title <span>| title</span></h5>
+                  
 
                   <input class="form-control" type="text" id="filterInput_1" placeholder="Search..." style="width:30%;min-width:100px;">
                   <div class="overflow-auto" style="padding:1px;">
@@ -272,27 +196,22 @@
                     <input type="hidden" name="mybutton1" id="mybutton1">
 
                     <table class="table  table-hover  table-bordered  table-borderless border-info fixed-header-table" id="tableDATA_1" cellspacing="0" >  <!-- table-sm  table-responsive-->
-
                         <thead class="table-dark border-info ">
-                          <!--<th ></th>
-                          <th >id </th>-->
-                          <th onclick="sortTable('tableDATA_{{k.index}}',1)">Prénom</th>  
-                          <th onclick="sortTable('tableDATA_{{k.index}}',2)">Nom</th> 
-                          <th onclick="sortTable('tableDATA_{{k.index}}',3)">Adresse</th> 
-                          <th onclick="sortTable('tableDATA_{{k.index}}',4)">N° de tél</th>
-                          <th onclick="sortTable('tableDATA_{{k.index}}',5)">E-mail</th> 
+                          <th onclick="sortTable('tableDATA_1',0)">Prénom</th>  
+                          <th onclick="sortTable('tableDATA_1',1)">Nom</th> 
+                          <th onclick="sortTable('tableDATA_1',2)">Adresse</th> 
+                          <th onclick="sortTable('tableDATA_1',3)">N° de tél</th>
+                          <th onclick="sortTable('tableDATA_1',4)">E-mail</th> 
                           <th colspan="2">Visite technique</th> 
                           <th colspan="2">Apporteur d'affaire</th> 
                           <th>Commercial</th> 
-                          <th onclick="sortTable_date('tableDATA_{{k.index}}',9)">Date de création</th>
+                          <th onclick="sortTable('tableDATA_1',10 , 1)">Date de création</th>
                         </thead>
                         <tbody id="myTable_1">
                           {% for item in data %}
                             {% if item.agent == user.com_name and item.ai %}
                               <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                               <tr>
-                                  <!--<td class="fixed-column fixed-column-backcolor" ><button  class="button_table_data " type="button" id="table1_edit_col" name="" value="" onclick="my_Func_edit_table_1('{{item.cell_id}}')"><i class="ri-edit-2-fill"></i></button></td>
-                                  <td ><p style="width:auto;">{{ item.cell_id }}</p></td>-->
                                   <td class="td_p_cell2"><p>{{ item.firstname }}</p></td>
                                   <td class="td_p_cell2"><p>{{ item.lastname }}</p></td>
                                   <td class="td_p_cell2"><p>{{ item.address }}</p></td>
@@ -493,44 +412,7 @@
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
                 <!-- redirect with param -->
-                <script>
-                        
-                  function my_Func_edit_table_1(id) {
-                    
-                    var x0 = document.getElementById("table1_hidden_id"+id).value;
-                    var x1 = document.getElementById("table1_firstname"+id).value;
-                    var x2 = document.getElementById("table1_lastname"+id).value;
-                    var x3 = document.getElementById("table1_address"+id).value;
-                    var x4 = document.getElementById("table1_num"+id).value;
-
-                    var selectElement = document.querySelector('#table1_etat'+id);
-                    var x6 = selectElement.value;
-                    var x7 = document.getElementById("paiement"+id);
-                      //var x7 = document.getElementById("cell_data7edit"+id).value;
-                      //var x8 = document.getElementById("cell_data8edit"+id).value;
-                      //var x9 = document.getElementById("cell_data9edit"+id).value;
-                      //var x10 = document.getElementById("cell_data10edit"+id).value;
-                    
-                      if (x7.checked) {
-                        x7="True";
-                      } else {
-                        x7="False";
-                      }
-                      var url2=//"{ %  u r l 'editFormTable' % }?"+
-                        "param=" + encodeURIComponent(x0) +
-                        "&param0=" + x0 +
-                        "&param1=" + encodeURIComponent(x1) +
-                        "&param2=" + encodeURIComponent(x2)+
-                        "&param3=" + encodeURIComponent(x3)+
-                        "&param4=" + encodeURIComponent(x4)+
-                        "&param6=" + encodeURIComponent(x6)+
-                        "&param7=" + encodeURIComponent(x7);
-
-                        
-                      //window.location.href = url2;
-
-                  }
-                  </script>
+                
                   <!-- end redirect with param -->
 
                 </div>

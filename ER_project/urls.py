@@ -41,43 +41,53 @@ urlpatterns = [
     path('profile/',ProfileU ),
     path('forgot_password/',forgot_password,name="forgot_password"),
     
+    # Auditeur Pages
+    # Auditeur Pages
+    # Auditeur Pages
     path('Accueil/',Auditeur_Accueil ,name="Auditeur_main_page"),
     path('BE_audit_ALL/',BE_audit_ALL ,name="BE_audit_ALL"),
     path('BE_audit_BY_A/',BE_audit_BY_A ,name="BE_audit_BY_A"),
     path('AI_audit_ALL/',AI_audit_ALL ,name="AI_audit_ALL"),
     path('AI_audit_BY_A/',AI_audit_BY_A ,name="AI_audit_BY_A"),
 
-    path('remove_file_from_MODELS/',remove_file_from_MODELS ,name="remove_file_from_MODEL"),
-
-    path('send-message/',send_message , name="send_message" ),
-    
-    
     path('create_account_for_ai/', create_acc_ai, name="create_acc_for_AI" ),
     path('create_account_for_be/', create_acc_be, name="create_acc_for_BE" ),
     path('historique_des_fichiers/', files_history, name="files_history" ),
     path('Activities/', Activities, name="Activities" ),
     
+    path('remove_file_from_MODELS/',remove_file_from_MODELS ,name="remove_file_from_MODEL"),
+    path('send-message/',send_message , name="send_message" ),
+    
+    
+    # Agent Immo Pages
+    # Agent Immo Pages
+    # Agent Immo Pages
     path(f'{ai}/',agent_immo ,name="ai"),
-    path(f'{ai}f/',agent_immo_f ),
+    path(f'{ai}f/',agent_immo_f,name="aif" ),
     
     
+    # Bereau d'etude Pages
+    # Bereau d'etude Pages
+    # Bereau d'etude Pages
     path(f'{be}/',BE_Page ,name="be"),
-    path(f'{be}f/',BE_Page_f ),
+    path(f'{be}f/',BE_Page_f ,name="bef"),
     
     
+    # Visiteur tech Pages
+    # Visiteur tech Pages
+    # Visiteur tech Pages
     path('VT/', VT_Page,name="VT"),
     path('VT1/', VT_Page_edit_state, name="VT_Page_edit_state"),
     
-    path('showimage/',showimage ),
     
-    
-    
-    
-    #path(f'{formK}/',Kizeo_form_page  ),
+    # Kiz
+    # Kiz
+    # Kiz
     path(f'{formK}/<str:client_id>',Kizeo_form_page  ,name='Kizeo_form_page'),
-    path('download_K_file/<str:file_id>/', download_K_file, name='download_K_file'),
     path(f'{formK}/<str:client_id>/<str:piece_id>/',kizeo_form_Pieces  ,name='kizeo_form_Pieces'),
     path(f'{formK}2/<str:client_id>/<str:piece_id>/',kizeo_form_Pieces_delete  ,name='kizeo_form_Pieces_del'),
+    path('download_K_file/<str:file_id>/', download_K_file, name='download_K_file'),
+        
     path('save_signature/', save_signature, name='save_signature'),
     
 ] #+static(settings.MEDIA_URL, documnet_root=settings.MEDIA_ROOT)
