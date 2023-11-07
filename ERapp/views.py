@@ -957,6 +957,13 @@ def files_history(request):
                                                   'datafiles_AuditFinal':datafiles_AuditFinal,
                                                   'redirect_next_page':redirect_page,
                                                   'model_type':model_type})
+
+
+@login_required
+def Activities(request):
+    activities_audit = Activities_audit.objects.order_by("-Activity_date")
+    return render(request, 'html/activities.html',{'activities_audit': activities_audit})
+    
 @login_required
 def update_xlsx_template(request):
     # Load your XLSX template

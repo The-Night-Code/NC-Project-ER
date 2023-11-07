@@ -212,6 +212,12 @@
         </a>
       </li>
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'Activities' %}">
+          <i class="bi bi-list-check"></i>
+          <span>Activités</span>
+        </a>
+      </li>
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -286,26 +292,25 @@
                         <thead class="table-dark border-info">
                           <th class="fixed-column" ></th><!--style="width:auto;"-->
                           
-                          <th  onclick="sortTable('tableDATA_{{k.index}}',2)">Prénom</th>  
-                          <th onclick="sortTable('tableDATA_{{k.index}}',3)">Nom</th> 
-                          <th onclick="sortTable('tableDATA_{{k.index}}',4)" >Adresse </th> 
-                          <th onclick="sortTable('tableDATA_{{k.index}}',5)">N° de tél</th> 
-                          <th onclick="sortTable('tableDATA_{{k.index}}',6)">E-mail</th> 
+                          <th onclick="sortTable('tableDATA_{{k.index}}',1)">Prénom</th>  
+                          <th onclick="sortTable('tableDATA_{{k.index}}',2)">Nom</th> 
+                          <th onclick="sortTable('tableDATA_{{k.index}}',3)" >Adresse </th> 
+                          <th onclick="sortTable('tableDATA_{{k.index}}',4)">N° de tél</th> 
+                          <th onclick="sortTable('tableDATA_{{k.index}}',5)">E-mail</th> 
                           <th colspan=2>Visite technique</th> 
                           <th >État</th> 
-                          <th>Travaux à préconiser</th> <!--Travaux à preconise-->
+                          <th onclick="sortTable('tableDATA_{{k.index}}',9)">Travaux à préconiser</th> <!--Travaux à preconise-->
                           <th>Audit v1</th> 
                           <th>Audit v2</th> 
                           <th>Audit v3</th> 
                           <th>Audit fin</th> 
                           
-                          
                           <th onclick="sortTable('tableDATA_{{k.index}}',14)">Cofrac</th> 
-                          <th>Paiement</th>
+                          <th >Paiement</th>
                           <th onclick="sortTable('tableDATA_{{k.index}}',16)">Agent</th>
                           <th onclick="sortTable('tableDATA_{{k.index}}',17)">Auditeur</th>
-                          <th>Commenter</th>
-                          <th onclick="sortTable_date('tableDATA_{{k.index}}',19)">Date de création</th>
+                          <th onclick="sortTable('tableDATA_{{k.index}}',18)">Commenter</th>
+                          <th onclick="sortTable('tableDATA_{{k.index}}',19)">Date de création</th>
                           <th  onclick="sortTable('tableDATA_{{k.index}}',20)"  >id </span></th>
                         </thead>
                         <tbody id="myTable_{{k.index}}">

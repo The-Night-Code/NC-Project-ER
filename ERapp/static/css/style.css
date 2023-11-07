@@ -1309,6 +1309,10 @@ h6 {
 }
 
 /* Activity */
+
+.activity2{padding:10px;}
+
+
 .dashboard .activity {
   font-size: 14px;
 }

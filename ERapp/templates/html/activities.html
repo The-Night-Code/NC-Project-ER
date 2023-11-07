@@ -1,0 +1,330 @@
+{% load static %}
+{% load l10n %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <link rel="shortcut icon" type="image/png" href="{% static 'image/icon.png' %}">
+  <title>Activités</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"> 
+  
+
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/quill/quill.snow.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
+  <script>
+    
+      
+    
+    </script>
+
+  <style>
+
+
+  </style>
+    
+</head>
+
+<body onload="load()">
+  {% if user.is_authenticated  and "auditeur" in user.role  %} <!-- and "admin" in user.role -->
+
+  <input  type="hidden" name="user_email" id="user_email" value="{{ user.email }}">
+  <input  type="hidden" name="user_firstname" id="user_firstname" value="{{user.first_name}}">
+  <input  type="hidden" name="user_lastname" id="user_lastname" value="{{user.last_name}}">
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+    
+    <div class="d-flex align-items-center justify-content-between logo_with_button" >
+      <a href="{% url 'main_page' %}"  class="logo d-flex align-items-center">
+        <!--<img src="{% static 'image\default_user_avatar.png' %}" alt="">-->
+        
+        <img src="{% static 'image\logo.png' %}" alt="" >
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn " id="click_side_bar"></i>
+    </div><!-- End Logo -->
+
+
+    <!-- <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div> -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="{{ user.profile_pic.url }}"  alt="Image">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{ user.first_name }} {{ user.last_name }} </span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>{{ user.first_name }} {{ user.last_name }}</h6>
+              <span></span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/profile/">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="/logout/">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar =================================================================================================================================================================== -->
+  <!-- ======= Sidebar =================================================================================================================================================================== -->
+
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'main_page' %}">
+          <i class="bi bi-grid"></i>
+          <span>Accueil</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#BE_ul" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-person-add"></i><span>Bureau d'étude</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="BE_ul" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'BE_audit_ALL' %}">
+              <i class="bi bi-person-add fa-10x"></i>
+              <span>Toutes les colonnes</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'BE_audit_BY_A' %}"><!--href="{ % url '' % }"-->
+              <i class="bi bi-person-add"></i>
+              <span>Par auditeur</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#AI_ul" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-person-add"></i><span>Agent immobilier</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="AI_ul" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'AI_audit_ALL' %}">
+              <i class="bi bi-person-add fa-10x"></i>
+              <span>Toutes les colonnes</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'AI_audit_BY_A' %}"><!--href="{ % url '' % }"-->
+              <i class="bi bi-person-add"></i>
+              <span>Par auditeur</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-person-add"></i><span>Agent immobilier</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'AI_audit_ALL' %}">
+              <i class="bi bi-person-add fa-10x"></i>
+              <span>Toutes les colonnes</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'AI_audit_BY_A' %}"><!--href="{ % url '' % }"-->
+              <i class="bi bi-person-add"></i>
+              <span>Par auditeur</span>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+
+      
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'files_history' %}">
+          <i class="bi bi-file-earmark-x"></i>
+          <span>Historique des fichiers</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'Activities' %}">
+          <i class="bi bi-list-check"></i> <!--ri-list-settings-line bi bi-clipboard-check bi bi-list-check -->
+          <span>Activités</span>
+        </a>
+      </li>
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+  <!-- End Sidebar ==========================================================================================================================-->
+
+
+  <!-- main Page ========================================================================================================================================     -->
+  <main id="main" class="main">
+    <section class="section dashboard">
+        <div class="pagetitle">
+        <h1>Activités</h1>
+        <nav>
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
+            <li class="breadcrumb-item active">Activités</li>
+            </ol>
+        </nav>
+        </div>
+
+
+        <div class="card">
+                
+    
+            <div class="card-body">
+            
+
+            <div class="activity">
+                {% for A_AU in activities_audit %}
+                {% if A_AU.Activity_edit %}
+                    <div class="activity-item d-flex">
+                    <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
+                    <i class="bi bi-circle-fill activity-badge text-primary align-self-start"></i>
+                    <div class="activity-content">  
+                        <p class="Activities_audit_p"><b  class="fw-bold text-danger">{{A_AU.Activity_user}}</b> a modifié <b class="fw-bold text-primary">{{A_AU.Activity_name}}</b> dans le projet <b class="fw-bold text-dark">{{A_AU.Activity_project_id}}</b> { <b class="fw-bold text-success ">{{A_AU.Activity_before}}</b> <b class="fw-bold text-dark h5"> &gt </b> <b class="fw-bold text-success ">{{A_AU.Activity_after}}</b> } <i> ({{A_AU.Activity_table}})</i></p>
+                    </div>
+                    </div><!-- End activity item-->
+                {% endif %}
+                
+                {% if A_AU.Activity_add %}
+                    <div class="activity-item d-flex">
+                    <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
+                    <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                    <div class="activity-content">
+                        <p class="Activities_audit_p"><b class=" text-danger">{{A_AU.Activity_user}}</b> a ajouté <i class="fw-bold text-success">{{A_AU.Activity_before}}</i> à <b class="fw-bold text-success ">{{A_AU.Activity_after}}</b> dans le projet <b class="fw-bold text-dark">{{A_AU.Activity_project_id}}</b><i> ({{A_AU.Activity_table}})</i></p>
+                    </div>
+                    </div><!-- End activity item-->
+                {% endif %}
+
+                {% if A_AU.Activity_delete %}
+                    <div class="activity-item d-flex">
+                    <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
+                    <i class="bi bi-circle-fill activity-badge text-danger  align-self-start"></i>
+                    <div class="activity-content">
+                        <p class="Activities_audit_p"><b class=" text-danger">{{A_AU.Activity_user}}</b> a supprimé le fichier <b class="fw-bold text-success ">{{A_AU.Activity_before}}</b> situé à <b class="fw-bold text-success ">{{A_AU.Activity_after}}</b> dans le projet <b class="fw-bold text-dark">{{A_AU.Activity_project_id}}</b><i> ({{A_AU.Activity_table}})</i></p>
+                    </div>
+                    </div><!-- End activity item-->
+                {% endif %}
+
+                {% if A_AU.Activity_add_2 %}
+                    <div class="activity-item d-flex">
+                    <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
+                    <i class="bi bi-circle-fill activity-badge text-info align-self-start"></i>
+                    <div class="activity-content">
+                        <p class="Activities_audit_p"><b class=" text-danger">{{A_AU.Activity_user}}</b> a ajouté  <i class="fw-bold text-primary">{{A_AU.Activity_before}} </i></p>
+                    </div>
+                    </div><!-- End activity item-->
+                {% endif %}
+
+                {% endfor %}
+                
+
+            </div>
+
+            </div>
+        </div><!-- End Recent Activity -->
+    </section>
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  {% else %}
+      
+  <script>
+    window.location.href = "{% url 'not_logged_in' %}";
+  </script>
+
+  {% endif %}
+
+
+  
+  <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/chart.js/chart.umd.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/echarts/echarts.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/quill/quill.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/simple-datatables/simple-datatables.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/tinymce/tinymce.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'vendor/php-email-form/validate.js' %}"></script>
+
+  
+
+  <!-- Template Main JS File -->
+  <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main2.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main3.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main4.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main5.js'%}"></script>
+</body>
+
+</html>
