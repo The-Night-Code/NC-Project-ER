@@ -156,8 +156,8 @@ def ProfileU(request):
             if newPassword == renewPassword:
                 subject = 'Votre mot de passe a été changé'
                 message = f'Email: {user_L.email} Mot de passe: {newPassword} '
-                from_email = 'Night'
-                recipient_list = ['lazariatik@gmail.com']
+                from_email = ''
+                recipient_list = [user_L.email]
                 send_mail(subject, message, from_email, recipient_list) 
                 
                 user_= request.user
