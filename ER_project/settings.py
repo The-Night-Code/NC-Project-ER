@@ -26,7 +26,7 @@ DEBUG = True # this sould be False
 CSRF_TRUSTED_ORIGINS =["https://web-production-68e2.up.railway.app/"]
 ALLOWED_HOSTS = [
                  "https://web-production-68e2.up.railway.app/",
-                 "https://*.up.railway.app/"] 
+                 "web-production-68e2.up.railway.app"] 
 s=[
     "nightcode01.pythonanywhere.com",
     "192.168.1.100",
