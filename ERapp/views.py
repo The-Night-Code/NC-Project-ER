@@ -61,8 +61,6 @@ def send_email():
 
 @csrf_protect
 def LoginU(request):
-    
-    
     if request.method == "POST":
         
         usernameU =request.POST.get('username')
@@ -71,7 +69,7 @@ def LoginU(request):
         user = authenticate(username=usernameU,password=passwordU)
         if user is not None:
             login(request,user)
-
+            return redirect("/")
     return render(request,'html/mainPage.html')
 
 
@@ -124,7 +122,7 @@ def LogoutU(request):
     return redirect("main_page")
     #return render(request,'html/login.html')
 
-@csrf_protect    
+ 
 @login_required
 def ProfileU(request):
     change_password_state=False
