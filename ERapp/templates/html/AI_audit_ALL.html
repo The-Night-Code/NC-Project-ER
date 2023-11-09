@@ -309,7 +309,7 @@
                             <th >Paiement</th>
                             <th onclick="sortTable('tableDATA_{{k.index}}',16)">Agent</th>
                             <th onclick="sortTable('tableDATA_{{k.index}}',17)">Auditeur</th>
-                            <th onclick="sortTable('tableDATA_{{k.index}}',18)">Commenter</th>
+                            <th>Commentaire</th>
                             <th onclick="sortTable('tableDATA_{{k.index}}',19 , 1)">Date de création</th>
                             <th  onclick="sortTable('tableDATA_{{k.index}}',20)"  >id </span></th>
                           </thead>
@@ -666,13 +666,13 @@
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
                                       <li class="dropdown-header">
                                         <input type="text" name="input_msg_{{item.cell_id}}" id="input_msg_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
-                                        <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}')" > <i class="bi bi-send" ></i></button>
+                                        <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','chat')" > <i class="bi bi-send" ></i></button>
                                         <a><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
                                       </li>
                                       <li>
                                         <hr class="dropdown-divider">
                                       </li>
-                                      <div id="chat-messages-container">
+                                      <div id="chat-messages-container_chat">
                                       {% for msg in message_box_1 reversed  %}
                                       {% if item.cell_id == msg.row_id %}
 

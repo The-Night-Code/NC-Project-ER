@@ -272,7 +272,7 @@ def table_view(request,redirect_page):
                                 {'column_name':'cofrac',   'name2':'Cofrac'},
                                 {'column_name':'auditeur', 'name2':'Auditeur'},
                                 {'column_name':'paiement', 'name2':'Paiement'},
-                                {'column_name':'precaite', 'name2':'Précaite'}]
+                                {'column_name':'precaite', 'name2':'Précarite'}]
                 
                 
                 if obj_by_id.be:
@@ -424,10 +424,15 @@ def audit_pages(request,redirect_page,html_page):
     column_names = TableData001._meta.get_fields()
     
     datafiles_VT = file_table_vt.objects.filter(file_removed=False)
+    countfiles_VT = file_table_vt.objects.filter(file_removed=False).count()
     datafiles_AuditV1 = file_table_auditV1.objects.filter(file_removed=False)
+    countfiles_AuditV1 = file_table_auditV1.objects.filter(file_removed=False).count()
     datafiles_AuditV2 = file_table_auditV2.objects.filter(file_removed=False)
+    countfiles_AuditV2 = file_table_auditV2.objects.filter(file_removed=False).count()
     datafiles_AuditV3 = file_table_auditV3.objects.filter(file_removed=False)
+    countfiles_AuditV3 = file_table_auditV3.objects.filter(file_removed=False).count()
     datafiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False)
+    countfiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False).count()
     message_box_01 = message_box_1.objects.all()
     
 
@@ -455,10 +460,15 @@ def audit_pages(request,redirect_page,html_page):
                                                   'col_count':col_count ,
                                                   'column_names': column_names,
                                                   'datafiles_VT': datafiles_VT ,
+                                                  'countfiles_VT': countfiles_VT ,
                                                   'datafiles_AuditV1': datafiles_AuditV1 ,
+                                                  'countfiles_AuditV1': countfiles_AuditV1,
                                                   'datafiles_AuditV2': datafiles_AuditV2 ,
+                                                  'countfiles_AuditV2': countfiles_AuditV2,
                                                   'datafiles_AuditV3': datafiles_AuditV3 ,
+                                                  'countfiles_AuditV3': countfiles_AuditV3,
                                                   'datafiles_AuditFinal':datafiles_AuditFinal,
+                                                  'countfiles_AuditFinal': countfiles_AuditFinal,
                                                   'message_box_1':message_box_01,
                                                   'table_index':table_index,
                                                   'auditeur':auditeur,
