@@ -23,9 +23,10 @@ SECRET_KEY = 'django-insecure-xe_ocjnzc+-l$)ni!-e0u!bh$!nt5xco#c55+0e+7*mzh=ded0
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True # this sould be False
+
 #CSRF_TRUSTED_ORIGINS =["web-production-68e2.up.railway.app",
 #                       "https://web-production-68e2.up.railway.app"]
-ALLOWED_HOSTS = ['web-production-68e2.up.railway.app']
+ALLOWED_HOSTS = ['*']
 s=[
     "nightcode01.pythonanywhere.com",
     "192.168.1.100",
@@ -134,8 +135,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = ["ERapp/static"]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]#"ERapp/static"
 
 
 STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
