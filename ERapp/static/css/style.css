@@ -46,9 +46,7 @@
 
 #main2{margin:80px 0px 0px 20px !important;}
 
-.main_page_bg {
-  background-image: url('{% static "image/bg_image.jpg" %}');background-size: cover;background-repeat: no-repeat;background-attachment: fixed;background-position: center center;
-}
+
 
 .reduce_div button{
   border: none !important;
