@@ -9,7 +9,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from django.views.generic.edit import CreateView
-
 from django.db.models import Max
 from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1,kizeo_model_Pieces,AI_or_AGENT
 from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal,Activities_audit,file_table_AdA,file_table_comm
@@ -19,7 +18,7 @@ from django.core.mail import send_mail
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt,csrf_protect
 # Create your views here.
 import random
 import string
@@ -60,7 +59,7 @@ def send_email():
     fail_silently=False,) 
 
 
-
+@csrf_protect
 def LoginU(request):
     
     
@@ -77,7 +76,7 @@ def LoginU(request):
 
 
 
-
+@csrf_protect
 def SignupU(request):
     
     
@@ -124,7 +123,8 @@ def LogoutU(request):
     logout(request)
     return redirect("main_page")
     #return render(request,'html/login.html')
-    
+
+@csrf_protect    
 @login_required
 def ProfileU(request):
     change_password_state=False
