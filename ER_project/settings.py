@@ -22,22 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xe_ocjnzc+-l$)ni!-e0u!bh$!nt5xco#c55+0e+7*mzh=ded0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # this sould be False
+DEBUG = True # this sould be False
 
-#CSRF_TRUSTED_ORIGINS =["web-production-68e2.up.railway.app",
-#                       "https://web-production-68e2.up.railway.app"]
-ALLOWED_HOSTS = ['*']
-s=[
-    "nightcode01.pythonanywhere.com",
-    "192.168.1.100",
-                "192.168.1.101",
-                "192.168.1.102",
-                "192.168.1.103",
-                "192.168.1.104",
-                 "192.168.1.105",
-                 "192.168.1.106",
-                 "127.0.0.1",
-                 "0.0.0.0"]
+ALLOWED_HOSTS = ["*"]
+
 
 # Application definition
 
@@ -135,13 +123,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]#"ERapp/static"
+STATICFILES_DIRS = [ "ERapp/static",]
 
-
-
-STATICFILES_STORAGE="whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -157,12 +140,7 @@ EMAIL_HOST_PASSWORD = "wimb aoms cbbm ddtk"
 EMAIL_USE_TLS = True
 #EMAIL_USE_SSL = False
 
-
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-
-
-
