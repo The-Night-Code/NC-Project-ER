@@ -22,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xe_ocjnzc+-l$)ni!-e0u!bh$!nt5xco#c55+0e+7*mzh=ded0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True # this should be False
+DEBUG = False # this should be False
 
 ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS=["https://web-production-68e2.up.railway.app/"]
+#CSRF_TRUSTED_ORIGINS=["https://web-production-68e2.up.railway.app/"]
 
 # Application definition
 
@@ -50,8 +50,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.runserver_nostatic',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.runserver_nostatic',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'application'
+WSGI_APPLICATION = 'ER_project.wsgi.application'
 
 
 # Database
@@ -126,7 +126,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, "static"),]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static/')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -143,7 +144,7 @@ EMAIL_HOST_PASSWORD = "wimb aoms cbbm ddtk"
 EMAIL_USE_TLS = True
 #EMAIL_USE_SSL = False
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
