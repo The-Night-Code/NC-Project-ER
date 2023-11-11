@@ -140,21 +140,24 @@ def ProfileU(request):
             
             if len(old_image) > 0 and old_image:
                 os.remove(old_image.path)    
-                        
+            
+            return redirect("/profile/")
+            
         if remove_profile_image=="remove_profile_image"  :
             
             user_L.profile_pic = 'images/sys_image/default_user_avatar.png'
             user_L.save(update_fields=['profile_pic'])
-            if not old_image.path == '/media/images/sys_image/default_user_avatar.png':
+            if old_image.path != '/media/images/sys_image/default_user_avatar.png':
                 if len(old_image) > 0 :
                     os.remove(old_image.path)
+            return redirect("/profile/")
             
  
             
         if change_password_button == "submit":
             newPassword = str(request.POST.get("newPassword"))
             renewPassword = str(request.POST.get("renewPassword"))
-            if newPassword == renewPassword:
+            if newPassword == renewPassword and newPassword!=" " and newPassword and len(newPassword)>=8:
                 subject = 'Votre mot de passe a été changé'
                 message = f'Email: {user_L.email} Mot de passe: {newPassword} '
                 from_email = ''
@@ -167,7 +170,7 @@ def ProfileU(request):
                 update_session_auth_hash(request, user_)
                 change_password_state=True
                 
-        return redirect("/profile/")
+        
 
     profile_image =user_L.profile_pic
     if profile_image :
@@ -1213,9 +1216,13 @@ def Kizeo_form_page(request,client_id):
                 img_get= request.FILES.get(lis)
                 if img_get:
                     if hasattr(obj, lis):
+                        if getattr(obj,lis):
+                            if len(getattr(obj,lis)) > 0 :
+                                os.remove(getattr(obj,lis).path)
                         # Check if the field exists in the model
                         setattr(obj, lis, img_get)
                         obj.save()  
+                        
                     
                 
 
@@ -1475,7 +1482,7 @@ def Kizeo_form_page(request,client_id):
                                     "Plancher_bas_1_Epaisseur_isolant" ,
                                     "Plancher_bas_1_Date_d_isolation" ,
                                     "Plancher_bas_1_Preuve_d_isolation" ,
-                                    "Plancher_bas_1_Photo_plancher_bas" ,
+                                    #"Plancher_bas_1_Photo_plancher_bas" ,
                                     ### Plancher bas 2
                                     "Plancher_bas_2_Position",
                                     "Plancher_bas_2_Composition" ,
@@ -1483,7 +1490,7 @@ def Kizeo_form_page(request,client_id):
                                     "Plancher_bas_2_Epaisseur_isolant" ,
                                     "Plancher_bas_2_Date_d_isolation" ,
                                     "Plancher_bas_2_Preuve_d_isolation" ,
-                                    "Plancher_bas_2_Photo_plancher_bas" ,
+                                    #"Plancher_bas_2_Photo_plancher_bas" ,
                                     
                                     ### Plancher haut 1
                                     "Plancher_Haut_1_Type",
@@ -1493,7 +1500,7 @@ def Kizeo_form_page(request,client_id):
                                     "Plancher_Haut_1_Epaisseur_isolant" ,
                                     "Plancher_Haut_1_Date_d_isolation",
                                     "Plancher_Haut_1_Preuve_d_isolation" ,
-                                    "Plancher_Haut_1_Photo_plancher_bas" ,
+                                    #"Plancher_Haut_1_Photo_plancher_bas" ,
                                     ### Plancher haut 2
                                     "Plancher_Haut_2_Type",
                                     "Plancher_Haut_2_Composition",
@@ -1502,7 +1509,7 @@ def Kizeo_form_page(request,client_id):
                                     "Plancher_Haut_2_Epaisseur_isolant" ,
                                     "Plancher_Haut_2_Date_d_isolation",
                                     "Plancher_Haut_2_Preuve_d_isolation" ,
-                                    "Plancher_Haut_2_Photo_plancher_bas" ,
+                                    #"Plancher_Haut_2_Photo_plancher_bas" ,
                                     
                                     
                                     ### Fenetre type 1
@@ -1511,14 +1518,14 @@ def Kizeo_form_page(request,client_id):
                                     "Fenetre_type_1_Type_de_vitrage" ,
                                     "Fenetre_type_1_Volets" ,
                                     "Fenetre_type_1_Nombre",
-                                    "Fenetre_type_1_Photo" ,
+                                    #"Fenetre_type_1_Photo" ,
                                     ### Fenetre type 2
                                     "Fenetre_type_2_Menuiserie" ,
                                     "Fenetre_type_2_Materiaux",
                                     "Fenetre_type_2_Type_de_vitrage" ,
                                     "Fenetre_type_2_Volets" ,
                                     "Fenetre_type_2_Nombre",
-                                    "Fenetre_type_2_Photo" ,
+                                    #"Fenetre_type_2_Photo" ,
                                     
                                     ### Porte 1
                                     "Porte_1_Materiaux",
@@ -1536,6 +1543,8 @@ def Kizeo_form_page(request,client_id):
                                     #'signature_data',
 
                                 ])
+
+        return redirect(f"/formK/{client_id}")
     Pieces_index_add = kizeo_model_Pieces.objects.filter(kizeo_id=client_id).aggregate(Max('Pieces_index'))['Pieces_index__max']
     if not Pieces_index_add:
         Pieces_index_add = 1
@@ -1566,6 +1575,20 @@ def kizeo_form_Pieces(request,client_id,piece_id):
         obj = kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id)  
             
 
+        table_index=['Pieces_image_1',
+                        'Pieces_image_2',
+                        'Pieces_image_3'
+                    ]
+        for lis in table_index:
+            img_get= request.FILES.get(lis)
+            if img_get:
+                if hasattr(obj, lis):
+                    if getattr(obj,lis):
+                        if len(getattr(obj,lis)) > 0 :
+                            os.remove(getattr(obj,lis).path)
+                    # Check if the field exists in the model
+                    setattr(obj, lis, img_get)
+                    obj.save()  
         
         obj.Niveau = request.POST.get("Niveau")
         
@@ -1590,20 +1613,12 @@ def kizeo_form_Pieces(request,client_id,piece_id):
             obj.S_rampants_2 = request.POST.get("S_rampants_2")
             obj.save(update_fields=['HSF','HPP','LP','S_rampants_1','S_rampants_2'])
         
-        Pieces_image_1=request.FILES.get('Pieces_image_1')
-        if Pieces_image_1:
-            obj.Pieces_image_1 = Pieces_image_1
-            obj.save(update_fields=['Pieces_image_1'])
-            
-        Pieces_image_2=request.FILES.get('Pieces_image_2')
-        if Pieces_image_2:
-            obj.Pieces_image_2 = Pieces_image_2
-            obj.save(update_fields=['Pieces_image_2'])
-            
-        Pieces_image_3=request.FILES.get('Pieces_image_3')
-        if Pieces_image_3:
-            obj.Pieces_image_3 = Pieces_image_3
-            obj.save(update_fields=['Pieces_image_1'])
+
+        
+
+
+
+        
             
         
         obj.HSP = float(request.POST.get("HSP"))
@@ -1895,6 +1910,11 @@ def download_K_file(request,file_id):
     ################################### start WORK_SHEET_4
     text_cell = worksheet4['A7']
     text_cell.value =f"L'audit énergétique est réalisé une maison individuelle située à {obj.Donnees_Generales_Adresse}, {obj.Donnees_Generales_Zip_Code} {obj.Donnees_Generales_City}."
+    
+    #"https://google.com/maps?q={{data.latitude}},{{data.longitude}}"
+    text_cell = worksheet4['A8']  
+    #text_cell.value = "GPS"
+    #text_cell.hyperlink  = f"https://google.com/maps?q={obj.latitude},{obj.longitude}"
     
     text_cell = worksheet4['E27']  
     text_cell.value = obj.Donnees_Generales_Annee_de_construction

@@ -271,9 +271,9 @@ class kizeo_model(models.Model):
     Donnees_Generales_Nombre_de_niveau = models.IntegerField(default=0,null=True,blank=True)
     Donnees_Generales_Surface_TOTALE = models.IntegerField(default=0,null=True,blank=True)
     Donnees_Generales_Preuve_Surface = models.CharField(max_length=100,blank=True)
-    Donnees_Generales_Preuve_Surface_Photo = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/db/blank-white.jpg")
+    Donnees_Generales_Preuve_Surface_Photo = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     Donnees_Generales_Surface_ajoute_depuis_moins_de_15_ans = models.IntegerField(default=0,null=True,blank=True)
-    Donnees_Generales_Factures = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/db/blank-white.jpg")
+    Donnees_Generales_Factures = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     Donnees_Generales_Besoin_du_client_Chauffage = models.CharField(max_length=100,blank=True)
     Donnees_Generales_Besoin_du_client_Isolation = models.CharField(max_length=100,blank=True)
     Donnees_Generales_Scenario_souhaite_par_le_client = models.CharField(max_length=100,blank=True)
@@ -285,48 +285,48 @@ class kizeo_model(models.Model):
     Facade_1_Longueur=models.FloatField(default=0.0,blank=True)
     Facade_1_Hauteur=models.FloatField(default=0.0,blank=True)
     Facade_1_Surface=models.FloatField(default=0.0,blank=True)
-    Facade_1_Photo_Principale=models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Facade_1_Photo_Principale=models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     Facade_2_Orientation =models.CharField(max_length=100,blank=True)
     Facade_2_Mitoyennete=models.CharField(max_length=100,blank=True)
     Facade_2_Longueur=models.FloatField(default=0.0,blank=True)
     Facade_2_Hauteur=models.FloatField(default=0.0,blank=True)
     Facade_2_Surface=models.FloatField(default=0.0,blank=True)
-    Facade_2_Photo_Principale=models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Facade_2_Photo_Principale=models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     Facade_3_Orientation =models.CharField(max_length=100,blank=True)
     Facade_3_Mitoyennete=models.CharField(max_length=100,blank=True)
     Facade_3_Longueur=models.FloatField(default=0.0,blank=True)
     Facade_3_Hauteur=models.FloatField(default=0.0,blank=True)
     Facade_3_Surface=models.FloatField(default=0.0,blank=True)
-    Facade_3_Photo_Principale=models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Facade_3_Photo_Principale=models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     Facade_4_Orientation =models.CharField(max_length=100,blank=True)
     Facade_4_Mitoyennete=models.CharField(max_length=100,blank=True)
     Facade_4_Longueur=models.FloatField(default=0.0,blank=True)
     Facade_4_Hauteur=models.FloatField(default=0.0,blank=True)
     Facade_4_Surface=models.FloatField(default=0.0,blank=True)
-    Facade_4_Photo_Principale=models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Facade_4_Photo_Principale=models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     ### Cauffage
     Cauffage_systeme = models.CharField(max_length=100,blank=True)
     Cauffage_annee_de_mise_en_oeuvre = models.IntegerField(default=0,blank=True)
-    Cauffage_photo_systeme_de_production = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
-    Cauffage_photo_fiche_signaletique = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Cauffage_photo_systeme_de_production = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
+    Cauffage_photo_fiche_signaletique = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     Cauffage_type_de_regulation = models.CharField(max_length=100,blank=True)
     Cauffage_system_d_appoint = models.CharField(max_length=100,blank=True)
-    Cauffage_photo_appoint = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Cauffage_photo_appoint = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     Cauffage_commentaire = models.CharField(max_length=750,blank=True)
     
     ### ECS
     ECS_type = models.CharField(max_length=100,blank=True)
     ECS_system_d_appoint = models.CharField(max_length=100,blank=True)
-    ECS_photo_appoint = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    ECS_photo_appoint = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     ECS_commentaire = models.CharField(max_length=750,blank=True)
     
     ### Ventilation
     Ventilation_type = models.CharField(max_length=100,blank=True)
-    Ventilation_photo_ventilation = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Ventilation_photo_ventilation = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     ### Refroidissement
     Refroidissement_type = models.CharField(max_length=100,blank=True)
@@ -335,7 +335,7 @@ class kizeo_model(models.Model):
     ### Compteur Electrique
     Compteur_Electrique_Puissance_souscrite = models.FloatField(default=0.0,blank=True)
     Compteur_Electrique_type = models.CharField(max_length=100,blank=True)
-    Compteur_Electrique_photo_compteur = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Compteur_Electrique_photo_compteur = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     Compteur_Electrique_commentaire = models.CharField(max_length=750,blank=True)
     
     ### Mur 1
@@ -346,7 +346,7 @@ class kizeo_model(models.Model):
     Mur_1_Epaisseur_isolant = models.IntegerField(default=0,blank=True)
     Mur_1_Date_d_isolation = models.CharField(max_length=100,blank=True)
     Mur_1_Preuve_d_isolation = models.CharField(max_length=100,blank=True)
-    Mur_1_Photo_mur = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Mur_1_Photo_mur = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     ### Mur 2
     Mur_2_Position = models.CharField(max_length=100,blank=True)
@@ -356,7 +356,7 @@ class kizeo_model(models.Model):
     Mur_2_Epaisseur_isolant = models.IntegerField(default=0,blank=True)
     Mur_2_Date_d_isolation = models.CharField(max_length=100,blank=True)
     Mur_2_Preuve_d_isolation = models.CharField(max_length=100,blank=True)
-    Mur_2_Photo_mur = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Mur_2_Photo_mur = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     ### Plancher bas 1
     Plancher_bas_1_Position = models.CharField(max_length=100,blank=True)
@@ -366,7 +366,7 @@ class kizeo_model(models.Model):
     Plancher_bas_1_Epaisseur_isolant = models.FloatField(default=0.0,blank=True)
     Plancher_bas_1_Date_d_isolation = models.CharField(max_length=100,blank=True)
     Plancher_bas_1_Preuve_d_isolation = models.CharField(max_length=100,blank=True)
-    Plancher_bas_1_Photo_plancher_bas = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Plancher_bas_1_Photo_plancher_bas = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     ### Plancher bas 2
     Plancher_bas_2_Position = models.CharField(max_length=100,blank=True)
@@ -376,7 +376,7 @@ class kizeo_model(models.Model):
     Plancher_bas_2_Epaisseur_isolant = models.FloatField(default=0.0,blank=True)
     Plancher_bas_2_Date_d_isolation = models.CharField(max_length=100,blank=True)
     Plancher_bas_2_Preuve_d_isolation = models.CharField(max_length=100,blank=True)
-    Plancher_bas_2_Photo_plancher_bas = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Plancher_bas_2_Photo_plancher_bas = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     ### Plancher haut 1
     Plancher_Haut_1_Type = models.CharField(max_length=100,blank=True)
@@ -386,7 +386,7 @@ class kizeo_model(models.Model):
     Plancher_Haut_1_Epaisseur_isolant = models.FloatField(default=0.0,blank=True)
     Plancher_Haut_1_Date_d_isolation = models.CharField(max_length=100,blank=True)
     Plancher_Haut_1_Preuve_d_isolation = models.CharField(max_length=100,blank=True)
-    Plancher_Haut_1_Photo_plancher_bas = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Plancher_Haut_1_Photo_plancher_bas = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     ### Plancher haut 2
     Plancher_Haut_2_Type = models.CharField(max_length=100,blank=True)
@@ -396,7 +396,7 @@ class kizeo_model(models.Model):
     Plancher_Haut_2_Epaisseur_isolant = models.FloatField(default=0.0,blank=True)
     Plancher_Haut_2_Date_d_isolation = models.CharField(max_length=100,blank=True)
     Plancher_Haut_2_Preuve_d_isolation = models.CharField(max_length=100,blank=True)
-    Plancher_Haut_2_Photo_plancher_bas = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Plancher_Haut_2_Photo_plancher_bas = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     ### Fenetre type 1
     Fenetre_type_1_Menuiserie = models.CharField(max_length=100,blank=True)
@@ -404,7 +404,7 @@ class kizeo_model(models.Model):
     Fenetre_type_1_Type_de_vitrage = models.CharField(max_length=100,blank=True)
     Fenetre_type_1_Volets = models.CharField(max_length=100,blank=True)
     Fenetre_type_1_Nombre = models.IntegerField(default=0,blank=True)
-    Fenetre_type_1_Photo = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Fenetre_type_1_Photo = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     ### Fenetre type 2
     Fenetre_type_2_Menuiserie = models.CharField(max_length=100,blank=True)
@@ -412,26 +412,26 @@ class kizeo_model(models.Model):
     Fenetre_type_2_Type_de_vitrage = models.CharField(max_length=100,blank=True)
     Fenetre_type_2_Volets = models.CharField(max_length=100,blank=True)
     Fenetre_type_2_Nombre = models.IntegerField(default=0,blank=True)
-    Fenetre_type_2_Photo = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Fenetre_type_2_Photo = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     
     ### Porte 1
     Porte_1_Materiaux = models.CharField(max_length=100,blank=True)
     Porte_1_Type_porte = models.CharField(max_length=100,blank=True)
     Porte_1_Nombre = models.IntegerField(default=0,blank=True)
-    Porte_1_Photo_porte = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Porte_1_Photo_porte = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
         
     ### Porte 2
     Porte_2_Materiaux = models.CharField(max_length=100,blank=True)
     Porte_2_Type_porte = models.CharField(max_length=100,blank=True)
     Porte_2_Nombre = models.IntegerField(default=0,blank=True)
-    Porte_2_Photo_porte = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Porte_2_Photo_porte = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     
-    signature_data = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    signature_data = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     Saisie_par_piece_Surface_Mesuree = models.FloatField(default=0.0,blank=True)
-    Saisie_par_piece_Signature_intervenant = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
-    Saisie_par_piece_Signature_client = models.ImageField(upload_to='uploads/data/kizeo',blank=True,default="uploads/data/kizeo/blank-white.jpg")
+    Saisie_par_piece_Signature_intervenant = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
+    Saisie_par_piece_Signature_client = models.ImageField(upload_to='uploads/data/kizeo',blank=True)
     
     def __str__(self):
         return f'{self.kizeo_id} {self.Donnees_Generales_Nom_client}'
