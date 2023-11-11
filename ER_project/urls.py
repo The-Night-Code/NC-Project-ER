@@ -17,14 +17,16 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import main_Page,Home, LoginU, LogoutU , ProfileU,forgot_password ,showimage,VT_Page_edit_state
+from ERapp.views import  LoginU, LogoutU , ProfileU,forgot_password ,showimage,VT_Page_edit_state
 from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,files_history,Activities
 from ERapp.views import remove_file_from_MODELS,agent_immo,agent_immo_f,send_message
 from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
-from ERapp import views
 
+from django.conf.urls import url
+from django.views.static import serve
 ai="ai"
 form="form"
 formK="formK"
@@ -90,7 +92,12 @@ urlpatterns = [
         
     path('save_signature/', save_signature, name='save_signature'),
     
-] # + static(settings.MEDIA_URL, documnet_root=settings.MEDIA_ROOT)
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    
+    url(r'media/(?<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
+    url(r'static/(?<path>.*)$',serve,{'document_root':settings.STATIC_ROOT}),
+    
+]  
+urlpatterns+= static(settings.MEDIA_URL, documnet_root=settings.MEDIA_ROOT)
+#if settings.DEBUG:
+#    urlpatterns += static(settings.MEDIA_URL,
+#                          document_root=settings.MEDIA_ROOT)
