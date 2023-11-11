@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-xe_ocjnzc+-l$)ni!-e0u!bh$!nt5xco#c55+0e+7*mzh=ded0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True # this should be False  'FALSE'
+DEBUG = 'FALSE' # this should be False  'FALSE'
 
-ALLOWED_HOSTS = ['web-production-3f42.up.railway.app']
+ALLOWED_HOSTS = ['*','web-production-3f42.up.railway.app']
 CSRF_TRUSTED_ORIGINS=["https://web-production-3f42.up.railway.app/"]
 
 # Application definition
@@ -51,8 +51,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'django.contrib.staticfiles.finders.FileSystemFinder',
+    #'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    #'django.contrib.staticfiles.finders.FileSystemFinder',
     
 
 ]
