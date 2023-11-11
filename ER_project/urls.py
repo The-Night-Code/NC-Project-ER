@@ -25,8 +25,6 @@ from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,k
 from ERapp.views import remove_file_from_MODELS,agent_immo,agent_immo_f,send_message
 from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
 
-from django.conf.urls import url
-from django.views.static import serve
 ai="ai"
 form="form"
 formK="formK"
@@ -92,12 +90,9 @@ urlpatterns = [
         
     path('save_signature/', save_signature, name='save_signature'),
     
+
     
-    url(r'media/(?<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
-    url(r'static/(?<path>.*)$',serve,{'document_root':settings.STATIC_ROOT}),
-    
-]  
-urlpatterns+= static(settings.MEDIA_URL, documnet_root=settings.MEDIA_ROOT)
-#if settings.DEBUG:
-#    urlpatterns += static(settings.MEDIA_URL,
-#                          document_root=settings.MEDIA_ROOT)
+] # + static(settings.MEDIA_URL, documnet_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
