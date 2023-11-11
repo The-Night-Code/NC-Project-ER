@@ -40,7 +40,7 @@
 </head>
 
 <body onload="load()">
-<!-- and "admin" in user.role -->
+  {% if user.is_authenticated  and "auditeur" in user.role  %} <!-- and "admin" in user.role -->
 
   <input  type="hidden" name="user_email" id="user_email" value="{{ user.email }}">
   <input  type="hidden" name="user_firstname" id="user_firstname" value="{{user.first_name}}">
@@ -950,7 +950,14 @@
 
   </main><!-- End #main -->
 
+  <!-- ======= Footer ======= -->
+  {% else %}
+      
+  <script>
+    window.location.href = "{% url 'not_logged_in' %}";
+  </script>
 
+  {% endif %}
 
 
   
