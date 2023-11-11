@@ -122,7 +122,6 @@ def LogoutU(request):
     return redirect("main_page")
     #return render(request,'html/login.html')
 
- 
 @login_required
 def ProfileU(request):
     change_password_state=False
@@ -133,15 +132,24 @@ def ProfileU(request):
     change_password_button = request.POST.get("change_password")
     # Upload Profile Image
     if request.method == 'POST' :
+        old_image = user_L.profile_pic
         if Submit_Upload_image=="Submit_Upload_image" and request.FILES['my_uploaded_image']:
             imagefile = request.FILES['my_uploaded_image']
             user_L.profile_pic =imagefile 
             user_L.save(update_fields=['profile_pic'])
             
-        if remove_profile_image=="remove_profile_image":
+            if len(old_image) > 0 and old_image:
+                os.remove(old_image.path)    
+                        
+        if remove_profile_image=="remove_profile_image"  :
             
-            user_L.profile_pic = 'uploads/default_user_avatar.png'
+            user_L.profile_pic = 'images/sys_image/default_user_avatar.png'
             user_L.save(update_fields=['profile_pic'])
+            if not old_image.path == '/media/images/sys_image/default_user_avatar.png':
+                if len(old_image) > 0 :
+                    os.remove(old_image.path)
+            
+ 
             
         if change_password_button == "submit":
             newPassword = str(request.POST.get("newPassword"))
@@ -158,11 +166,8 @@ def ProfileU(request):
                 user_.save()
                 update_session_auth_hash(request, user_)
                 change_password_state=True
-               
-            
-            
-            
-
+                
+        return redirect("/profile/")
 
     profile_image =user_L.profile_pic
     if profile_image :
