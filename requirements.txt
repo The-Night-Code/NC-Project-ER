@@ -10,4 +10,4 @@ pillow-heif==0.13.0
 sqlparse==0.4.4
 tzdata==2023.3
 Wand==0.6.11
-WhiteNoise==2.0.6
+whitenoise==2.0.6
