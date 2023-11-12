@@ -34,6 +34,9 @@ from .models import MyModel, UpdatedXLSXFile
 from openpyxl.styles import NamedStyle
 import os
 
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 formT="/"
 formK="/formK/"
 link2="/agentimmo/"
@@ -965,9 +968,75 @@ def files_history(request):
                                                   'model_type':model_type})
 
 
+
+import os
+import tempfile
+import shutil
+from django.http import FileResponse
+from django.http import HttpResponse
+from django.views.static import serve
+from django.core.files.base import File
+
+import os
+import tempfile
+import shutil
+import zipfile
+from django.http import HttpResponse
+## <a href="{% url 'download_media_folder' %}">Download Media Folder</a>
+@login_required
+def download_media_folder(request):
+    date_time_now=datetime.now()
+    downloaded_folders=date_time_now.strftime("%Y-%m-%d_%H-%M-%S")
+    
+    user_ = request.user
+    if "" in user_.role :
+        # Replace 'your_media_folder' with the relative path to your media folder
+
+
+        media_folder = media_path =  BASE_DIR / "media"
+        other_folder = BASE_DIR
+            # Get the absolute paths to the folders
+        media_path = os.path.join('media', media_folder)
+
+        # Ensure that both folders exist
+        if os.path.exists(media_path) and os.path.exists(other_folder):
+            # Create a temporary directory to store the zip file
+            temp_dir = tempfile.mkdtemp()
+
+            # Create a zip file containing the contents of both folders
+            zip_filename = f'{downloaded_folders}.zip'
+            zip_filepath = os.path.join(temp_dir, zip_filename)
+
+            with zipfile.ZipFile(zip_filepath, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+                # Add files from the media folder
+                for root, dirs, files in os.walk(media_path):
+                    for file in files:
+                        file_path = os.path.join(root, file)
+                        arcname = os.path.relpath(file_path, media_path)
+                        zip_file.write(file_path, arcname)
+
+                # Add the JSON file from the other folder
+                json_file_path = os.path.join(other_folder, 'backup.json')  # Replace with the actual filename
+                arcname = os.path.basename(json_file_path)
+                zip_file.write(json_file_path, arcname)
+
+            # Prepare the response with the zip file
+            with open(zip_filepath, 'rb') as zip_file:
+                response = HttpResponse(zip_file.read(), content_type='application/zip')
+                response['Content-Disposition'] = f'attachment; filename="{zip_filename}"'
+
+            # Clean up the temporary directory and zip file
+            shutil.rmtree(temp_dir)
+
+            return response
+
+
+
+
 @login_required
 def Activities(request):
     activities_audit = Activities_audit.objects.order_by("-Activity_date")
+    
     return render(request, 'html/activities.html',{'activities_audit': activities_audit})
     
 @login_required
