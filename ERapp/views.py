@@ -1010,7 +1010,7 @@ def download_media_folder(request):
     downloaded_folders=date_time_now.strftime("%Y-%m-%d_%H-%M-%S")
     
     user_ = request.user
-    if "" in user_.role :
+    if "backup_server_ROLE_for_download_the_backUP" in user_.role :
         other_folder = BASE_DIR
         dump_file_path = os.path.join(other_folder, 'backup.json')
         cwd_ = BASE_DIR
