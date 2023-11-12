@@ -969,27 +969,62 @@ def files_history(request):
 
 
 
-import os
-import tempfile
-import shutil
-from django.http import FileResponse
-from django.http import HttpResponse
-from django.views.static import serve
-from django.core.files.base import File
 
 import os
 import tempfile
 import shutil
 import zipfile
 from django.http import HttpResponse
+import subprocess
 ## <a href="{% url 'download_media_folder' %}">Download Media Folder</a>
+
+#backup
+def export_all_data(request):
+    # Define the path where you want to store the dump file
+
+    other_folder = BASE_DIR
+    dump_file_path = os.path.join(other_folder, 'backup.json')
+    cwd_ = BASE_DIR
+    # Run the dumpdata command
+    dumpdata_cmd = f"python manage.py dumpdata --indent 2 > {dump_file_path}"
+    subprocess.run(dumpdata_cmd, shell=True, cwd=cwd_)
+
+    # Read the dumped data from the file
+    with open(dump_file_path, 'r') as f:
+        data = f.read()
+
+    # Prepare the response with the dumped data
+    response = HttpResponse(data, content_type='application/json')
+    response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
+
+    return response
 @login_required
 def download_media_folder(request):
+    #export_all_data(request)
+    
+    
+    
+    
+    
     date_time_now=datetime.now()
     downloaded_folders=date_time_now.strftime("%Y-%m-%d_%H-%M-%S")
     
     user_ = request.user
     if "" in user_.role :
+        other_folder = BASE_DIR
+        dump_file_path = os.path.join(other_folder, 'backup.json')
+        cwd_ = BASE_DIR
+        # Run the dumpdata command
+        dumpdata_cmd = "python manage.py dumpdata --indent 2 > backup.json"
+        subprocess.run(dumpdata_cmd, shell=True, cwd=cwd_)
+
+        # Read the dumped data from the file
+        with open(dump_file_path, 'r') as f:
+            data = f.read()
+
+        # Prepare the response with the dumped data
+        response = HttpResponse(data, content_type='application/json')
+        response['Content-Disposition'] = 'attachment; filename="exported_data.json"'
         # Replace 'your_media_folder' with the relative path to your media folder
 
 
@@ -1027,7 +1062,8 @@ def download_media_folder(request):
 
             # Clean up the temporary directory and zip file
             shutil.rmtree(temp_dir)
-
+            
+            os.remove(dump_file_path)
             return response
 
 
