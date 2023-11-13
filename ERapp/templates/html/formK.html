@@ -159,14 +159,39 @@
               <button class="nav-link w-100 tablinks" id="TAB-5" type="button"  onclick="open_form(event, 'tab_id_5')">5</button>
             </li>
           </ul>
-      </div>
+        </div>
+
+        <div class="tab_button">
+
+          </br>
+          <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+            <li class="nav-item flex-fill" role="presentation">
+              <a class="nav-link w-100 tablinks "  href="{% url 'Kizeo_form_page' client_id=client_id page_number=1 %}">1</a>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+              <a class="nav-link w-100 tablinks" id="TAB-2" type="button" href="{% url 'Kizeo_form_page' client_id=client_id page_number='2' %}" >2</a>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+              <a class="nav-link w-100 tablinks" id="TAB-3" type="button" href="{% url 'Kizeo_form_page' client_id=client_id page_number='3' %}" >3</a>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+              <a class="nav-link w-100 tablinks" id="TAB-4" type="button"  href="{% url 'Kizeo_form_page' client_id=client_id page_number='4' %}" >4</a>
+            </li>
+            <li class="nav-item flex-fill" role="presentation">
+              <a class="nav-link w-100 tablinks" id="TAB-5" type="button" href="{% url 'Kizeo_form_page' client_id=client_id page_number='5' %}"  >5</a>
+            </li>
+          </ul>
+        </div>
+
+
+
       </br>
       <div>
         <input  type="hidden" name="input_value" id="input_value" >
         <button type="submit" name="mybutton1" id="mybutton1" value="mybutton1" style="display:none;"></button>
       </div>
-
-      <div class="tab_content_onclick" id="tab_id_1" >
+      {% if page_number == "1" %}
+      <div class=""  >
         <section class="section"><!--Données Générales-->
           <div class="row" >
               <div class="card" >
@@ -554,8 +579,10 @@
             </div>
         </section>
       </div>
+      {% endif %}
 
-      <div class="tab_content_onclick" id="tab_id_2" >
+      {% if page_number == "2" %}
+      <div class=""  >
         <section class="section">
           <div class="row" >
               <div class="card" >
@@ -862,8 +889,10 @@
         </section>
 
       </div>
-
-      <div class="tab_content_onclick" id="tab_id_3" >
+      {% endif %}
+      
+      {% if page_number == "3" %}
+      <div class=""  >
         <section class="section">
           <div class="row" >
               <div class="card" >
@@ -1428,8 +1457,10 @@
           </div>
         </section>
       </div>
-
-      <div class="tab_content_onclick" id="tab_id_4" >
+      {% endif %}
+      
+      {% if page_number == "4" %}
+      <div class=""  >
         <section class="section">
           <div class="row" >
               <div class="card" >
@@ -1691,8 +1722,10 @@
           </div>
         </section>
       </div>
-
-      <div class="tab_content_onclick" id="tab_id_5" >
+      {% endif %}
+      
+      {% if page_number == "5" %}
+      <div class=""  >
         <section class="section">
           <div class="row" >
               <div class="card" >
@@ -1764,7 +1797,8 @@
           </div>
         </section>
       </div>
-
+      {% endif %}
+      
       <div class="text-center">
         <button type="submit" class="btn btn-danger" name="submit_to_Kizeo" value="submit" >Sauvegarder</button>
       </div>

@@ -84,8 +84,9 @@ urlpatterns = [
     # Kiz
     # Kiz
     # Kiz
-    path(f'{formK}/<str:client_id>',Kizeo_form_page  ,name='Kizeo_form_page'),
-    path(f'{formK}/<str:client_id>/<str:piece_id>/',kizeo_form_Pieces  ,name='kizeo_form_Pieces'),
+    #path(f'{formK}1/<str:client_id>',Kizeo_form_page  ,name='Kizeo_form_page'),
+    path(f'{formK}/<str:client_id>/<str:page_number>',Kizeo_form_page  ,name='Kizeo_form_page'),
+    path(f'{formK}1/<str:client_id>/<str:piece_id>/',kizeo_form_Pieces  ,name='kizeo_form_Pieces'),
     path(f'{formK}2/<str:client_id>/<str:piece_id>/',kizeo_form_Pieces_delete  ,name='kizeo_form_Pieces_del'),
     path('download_K_file/<str:file_id>/', download_K_file, name='download_K_file'),
         

@@ -44,6 +44,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 formT="/"
 formK="/formK/"
+formK111="formK"
 link2="/agentimmo/"
 beaudit="/beaudit/"
 FROM_EMAIL="guhgi155@gmail.com"
@@ -1240,7 +1241,7 @@ class table_index_image:
         self.obj_image=obj_image
         
 @login_required        
-def Kizeo_form_page(request,client_id):
+def Kizeo_form_page(request,client_id,page_number):
 
     if kizeo_model.objects.filter(kizeo_id=client_id):
             pass
@@ -1623,7 +1624,7 @@ def Kizeo_form_page(request,client_id):
 
                                 ])
 
-        return redirect(f"/formK/{client_id}")
+        return redirect(f"/formK/{client_id}/{page_number}")
     Pieces_index_add = kizeo_model_Pieces.objects.filter(kizeo_id=client_id).aggregate(Max('Pieces_index'))['Pieces_index__max']
     if not Pieces_index_add:
         Pieces_index_add = 1
@@ -1635,7 +1636,11 @@ def Kizeo_form_page(request,client_id):
     
     pieces=kizeo_model_Pieces.objects.filter(kizeo_id=client_id)
     data = kizeo_model.objects.get(kizeo_id=client_id)
-    return render(request, 'html/formK.html',{"data":data,"pieces":pieces,'Pieces_index_add':Pieces_index_add})
+    return render(request, 'html/formK.html',{"data":data,"pieces":pieces,
+                                              'Pieces_index_add':Pieces_index_add,
+                                              'page_number':page_number,
+                                              'client_id':client_id,
+                                              'formKURL':formK111})
 
 
 
