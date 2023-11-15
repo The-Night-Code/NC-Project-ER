@@ -143,18 +143,18 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#BE_ul" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-person-add"></i><span>Bureau d'étude</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-table"></i><span>Bureau d'étude</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="BE_ul" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li class="nav-item">
             <a class="nav-link collapsed" href="{% url 'BE_audit_ALL' %}">
-              <i class="bi bi-person-add fa-10x"></i>
+              <i class="bi bi-table fa-10x"></i>
               <span>Toutes les colonnes</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link " href="{% url 'BE_audit_BY_A' %}"><!--href="{ % url '' % }"-->
-              <i class="bi bi-person-add"></i>
+              <i class="bi bi-table"></i>
               <span>Par auditeur</span>
             </a>
           </li>
@@ -164,18 +164,18 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#AI_ul" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-person-add"></i><span>Agent immobilier</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-table"></i><span>Agent immobilier</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="AI_ul" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li class="nav-item">
             <a class="nav-link collapsed" href="{% url 'AI_audit_ALL' %}">
-              <i class="bi bi-person-add fa-10x"></i>
+              <i class="bi bi-table fa-10x"></i>
               <span>Toutes les colonnes</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link collapsed" href="{% url 'AI_audit_BY_A' %}"><!--href="{ % url '' % }"-->
-              <i class="bi bi-person-add"></i>
+              <i class="bi bi-table"></i>
               <span>Par auditeur</span>
             </a>
           </li>
@@ -183,26 +183,28 @@
         </ul>
       </li>
 
+      {% if "a1" in user.role   %}
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-person-add"></i><span>Agent immobilier</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-person-add"></i><span>Créer un compte</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li class="nav-item">
-            <a class="nav-link collapsed" href="{% url 'AI_audit_ALL' %}">
+            <a class="nav-link collapsed" href="{% url 'create_acc_for_AI' %}">
               <i class="bi bi-person-add fa-10x"></i>
-              <span>Toutes les colonnes</span>
+              <span>Pour l'agent immobilier</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link collapsed" href="{% url 'AI_audit_BY_A' %}"><!--href="{ % url '' % }"-->
+            <a class="nav-link collapsed" href="{% url 'create_acc_for_BE' %}">
               <i class="bi bi-person-add"></i>
-              <span>Par auditeur</span>
+              <span>Pour Bureau d'étude</span>
             </a>
           </li>
 
         </ul>
       </li>
+      {% endif %}
 
       
 
