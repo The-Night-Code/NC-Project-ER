@@ -357,8 +357,21 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 
 /*  Kizeo form */
-.card_for_k_form{width:99%; padding:0px 10px;}
+.tab_button_2 ul li {padding:0px 5px;}
+.tablinks_K{
+  font-weight: bold!important;
+  font-size: 20px!important;
+  color:white!important;
+  background-color: rgb(1, 71, 81)!important;}
+
+.card_for_k_form{width:99%; padding:0px 10px; }
 .card_for_k_form section{padding:0px 30px ;}
+.tab_button_2{margin: 20px 10px 5px 10px!important;}
+
+.tablinks_K_active_b{color:rgb(1, 71, 81)!important;
+  border: 1px solid  rgb(1, 71, 81)!important;
+  background: white!important;}
+  
 .tab_button {
   display: block;
   padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
@@ -367,8 +380,8 @@ table.dataTable thead .sorting_desc_disabled:before {
   color: var(--bs-nav-link-color);
   text-decoration: none;
   background: 0 0;
-  border: 0;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+
+  transition: color .15s ease-in-out,background-color .15s ease-in-out;
 }
 .tab_button button:hover {
   color: #4154f1 !important;

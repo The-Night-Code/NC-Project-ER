@@ -1263,9 +1263,202 @@ def Kizeo_form_page(request,client_id,page_number):
                 setattr(obj, input_cell_name, img_get)
                 obj.save()        
         
-        
+        next_page_index=""
         submit_to_Kizeo = request.POST.get("submit_to_Kizeo")
-        if submit_to_Kizeo=="submit":
+        list_inputs=[]
+        table_index=[]
+        if str(submit_to_Kizeo)=="1":
+            next_page_index='2'
+            list_inputs=[### Données Générales
+                                    'latitude',
+                                    'longitude',
+                                    'altitude',
+                                    'Donnees_Generales_Nom_d_intervenant',
+                                    'Donnees_Generales_Date_de_visite',
+                                    'Donnees_Generales_Adresse',
+                                    'Donnees_Generales_Zip_Code',
+                                    'Donnees_Generales_City',
+                                    'Donnees_Generales_Annee_de_construction',
+                                    'Donnees_Generales_Etat_d_occupation',
+                                    'Donnees_Generales_Nom_client',
+                                    'Donnees_Generales_Tel_client',
+                                    'Donnees_Generales_Email',
+                                    'Donnees_Generales_Horaire_d_occupation_des_lieux',
+                                    'Donnees_Generales_Destination_du_lieu',
+                                    'Donnees_Generales_Nombre_d_occupant',
+                                    'Donnees_Generales_Nombre_de_niveau',
+                                    'Donnees_Generales_Surface_TOTALE',
+                                    'Donnees_Generales_Preuve_Surface',
+                                    'Donnees_Generales_Surface_ajoute_depuis_moins_de_15_ans',
+                                    'Donnees_Generales_Besoin_du_client_Chauffage',
+                                    'Donnees_Generales_Besoin_du_client_Isolation',
+                                    'Donnees_Generales_Scenario_souhaite_par_le_client',
+                                    
+                                    ### Façades
+                                    'Facade_1_Orientation', 'Facade_1_Mitoyennete','Facade_1_Longueur','Facade_1_Hauteur','Facade_1_Surface',#'Facade_1_Photo_Principale',
+                                    'Facade_2_Orientation', 'Facade_2_Mitoyennete','Facade_2_Longueur','Facade_2_Hauteur','Facade_2_Surface',#'Facade_2_Photo_Principale',
+                                    'Facade_3_Orientation', 'Facade_3_Mitoyennete','Facade_3_Longueur','Facade_3_Hauteur','Facade_3_Surface',#'Facade_3_Photo_Principale',
+                                    'Facade_4_Orientation', 'Facade_4_Mitoyennete','Facade_4_Longueur','Facade_4_Hauteur','Facade_4_Surface',#'Facade_4_Photo_Principale',
+                         ]
+            table_index=['Donnees_Generales_Preuve_Surface_Photo',
+                         'Donnees_Generales_Factures',
+                        'Facade_1_Photo_Principale',
+                        'Facade_2_Photo_Principale',
+                        'Facade_3_Photo_Principale',
+                        'Facade_4_Photo_Principale',
+                        ]
+        if str(submit_to_Kizeo)=="2":
+            next_page_index='3'
+            list_inputs=[### Cauffage
+                                    "Cauffage_systeme",
+                                    "Cauffage_annee_de_mise_en_oeuvre",
+                                    "Cauffage_type_de_regulation",
+                                    "Cauffage_system_d_appoint",
+                                    "Cauffage_commentaire" ,
+                                    
+                                    ### ECS
+                                    "ECS_type",
+                                    "ECS_system_d_appoint",
+                                    "ECS_commentaire",
+                                    
+                                    ### Ventilation
+                                    "Ventilation_type" ,
+                                    
+                                    ### Refroidissement
+                                    "Refroidissement_type" ,
+                                    "Refroidissement_commentaire" ,
+                                    
+                                    ### Compteur Electrique
+                                    "Compteur_Electrique_Puissance_souscrite" ,
+                                    "Compteur_Electrique_type" ,
+                                    "Compteur_Electrique_commentaire" ,]
+            table_index=['Cauffage_photo_systeme_de_production',
+                        'Cauffage_photo_fiche_signaletique',
+                        'Cauffage_photo_appoint',
+                        'ECS_photo_appoint',
+                        'Ventilation_photo_ventilation',
+                        'Compteur_Electrique_photo_compteur',
+                        ]
+        if str(submit_to_Kizeo)=="3":
+            next_page_index='4'
+            list_inputs=[### Mur 1
+                                    "Mur_1_Position", 
+                                    "Mur_1_Composition",
+                                    "Mur_1_Epaisseur_mur",
+                                    "Mur_1_Isolation",
+                                    "Mur_1_Epaisseur_isolant",
+                                    "Mur_1_Date_d_isolation",
+                                    "Mur_1_Preuve_d_isolation",
+                                    ### Mur 2
+                                    "Mur_2_Position", 
+                                    "Mur_2_Composition",
+                                    "Mur_2_Epaisseur_mur",
+                                    "Mur_2_Isolation",
+                                    "Mur_2_Epaisseur_isolant",
+                                    "Mur_2_Date_d_isolation",
+                                    "Mur_2_Preuve_d_isolation",
+                                    
+                                    ### Plancher bas 1
+                                    "Plancher_bas_1_Position",
+                                    "Plancher_bas_1_Composition" ,
+                                    "Plancher_bas_1_Isolation" ,
+                                    "Plancher_bas_1_Epaisseur_isolant" ,
+                                    "Plancher_bas_1_Date_d_isolation" ,
+                                    "Plancher_bas_1_Preuve_d_isolation" ,
+                                    #"Plancher_bas_1_Photo_plancher_bas" ,
+                                    ### Plancher bas 2
+                                    "Plancher_bas_2_Position",
+                                    "Plancher_bas_2_Composition" ,
+                                    "Plancher_bas_2_Isolation" ,
+                                    "Plancher_bas_2_Epaisseur_isolant" ,
+                                    "Plancher_bas_2_Date_d_isolation" ,
+                                    "Plancher_bas_2_Preuve_d_isolation" ,
+                                    #"Plancher_bas_2_Photo_plancher_bas" ,
+                                    
+                                    ### Plancher haut 1
+                                    "Plancher_Haut_1_Type",
+                                    "Plancher_Haut_1_Composition",
+                                    "Plancher_Haut_1_Surface",
+                                    "Plancher_Haut_1_Isolation" ,
+                                    "Plancher_Haut_1_Epaisseur_isolant" ,
+                                    "Plancher_Haut_1_Date_d_isolation",
+                                    "Plancher_Haut_1_Preuve_d_isolation" ,
+                                    #"Plancher_Haut_1_Photo_plancher_bas" ,
+                                    ### Plancher haut 2
+                                    "Plancher_Haut_2_Type",
+                                    "Plancher_Haut_2_Composition",
+                                    "Plancher_Haut_2_Surface",
+                                    "Plancher_Haut_2_Isolation" ,
+                                    "Plancher_Haut_2_Epaisseur_isolant" ,
+                                    "Plancher_Haut_2_Date_d_isolation",
+                                    "Plancher_Haut_2_Preuve_d_isolation" ,
+                                    #"Plancher_Haut_2_Photo_plancher_bas" ,
+                                    ]
+            table_index=['Mur_1_Photo_mur',
+                        'Mur_2_Photo_mur',
+                        'Plancher_bas_1_Photo_plancher_bas',
+                        'Plancher_bas_2_Photo_plancher_bas',
+                        'Plancher_Haut_1_Photo_plancher_bas',
+                        'Plancher_Haut_2_Photo_plancher_bas',
+                ]
+        if str(submit_to_Kizeo)=="4":
+            next_page_index='5'
+            list_inputs=[### Fenetre type 1
+                                    "Fenetre_type_1_Menuiserie" ,
+                                    "Fenetre_type_1_Materiaux",
+                                    "Fenetre_type_1_Type_de_vitrage" ,
+                                    "Fenetre_type_1_Volets" ,
+                                    "Fenetre_type_1_Nombre",
+                                    #"Fenetre_type_1_Photo" ,
+                                    ### Fenetre type 2
+                                    "Fenetre_type_2_Menuiserie" ,
+                                    "Fenetre_type_2_Materiaux",
+                                    "Fenetre_type_2_Type_de_vitrage" ,
+                                    "Fenetre_type_2_Volets" ,
+                                    "Fenetre_type_2_Nombre",
+                                    #"Fenetre_type_2_Photo" ,
+                                    
+                                    ### Porte 1
+                                    "Porte_1_Materiaux",
+                                    "Porte_1_Type_porte",
+                                    "Porte_1_Nombre",
+                                    ### Porte 2
+                                    "Porte_2_Materiaux",
+                                    "Porte_2_Type_porte",
+                                    "Porte_2_Nombre",]
+            table_index=['Fenetre_type_1_Photo',
+                        'Fenetre_type_2_Photo',
+                        'Porte_1_Photo_porte',
+                        'Porte_2_Photo_porte',
+                ]
+            
+        if str(submit_to_Kizeo)=="5":
+            next_page_index='0'
+            list_inputs=[   ###  Saisie par pièce
+                        'Saisie_par_piece_Surface_Mesuree',
+                        ]
+            table_index=[
+                        'Saisie_par_piece_Signature_intervenant',
+                        'Saisie_par_piece_Signature_client'
+                ]
+        for lis_inp in list_inputs:
+                input_get= request.POST.get(lis_inp)
+                if input_get:
+                    setattr(obj, lis_inp, input_get)
+                    obj.save()
+                    
+        for lis in table_index:
+                img_get= request.FILES.get(lis)
+                if img_get:
+                    if hasattr(obj, lis):
+                        if getattr(obj,lis):
+                            if len(getattr(obj,lis)) > 0 :
+                                os.remove(getattr(obj,lis).path)
+                        # Check if the field exists in the model
+                        setattr(obj, lis, img_get)
+                        obj.save()  
+        if str(submit_to_Kizeo)=="123123":
+            
             #obj. = request.FILES.get('Donnees_Generales_Preuve_Surface_Photo')
             table_index=['Donnees_Generales_Preuve_Surface_Photo',
                          'Donnees_Generales_Factures',
@@ -1292,20 +1485,12 @@ def Kizeo_form_page(request,client_id,page_number):
                         'Saisie_par_piece_Signature_intervenant',
                         'Saisie_par_piece_Signature_client'
                 ]
-            for lis in table_index:
-                img_get= request.FILES.get(lis)
-                if img_get:
-                    if hasattr(obj, lis):
-                        if getattr(obj,lis):
-                            if len(getattr(obj,lis)) > 0 :
-                                os.remove(getattr(obj,lis).path)
-                        # Check if the field exists in the model
-                        setattr(obj, lis, img_get)
-                        obj.save()  
+            
                         
                     
                 
-
+            
+            
             ### Données Générales
             obj.latitude = request.POST.get("latitude_input")
             obj.longitude = request.POST.get("longitude_input")
@@ -1313,7 +1498,7 @@ def Kizeo_form_page(request,client_id,page_number):
             obj.Donnees_Generales_Nom_d_intervenant = request.POST.get("Donnees_Generales_Nom_d_intervenant")
             
             Donnees_Generales_Date_de_visite = request.POST.get("Donnees_Generales_Date_de_visite")
-            obj.Donnees_Generales_Date_de_visite = datetime.strptime(Donnees_Generales_Date_de_visite,'%Y-%m-%d')
+            obj.Donnees_Generales_Date_de_visite = datetime.strptime(str(Donnees_Generales_Date_de_visite),'%Y-%m-%d')
             
             obj.Donnees_Generales_Adresse = request.POST.get("Donnees_Generales_Adresse")
             obj.Donnees_Generales_Zip_Code = int(request.POST.get("Donnees_Generales_Zip_Code"))
@@ -1366,7 +1551,7 @@ def Kizeo_form_page(request,client_id,page_number):
             
             ### Cauffage
             obj.Cauffage_systeme = request.POST.get("Cauffage_systeme")
-            obj.Cauffage_annee_de_mise_en_oeuvre = int(request.POST.get("Cauffage_annee_de_mise_en_oeuvre"))
+            obj.Cauffage_annee_de_mise_en_oeuvre = request.POST.get("Cauffage_annee_de_mise_en_oeuvre")
             #Cauffage_photo_systeme_de_production = request.FILES['Cauffage_photo_systeme_de_production']
             #Cauffage_photo_fiche_signaletique = request.FILES['Cauffage_photo_fiche_signaletique']
             obj.Cauffage_type_de_regulation = request.POST.get("Cauffage_type_de_regulation")
@@ -1624,7 +1809,7 @@ def Kizeo_form_page(request,client_id,page_number):
 
                                 ])
 
-        return redirect(f"/formK/{client_id}/{page_number}")
+        return redirect(f"/formK/{client_id}/{next_page_index}")
     Pieces_index_add = kizeo_model_Pieces.objects.filter(kizeo_id=client_id).aggregate(Max('Pieces_index'))['Pieces_index__max']
     if not Pieces_index_add:
         Pieces_index_add = 1
