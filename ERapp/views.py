@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.views.generic.edit import CreateView
 from django.db.models import Max
+from .models import MyModel, UpdatedXLSXFile 
 from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1,kizeo_model_Pieces,AI_or_AGENT
 from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal,Activities_audit,file_table_AdA,file_table_comm
 from django.template.loader import render_to_string
@@ -19,35 +20,48 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt,csrf_protect
+
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # Create your views here.
 import random
 import string
 from datetime import datetime, date
+import os
 
+## generate xlsx
 import openpyxl
 from openpyxl.utils import get_column_letter
 from openpyxl.drawing.image import Image
 from io import BytesIO
 
-from django.http import HttpResponse
-from .models import MyModel, UpdatedXLSXFile 
-from openpyxl.styles import NamedStyle
-import os
+XLSX_TEMPLATE_FILE_PATH = BASE_DIR/ 'ERapp/static/sys_files/KiFile.xlsx'
 
 
+## generate pdf
+from jinja2 import Environment, FileSystemLoader
+from reportlab.pdfgen import canvas
+from io import BytesIO
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.utils import ImageReader
+PDF_TEMPLATE_FILE_PATH = BASE_DIR/ 'ERapp/static/sys_files/template_pdf.html'
+
+## backup
 import tempfile
 import shutil
 import zipfile
 import subprocess
-from pathlib import Path
-BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+#from ..ER_project.settings import EMAIL_HOST_USER
+FROM_EMAIL="guhgi155@gmail.com"
+EMAIL_SENDER = FROM_EMAIL
 formT="/"
 formK="/formK/"
 formK111="formK"
 link2="/agentimmo/"
 beaudit="/beaudit/"
-FROM_EMAIL="guhgi155@gmail.com"
 
 VT="/VT/"
 
@@ -59,12 +73,12 @@ def Home(request):
     #return render(request,'html/home.html',{"name":"night","username":"nightcode"})
     return render(request,'html/home.html')
     
-def send_email():
+def send_email(subject,msg,receiver_email):
     send_mail(
-    "Subject here",
-    "Here is the message. test test 123 ",
-    "guhgi155@gmail.com",
-    ["lazariatik@gmail.com"],
+    subject,
+    msg,
+    EMAIL_SENDER,
+    [receiver_email],
     fail_silently=False,) 
 
 
@@ -125,7 +139,7 @@ def SignupU(request):
     return render(request, 'html/signup.html',{"per":per,"pl":pl,"pm":pm,"pc":pc,"pn":pn})
     
     
-    
+@login_required
 def LogoutU(request):
     logout(request)
     return redirect("main_page")
@@ -200,9 +214,9 @@ def forgot_password(request):
             
             subject = 'Votre mot de passe a été changé'
             message = f'Email: {user_L.email} Mot de passe: {newPassword} '
-            from_email = 'Night'
-            recipient_list = ['lazariatik@gmail.com']
-            send_mail(subject, message, from_email, recipient_list) 
+            receiver_email = [user_L.email]
+            send_email(subject,message,receiver_email)
+             
             
             user_= USER.objects.get(email=email)
             user_.set_password(newPassword)
@@ -1623,8 +1637,8 @@ def download_K_file(request,file_id):
     
     obj = kizeo_model.objects.get(kizeo_id=file_id)
     obj2 = kizeo_model_Pieces.objects.filter(kizeo_id=file_id)
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    template_path = os.path.join(BASE_DIR, 'ERapp/static/KiFile.xlsx')
+    
+    template_path = XLSX_TEMPLATE_FILE_PATH
     #template_path = 'ERapp\static\KiFile.xlsx'  # Provide the path to your template file
     workbook = openpyxl.load_workbook(template_path)
     
@@ -2376,3 +2390,43 @@ def download_K_file(request,file_id):
 
 
 
+
+
+def generate_pdf(template_path, context):
+    # Load the template
+    env = Environment(loader=FileSystemLoader('.'))
+    template = env.get_template(template_path)
+
+    # Render the template with the provided context
+    html_content = template.render(**context)
+
+    # Generate PDF from HTML content
+    pdf_buffer = BytesIO()
+    p = canvas.Canvas(pdf_buffer, pagesize=letter)
+
+    # Draw HTML content on the PDF
+    p.drawString(100, 700, html_content)  # Adjust the position as needed
+
+    # Reset the buffer pointer to the beginning
+    pdf_buffer.seek(0)
+
+    return pdf_buffer
+
+if __name__ == "__main__":
+    # Define the template path and context
+    template_path = "template.html"
+    context = {
+        "title": "My PDF",
+        "content": "Hello, this is a sample PDF!",
+        "my_integer": 42,
+        "my_string": "This is a string",
+        "my_float": 3.14,
+        "image_path": "path/to/your/image.jpg"  # Replace with the actual path
+    }
+
+    # Generate the PDF
+    pdf_buffer = generate_pdf(template_path, context)
+
+    # Save the PDF to a file
+    with open("output.pdf", "wb") as output_file:
+        output_file.write(pdf_buffer.read())

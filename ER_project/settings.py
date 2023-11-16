@@ -144,6 +144,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com" #Gmail: smtp.gmail.com  Outlook: smtp-mail.outlook.com  Yahoo: smtp.mail.yahoo.com live.smtp.mailstrap.io
 EMAIL_PORT = 587 # the default one 587 or 25  EMAIL_USE_TLS uses port 587 by default, where and EMAIL_USE_SSL uses port 465
 EMAIL_HOST_USER = "guhgi155@gmail.com"
+
 EMAIL_HOST_PASSWORD = "wimb aoms cbbm ddtk"
 EMAIL_USE_TLS = True
 #EMAIL_USE_SSL = False

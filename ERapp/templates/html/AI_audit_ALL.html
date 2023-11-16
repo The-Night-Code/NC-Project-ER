@@ -642,14 +642,7 @@
                                   <select class="form-select" name="table_auditeur_{{ item.cell_id }}" id="auditeur" style="height:55px!important;width:250px!important;">
                                     <option value="" >...</option>
                                     {% for audi in auditeur %}
-                                      <option value="{{ audi.email }}" {% if audi.email == item.auditeur %} selected {% endif %} style="background-image:url(male.png);"
-                                        {% if audi.profile_pic %}  
-                                        style="background:url('{{ audi.profile_pic.url }}')no-repeat; width:100px; height:100px;"
-                                        
-                                        {% else %}
-                                        style="background:url('image/default_user_avatar.png') no-repeat !important; width:100px; height:100px ;" 
-                                        {% endif %}
-                                        >
+                                      <option value="{{ audi.email }}" {% if audi.email == item.auditeur %} selected {% endif %}>
                                         {{ audi.last_name }} {{ audi.first_name }}
                                       </option>
 
