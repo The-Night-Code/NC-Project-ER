@@ -335,7 +335,12 @@ table.dataTable thead .sorting_desc_disabled:before {
   scroll-behavior: smooth;
 }
 
+
 /* start chat_box_ul_style */
+.chat-messages-container_auditV1 li a img ,
+.chat-messages-container_auditV2 li a img ,
+.chat-messages-container_auditV3 li a img ,
+.chat-messages-container_auditV1 li a img {width:50px !important;}
 .chat_box_ul_style{width:97%!important;max-width:420px!important; height:auto!important; max-height:500px!important;}
 .chat_box_ul_style h3 {font-size: 18px!important;}
 /* end chat_box_ul_style */

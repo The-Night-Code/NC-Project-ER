@@ -161,9 +161,11 @@ def ProfileU(request):
             user_L.profile_pic =imagefile 
             user_L.save(update_fields=['profile_pic'])
             
-            if len(old_image) > 0 and old_image:
-                os.remove(old_image.path)    
-            
+            if len(old_image) > 0 and old_image and os.path.exists(old_image.path):
+                try:
+                    os.remove(old_image.path)    
+                except:
+                    pass
             return redirect("/profile/")
             
         if remove_profile_image=="remove_profile_image"  :
@@ -171,8 +173,11 @@ def ProfileU(request):
             user_L.profile_pic = 'images/sys_image/default_user_avatar.png'
             user_L.save(update_fields=['profile_pic'])
             if old_image.path != '/media/images/sys_image/default_user_avatar.png':
-                if len(old_image) > 0 :
-                    os.remove(old_image.path)
+                if len(old_image) > 0 and os.path.exists(old_image.path) :
+                    try:
+                        os.remove(old_image.path)
+                    except:
+                        pass
             return redirect("/profile/")
             
  
@@ -463,7 +468,7 @@ def audit_pages(request,redirect_page,html_page):
     datafiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False)
     countfiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False).count()
     message_box_01 = message_box_1.objects.all()
-    
+    #user_profile_image = USER.objects.all()#values_list('first_name','last_name','email','profile_pic')
 
     table_index=[{'index':1,'state':"A realiser"},
                  {'index':2,'state':"En cours"},
@@ -506,7 +511,9 @@ def audit_pages(request,redirect_page,html_page):
                                                   'Audi':Audi,
                                                   #'a':a,
                                                   'redirect_next_page':redirect_page,
-                                                  'msg_box_tagged':msg_box_tagged}
+                                                  'msg_box_tagged':msg_box_tagged,
+                                                  #'user_profile_image':user_profile_image
+                                                  }
     return list
 
 @login_required 
@@ -555,9 +562,11 @@ def BE_audit_BY_A(request):
 @login_required
 def send_message(request):
     if request.method == 'POST':
+        user_ = request.user
         message = request.POST.get('message')
         redirectNextPage = request.POST.get('redirectNextPage')
-        box = request.POST.get('box')
+        #box = request.POST.get('box')
+        col = request.POST.get('col')
         cellId = request.POST.get('cellId')
         msg_id=generate_random_string(10)
         if message:
@@ -566,10 +575,11 @@ def send_message(request):
                                                        
                                                         message_id = msg_id,
                                                         row_id = cellId,
-                                                        username =request.user.first_name + "  " +  request.user.last_name,
-                                                        email =  request.user.email,
+                                                        username =user_.first_name + "  " +  user_.last_name,
+                                                        email =  user_.email,
                                                         message =message,
-                                                        box = box)
+                                                        box = col,
+                                                        profile_pic = user_.profile_pic)
             response_data = {
                 'username': new_message.username,
                 'message': new_message.message,

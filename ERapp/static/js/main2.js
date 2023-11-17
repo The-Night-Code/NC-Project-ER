@@ -22,12 +22,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function sendMessage(cellId, box, redirectNextPage,col) {
-    inpust_msg_col_id="input_msg_"+col+"_" + cellId
+                    
+    inpust_msg_col_id="input_msg_"+col+"_" + cellId;
     var message = document.getElementById(inpust_msg_col_id).value;
-    
-    if (message !== '') {
+    //window.location.href=col+"___"+cellId
+    //if (!message) {
         var csrfToken = $("[name=csrfmiddlewaretoken]").val();
-
+        
         $.ajax({
             url: "/send-message/",
             type: "POST",
@@ -36,6 +37,7 @@ function sendMessage(cellId, box, redirectNextPage,col) {
                 box:box,
                 redirectNextPage:redirectNextPage,
                 cellId:cellId,
+                col:col,
                 csrfmiddlewaretoken: csrfToken
             },
             success: function (data) {
@@ -43,7 +45,7 @@ function sendMessage(cellId, box, redirectNextPage,col) {
                 var newMessage = `
                     <li class="message-item">
                         <a>
-                            <img src="${data.userProfilePic}" alt="Image" class="rounded-circle">
+                            <img src="${data.userProfilePic}" alt="Image" width="50"class="rounded-circle">
                             <div>
                                 <h3>${data.username}</h3>
                                 <h4>${data.message}</h4>
@@ -63,7 +65,7 @@ function sendMessage(cellId, box, redirectNextPage,col) {
 
             },
         });
-    }
+    //}
 }
 
 function preventSubmit(event) {

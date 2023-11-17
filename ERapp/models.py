@@ -229,6 +229,7 @@ class message_box_1(models.Model):
     message = models.CharField(max_length=255,blank=True)
     message_date = models.DateTimeField(default=timezone.now)
     box = models.CharField(max_length=255,blank=True)
+    profile_pic = models.ImageField(blank=True, upload_to='uploads/profilePic',default='uploads/default_user_avatar.png')
     def __str__(self):
         return f'{self.email} {self.message}'
     
