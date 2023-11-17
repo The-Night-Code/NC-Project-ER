@@ -23,7 +23,7 @@ from django.conf.urls.static import static
 from ERapp.views import  LoginU, LogoutU , ProfileU,forgot_password ,showimage,VT_Page_edit_state
 from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,files_history,Activities
 from ERapp.views import remove_file_from_MODELS,agent_immo,agent_immo_f,send_message
-from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
+from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,BE_home_page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
 from ERapp.views import download_media_folder
 
 ai="ai"
@@ -70,6 +70,7 @@ urlpatterns = [
     # Bereau d'etude Pages
     # Bereau d'etude Pages
     # Bereau d'etude Pages
+    path(f'{be}_home_page/',BE_home_page ,name="be_home_page"),
     path(f'{be}/',BE_Page ,name="be"),
     path(f'{be}f/',BE_Page_f ,name="bef"),
     

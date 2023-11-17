@@ -127,12 +127,17 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'main_page' %}">
+        <a class="nav-link collapsed" href="{% url 'be_home_page' %}">
           <i class="bi bi-grid"></i>
           <span>Accueil</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'be' %}">
+          <i class="bi bi-table"></i>
+          <span>Les tables</span>
+        </a>
+      </li>
       <li class="nav-item">
         <a class="nav-link " href="{% url 'bef' %}">
           <i class="ri-file-add-line"></i>
@@ -151,7 +156,7 @@
       <h1>Ajouter un client</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'be_home_page' %}">Accueil</a></li>
           <li class="breadcrumb-item active">Ajouter un client</li>
         </ol>
       </nav>

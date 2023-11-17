@@ -494,9 +494,34 @@ class Activities_audit(models.Model):
     Activity_edit = models.BooleanField(default=False) 
     Activity_delete = models.BooleanField(default=False)
     
+    Activity_be = models.BooleanField(default=False) 
+    
+    def __str__(self):
+        return f'id:{self.Activity_id} || user:{self.Activity_user} || table:{self.Activity_table} || pID:{self.Activity_project_id} || before:{self.Activity_before} || after:{self.Activity_after}'
+    
+class Activities_be(models.Model):
+    Activity_id = models.CharField(max_length=255,blank=True)
+    Activity_user = models.CharField(max_length=255,blank=True)
+    Activity_user_email = models.CharField(max_length=255,blank=True)
+    Activity_table = models.CharField(max_length=255,blank=True)
+    Activity_date = models.DateTimeField(default=timezone.now)
+    Activity_project_id = models.CharField(max_length=255,blank=True)
+    
+    Activity_name = models.CharField(max_length=255,blank=True)
+    Activity_before = models.CharField(max_length=255,blank=True)
+    Activity_after = models.CharField(max_length=255,blank=True)
+    
+    Activity_add = models.BooleanField(default=False) 
+    Activity_add_2 = models.BooleanField(default=False) 
+    Activity_edit = models.BooleanField(default=False) 
+    Activity_delete = models.BooleanField(default=False)
+    
+    Activity_be = models.BooleanField(default=False) 
+    
     def __str__(self):
         return f'id:{self.Activity_id} || user:{self.Activity_user} || table:{self.Activity_table} || pID:{self.Activity_project_id} || before:{self.Activity_before} || after:{self.Activity_after}'
     
     
+      
     
     

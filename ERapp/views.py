@@ -13,6 +13,7 @@ from django.db.models import Max
 from .models import MyModel, UpdatedXLSXFile 
 from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1,kizeo_model_Pieces,AI_or_AGENT
 from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal,Activities_audit,file_table_AdA,file_table_comm
+from .models import Activities_be,Activities_audit
 from django.template.loader import render_to_string
 
 from django.core.mail import send_mail
@@ -62,7 +63,7 @@ formK="/formK/"
 formK111="formK"
 link2="/agentimmo/"
 beaudit="/beaudit/"
-
+redirect_page_be="/be/"
 VT="/VT/"
 
 def main_Page(request):
@@ -738,10 +739,44 @@ def agent_immo_f(request):
 
 
 
+@login_required
+def BE_home_page(request):
+    data = TableData001.objects.all()
+    activities_audit = Activities_be.objects.order_by("-Activity_date")[:6]
+    today = date.today()
+    first_day_of_year = date(today.year, 1, 1)
+    first_day_of_month = date(today.year, today.month, 1)
+
+    client_count_added_today = TableData001.objects.filter(creation_time__date=today).count()
+    client_count_added_month = TableData001.objects.filter(creation_time__range=(first_day_of_month, datetime.now())).count()
+    client_count_added_year= TableData001.objects.filter(creation_time__range=(first_day_of_year, datetime.now())).count()
+
+    client_count_envoye_today = TableData001.objects.filter(Envoye_time__date=today).count()
+    client_count_envoye_month = TableData001.objects.filter(Envoye_time__range=(first_day_of_month, datetime.now())).count()
+    client_count_envoye_year= TableData001.objects.filter(Envoye_time__range=(first_day_of_year, datetime.now())).count()
+    
+    client_count_fini_today = TableData001.objects.filter(fini_time__date=today).count()
+    client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month, datetime.now())).count()
+    client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now())).count()
 
 
+
+    return render(request, 'html/BE_home_page.html', {'data':data,
+                                                        'activities_audit':activities_audit,
+                                                        'client_count_added_today':client_count_added_today,
+                                                        'client_count_added_month':client_count_added_month,
+                                                        'client_count_added_year':client_count_added_year,
+                                                        
+                                                        'client_count_envoye_today':client_count_envoye_today,
+                                                        'client_count_envoye_month':client_count_envoye_month,
+                                                        'client_count_envoye_year':client_count_envoye_year,
+                                                        
+                                                        'client_count_fini_today':client_count_fini_today,
+                                                        'client_count_fini_month':client_count_fini_month,
+                                                        'client_count_fini_year':client_count_fini_year})
 @login_required
 def BE_Page(request):
+    
     user_ = request.user
     bureau_d_etude = user_.com_name
     data = TableData001.objects.filter(be=True,bureau_d_etude=bureau_d_etude).order_by('-creation_time')
@@ -749,13 +784,36 @@ def BE_Page(request):
     col_count = data.count()
     # Get unique column names from the TableData model
     column_names = TableData001._meta.get_fields()
-    datafiles_VT = file_table_vt.objects.all()
-    datafiles_AuditFinal = file_table_auditFinal.objects.all()
+    datafiles_VT = file_table_vt.objects.filter(file_removed=False)
+    countfiles_VT = file_table_vt.objects.filter(file_removed=False).count()
+    datafiles_AuditV1 = file_table_auditV1.objects.filter(file_removed=False)
+    countfiles_AuditV1 = file_table_auditV1.objects.filter(file_removed=False).count()
+    datafiles_AuditV2 = file_table_auditV2.objects.filter(file_removed=False)
+    countfiles_AuditV2 = file_table_auditV2.objects.filter(file_removed=False).count()
+    datafiles_AuditV3 = file_table_auditV3.objects.filter(file_removed=False)
+    countfiles_AuditV3 = file_table_auditV3.objects.filter(file_removed=False).count()
+    datafiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False)
+    countfiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False).count()
+    message_box_01 = message_box_1.objects.all()
+    
+    msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
+    
     return render(request, 'html/BE_page.html', { 'data': data ,
                                                   'col_count':col_count ,
                                                   'column_names': column_names,
                                                   'datafiles_VT': datafiles_VT ,
-                                                  'datafiles_AuditFinal':datafiles_AuditFinal})
+                                                  'countfiles_VT': countfiles_VT ,
+                                                  'datafiles_AuditV1': datafiles_AuditV1 ,
+                                                  'countfiles_AuditV1': countfiles_AuditV1,
+                                                  'datafiles_AuditV2': datafiles_AuditV2 ,
+                                                  'countfiles_AuditV2': countfiles_AuditV2,
+                                                  'datafiles_AuditV3': datafiles_AuditV3 ,
+                                                  'countfiles_AuditV3': countfiles_AuditV3,
+                                                  'datafiles_AuditFinal':datafiles_AuditFinal,
+                                                  'countfiles_AuditFinal': countfiles_AuditFinal,
+                                                  'message_box_1':message_box_01,
+                                                  'redirect_next_page':redirect_page_be,
+                                                  'msg_box_tagged':msg_box_tagged,})
 @login_required
 def BE_Page_f(request):
     user_= request.user
@@ -2422,7 +2480,7 @@ def generate_pdf(template_path, context):
 
     return pdf_buffer
 
-if __name__ == "__main__":
+if __name__ == "__main____":
     # Define the template path and context
     template_path = "template.html"
     context = {

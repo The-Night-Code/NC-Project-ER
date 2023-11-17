@@ -2,14 +2,15 @@
 {% load l10n %}
 {% load humanize %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+
   <link rel="shortcut icon" type="image/png" href="{% static 'image/icon.png' %}">
-  <title>Accueil</title>
+  <title>Les tables</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -40,20 +41,11 @@
       
     
     </script>
-
-  <style>
-
-
-  </style>
     
 </head>
 
 <body onload="load()">
-  {% if user.is_authenticated  and "auditeur" in user.role  %} <!-- and "admin" in user.role -->
-
-  <input  type="hidden" name="user_email" id="user_email" value="{{ user.email }}">
-  <input  type="hidden" name="user_firstname" id="user_firstname" value="{{user.first_name}}">
-  <input  type="hidden" name="user_lastname" id="user_lastname" value="{{user.last_name}}">
+  {% if user.is_authenticated  and "ai" in user.role %}
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     
@@ -78,9 +70,11 @@
       <ul class="d-flex align-items-center">
 
 
+
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            
             <img src="{{ user.profile_pic.url }}"  alt="Image">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ user.first_name }} {{ user.last_name }} </span>
           </a><!-- End Profile Iamge Icon -->
@@ -134,96 +128,25 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="{% url 'main_page' %}">
+        <a class="nav-link " href="{% url 'be_home_page' %}">
           <i class="bi bi-grid"></i>
           <span>Accueil</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
-
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#BE_ul" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-table"></i><span>Bureau d'étude</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="BE_ul" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li class="nav-item">
-            <a class="nav-link collapsed" href="{% url 'BE_audit_ALL' %}">
-              <i class="bi bi-table fa-10x"></i>
-              <span>Toutes les colonnes</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link collapse" href="{% url 'BE_audit_BY_A' %}"><!--href="{ % url '' % }"-->
-              <i class="bi bi-table"></i>
-              <span>Par auditeur</span>
-            </a>
-          </li>
-
-        </ul>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#AI_ul" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-table"></i><span>Agent immobilier</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="AI_ul" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li class="nav-item">
-            <a class="nav-link collapsed" href="{% url 'AI_audit_ALL' %}">
-              <i class="bi bi-table fa-10x"></i>
-              <span>Toutes les colonnes</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link collapsed" href="{% url 'AI_audit_BY_A' %}"><!--href="{ % url '' % }"-->
-              <i class="bi bi-table"></i>
-              <span>Par auditeur</span>
-            </a>
-          </li>
-
-        </ul>
-      </li>
-
-      {% if "a1" in user.role   %}
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-person-add"></i><span>Créer un compte</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li class="nav-item">
-            <a class="nav-link collapsed" href="{% url 'create_acc_for_AI' %}">
-              <i class="bi bi-person-add fa-10x"></i>
-              <span>Pour l'agent immobilier</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link collapsed" href="{% url 'create_acc_for_BE' %}">
-              <i class="bi bi-person-add"></i>
-              <span>Pour Bureau d'étude</span>
-            </a>
-          </li>
-
-        </ul>
-      </li>
-      {% endif %}
-
-      
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'files_history' %}">
-          <i class="bi bi-file-earmark-x"></i>
-          <span>Historique des fichiers</span>
+        <a class="nav-link collapsed" href="{% url 'be' %}">
+          <i class="bi bi-table"></i>
+          <span>Les tables</span>
         </a>
       </li>
-
       <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'Activities' %}">
-          <i class="bi bi-list-check"></i>
-          <span>Activités</span>
+        <a class="nav-link collapsed" href="{% url 'bef' %}">
+          <i class="ri-file-add-line"></i>
+          <span>Ajouter un client</span>
         </a>
-      </li>
+      </li><!-- End Dashboard Nav -->
 
     </ul>
-
   </aside><!-- End Sidebar-->
   <!-- End Sidebar ==========================================================================================================================-->
 
@@ -421,21 +344,18 @@
         </div>
     </section>
 
-
-    
-
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   {% else %}
-      
   <script>
     window.location.href = "{% url 'not_logged_in' %}";
   </script>
 
   {% endif %}
 
-
+ 
+  
   
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -454,7 +374,7 @@
   <script type="text/javascript" src="{% static 'js/main3.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main4.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main5.js'%}"></script>
-  <script type="text/javascript" src="{% static 'js/main9.js'%}"></script>
+
 </body>
 
 </html>
