@@ -623,37 +623,42 @@ def remove_file_from_MODELS(request):
     file_table=ModelByColumn(model_by_column)
     
     try:
-        f_table_audit_v1 =file_table.objects.get(file_id=str(file_id),file_index=str(index))
-        Activity_table_object = get_object_or_404(TableData001,cell_id=str(file_id))
-            
-        if getattr(Activity_table_object,"be"):
-                    Activity_table="Bureau d'étude"
-        elif getattr(Activity_table_object,"ai"):
-                    Activity_table="Agent immobilier"
-                    
+        f_table_audit_v1 = file_table.objects.get(file_id=str(file_id),file_index=str(index))
+
         if f_table_audit_v1.file_removed == True:
+            file_removed_path=f_table_audit_v1.file_save
+            if os.path.exists(file_removed_path.path):
+                os.remove(file_removed_path.path)
+
             f_table_audit_v1.delete()
-            
-            
         else:
-            
-            f_table_audit_v1.file_removed = True
-            #f_table_audit_v1.file_removed_date = 
-            f_table_audit_v1.file_removed_user_email = user_.email
-            f_table_audit_v1.file_removed_user_FN = user_.first_name
-            f_table_audit_v1.file_removed_user_LN = user_.last_name
-            f_table_audit_v1.file_removed_date=datetime.now()
-            f_table_audit_v1.save(update_fields=['file_removed', 'file_removed_user_email', 'file_removed_user_FN', 'file_removed_user_LN','file_removed_date' ])
-            if model_by_column == "vt":
-                model_by_column="Visite technique"
-            Activities_audit.objects.create(Activity_id=generate_random_string(10),
-                                                        Activity_user=f"{user_.last_name} {user_.first_name}",
-                                                        Activity_user_email=user_.email,
-                                                        Activity_table=Activity_table,
-                                                        Activity_project_id=str(file_id),
-                                                        Activity_before=getattr(f_table_audit_v1,"file_name"),
-                                                        Activity_after = model_by_column ,
-                                                        Activity_delete=True)
+            try:
+                Activity_table_object = TableData001.objects.get(cell_id=str(file_id)) #get_object_or_404(TableData001,cell_id=str(file_id))
+                if  Activity_table_object:
+                    if getattr(Activity_table_object,"be"):
+                                Activity_table="Bureau d'étude"
+                    elif getattr(Activity_table_object,"ai"):
+                                Activity_table="Agent immobilier"
+                        
+                f_table_audit_v1.file_removed = True
+                #f_table_audit_v1.file_removed_date = 
+                f_table_audit_v1.file_removed_user_email = user_.email
+                f_table_audit_v1.file_removed_user_FN = user_.first_name
+                f_table_audit_v1.file_removed_user_LN = user_.last_name
+                f_table_audit_v1.file_removed_date=datetime.now()
+                f_table_audit_v1.save(update_fields=['file_removed', 'file_removed_user_email', 'file_removed_user_FN', 'file_removed_user_LN','file_removed_date' ])
+                if model_by_column == "vt":
+                    model_by_column="Visite technique"
+                Activities_audit.objects.create(Activity_id=generate_random_string(10),
+                                                            Activity_user=f"{user_.last_name} {user_.first_name}",
+                                                            Activity_user_email=user_.email,
+                                                            Activity_table=Activity_table,
+                                                            Activity_project_id=str(file_id),
+                                                            Activity_before=getattr(f_table_audit_v1,"file_name"),
+                                                            Activity_after = model_by_column ,
+                                                            Activity_delete=True)
+            except:
+                pass
     except file_table.DoesNotExist:
         pass
     

@@ -322,7 +322,7 @@
                               <td class="td_input_cell"><input class="input_table_data" type="text" name="table_num_{{ item.cell_id }}" id="table{{k.index}}_num{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
                               <td class="td_input_cell"><input class="input_table_data" type="text" name="table_email_{{ item.cell_id }}" id="table{{k.index}}_email{{ item.cell_id }}" value="{{ item.email }}"  ></td>  
 
-                              <td class="td_input_cell" > <!-- VT-->
+                              <td class="td_input_cell td_input_file_cell" > <!-- VT-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="ri-file-list-3-line"></i>
@@ -367,9 +367,15 @@
 
                                     <li><input class="input_table_data" type="file" name="table_VT_{{ item.cell_id }}" multiple></li>
                                     <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                    <li style="text-align:center;height:20px;">
+                                      <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                        <i class="bi bi-save2 save_button_i_style" ></i>
+                                      </button>
+                                    </li> 
                                     <li></li>
                                     
-                    
+                                    </i></button>
+
                                   </ul>
                     
                     
@@ -412,7 +418,7 @@
   
                               
   
-                              <td class="td_input_cell"> <!-- auditV1-->
+                              <td class="td_input_cell td_input_file_cell"> <!-- auditV1-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" >
                                     <i class="ri-file-list-3-line"></i>
@@ -455,6 +461,11 @@
                                     <hr class="dropdown-divider">
                                     <li><input class="input_table_data" type="file" name="table_auditV1_{{ item.cell_id }}" multiple></li>
                                     <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                    <li style="text-align:center;height:20px;">
+                                      <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                        <i class="bi bi-save2 save_button_i_style" ></i>
+                                      </button>
+                                    </li> 
                                     <li></li>
                                   </ul>
                     
@@ -515,7 +526,7 @@
                               </td>
 
                     
-                              <td class="td_input_cell"> <!-- auditV2-->
+                              <td class="td_input_cell td_input_file_cell"> <!-- auditV2-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="ri-file-list-3-line"></i>
@@ -557,7 +568,12 @@
                                   <hr class="dropdown-divider">
                                    <li><input class="input_table_data" type="file" name="table_auditV2_{{ item.cell_id }}" multiple></li>
                                    <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                   <li></li>
+                                   <li style="text-align:center;height:20px;">
+                                    <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                      <i class="bi bi-save2 save_button_i_style" ></i>
+                                    </button>
+                                  </li> 
+                                  <li></li>
                                    
                                  
                  
@@ -619,7 +635,7 @@
                                 </nav>
                               </td>
 
-                              <td class="td_input_cell"> <!-- auditV3-->
+                              <td class="td_input_cell td_input_file_cell"> <!-- auditV3-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="ri-file-list-3-line"></i>
@@ -661,7 +677,12 @@
                                   <hr class="dropdown-divider">
                                    <li><input class="input_table_data" type="file"  name="table_auditV3_{{ item.cell_id }}" multiple></li>
                                    <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                   <li></li>
+                                   <li style="text-align:center;height:20px;">
+                                    <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                      <i class="bi bi-save2 save_button_i_style" ></i>
+                                    </button>
+                                  </li> 
+                                  <li></li>
                  
                                </ul>
                     
@@ -721,11 +742,11 @@
                                 </nav>
                               </td>
                     
-                              <td class="td_input_cell"> <!-- auditFinal-->
+                              <td class="td_input_cell  td_input_file_cell"> <!-- auditFinal-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="ri-file-list-3-line"></i>
-                                  </a>
+                                  </a> 
                                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
                                     
                                     <!-- for i in datafiles  if item.cell_id == i.file_id -->
@@ -763,7 +784,12 @@
                                   <hr class="dropdown-divider">
                                    <li><input class="input_table_data" type="file" name="table_auditFinal_{{ item.cell_id }}" multiple></li>
                                    <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                   <li></li>
+                                   <li style="text-align:center;height:20px;">
+                                    <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                      <i class="bi bi-save2 save_button_i_style" ></i>
+                                    </button>
+                                  </li> 
+                                  <li></li>
                  
                                </ul>
                     

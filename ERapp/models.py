@@ -177,7 +177,7 @@ class file_table_auditFinal(models.Model):
     def __str__(self):
         return f'{self.file_id} {self.file_index} {self.file_name} {self.file_removed}'
 class file_table_vt(models.Model):
-    file_removed_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    file_removed_date = models.DateTimeField(auto_now=True,null=True,blank=True)
     file_removed_user_email = models.CharField(max_length=255,blank=True)
     file_removed_user_FN = models.CharField(max_length=255,blank=True)
     file_removed_user_LN = models.CharField(max_length=255,blank=True)
@@ -191,7 +191,7 @@ class file_table_vt(models.Model):
     def __str__(self):
         return f'{self.file_id} {self.file_index} {self.file_name} {self.file_removed}'
 class file_table_AdA(models.Model):
-    file_removed_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    file_removed_date = models.DateTimeField(auto_now=True,null=True,blank=True)
     file_removed_user_email = models.CharField(max_length=255,blank=True)
     file_removed_user_FN = models.CharField(max_length=255,blank=True)
     file_removed_user_LN = models.CharField(max_length=255,blank=True)
@@ -205,7 +205,7 @@ class file_table_AdA(models.Model):
     def __str__(self):
         return f'{self.file_id} {self.file_index} {self.file_name} {self.file_removed}'
 class file_table_comm(models.Model):
-    file_removed_date = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    file_removed_date = models.DateTimeField(auto_now=True,null=True,blank=True)
     file_removed_user_email = models.CharField(max_length=255,blank=True)
     file_removed_user_FN = models.CharField(max_length=255,blank=True)
     file_removed_user_LN = models.CharField(max_length=255,blank=True)
