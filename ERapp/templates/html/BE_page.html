@@ -223,7 +223,8 @@
                         <th colspan=2>Audit v3</th> 
                         <th colspan=2>Audit fin</th> 
                         <th onclick="sortTable('tableDATA_1',15)">Précarite</th> 
-                        <th onclick="sortTable('tableDATA_1',16 , 1)">Date de création</th>
+                        <th>Commentaire</th>
+                        <th onclick="sortTable('tableDATA_1',17 , 1)">Date de création</th>
                       </thead>
                       <tbody id="myTable_1">
                         {% for item in data %}
@@ -238,7 +239,7 @@
                               <td class="td_p_cell2"><p>{{ item.address }}</p></td>
                               <td class="td_p_cell2"><p>{{ item.num }}</p></td>  
                               <td class="td_p_cell2"><p>{{ item.email }}</p></td> 
-
+                              
 
                               <td class="td_input_cell" > <!-- VT-->
                                 <nav class="header-nav ms-auto" >
@@ -347,7 +348,7 @@
                     
                                 </nav>
                               </td>
-                              <td class="td_input_cell"><!--cemmenter-->
+                              <td class="td_input_cell"><!--commentaire-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
                                     <i class="bi bi-chat-left-text"></i>
@@ -452,7 +453,7 @@
                     
                                 </nav>
                               </td>
-                              <td class="td_input_cell"><!--cemmenter-->
+                              <td class="td_input_cell"><!--commentaire-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
                                     <i class="bi bi-chat-left-text"></i>
@@ -554,7 +555,7 @@
                     
                                 </nav>
                               </td>
-                              <td class="td_input_cell"><!--cemmenter-->
+                              <td class="td_input_cell"><!--commentaire-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
                                     <i class="bi bi-chat-left-text"></i>
@@ -656,7 +657,7 @@
                     
                                 </nav>
                               </td>
-                              <td class="td_input_cell"><!--cemmenter-->
+                              <td class="td_input_cell"><!--commentaire-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
                                     <i class="bi bi-chat-left-text"></i>
@@ -712,6 +713,59 @@
 
                               <td class="td_p_dateTime_cell2"><p>{{ item.precaite}} </p></td>
 
+                              
+                              <td class="td_input_cell"><!--commentaire-->
+                                <nav class="header-nav ms-auto" >
+                                  <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
+                                    <i class="bi bi-chat-left-text"></i>
+                                  </a> 
+                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
+                                    <li class="dropdown-header">
+                                      <input type="text" name="input_msg_chat_{{item.cell_id}}" id="input_msg_chat_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
+                                      <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','chat')" > <i class="bi bi-send" ></i></button>
+                                    </li>
+                                    <li>
+                                      <hr class="dropdown-divider">
+                                    </li>
+                                    <div id="chat-messages-container_chat">
+                                      {% for msg in message_box_1 reversed %}
+                                      {% if item.cell_id == msg.row_id and msg.box == "chat" %}
+                                        <li class="message-item">
+                                          <a>
+                                            {% if msg.email %}  
+                                              <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
+                                            {% else %}
+                                              <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
+                                            {% endif %}
+                                            <div>
+                                              <h3>{{ msg.username }}</h3>
+                                              {% if msg_box_tagged.1 in msg.message %}
+                                                        <h4 class="color-red">{{ msg.message }}</h4>
+                                              {% else %}
+                                                {% if msg_box_tagged.2 in msg.message %}
+                                                    <h4 class="color-red">{{ msg.message }} </h4>
+                                                {% else %}
+                                                  {% if msg_box_tagged.3 in msg.message %}
+                                                    <h4 class="color-red">{{ msg.message }}</h4>
+                                                  {% else %}
+                                                    <h4>{{ msg.message }}</h4>
+                                                  {% endif%}
+                                                {% endif%}
+                                              {% endif%}
+                                              
+                                              <p>{{ msg.message_date|naturaltime }}</p>
+                                            </div>
+                                          </a>
+                                        </li>
+                                        <li>
+                                          <hr class="dropdown-divider">
+                                        </li>
+                                        {% endif %}
+                                      {% endfor %}
+                                  </div>
+                                  </ul>
+                                </nav>
+                              </td>
 
                               <td class="td_p_dateTime_cell2"><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
 
