@@ -245,14 +245,6 @@
       <div class="row">
 
         
-
-
-
-
-
-
-
-
           <!--  ======================================================== start table 1 ===============================================================  -->
           <!--  ======================================================== start table 1 ===============================================================  -->
           <!--  ======================================================== start table 1 ===============================================================  -->
@@ -285,27 +277,27 @@
   
                         <thead class="table-dark border-info">
                           <tr>
-                          <th class="fixed-column" ></th><!--style="width:auto;"-->
-                          
-                          <th onclick="sortTable('tableDATA_{{k.index}}',1)">Prénom</th>  
-                          <th onclick="sortTable('tableDATA_{{k.index}}',2)" >Nom </th> 
-                          <th onclick="sortTable('tableDATA_{{k.index}}',3)" >Adresse </th> 
-                          <th onclick="sortTable('tableDATA_{{k.index}}',4)">N° de tél</th> 
-                          <th onclick="sortTable('tableDATA_{{k.index}}',5)">E-mail </th>
-                          <th colspan=2>Visite technique</th> 
-                          <th>État</th> 
-                          <th onclick="sortTable('tableDATA_{{k.index}}',9)" >Travaux à préconiser</th> <!--Travaux à preconise-->
-                          <th colspan=2>Audit v1</th> 
-                          <th colspan=2>Audit v2</th> 
-                          <th colspan=2>Audit v3</th> 
-                          <th colspan=2>Audit fin</th> 
-                          <th onclick="sortTable('tableDATA_{{k.index}}',18)">Cofrac</th> 
-                          <th >Paiement</th>
-                          <th onclick="sortTable('tableDATA_{{k.index}}',19)">Bureau d'étude</th>
-                          <th onclick="sortTable('tableDATA_{{k.index}}',20)">Auditeur</th>
-                          <th>Commentaire</th>
-                          <th onclick="sortTable('tableDATA_{{k.index}}',21 ,1)" >Date de création</th>
-                          <th onclick="sortTable('tableDATA_{{k.index}}',22)" >id </span></th>
+                            <th class="fixed-column" ></th><!--style="width:auto;"-->
+                            
+                            <th onclick="sortTable('tableDATA_{{k.index}}',1)">Prénom</th>  
+                            <th onclick="sortTable('tableDATA_{{k.index}}',2)" >Nom </th> 
+                            <th onclick="sortTable('tableDATA_{{k.index}}',3)" >Adresse </th> 
+                            <th onclick="sortTable('tableDATA_{{k.index}}',4)">N° de tél</th> 
+                            <th onclick="sortTable('tableDATA_{{k.index}}',5)">E-mail </th>
+                            <th colspan=2>Visite technique</th> 
+                            <th>État</th> 
+                            <th onclick="sortTable('tableDATA_{{k.index}}',9)" >Travaux à préconiser</th> <!--Travaux à preconise-->
+                            <th colspan=2>Audit v1</th> 
+                            <th colspan=2>Audit v2</th> 
+                            <th colspan=2>Audit v3</th> 
+                            <th colspan=2>Audit fin</th> 
+                            <th onclick="sortTable('tableDATA_{{k.index}}',18)">Cofrac</th> 
+                            <th >Paiement</th>
+                            <th onclick="sortTable('tableDATA_{{k.index}}',20)">Bureau d'étude</th>
+                            <th onclick="sortTable('tableDATA_{{k.index}}',21)">Auditeur</th>
+                            <th>Commentaire</th>
+                            <th onclick="sortTable('tableDATA_{{k.index}}',23 ,1)" >Date de création</th>
+                            <th onclick="sortTable('tableDATA_{{k.index}}',24)" >id </span></th>
                           </tr>
                         </thead>
                           <tbody id="myTable_{{k.index}}">
@@ -364,7 +356,7 @@
                                     {% endfor %}
 
                                     <hr class="dropdown-divider">
-
+                                      
                                     <li><input class="input_table_data" type="file" name="table_VT_{{ item.cell_id }}" multiple></li>
                                     <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
                                     <li style="text-align:center;height:20px;">
@@ -485,7 +477,7 @@
                                     <li>
                                       <hr class="dropdown-divider">
                                     </li>
-                                    <div id="chat-messages-container_auditV1">
+                                    <div id="chat-messages-container_auditV1_{{item.cell_id}}">
                                     {% for msg in message_box_1 reversed %}
                                     {% if item.cell_id == msg.row_id and msg.box == "auditV1" %}
                                       <li class="message-item">
@@ -595,7 +587,7 @@
                                     <li>
                                       <hr class="dropdown-divider">
                                     </li>
-                                    <div id="chat-messages-container_auditV2">
+                                    <div id="chat-messages-container_auditV2_{{item.cell_id}}">
                                       {% for msg in message_box_1 reversed %}
                                       {% if item.cell_id == msg.row_id and msg.box == "auditV2" %}
                                         <li class="message-item">
@@ -702,7 +694,7 @@
                                     <li>
                                       <hr class="dropdown-divider">
                                     </li>
-                                    <div id="chat-messages-container_auditV3">
+                                    <div id="chat-messages-container_auditV3_{{item.cell_id}}">
                                       {% for msg in message_box_1 reversed %}
                                       {% if item.cell_id == msg.row_id and msg.box == "auditV3" %}
                                         <li class="message-item">
@@ -809,7 +801,7 @@
                                     <li>
                                       <hr class="dropdown-divider">
                                     </li>
-                                    <div id="chat-messages-container_auditFinal">
+                                    <div id="chat-messages-container_auditFinal_{{item.cell_id}}">
                                       {% for msg in message_box_1 reversed %}
                                       {% if item.cell_id == msg.row_id and msg.box == "auditFinal" %}
                                         <li class="message-item">
@@ -891,7 +883,7 @@
                                     <li>
                                       <hr class="dropdown-divider">
                                     </li>
-                                    <div id="chat-messages-container_chat">
+                                    <div id="chat-messages-container_chat_{{item.cell_id}}">
                                       {% for msg in message_box_1 reversed %}
                                       {% if item.cell_id == msg.row_id and msg.box == "chat" %}
                                         <li class="message-item">

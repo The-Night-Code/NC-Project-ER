@@ -241,7 +241,7 @@
                               <td class="td_p_cell2"><p>{{ item.email }}</p></td> 
                               
 
-                              <td class="td_input_cell" > <!-- VT-->
+                              <td class="td_input_cell td_input_file_cell" > <!-- VT-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="ri-file-list-3-line"></i>
@@ -299,7 +299,7 @@
                               </td> 
 
 
-                              <td class="td_input_cell"> <!-- auditV1-->
+                              <td class="td_input_cell td_input_file_cell"> <!-- auditV1-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" >
                                     <i class="ri-file-list-3-line"></i>
@@ -361,7 +361,7 @@
                                     <li>
                                       <hr class="dropdown-divider">
                                     </li>
-                                    <div id="chat-messages-container_auditV1">
+                                    <div id="chat-messages-container_auditV1_{{item.cell_id}}">
                                     {% for msg in message_box_1 reversed %}
                                     {% if item.cell_id == msg.row_id and msg.box == "auditV1" %}
                                       <li class="message-item">
@@ -402,7 +402,7 @@
                               </td>
 
                     
-                              <td class="td_input_cell"> <!-- auditV2-->
+                              <td class="td_input_cell td_input_file_cell"> <!-- auditV2-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="ri-file-list-3-line"></i>
@@ -466,7 +466,7 @@
                                     <li>
                                       <hr class="dropdown-divider">
                                     </li>
-                                    <div id="chat-messages-container_auditV2">
+                                    <div id="chat-messages-container_auditV2_{{item.cell_id}}">
                                       {% for msg in message_box_1 reversed %}
                                       {% if item.cell_id == msg.row_id and msg.box == "auditV2" %}
                                         <li class="message-item">
@@ -506,7 +506,7 @@
                                 </nav>
                               </td>
 
-                              <td class="td_input_cell"> <!-- auditV3-->
+                              <td class="td_input_cell td_input_file_cell"> <!-- auditV3-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="ri-file-list-3-line"></i>
@@ -568,7 +568,7 @@
                                     <li>
                                       <hr class="dropdown-divider">
                                     </li>
-                                    <div id="chat-messages-container_auditV3">
+                                    <div id="chat-messages-container_auditV3_{{item.cell_id}}">
                                       {% for msg in message_box_1 reversed %}
                                       {% if item.cell_id == msg.row_id and msg.box == "auditV3" %}
                                         <li class="message-item">
@@ -608,7 +608,7 @@
                                 </nav>
                               </td>
                     
-                              <td class="td_input_cell"> <!-- auditFinal-->
+                              <td class="td_input_cell td_input_file_cell"> <!-- auditFinal-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="ri-file-list-3-line"></i>
@@ -670,7 +670,7 @@
                                     <li>
                                       <hr class="dropdown-divider">
                                     </li>
-                                    <div id="chat-messages-container_auditFinal">
+                                    <div id="chat-messages-container_auditFinal_{{item.cell_id}}">
                                       {% for msg in message_box_1 reversed %}
                                       {% if item.cell_id == msg.row_id and msg.box == "auditFinal" %}
                                         <li class="message-item">
@@ -727,7 +727,7 @@
                                     <li>
                                       <hr class="dropdown-divider">
                                     </li>
-                                    <div id="chat-messages-container_chat">
+                                    <div id="chat-messages-container_chat_{{item.cell_id}}">
                                       {% for msg in message_box_1 reversed %}
                                       {% if item.cell_id == msg.row_id and msg.box == "chat" %}
                                         <li class="message-item">

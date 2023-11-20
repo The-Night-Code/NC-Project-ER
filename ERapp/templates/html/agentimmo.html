@@ -1,4 +1,6 @@
 {% load static %}
+{% load l10n %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -202,10 +204,11 @@
                           <th onclick="sortTable('tableDATA_1',2)">Adresse</th> 
                           <th onclick="sortTable('tableDATA_1',3)">N° de tél</th>
                           <th onclick="sortTable('tableDATA_1',4)">E-mail</th> 
-                          <th colspan="2">Visite technique</th> 
-                          <th colspan="2">Apporteur d'affaire</th> 
-                          <th>Commercial</th> 
-                          <th onclick="sortTable('tableDATA_1',10 , 1)">Date de création</th>
+                          <th class="td_input_cell_contain_only_box" colspan="2">Visite technique</th> 
+                          <th class="td_input_cell_contain_only_box" colspan="2">Apporteur d'affaire</th> 
+                          <th class="td_input_cell_contain_only_box" >Commercial</th> 
+                          <th class="td_input_cell_contain_only_box">Commentaire</th>
+                          <th onclick="sortTable('tableDATA_1',11 , 1)">Date de création</th>
                         </thead>
                         <tbody id="myTable_1">
                           {% for item in data %}
@@ -218,7 +221,7 @@
                                   <td class="td_p_cell2"><p>{{ item.num }}</p></td>  
                                   <td class="td_p_cell2"><p>{{ item.email }}</p></td> 
 
-                                  <td class="td_input_files_cell" > <!-- VT-->
+                                  <td class="td_input_files_cell td_input_file_cell td_input_cell" > <!-- VT-->
                                     <nav class="header-nav ms-auto" >
                                       <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                         <i class="ri-file-list-3-line"></i>
@@ -251,7 +254,6 @@
                                         <li></li>
                                       </ul>
                                     </nav>
-                                    <a href="{% url 'download_K_file' file_id=item.cell_id %}" class="btn btn-primary"><i class="bi bi-download"></i></a>
 
                                   </td>  <!--  target="_blank"-->
                                   
@@ -270,8 +272,8 @@
 
                                   
 
-
-                                  <td class="td_input_files_cell"> <!-- auditV1-->
+ 
+                                  <td class="td_input_files_cell td_input_file_cell td_input_cell "> <!-- Apporteur d'affaire	-->
                                     <nav class="header-nav ms-auto" >
                                       <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                         <i class="ri-file-list-3-line"></i>
@@ -334,7 +336,7 @@
                                   </td>
 
 
-                                  <td class="td_input_files_cell"> <!-- auditV2-->
+                                  <td class="td_input_files_cell td_input_file_cell td_input_cell"> <!-- Commercial	-->
                                     <nav class="header-nav ms-auto" >
                                       <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                         <i class="ri-file-list-3-line"></i>
@@ -391,7 +393,58 @@
                                   </td>
 
                                   
-
+                                  <td class="td_input_cell"><!--commentaire-->
+                                    <nav class="header-nav ms-auto" >
+                                      <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
+                                        <i class="bi bi-chat-left-text"></i>
+                                      </a>
+                                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
+                                        <li class="dropdown-header">
+                                          <input type="text" name="input_msg_chat_{{item.cell_id}}" id="input_msg_chat_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
+                                          <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','chat')" > <i class="bi bi-send" ></i></button>
+                                        </li>
+                                        <li>
+                                          <hr class="dropdown-divider">
+                                        </li>
+                                        <div id="chat-messages-container_chat_{{item.cell_id}}">
+                                          {% for msg in message_box_1 reversed %}
+                                          {% if item.cell_id == msg.row_id and msg.box == "chat" %}
+                                            <li class="message-item">
+                                              <a>
+                                                {% if msg.email %}  
+                                                  <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
+                                                {% else %}
+                                                  <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
+                                                {% endif %}
+                                                <div>
+                                                  <h3>{{ msg.username }}</h3>
+                                                  {% if msg_box_tagged.1 in msg.message %}
+                                                            <h4 class="color-red">{{ msg.message }}</h4>
+                                                  {% else %}
+                                                    {% if msg_box_tagged.2 in msg.message %}
+                                                        <h4 class="color-red">{{ msg.message }} </h4>
+                                                    {% else %}
+                                                      {% if msg_box_tagged.3 in msg.message %}
+                                                        <h4 class="color-red">{{ msg.message }}</h4>
+                                                      {% else %}
+                                                        <h4>{{ msg.message }}</h4>
+                                                      {% endif%}
+                                                    {% endif%}
+                                                  {% endif%}
+                                                  
+                                                  <p>{{ msg.message_date|naturaltime }}</p>
+                                                </div>
+                                              </a>
+                                            </li>
+                                            <li>
+                                              <hr class="dropdown-divider">
+                                            </li>
+                                            {% endif %}
+                                          {% endfor %}
+                                      </div>
+                                      </ul>
+                                    </nav>
+                                  </td>
 
                                   <td class="td_p_dateTime_cell2"><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
 
@@ -439,119 +492,6 @@
 
   {% endif %}
 
-  <script>
-      // table1_remove_file_from_model
-    function remove_file_from_m(id,index,column) {
-        
-      var url2="{% url 'remove_file_from_MODEL' %}?"+
-        "param0=" + encodeURIComponent(id) +
-        "&param1=" + encodeURIComponent(index)+
-        "&param2=" + encodeURIComponent(column); 
-      window.location.href = url2;
-
-      }
-      function table1_remove_file_from_model(id1,index1,column) {
-      remove_file_from_m(id1,index1,column);
-      }
-      function table2_remove_file_from_model(id1,index1,column) {
-      remove_file_from_m(id1,index1,column);
-      }
-      function table3_remove_file_from_model(id1,index1,column) {
-      remove_file_from_m(id1,index1,column);    
-      }
-  </script>
-
-
-  <script>
-  function add_files_to_table(fileId, table, col_type) {
-    
-    // Set the values of the hidden input fields in the form
-    document.getElementById("myid1").value = fileId;
-    //document.getElementById("table1").value = table;
-    document.getElementById("col_type1").value = col_type;
-    document.getElementById("mybutton1").value = "clicked";
-  }
-  </script>
-  <script>
-  function add_files_to_table2(fileId, table, col_type) {
-    
-    // Set the values of the hidden input fields in the form
-    document.getElementById("myid2").value = fileId;
-    //document.getElementById("table").value = table;
-    document.getElementById("col_type2").value = col_type;
-    document.getElementById("mybutton2").value = "clicked";
-    }
-  </script>
-  <script>
-  function add_files_to_table3(fileId, table, col_type) {
-    
-    // Set the values of the hidden input fields in the form
-    document.getElementById("myid3").value = fileId;
-    //document.getElementById("table").value = table;
-    document.getElementById("col_type3").value = col_type;
-    document.getElementById("mybutton3").value = "clicked";
-  }
-  </script>
-  
-
-  <script>
-    function updateBadge(row) {
-        const selectElement = row.querySelector('.form-select');
-        const badgeElements = row.querySelectorAll('.badge');
-        const selectedOption = selectElement.value;
-    
-        badgeElements.forEach(badge => {
-            if (badge.getAttribute('data-badge') === selectedOption) {
-                badge.style.display = 'inline-block';
-            } else {
-                badge.style.display = 'none';
-            }
-        });
-    }
-    
-    // Add event listener for each row in tableDATA1
-    const rows1 = document.querySelectorAll('#tableDATA_1 tbody tr');
-    
-    rows1.forEach(row => {
-        const selectElement = row.querySelector('.form-select');
-    
-        // Initial call to set the badge based on the default selected option in each row
-        updateBadge(row);
-    
-        selectElement.addEventListener('change', () => {
-            updateBadge(row);
-        });
-    });
-    
-    // Add event listener for each row in tableDATA2
-    const rows2 = document.querySelectorAll('#tableDATA_2 tbody tr');
-    
-    rows2.forEach(row => {
-        const selectElement = row.querySelector('.form-select');
-    
-        // Initial call to set the badge based on the default selected option in each row
-        updateBadge(row);
-    
-        selectElement.addEventListener('change', () => {
-            updateBadge(row);
-        });
-    });
-    
-    // Add event listener for each row in tableDATA3
-    const rows3 = document.querySelectorAll('#tableDATA_3 tbody tr');
-    
-    rows3.forEach(row => {
-        const selectElement = row.querySelector('.form-select');
-    
-        // Initial call to set the badge based on the default selected option in each row
-        updateBadge(row);
-    
-        selectElement.addEventListener('change', () => {
-            updateBadge(row);
-        });
-    });
-    
-  </script>
   
   
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>

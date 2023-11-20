@@ -59,7 +59,7 @@ function sendMessage(cellId, box, redirectNextPage,col) {
                 `;
 
                 // Append the new message to the chat box
-                $("#chat-messages-container_"+col).prepend(newMessage);
+                $("#chat-messages-container_"+col+"_"+cellId).prepend(newMessage);
 
                 document.getElementById(inpust_msg_col_id).value = '';
 

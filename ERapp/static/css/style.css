@@ -314,7 +314,7 @@ tr .badge ,tr .badgefoot{
 .td_badge_cell,.td_badge_cell span{
   width:100px;
   font-size:medium;}
-.td_input_files_cell{width:50px;}
+.td_input_cell_contain_only_box{width: 20px!important;;}
 
 
 table.dataTable thead .sorting:after,
@@ -358,18 +358,26 @@ chat box icoon
 */
 .td_input_cell .header-nav .nav-icon .bi-chat-left-text{color: #0DCAF0;}
 
-.td_input_cell .header-nav  .dropdown-menu-for-showFils{position:absolute!important;margin: auto!important; }
+.td_input_cell .header-nav  .dropdown-menu-for-showFils{position:absolute!important;margin-left: 100px!important;margin-right: 100px!important;}
 
 
 
+
+/*.td_input_file_cell .header-nav .dropdown-menu-for-showFils .header-nav,
+.td_input_file_cell .header-nav .dropdown-menu-for-showFils ul,*/
+.td_input_file_cell .header-nav .dropdown-menu-for-showFils {
+  
+    min-height: 95px!important;
+    max-height: 600px!important;
+    padding: 20px  10px!important;}
+
+.td_input_file_cell{width:10px;}
 /*.td_input_cell .header-nav .dropdown-menu-for-showFils  {font-si ze: 25 px!impo rtant;}*/
 .save_button_i_style{height:30px!important;
   width:30px !important;
   color:rgb(1, 71, 81)!important;
   padding:10px!important;}
-.td_input_file_cell .header-nav ul{
-  
-  max-height: 500px!important;}
+
 
 .td_input_cell .header-nav .dropdown-menu-for-showFils i{font-size: 25px!important;}
 .border_none, .input_table_data,.button_table_data,.style_none_border{border: none !important;}

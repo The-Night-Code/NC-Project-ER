@@ -320,7 +320,7 @@
 
                             {% if item.etat == k.state  and item.ai and Audi in item.auditeur %}
                             <input class="input_table_data" type="hidden" name="table{{k.index}}_id_{{ item.cell_id }}" id="table{{k.index}}_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
-                          <tr>
+                            <tr>
                               <td class="fixed-column table-secondary"><button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') "><i class="ri-checkbox-circle-fill fa-2x color-red "></i></button></td>
                               
                               <td class="td_input_cell" ><input class="input_table_data" type="text" name="table_firstname_{{ item.cell_id }}" id="table{{k.index}}_firstname{{ item.cell_id }}" value="{{ item.firstname }}"  ></td>
@@ -329,7 +329,7 @@
                               <td class="td_input_cell"><input class="input_table_data" type="text" name="table_num_{{ item.cell_id }}" id="table{{k.index}}_num{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
                               <td class="td_input_cell"><input class="input_table_data" type="text" name="table_email_{{ item.cell_id }}" id="table{{k.index}}_email{{ item.cell_id }}" value="{{ item.email }}"  ></td>  
 
-                              <td class="td_input_cell" > <!-- VT-->
+                              <td class="td_input_cell td_input_file_cell" > <!-- VT-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="ri-file-list-3-line"></i>
@@ -337,7 +337,7 @@
                                   </a>
                                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
                                     
-                                        <!-- for i in datafiles  if item.cell_id == i.file_id -->
+                                       <!-- for i in datafiles  if item.cell_id == i.file_id -->
                                     {% for F in datafiles_VT %}
                                     
                                       {% if F.file_id == item.cell_id %}
@@ -366,13 +366,18 @@
                                           </button>
                                         </li>
                                       </li>
-                                          
-                                        {% endif %}
+                                         
+                                       {% endif %}
                                     {% endfor %}
 
                                     <hr class="dropdown-divider">
                                     <li><input class="input_table_data" type="file" name="table_VT_{{ item.cell_id }}" multiple></li>
                                     <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                    <li style="text-align:center;height:20px;">
+                                      <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                        <i class="bi bi-save2 save_button_i_style" ></i>
+                                      </button>
+                                    </li> 
                                     <li></li>
                                     
                     
@@ -418,49 +423,53 @@
 
                             
 
-                            <td class="td_input_cell"> <!-- auditV1-->
+                            <td class="td_input_cell td_input_file_cell"> <!-- auditV1-->
                               <nav class="header-nav ms-auto" >
                                 <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                   <i class="ri-file-list-3-line"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
                                   
-                                      <!-- for i in datafiles  if item.cell_id == i.file_id -->
-                                      {% for F in datafiles_AuditV1 %}
+                                     <!-- for i in datafiles  if item.cell_id == i.file_id -->
+                                     {% for F in datafiles_AuditV1 %}
                                     
-                                      {% if F.file_id == item.cell_id %}
-                                      <li>
-                                        <li class="list-inline-item">
-                                          {% if F.file_format == "excel" %}
-                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                          {% elif F.file_format == "pdf" %}
-                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                          {% elif F.file_format == "image" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                          {% elif F.file_format == "word" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                          {% elif F.file_format == "pz2" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                          {% else %}
-                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                          {% endif %}
-                                        </li>
-                                          
-                                          {{ F.file_name }}
-                                            
-                                        <li class="list-inline-item">
-                                          <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV1','{{redirect_next_page}}')">
-                                            <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                          </button>
-                                        </li>
-                                      </li>
+                                     {% if F.file_id == item.cell_id %}
+                                     <li>
+                                       <li class="list-inline-item">
+                                         {% if F.file_format == "excel" %}
+                                         <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
+                                         {% elif F.file_format == "pdf" %}
+                                         <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
+                                         {% elif F.file_format == "image" %}
+                                           <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
+                                         {% elif F.file_format == "word" %}
+                                           <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
+                                         {% elif F.file_format == "pz2" %}
+                                           <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
+                                         {% else %}
+                                           <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
+                                         {% endif %}
+                                       </li>
+                                         
+                                         {{ F.file_name }}
+                                           
+                                       <li class="list-inline-item">
+                                         <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV1','{{redirect_next_page}}')">
+                                           <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                         </button>
+                                       </li>
+                                     </li>
                                         
                                       {% endif %}
-                                    {% endfor %}
-                                    <hr class="dropdown-divider">
+                                   {% endfor %}
+                                   <hr class="dropdown-divider">
                                     <li><input class="input_table_data" type="file" name="table_auditV1_{{ item.cell_id }}" multiple></li>
                                     <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                    <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table{{k.index}}('{{item.cell_id}}','table{{k.index}}','auditV1')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
+                                    <li style="text-align:center;height:20px;">
+                                      <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                        <i class="bi bi-save2 save_button_i_style" ></i>
+                                      </button>
+                                    </li> 
                                     <li></li>
                                     
                                   
@@ -472,7 +481,7 @@
                             </td>
                   
                   
-                            <td class="td_input_cell"> <!-- auditV2-->
+                            <td class="td_input_cell td_input_file_cell"> <!-- auditV2-->
                               <nav class="header-nav ms-auto" >
                                 <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                   <i class="ri-file-list-3-line"></i>
@@ -481,7 +490,7 @@
                                   
                                   <!-- for i in datafiles  if item.cell_id == i.file_id -->
                                   {% for F in datafiles_AuditV2 %}
-                                  
+                                 
                                   {% if F.file_id == item.cell_id %}
                                   <li>
                                     <li class="list-inline-item">
@@ -508,24 +517,28 @@
                                       </button>
                                     </li>
                                   </li>
-                                      
-                                    {% endif %}
+                                     
+                                   {% endif %}
                                 {% endfor %}
                                 <hr class="dropdown-divider">
-                                  <li><input class="input_table_data" type="file"  name="table_auditV2_{{ item.cell_id }}" multiple></li>
-                                  <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                  <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table{{k.index}}('{{item.cell_id}}','table2','auditV2')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
-                                  <li></li>
-                                  
-                                
-                
-                              </ul>
+                                 <li><input class="input_table_data" type="file"  name="table_auditV2_{{ item.cell_id }}" multiple></li>
+                                 <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                 <li style="text-align:center;height:20px;">
+                                  <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                    <i class="bi bi-save2 save_button_i_style" ></i>
+                                  </button>
+                                </li> 
+                                <li></li>
+                                 
+                               
+               
+                             </ul>
                   
                   
                               </nav>
                             </td>
                   
-                            <td class="td_input_cell"> <!-- auditV3-->
+                            <td class="td_input_cell td_input_file_cell"> <!-- auditV3-->
                               <nav class="header-nav ms-auto" >
                                 <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                   <i class="ri-file-list-3-line"></i>
@@ -534,7 +547,7 @@
                                   
                                   <!-- for i in datafiles  if item.cell_id == i.file_id -->
                                   {% for F in datafiles_AuditV3 %}
-                                  
+                                 
                                   {% if F.file_id == item.cell_id %}
                                   <li>
                                     <li class="list-inline-item">
@@ -561,23 +574,27 @@
                                       </button>
                                     </li>
                                   </li>
-                                      
-                                    {% endif %}
+                                     
+                                   {% endif %}
                                 {% endfor %}
                                 <hr class="dropdown-divider">
-                                  <li><input class="input_table_data" type="file"  name="table_auditV2_{{ item.cell_id }}" multiple></li>
-                                  <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                  <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table{{k.index}}('{{item.cell_id}}','table{{k.index}}','auditV3')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
-                                  <li></li>
-                
-                              </ul>
+                                 <li><input class="input_table_data" type="file"  name="table_auditV2_{{ item.cell_id }}" multiple></li>
+                                 <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                 <li style="text-align:center;height:20px;">
+                                  <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                    <i class="bi bi-save2 save_button_i_style" ></i>
+                                  </button>
+                                </li> 
+                                <li></li>
+               
+                             </ul>
                   
                   
                               </nav>
                             </td>
                   
                   
-                            <td class="td_input_cell"> <!-- auditFinal-->
+                            <td class="td_input_cell td_input_file_cell"> <!-- auditFinal-->
                               <nav class="header-nav ms-auto" >
                                 <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                   <i class="ri-file-list-3-line"></i>
@@ -586,7 +603,7 @@
                                   
                                   <!-- for i in datafiles  if item.cell_id == i.file_id -->
                                   {% for F in datafiles_AuditFinal %}
-                                  
+                                 
                                   {% if F.file_id == item.cell_id %}
                                   <li>
                                     <li class="list-inline-item">
@@ -613,78 +630,80 @@
                                       </button>
                                     </li>
                                   </li>
-                                      
-                                    {% endif %}
+                                     
+                                   {% endif %}
                                 {% endfor %}
                                 <hr class="dropdown-divider">
-                                  <li><input class="input_table_data" type="file" name="table_auditFinal_{{ item.cell_id }}" multiple></li>
-                                  <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                  <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table{{k.index}}('{{item.cell_id}}','table{{k.index}}','auditFinal')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
-                                  <li></li>
-                
-                              </ul>
+                                 <li><input class="input_table_data" type="file" name="table_auditFinal_{{ item.cell_id }}" multiple></li>
+                                 <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                 <li style="text-align:center;height:20px;">
+                                  <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                    <i class="bi bi-save2 save_button_i_style" ></i>
+                                  </button>
+                                </li> 
+                                <li></li>
+               
+                             </ul>
                   
                   
                               </nav>
                             </td>
 
-                              <td class="td_input_cell"><input class="input_table_data" type="text"  name="table_cofrac_{{ item.cell_id }}"  value="{{item.cofrac}}"></td>
+                            <td class="td_input_cell"><input class="input_table_data" type="text"  name="table_cofrac_{{ item.cell_id }}"  value="{{item.cofrac}}"></td>
 
-                                
-                              <td class="td_input_cell td-form-check-checkbox" > <!--paiement-->
-                                <input class="form-check-input form-check-checkbox" type="checkbox" value="True" name="table_paiement_{{ item.cell_id }}" id="table{{k.index}}_paiement{{ item.cell_id }}" {% if  item.paiement %}  checked  {% endif %}>
-                              </td>
+                              
+                            <td class="td_input_cell td-form-check-checkbox" > <!--paiement-->
+                              <input class="form-check-input form-check-checkbox" type="checkbox" value="True" name="table_paiement_{{ item.cell_id }}" id="table{{k.index}}_paiement{{ item.cell_id }}" {% if  item.paiement %}  checked  {% endif %}>
+                            </td>
 
-                              <td class="td_input_cell"><!--agent-->
-                                <p>{{item.agent}}</p>
-                              </td>
+                            <td class="td_input_cell"><!--agent-->
+                              <p>{{item.agent}}</p>
+                            </td>
 
-                              <td class="td_input_cell"><!--auditeur-->
+                            <td class="td_input_cell"><!--auditeur-->
 
-                                <select class="form-select" name="table_auditeur_{{ item.cell_id }}" id="auditeur" style="height:55px!important;width:250px!important;">
-                                  <option value="" >...</option>
-                                  {% for audi in auditeur %}
-                                    <option value="{{ audi.email }}" {% if audi.email == item.auditeur %} selected {% endif %} >
-                                      {{ audi.last_name }} {{ audi.first_name }}
-                                    </option>
+                              <select class="form-select" name="table_auditeur_{{ item.cell_id }}" id="auditeur" style="height:55px!important;width:250px!important;">
+                                <option value="" >...</option>
+                                {% for audi in auditeur %}
+                                  <option value="{{ audi.email }}" {% if audi.email == item.auditeur %} selected {% endif %}>
+                                    {{ audi.last_name }} {{ audi.first_name }}
+                                  </option>
 
-                                  {% endfor %}
-                                </select>
+                                {% endfor %}
+                              </select>
 
-                              </td>
+                            </td>
 
-                              <td class="td_input_cell"><!--commentaire-->
-                                <nav class="header-nav ms-auto" >
-                                  <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
-                                    <i class="bi bi-chat-left-text"></i>
-                                  </a>
-                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
-                                    <li class="dropdown-header">
-                                      <input type="text" name="input_msg_{{item.cell_id}}" id="input_msg_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
-                                      <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','chat')" > <i class="bi bi-send" ></i></button>
-                                    </li>
-                                    <li>
-                                      <hr class="dropdown-divider">
-                                    </li>
-                                    <div id="chat-messages-container_chat">
-                                    {% for msg in message_box_1 reversed  %}
-                                    {% if item.cell_id == msg.row_id %}
-
+                            <td class="td_input_cell"><!--commentaire-->
+                              <nav class="header-nav ms-auto" >
+                                <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
+                                  <i class="bi bi-chat-left-text"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
+                                  <li class="dropdown-header">
+                                    <input type="text" name="input_msg_chat_{{item.cell_id}}" id="input_msg_chat_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
+                                    <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','chat')" > <i class="bi bi-send" ></i></button>
+                                  </li>
+                                  <li>
+                                    <hr class="dropdown-divider">
+                                  </li>
+                                  <div id="chat-messages-container_chat_{{item.cell_id}}">
+                                    {% for msg in message_box_1 reversed %}
+                                    {% if item.cell_id == msg.row_id and msg.box == "chat" %}
                                       <li class="message-item">
                                         <a>
-                                          {% if user.profile_pic %}  
-                                            <img src="{{ user.profile_pic.url }}" alt="Image"  class="rounded-circle">  <!-- alt="image.title"-->
+                                          {% if msg.email %}  
+                                            <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
                                           {% else %}
                                             <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
                                           {% endif %}
                                           <div>
                                             <h3>{{ msg.username }}</h3>
-                                            
                                             {% if msg_box_tagged.1 in msg.message %}
                                                       <h4 class="color-red">{{ msg.message }}</h4>
                                             {% else %}
                                               {% if msg_box_tagged.2 in msg.message %}
-                                                  <h4 class="color-red">{{ msg.message }}</h4>
+                                                  <h4 class="color-red">{{ msg.message }} </h4>
                                               {% else %}
                                                 {% if msg_box_tagged.3 in msg.message %}
                                                   <h4 class="color-red">{{ msg.message }}</h4>
@@ -693,7 +712,7 @@
                                                 {% endif%}
                                               {% endif%}
                                             {% endif%}
-
+                                            
                                             <p>{{ msg.message_date|naturaltime }}</p>
                                           </div>
                                         </a>
@@ -703,18 +722,20 @@
                                       </li>
                                       {% endif %}
                                     {% endfor %}
-                                  </div>
+                                </div>
                                 </ul>
-                                </td>
+                              </nav>
+                            </td>
 
 
-                              <td><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
-                              <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
-                            </tr>
-                            {% endif %}
-                            {% endfor %}
+                            <td><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
+                            <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
+                          </tr>
+                          {% endif %}
+                          {% endfor %}
                           
-                        </tbody>
+                        
+                          </tbody>
                       </table>
                       <!--{} form.as_p -->
                       <!--<button class="btn ri-add-fill"></button>-->
