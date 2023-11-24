@@ -260,14 +260,14 @@
                     <button class="reduce_table_size" type="button" style="width:40px;height:40px;"><i class=" ri-arrow-down-s-line fa-3x" ></i></butoon>
                   </div>-->
   
-                  <div class="card-body">
+                  <div class="card-body " id="resultDiv">
                     <h5 class="card-title">État | <span class="badge" data-badge="{{k.state}}"> {{k.state}}</span> </h5>
   
                     
                     
                     <input class="form-control" type="text" id="filterInput_{{ k.index }}" placeholder="Search..." style="width:30%;min-width:100px;">
                       <div class="overflow-auto" style="padding:1px;">
-                      <form method="post"  enctype="multipart/form-data" id="myForm">
+                      <form method="POST"   enctype="multipart/form-data" id="myForm">
                       {% csrf_token %}
                       <input type="hidden" name="myid{{ k.index }}" id="myid{{ k.index }}">
                       <input type="hidden" name="col_type{{ k.index }}" id="col_type{{ k.index }}">
@@ -305,8 +305,8 @@
 
                               {% if item.etat == k.state and item.be == True %}
                               <input class="input_table_data" type="hidden" name="table{{k.index}}_id_{{ item.cell_id }}" id="table{{k.index}}_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
-                            <tr>
-                              <td class="fixed-column table-secondary"><button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') "><i class="ri-checkbox-circle-fill fa-2x color-red "></i></button></td>
+                            <tr><!--type="submit" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') " -->
+                              <td class="fixed-column table-secondary"><button  class="button_table_data" onclick="submitForm__11('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" ><i class="ri-checkbox-circle-fill fa-2x color-red "></i></button></td>
                               
                               <td class="td_input_cell" ><input class="input_table_data" type="text" name="table_firstname_{{ item.cell_id }}" id="table{{k.index}}_firstname{{ item.cell_id }}" value="{{ item.firstname }}"  ></td>
                               <td class="td_input_cell"><input class="input_table_data" type="text" name="table_lastname_{{ item.cell_id }}" id="table{{k.index}}_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
@@ -848,8 +848,8 @@
                               </td>
 
                                 
-                              <td class="td_input_cell td-form-check-checkbox" > <!--paiement-->
-                                <input class="form-check-input form-check-checkbox" type="checkbox" value="True" name="table_paiement_{{ item.cell_id }}" id="table{{k.index}}_paiement{{ item.cell_id }}" {% if  item.paiement %}  checked  {% endif %}>
+                              <td class="td_input_cell td-form-check-checkbox" > <!--paiement-->                
+                                <input class="form-check-input form-check-checkbox" type="checkbox" value="True" name="table_paiement_{{ item.cell_id }}" id="table_paiement_{{ item.cell_id }}" {% if  item.paiement %}  checked  {% endif %}>
                               </td>
 
                               <td class="td_input_cell"> <!-- Bureau d'Etude -->
@@ -967,8 +967,9 @@
 
   {% endif %}
 
-
+  <script>
   
+</script>
 
 
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>

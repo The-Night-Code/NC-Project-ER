@@ -1,4 +1,82 @@
   // table1_remove_file_from_model
+function submitForm__11(cellId, box, redirectPage,col){
+    
+    var myForm_id="myForm";
+    var csrfToken = $("[name=csrfmiddlewaretoken]").val();
+    
+
+    var myid1 = document.getElementsByName("myid1")[0].value;
+    var col_type1 = document.getElementsByName("col_type1")[0].value;
+    var button_edit_data_on_table = document.getElementsByName("button_edit_data_on_table")[0].value;
+
+    var table_firstname = document.getElementsByName("table_firstname_"+cellId)[0].value;
+    var table_lastname = document.getElementsByName("table_lastname_"+cellId)[0].value;
+    var table_address = document.getElementsByName("table_address_"+cellId)[0].value;
+    var table_num = document.getElementsByName("table_num_"+cellId)[0].value;
+    var table_email = document.getElementsByName("table_email_"+cellId)[0].value;
+    var table_etat = document.getElementsByName("table_etat_"+cellId)[0].value;
+    var table_tp = document.getElementsByName("table_tp_"+cellId)[0].value;
+    var table_cofrac = document.getElementsByName("table_cofrac_"+cellId)[0].value;
+    var table_auditeur = document.getElementsByName("table_auditeur_"+cellId)[0].value;
+    
+    var table_paiement = document.getElementById("table_paiement_"+cellId);
+    if (table_paiement.checked == true){
+        var table_paiement_send_state = "True";
+    } else {
+        var table_paiement_send_state = "False";
+    }
+    
+    var table_VT = document.getElementsByName("table_VT_"+cellId)[0];
+    //var table_auditV1 = document.getElementsByName("table_auditV1_"+cellId)[0];
+    //var table_auditV2 = document.getElementsByName("table_auditV2_"+cellId)[0];
+    //var table_auditV3 = document.getElementsByName("table_auditV3_"+cellId)[0];
+    //var table_auditFinal = document.getElementsByName("table_auditFinal_"+cellId)[0];
+    
+    //var table_precaite = document.getElementById("table_precarite_"+cellId);
+    //window.location.href=table_firstname +" "+ table_lastname+" "+table_address +" "+ table_num+" "+ table_email+" "+ table_etat+" "+table_tp+" "+ table_cofrac+" "+table_paiement+" "+table_auditeur ;
+    //data: $(myForm_id).serialize(),
+    $.ajax({
+        url: "/table-view/",
+        type: "POST",
+        data: {
+            cellId_new:cellId,
+            table_firstname:table_firstname,
+            table_lastname:table_lastname,
+            table_address:table_address,
+            table_num:table_num,
+            table_email:table_email,
+            table_etat:table_etat,
+            table_tp:table_tp,
+            table_cofrac:table_cofrac,
+            table_auditeur:table_auditeur,
+            table_paiement:table_paiement_send_state,
+            
+            //table_VT:table_VT,
+            //table_auditV1:table_auditV1,
+            //table_auditV2:table_auditV2,
+            //table_auditV3:table_auditV3,
+            //table_auditFinal:table_auditFinal,
+            redirect_page:redirectPage,
+            myid1:myid1,
+            col_type1:col_type1,
+            button_edit_data_on_table:button_edit_data_on_table,
+
+            csrfmiddlewaretoken: csrfToken
+        },
+        
+        success: function(data){
+            //window.location.href=table_firstname 
+            // update the specific  div {new contant}
+            //("#resultDiv").html(data);
+            if(data.re_page){
+                location.reload();
+            }
+        },
+
+    });
+
+}
+
 function remove_file_from_m(id, index, column, redirect_next_page) {
     var url = "/remove_file_from_MODELS/?param0=" + encodeURIComponent(id) +
                 "&param1=" + encodeURIComponent(index) +
@@ -27,44 +105,44 @@ function sendMessage(cellId, box, redirectNextPage,col) {
     var message = document.getElementById(inpust_msg_col_id).value;
     //window.location.href=col+"___"+cellId
     //if (!message) {
-        var csrfToken = $("[name=csrfmiddlewaretoken]").val();
-        
-        $.ajax({
-            url: "/send-message/",
-            type: "POST",
-            data: {
-                message: message,
-                box:box,
-                redirectNextPage:redirectNextPage,
-                cellId:cellId,
-                col:col,
-                csrfmiddlewaretoken: csrfToken
-            },
-            success: function (data) {
-                document.getElementById(inpust_msg_col_id).value = ''; // Clear the input field
-                var newMessage = `
-                    <li class="message-item">
-                        <a>
-                            <img src="${data.userProfilePic}" alt="Image" width="50"class="rounded-circle">
-                            <div>
-                                <h3>${data.username}</h3>
-                                <h4>${data.message}</h4>
-                                <p> quelques secondes </p>  <!-- Use the naturaltime filter here -->
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                `;
+    var csrfToken = $("[name=csrfmiddlewaretoken]").val();
+    
+    $.ajax({
+        url: "/send-message/",
+        type: "POST",
+        data: {
+            message: message,
+            box:box,
+            redirectNextPage:redirectNextPage,
+            cellId:cellId,
+            col:col,
+            csrfmiddlewaretoken: csrfToken
+        },
+        success: function (data) {
+            document.getElementById(inpust_msg_col_id).value = ''; // Clear the input field
+            var newMessage = `
+                <li class="message-item">
+                    <a>
+                        <img src="${data.userProfilePic}" alt="Image" width="50"class="rounded-circle">
+                        <div>
+                            <h3>${data.username}</h3>
+                            <h4>${data.message}</h4>
+                            <p> quelques secondes </p>  <!-- Use the naturaltime filter here -->
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+            `;
 
-                // Append the new message to the chat box
-                $("#chat-messages-container_"+col+"_"+cellId).prepend(newMessage);
+            // Append the new message to the chat box
+            $("#chat-messages-container_"+col+"_"+cellId).prepend(newMessage);
 
-                document.getElementById(inpust_msg_col_id).value = '';
+            document.getElementById(inpust_msg_col_id).value = '';
 
-            },
-        });
+        },
+    });
     //}
 }
 
@@ -306,3 +384,5 @@ function sortTable(table_id,n,Date_Time_TD) {
         }
     }
 }
+
+

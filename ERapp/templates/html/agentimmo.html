@@ -206,7 +206,7 @@
                           <th onclick="sortTable('tableDATA_1',4)">E-mail</th> 
                           <th class="td_input_cell_contain_only_box" colspan="2">Visite technique</th> 
                           <th class="td_input_cell_contain_only_box" colspan="2">Apporteur d'affaire</th> 
-                          <th class="td_input_cell_contain_only_box" >Commercial</th> 
+                          
                           <th class="td_input_cell_contain_only_box">Commentaire</th>
                           <th onclick="sortTable('tableDATA_1',11 , 1)">Date de création</th>
                         </thead>
@@ -270,9 +270,6 @@
                                   </td>
 
 
-                                  
-
- 
                                   <td class="td_input_files_cell td_input_file_cell td_input_cell "> <!-- Apporteur d'affaire	-->
                                     <nav class="header-nav ms-auto" >
                                       <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
@@ -334,65 +331,7 @@
                                       <span class="badge bg-success" >Validé</span>
                                     {% endif %}
                                   </td>
-
-
-                                  <td class="td_input_files_cell td_input_file_cell td_input_cell"> <!-- Commercial	-->
-                                    <nav class="header-nav ms-auto" >
-                                      <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                        <i class="ri-file-list-3-line"></i>
-                                      </a>
-                                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
-                                        
-                                          <!-- for i in datafiles  if item.cell_id == i.file_id -->
-                                        {% for F in datafiles_AuditV2 %}
-                                        
-                                          {% if F.file_id == item.cell_id %}
-                                          <li>
-                                            <li class="list-inline-item">
-                                              {% if F.file_format == "excel" %}
-                                              <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                              {% elif F.file_format == "pdf" %}
-                                              <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                              {% elif F.file_format == "image" %}
-                                                <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                              {% elif F.file_format == "word" %}
-                                                <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                              {% elif F.file_format == "pz2" %}
-                                                <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                              {% else %}
-                                                <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                              {% endif %}
-                                            </li>
-                                              
-                                              {{ F.file_name }}
-                                                
-                                            <li class="list-inline-item">
-                                              <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_remove_file_from_model('{{item.cell_id}}','{{F.file_index}}','auditV2')">
-                                                <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                              </button>
-                                            </li>
-                                          </li>
-                                            
-                                          {% endif %}
-                                        {% endfor %}
-                                        <!-- <li style="text-align:center;height:20px;">
-                                            <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_add_files_to_auditV1('{{item.cell_id}}')"><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
-                                            
-                                        </li>-->
-                                        <hr class="dropdown-divider">
-                                        <li><input class="input_table_data" type="file" id="table1_input_files_to_{{ item.cell_id }}" name="table1_input_files_to_{{ item.cell_id }}" multiple></li>
-                                        <input type="hidden" name="mybutton1{{ item.cell_id }}" id="mybutton1{{ item.cell_id }}">
-                                        <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table('{{item.cell_id}}','table1','auditV2')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
-                                        <li></li>
-                                        
-
-                                      </ul>
-
-
-                                    </nav>
-                                  </td>
-
-                                  
+                    
                                   <td class="td_input_cell"><!--commentaire-->
                                     <nav class="header-nav ms-auto" >
                                       <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
@@ -445,6 +384,7 @@
                                       </ul>
                                     </nav>
                                   </td>
+    
 
                                   <td class="td_p_dateTime_cell2"><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
 
