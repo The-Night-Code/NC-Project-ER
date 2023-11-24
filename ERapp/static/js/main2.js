@@ -120,30 +120,34 @@ function submitForm__01(cellId, box, redirectPage,col){
 
 }
 
-function input_changed_func(cellId){
-    //var tr_div = document.getElementById("tr_"+cellId);
-    
-    document.getElementById("tr_" + cellId).style.backgroundColor = "red";
-    document.getElementById("tr_"+cellId).style.borderColor = "red";
-}
+initializeInput_change('tableDATA_1');
+initializeInput_change('tableDATA_2');
+initializeInput_change('tableDATA_3');
+initializeInput_change('tableDATA_4');
+initializeInput_change('tableDATA_5');
+initializeInput_change('tableDATA_6');
+initializeInput_change('tableDATA_7');
+initializeInput_change('tableDATA_8');
+initializeInput_change('tableDATA_9');
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Get all input elements within the table
-    var inputElements = document.querySelectorAll("#tableDATA_1 tbody input[type='text'], #myTable tbody input[type='file']");
+function initializeInput_change(tableId) {
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get all input elements within the table
+        var inputElements = document.querySelectorAll("#"+tableId+" tbody input[type='text'], #"+tableId+" tbody input[type='file']");
 
-    // Store the original values in a data attribute
-    inputElements.forEach(function(input) {
-        input.dataset.originalValue = input.value;
-    });
+        // Store the original values in a data attribute
+        inputElements.forEach(function(input) {
+            input.dataset.originalValue = input.value;
+        });
 
-    // Listen for input changes
-    inputElements.forEach(function(input) {
-        input.addEventListener("input", function() {
-            updateRowColor(input.closest("tr"));
+        // Listen for input changes
+        inputElements.forEach(function(input) {
+            input.addEventListener("input", function() {
+                updateRowColor(input.closest("tr"));
+            });
         });
     });
-});
-
+}
 function updateRowColor(row) {
     // Check if at least one input has a different value from its original value
     var rowShouldBeRed = Array.from(row.querySelectorAll("input[type='text'], input[type='file']")).some(function(input) {
