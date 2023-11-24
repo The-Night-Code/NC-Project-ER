@@ -25,44 +25,72 @@ function submitForm__11(cellId, box, redirectPage,col){
     } else {
         var table_paiement_send_state = "False";
     }
-    
-    var table_VT = document.getElementsByName("table_VT_"+cellId)[0];
-    //var table_auditV1 = document.getElementsByName("table_auditV1_"+cellId)[0];
-    //var table_auditV2 = document.getElementsByName("table_auditV2_"+cellId)[0];
-    //var table_auditV3 = document.getElementsByName("table_auditV3_"+cellId)[0];
-    //var table_auditFinal = document.getElementsByName("table_auditFinal_"+cellId)[0];
-    
-    //var table_precaite = document.getElementById("table_precarite_"+cellId);
-    //window.location.href=table_firstname +" "+ table_lastname+" "+table_address +" "+ table_num+" "+ table_email+" "+ table_etat+" "+table_tp+" "+ table_cofrac+" "+table_paiement+" "+table_auditeur ;
-    //data: $(myForm_id).serialize(),
+   
+
+    // Construct the names of the file input elements
+    var table_VT_input_name = 'table_VT_' + cellId;
+    var table_auditV1_input_name = 'table_auditV1_' + cellId;
+    var table_auditV2_input_name = 'table_auditV2_' + cellId;
+    var table_auditV3_input_name = 'table_auditV3_' + cellId;
+    var table_auditFinal_input_name = 'table_auditFinal_' + cellId;
+    // Get the file input elements using the constructed names
+    var table_VT_input = document.querySelector('input[name="' + table_VT_input_name + '"]');
+    var table_auditV1_input = document.querySelector('input[name="' + table_auditV1_input_name + '"]');
+    var table_auditV2_input = document.querySelector('input[name="' + table_auditV2_input_name + '"]');
+    var table_auditV3_input = document.querySelector('input[name="' + table_auditV3_input_name + '"]');
+    var table_auditFinal_input = document.querySelector('input[name="' + table_auditFinal_input_name + '"]');
+
+
+    var formData = new FormData();
+
+    // Append other data to the FormData object
+    formData.append('cellId_new', cellId);
+    formData.append('table_firstname', table_firstname);
+    formData.append('table_lastname', table_lastname);
+    formData.append('table_address', table_address);
+    formData.append('table_num', table_num);
+    formData.append('table_email', table_email);
+    formData.append('table_etat', table_etat);
+    formData.append('table_tp', table_tp);
+    formData.append('table_cofrac', table_cofrac);
+    formData.append('table_auditeur', table_auditeur);
+    formData.append('table_paiement', table_paiement_send_state);
+    formData.append('redirect_page', redirectPage);
+    formData.append('myid1', myid1);
+    formData.append('col_type1', col_type1);
+    formData.append('button_edit_data_on_table', button_edit_data_on_table);
+    formData.append('csrfmiddlewaretoken', csrfToken);
+
+
+    // Append all files from table_VT_input to the FormData object
+    for (var i = 0; i < table_VT_input.files.length; i++) {
+        formData.append('table_VT[]', table_VT_input.files[i]);
+    }
+
+    // Append all files from table_auditV1_input to the FormData object
+    for (var i = 0; i < table_auditV1_input.files.length; i++) {
+        formData.append('table_auditV1[]', table_auditV1_input.files[i]);
+    }
+
+    // Append all files from table_auditV2_input to the FormData object
+    for (var i = 0; i < table_auditV2_input.files.length; i++) {
+        formData.append('table_auditV2[]', table_auditV2_input.files[i]);
+    }
+    // Append all files from table_auditV2_input to the FormData object
+    for (var i = 0; i < table_auditV3_input.files.length; i++) {
+        formData.append('table_auditV3[]', table_auditV3_input.files[i]);
+    }
+    // Append all files from table_auditV2_input to the FormData object
+    for (var i = 0; i < table_auditFinal_input.files.length; i++) {
+        formData.append('table_auditFinal[]', table_auditFinal_input.files[i]);
+    }
+
     $.ajax({
         url: "/table-view/",
         type: "POST",
-        data: {
-            cellId_new:cellId,
-            table_firstname:table_firstname,
-            table_lastname:table_lastname,
-            table_address:table_address,
-            table_num:table_num,
-            table_email:table_email,
-            table_etat:table_etat,
-            table_tp:table_tp,
-            table_cofrac:table_cofrac,
-            table_auditeur:table_auditeur,
-            table_paiement:table_paiement_send_state,
-            
-            //table_VT:table_VT,
-            //table_auditV1:table_auditV1,
-            //table_auditV2:table_auditV2,
-            //table_auditV3:table_auditV3,
-            //table_auditFinal:table_auditFinal,
-            redirect_page:redirectPage,
-            myid1:myid1,
-            col_type1:col_type1,
-            button_edit_data_on_table:button_edit_data_on_table,
-
-            csrfmiddlewaretoken: csrfToken
-        },
+        data:  formData,
+        processData: false, // Important: tell jQuery not to process the data
+        contentType: false, // Important: tell jQuery not to set contentType
         
         success: function(data){
             //window.location.href=table_firstname 

@@ -254,6 +254,38 @@ def generate_random_string(length):
 
 
 @login_required
+def add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table):
+    l1=f"table_{column_name_type}[]"
+    file_table = ModelByColumn(column_name_type)
+    for file in request.FILES.getlist(l1, []):
+        format_file=file.name.split(".")[1]
+        if format_file in ['jpg','png','jpeg','heic']:
+            format_file="image"
+        if format_file in ['doc','docx']:
+            format_file="word"
+        if format_file in ['xls','xlsm']:
+            format_file="excel" 
+            
+        
+        
+        if not file_table.objects.filter(file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name):
+            Activities_audit.objects.create(
+                    Activity_id=generate_random_string(10),
+                    Activity_user = f"{request.user.last_name} {request.user.first_name}",
+                    Activity_user_email = request.user.email,
+                    Activity_table=Activity_table,
+                    Activity_project_id = button_edit_data_on_table,
+                    Activity_before =f"le fichier {file.name}" ,
+                    Activity_after = column_name_type ,
+                    Activity_add=True
+                )
+            file_table.objects.create(
+                    file_id = button_edit_data_on_table,
+                    file_name = file.name,
+                    file_save = file,
+                    file_format =format_file
+                )
+@login_required
 def add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table):
     l1=f"table_{column_name_type}_{button_edit_data_on_table}"
     file_table = ModelByColumn(column_name_type)
@@ -405,23 +437,21 @@ def table_view_2(request):
             
 
             column_name_type="VT"   
-            if request.FILES.getlist(f"table_{column_name_type}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
-                
-                
+            if request.FILES.getlist(f"table_{column_name_type}[]", []):
+                add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
 
             column_name_type="auditV1"
-            if request.FILES.getlist(f"table_{column_name_type}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
+            if request.FILES.getlist(f"table_{column_name_type}[]", []):
+                add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
             column_name_type="auditV2"
-            if request.FILES.getlist(f"table_{column_name_type}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
+            if request.FILES.getlist(f"table_{column_name_type}[]", []):
+                add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
             column_name_type="auditV3"
-            if request.FILES.getlist(f"table_{column_name_type}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
+            if request.FILES.getlist(f"table_{column_name_type}[]", []):
+                add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
             column_name_type="auditFinal"
-            if request.FILES.getlist(f"table_{column_name_type}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
+            if request.FILES.getlist(f"table_{column_name_type}[]", []):
+                add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
 
 
             response_date={
