@@ -276,7 +276,7 @@
                       <table class="table  table-hover   table-bordered  table-borderless border-info " id="tableDATA_{{k.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
   
                         <thead class="table-dark border-info">
-                          <tr>
+                          <tr >
                             <th class="fixed-column" ></th><!--style="width:auto;"-->
                             
                             <th onclick="sortTable('tableDATA_{{k.index}}',1)">Prénom</th>  
@@ -305,10 +305,10 @@
 
                               {% if item.etat == k.state and item.be == True %}
                               <input class="input_table_data" type="hidden" name="table{{k.index}}_id_{{ item.cell_id }}" id="table{{k.index}}_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
-                            <tr><!--type="submit" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') " -->
-                              <td class="fixed-column table-secondary"><button  class="button_table_data" onclick="submitForm__11('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" ><i class="ri-checkbox-circle-fill fa-2x color-red "></i></button></td>
+                            <tr id="tr_{{ item.cell_id }}">
+                              <td class="fixed-column table-secondary"><button  class="button_table_data" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" ><i class="ri-checkbox-circle-fill fa-2x color-red "></i></button></td>
                               
-                              <td class="td_input_cell" ><input class="input_table_data" type="text" name="table_firstname_{{ item.cell_id }}" id="table{{k.index}}_firstname{{ item.cell_id }}" value="{{ item.firstname }}"  ></td>
+                              <td class="td_input_cell" ><input class="input_table_data" type="text" name="table_firstname_{{ item.cell_id }}" id="table{{k.index}}_firstname{{ item.cell_id }}" value="{{ item.firstname }}" oninput="input_changed_func('{{item.cell_id}}')" ></td>
                               <td class="td_input_cell"><input class="input_table_data" type="text" name="table_lastname_{{ item.cell_id }}" id="table{{k.index}}_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
                               <td class="td_input_cell"><input class="input_table_data" type="text" name="table_address_{{ item.cell_id }}" id="table{{k.index}}_address{{ item.cell_id }}" value="{{ item.address }}"  ></td>
                               <td class="td_input_cell"><input class="input_table_data" type="text" name="table_num_{{ item.cell_id }}" id="table{{k.index}}_num{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
@@ -360,7 +360,7 @@
                                     <li><input class="input_table_data" type="file" name="table_VT_{{ item.cell_id }}" multiple></li>
                                     <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
                                     <li style="text-align:center;height:20px;">
-                                      <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                      <button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')">
                                         <i class="bi bi-save2 save_button_i_style" ></i>
                                       </button>
                                     </li> 
@@ -454,7 +454,7 @@
                                     <li><input class="input_table_data" type="file" name="table_auditV1_{{ item.cell_id }}" multiple></li>
                                     <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
                                     <li style="text-align:center;height:20px;">
-                                      <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                      <button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')">
                                         <i class="bi bi-save2 save_button_i_style" ></i>
                                       </button>
                                     </li> 
@@ -561,7 +561,7 @@
                                    <li><input class="input_table_data" type="file" name="table_auditV2_{{ item.cell_id }}" multiple></li>
                                    <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
                                    <li style="text-align:center;height:20px;">
-                                    <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                    <button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')">
                                       <i class="bi bi-save2 save_button_i_style" ></i>
                                     </button>
                                   </li> 
@@ -670,7 +670,7 @@
                                    <li><input class="input_table_data" type="file"  name="table_auditV3_{{ item.cell_id }}" multiple></li>
                                    <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
                                    <li style="text-align:center;height:20px;">
-                                    <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                    <button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')">
                                       <i class="bi bi-save2 save_button_i_style" ></i>
                                     </button>
                                   </li> 
@@ -777,7 +777,7 @@
                                    <li><input class="input_table_data" type="file" name="table_auditFinal_{{ item.cell_id }}" multiple></li>
                                    <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
                                    <li style="text-align:center;height:20px;">
-                                    <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
+                                    <button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}"onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')">
                                       <i class="bi bi-save2 save_button_i_style" ></i>
                                     </button>
                                   </li> 

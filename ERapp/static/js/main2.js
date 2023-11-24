@@ -1,9 +1,15 @@
   // table1_remove_file_from_model
-function submitForm__11(cellId, box, redirectPage,col){
+function submitForm__uploadfiles(cellId, box, redirectPage,col){
+    submitForm__01(cellId, box, redirectPage,col);
+}
+function submitForm__01(cellId, box, redirectPage,col){
     
     var myForm_id="myForm";
     var csrfToken = $("[name=csrfmiddlewaretoken]").val();
     
+
+    
+
 
     var myid1 = document.getElementsByName("myid1")[0].value;
     var col_type1 = document.getElementsByName("col_type1")[0].value;
@@ -99,11 +105,59 @@ function submitForm__11(cellId, box, redirectPage,col){
             if(data.re_page){
                 location.reload();
             }
+            table_VT_input.value = null;
+            table_auditV1_input.value = null;
+            table_auditV2_input.value = null;
+            table_auditV3_input.value = null;
+            table_auditFinal_input.value=null
+            var row = document.getElementById("tr_"+cellId);
+            if (row) {
+                row.style.borderColor = "";
+            }
         },
 
     });
 
 }
+
+function input_changed_func(cellId){
+    //var tr_div = document.getElementById("tr_"+cellId);
+    
+    document.getElementById("tr_" + cellId).style.backgroundColor = "red";
+    document.getElementById("tr_"+cellId).style.borderColor = "red";
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Get all input elements within the table
+    var inputElements = document.querySelectorAll("#tableDATA_1 tbody input[type='text'], #myTable tbody input[type='file']");
+
+    // Store the original values in a data attribute
+    inputElements.forEach(function(input) {
+        input.dataset.originalValue = input.value;
+    });
+
+    // Listen for input changes
+    inputElements.forEach(function(input) {
+        input.addEventListener("input", function() {
+            updateRowColor(input.closest("tr"));
+        });
+    });
+});
+
+function updateRowColor(row) {
+    // Check if at least one input has a different value from its original value
+    var rowShouldBeRed = Array.from(row.querySelectorAll("input[type='text'], input[type='file']")).some(function(input) {
+        return input.value !== input.dataset.originalValue;
+    });
+
+    // Set the row color based on the check
+    if (rowShouldBeRed) {
+        row.style.borderColor = "red";
+    } else {
+        row.style.borderColor = ""; // Reset to the default background color
+    }
+}
+
 
 function remove_file_from_m(id, index, column, redirect_next_page) {
     var url = "/remove_file_from_MODELS/?param0=" + encodeURIComponent(id) +
