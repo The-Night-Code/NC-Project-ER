@@ -243,9 +243,9 @@
 
     <section class="section dashboard">
       <div class="row">
-
         
-          <!--  ======================================================== start table 1 ===============================================================  -->
+        
+          <!-- <div id="newfile_Added"></div>  ======================================================== start table 1 ===============================================================  -->
           <!--  ======================================================== start table 1 ===============================================================  -->
           <!--  ======================================================== start table 1 ===============================================================  -->
           <!--  ======================================================== start table 1 ===============================================================  -->
@@ -272,8 +272,8 @@
                       <input type="hidden" name="myid{{ k.index }}" id="myid{{ k.index }}">
                       <input type="hidden" name="col_type{{ k.index }}" id="col_type{{ k.index }}">
                       <input type="hidden" name="mybutton{{ k.index }}" id="mybutton{{ k.index }}">
-  
-                      <table class="table  table-hover   table-bordered  table-borderless border-info " id="tableDATA_{{k.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
+                      
+                      <table class="table  table-hover   table-bordered  border-info " id="tableDATA_{{k.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
   
                         <thead class="table-dark border-info">
                           <tr >
@@ -320,13 +320,13 @@
                                     <i class="ri-file-list-3-line"></i>
                                     
                                   </a>
-                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
+                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" id="ul_for_vt_{{item.cell_id}}">
                                     
-                                        <!-- for i in datafiles  if item.cell_id == i.file_id -->
+                                        <!-- for i in datafiles  if item.cell_id == i.file_id  -->
                                     {% for F in datafiles_VT %}
                                     
                                       {% if F.file_id == item.cell_id %}
-                                      <li>
+                                      <li id="li_for_vt_{{item.cell_id}}">
                                         <li class="list-inline-item">
                                           {% if F.file_format == "excel" %}
                                           <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -354,7 +354,7 @@
                                           
                                         {% endif %}
                                     {% endfor %}
-
+                                    
                                     <hr class="dropdown-divider">
                                       
                                     <li><input class="input_table_data" type="file" name="table_VT_{{ item.cell_id }}" multiple></li>
@@ -416,13 +416,13 @@
                                     <i class="ri-file-list-3-line"></i>
                                     
                                   </a>
-                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
+                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end"  id="ul_for_auditV1_{{item.cell_id}}" >
                                     
                                        <!-- for i in datafiles  if item.cell_id == i.file_id -->
                                     {% for F in datafiles_AuditV1 %}
                                       
                                       {% if F.file_id == item.cell_id %}
-                                        <li>
+                                        <li id="li_for_auditV1_{{item.cell_id}}">
                                          <li class="list-inline-item">
                                            {% if F.file_format == "excel" %}
                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -523,13 +523,13 @@
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="ri-file-list-3-line"></i>
                                   </a>
-                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
+                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end"  id="ul_for_auditV2_{{item.cell_id}}">
                                     
                                     <!-- for i in datafiles  if item.cell_id == i.file_id -->
                                     {% for F in datafiles_AuditV2 %}
                                    
                                     {% if F.file_id == item.cell_id  and not F.file_removed %}
-                                    <li>
+                                    <li id="li_for_auditV2_{{item.cell_id}}">
                                       <li class="list-inline-item">
                                         {% if F.file_format == "excel" %}
                                         <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -632,13 +632,13 @@
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="ri-file-list-3-line"></i>
                                   </a>
-                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
+                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" id="ul_for_auditV3_{{item.cell_id}}" >
                                     
                                     <!-- for i in datafiles  if item.cell_id == i.file_id -->
                                     {% for F in datafiles_AuditV3 %}
                                    
                                     {% if F.file_id == item.cell_id %}
-                                    <li>
+                                    <li id="li_for_auditV3_{{item.cell_id}}">
                                       <li class="list-inline-item">
                                         {% if F.file_format == "excel" %}
                                         <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -739,13 +739,13 @@
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="ri-file-list-3-line"></i>
                                   </a> 
-                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
+                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" id="ul_for_auditFinal_{{item.cell_id}}" >
                                     
                                     <!-- for i in datafiles  if item.cell_id == i.file_id -->
                                     {% for F in datafiles_AuditFinal %}
                                    
                                     {% if F.file_id == item.cell_id %}
-                                    <li>
+                                    <li id="li_for_auditFinal_{{item.cell_id}}">
                                       <li class="list-inline-item">
                                         {% if F.file_format == "excel" %}
                                         <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>

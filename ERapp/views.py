@@ -257,15 +257,42 @@ def generate_random_string(length):
 def add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table):
     l1=f"table_{column_name_type}[]"
     file_table = ModelByColumn(column_name_type)
+    files_date_for_response=[]
+    I_icon_class=""
+    files_date_for_response+=[{'file_id':"button_edit_data_on_table",
+                                                        'file_save':"file",
+                                                        'file_format':"format_file",
+                                                        'file_name':"file.name",
+                                                        'file_index':"1111",
+                                                        'column':"column_name_type",
+                                                        'I_icon_class':"I_icon_class",},]
+    files_date_for_response+=[{'file_id':"button_edit_data_on_table",
+                                                        'file_save':"file2",
+                                                        'file_format':"format_file2",
+                                                        'file_name':"file.name2",
+                                                        'file_index':"1111",
+                                                        'column':"column_name_type",
+                                                        'I_icon_class':"I_icon_class",},]
+    
     for file in request.FILES.getlist(l1, []):
         format_file=file.name.split(".")[1]
         if format_file in ['jpg','png','jpeg','heic']:
             format_file="image"
-        if format_file in ['doc','docx']:
+            I_icon_class="bi bi-file-earmark-image"
+        elif format_file in ['doc','docx']:
             format_file="word"
-        if format_file in ['xls','xlsm']:
+            I_icon_class="bi bi-file-earmark-word"
+        elif format_file in ['xls','xlsm']:
             format_file="excel" 
-            
+            I_icon_class="ri-file-excel-2-line"
+        elif format_file in ['pdf']:
+            format_file="pdf" 
+            I_icon_class="bi bi-file-earmark-pdf"
+        elif format_file in ['pz2']:
+            format_file="pz2" 
+            I_icon_class="bi bi-file-ppt"
+        else:
+            I_icon_class="ri-file-line"
         
         
         if not file_table.objects.filter(file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name):
@@ -285,6 +312,24 @@ def add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_tab
                     file_save = file,
                     file_format =format_file
                 )
+            
+            obj_by_id = get_object_or_404(file_table,file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name,file_save = file)
+            #obj_by_id = file_table.objects.filter(file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name,file_save = file)
+            #GET_file_index = getattr(obj_by_id,'file_index')
+            column_name_type_new = column_name_type
+            if column_name_type == "VT":
+                column_name_type_new="vt"
+            files_date_for_response.append({'file_id':button_edit_data_on_table,
+                                        'file_save':file,
+                                        'file_format':format_file,
+                                        'file_name':file.name,
+                                        'file_index':"1111",
+                                        'column':column_name_type,
+                                        'I_icon_class':I_icon_class,})
+            
+    return files_date_for_response
+    
+            
 @login_required
 def add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table):
     l1=f"table_{column_name_type}_{button_edit_data_on_table}"
@@ -328,6 +373,8 @@ def table_view_2(request):
         myID1=request.POST.get("myid1")
         column1=request.POST.get("col_type1")
         Activity_table=''
+        file_uploaded_state=False
+        files_date_for_response=[]
         button_edit_data_on_table=request.POST.get("cellId_new")
 
         if button_edit_data_on_table:
@@ -435,27 +482,82 @@ def table_view_2(request):
             except TableData001.DoesNotExist:
                 pass
             
+            
+            column_name_types = ["VT", "auditV1", "auditV2", "auditV3", "auditFinal"]
+            for column_name_type in column_name_types:
+                files_uploaded = request.FILES.getlist(f"table_{column_name_type}[]")
+                if files_uploaded:
 
-            column_name_type="VT"   
-            if request.FILES.getlist(f"table_{column_name_type}[]", []):
-                add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
+                    file_uploaded_state = True
+                    
+                    l1=f"table_{column_name_type}[]"
+                    file_table = ModelByColumn(column_name_type)
+                    files_date_for_response=[]
+                    I_icon_class=""
 
-            column_name_type="auditV1"
-            if request.FILES.getlist(f"table_{column_name_type}[]", []):
-                add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
-            column_name_type="auditV2"
-            if request.FILES.getlist(f"table_{column_name_type}[]", []):
-                add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
-            column_name_type="auditV3"
-            if request.FILES.getlist(f"table_{column_name_type}[]", []):
-                add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
-            column_name_type="auditFinal"
-            if request.FILES.getlist(f"table_{column_name_type}[]", []):
-                add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
+                    for file in request.FILES.getlist(l1, []):
+                        format_file=file.name.split(".")[1]
+                        if format_file not in ['jpg','png','jpeg','heic','doc','docx','xls','xlsm','pdf','pz2']:
+                            I_icon_class="ri-file-line"
+                            
+                        if format_file in ['jpg','png','jpeg','heic']:
+                            format_file="image"
+                            I_icon_class="bi bi-file-earmark-image"
+                        if format_file in ['doc','docx']:
+                            format_file="word"
+                            I_icon_class="bi bi-file-earmark-word"
+                        if format_file in ['xls','xlsm']:
+                            format_file="excel" 
+                            I_icon_class="ri-file-excel-2-line"
+                        if format_file in ['pdf']:
+                            format_file="pdf" 
+                            I_icon_class="bi bi-file-earmark-pdf"
+                        if format_file in ['pz2']:
+                            format_file="pz2" 
+                            I_icon_class="bi bi-file-ppt"
+                        
+                        column_name_type_new = column_name_type
+                        if column_name_type == "VT":
+                            column_name_type_new="vt"
+                        files_date_for_response.append({'file_id':button_edit_data_on_table,
+                                                        'file_save_url':"file.name",
+                                                        'file_format':format_file,
+                                                        'file_name':file.name,
+                                                        'file_index':"1111",
+                                                        'column':column_name_type_new,
+                                                        'I_icon_class':I_icon_class,})
+                        
+                        if not file_table.objects.filter(file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name):
+                            Activities_audit.objects.create(
+                                    Activity_id=generate_random_string(10),
+                                    Activity_user = f"{request.user.last_name} {request.user.first_name}",
+                                    Activity_user_email = request.user.email,
+                                    Activity_table=Activity_table,
+                                    Activity_project_id = button_edit_data_on_table,
+                                    Activity_before =f"le fichier {file.name}" ,
+                                    Activity_after = column_name_type ,
+                                    Activity_add=True
+                                )
+                            file_table.objects.create(
+                                    file_id = button_edit_data_on_table,
+                                    file_name = file.name,
+                                    file_save = file,
+                                    file_format =format_file
+                                )
+                            
+                            obj_by_id = get_object_or_404(file_table,file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name,file_save = file)
+                            #obj_by_id = file_table.objects.filter(file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name,file_save = file)
+                            #GET_file_index = getattr(obj_by_id,'file_index')
+                            column_name_type_new = column_name_type
+                            if column_name_type == "VT":
+                                column_name_type_new="vt"
+                            
 
 
             response_date={
                 're_page':re_page,
+                'file_uploaded_state':file_uploaded_state,
+                'files_date_for_response':files_date_for_response,
                 #'message':'Form submitted successfully!',
                 #'data':'additional data if needed
             }

@@ -561,7 +561,8 @@ h6 {
  
 .color_blue_2{color:rgb(0, 84, 209)!important;}
 .color_blue{color:blue!important;}
-.color-red , .color_red {color:red!important;}
+.color-red , .color_red {color:red;}
+.color-red_important , .color_red_important {color:red!important;}
 .color_cyan{color:#0dcaf0;} 
 .color_green_important{color:green!important;} 
 .color_green{color:green;} 
