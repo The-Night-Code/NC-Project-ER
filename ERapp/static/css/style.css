@@ -558,10 +558,14 @@ h6 {
   }
 }
 
-.color_green{color:green!important;}  
+ 
 .color_blue_2{color:rgb(0, 84, 209)!important;}
 .color_blue{color:blue!important;}
 .color-red , .color_red {color:red!important;}
+.color_cyan{color:#0dcaf0;} 
+.color_green_important{color:green!important;} 
+.color_green{color:green;} 
+.color_cyan_important {color:#0dcaf0!important;}
 .color_gray_dark{color:rgba(54, 54, 54, 0.733)!important;}
 .bg-color-red{background-color:red!important;}
 .bg-color-white{background-color:white!important;}

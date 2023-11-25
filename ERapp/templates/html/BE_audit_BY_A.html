@@ -323,8 +323,8 @@
 
                               {% if item.etat == k.state and item.be == True and Audi in item.auditeur %}
                               <input class="input_table_data" type="hidden" name="table{{k.index}}_id_{{ item.cell_id }}" id="table{{k.index}}_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
-                            <tr>
-                                <td class="fixed-column table-secondary"><button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') "><i class="ri-checkbox-circle-fill fa-2x color-red "></i></button></td>
+                            <tr id="tr_{{ item.cell_id }}">
+                                <td class="fixed-column table-secondary"><button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') "><i class="ri-checkbox-circle-fill fa-2x color_green "></i></button></td>
                                 
                                 <td class="td_input_cell" ><input class="input_table_data" type="text" name="table_firstname_{{ item.cell_id }}" id="table{{k.index}}_firstname{{ item.cell_id }}" value="{{ item.firstname }}"  ></td>
                                 <td class="td_input_cell"><input class="input_table_data" type="text" name="table_lastname_{{ item.cell_id }}" id="table{{k.index}}_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>

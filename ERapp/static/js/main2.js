@@ -111,8 +111,10 @@ function submitForm__01(cellId, box, redirectPage,col){
             table_auditV3_input.value = null;
             table_auditFinal_input.value=null
             var row = document.getElementById("tr_"+cellId);
+            var button_edit_data_on_T = row.querySelector('i');
             if (row) {
-                row.style.borderColor = "";
+                row.style.borderColor = "#0dcaf0";
+                button_edit_data_on_T.style.color="green";
             }
         },
 
@@ -133,7 +135,7 @@ initializeInput_change('tableDATA_9');
 function initializeInput_change(tableId) {
     document.addEventListener("DOMContentLoaded", function() {
         // Get all input elements within the table
-        var inputElements = document.querySelectorAll("#"+tableId+" tbody input[type='text'], #"+tableId+" tbody input[type='file']");
+        var inputElements = document.querySelectorAll("#"+tableId+" tbody input[type='text'], #"+tableId+" tbody input[type='file'], #"+tableId+" tbody select ");
 
         // Store the original values in a data attribute
         inputElements.forEach(function(input) {
@@ -143,22 +145,25 @@ function initializeInput_change(tableId) {
         // Listen for input changes
         inputElements.forEach(function(input) {
             input.addEventListener("input", function() {
-                updateRowColor(input.closest("tr"));
+                updateRowColor(input.closest("tr"),tableId);
             });
         });
     });
 }
-function updateRowColor(row) {
+function updateRowColor(row,cellId) {
     // Check if at least one input has a different value from its original value
-    var rowShouldBeRed = Array.from(row.querySelectorAll("input[type='text'], input[type='file']")).some(function(input) {
+    var rowShouldBeRed = Array.from(row.querySelectorAll("input[type='text'], input[type='file'],  tbody select ")).some(function(input) {
         return input.value !== input.dataset.originalValue;
     });
-
+    //var button_edit_data_on_T = document.getElementById("i_for_edit_button_"+cellId); //document.getElementsByClassName("i_for_edit_button")[0];
+    const button_edit_data_on_T = row.querySelector('i');
     // Set the row color based on the check
     if (rowShouldBeRed) {
         row.style.borderColor = "red";
+        button_edit_data_on_T.style.color="red";
     } else {
-        row.style.borderColor = ""; // Reset to the default background color
+        row.style.borderColor = "#0dcaf0"; // Reset to the default background color
+        button_edit_data_on_T.style.color="green";
     }
 }
 
