@@ -217,6 +217,7 @@
   </aside><!-- End Sidebar-->
   <!-- End Sidebar ==========================================================================================================================-->
 
+  
 
   <!-- main Page ========================================================================================================================================     -->
   <main id="main" class="main">
@@ -326,33 +327,33 @@
                                     {% for F in datafiles_VT %}
                                     
                                       {% if F.file_id == item.cell_id %}
-                                      <li id="li_for_vt_{{item.cell_id}}">
-                                        <li class="list-inline-item">
-                                          {% if F.file_format == "excel" %}
-                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                          {% elif F.file_format == "pdf" %}
-                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                          {% elif F.file_format == "image" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                          {% elif F.file_format == "word" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                          {% elif F.file_format == "pz2" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                          {% else %}
-                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                          {% endif %}
-                                        </li>
-                                          
-                                          {{ F.file_name }}
+                                        <li id="li_for_vt_{{item.cell_id}}_{{F.file_index}}">
+                                          <li class="list-inline-item">
+                                            {% if F.file_format == "excel" %}
+                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
+                                            {% elif F.file_format == "pdf" %}
+                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
+                                            {% elif F.file_format == "image" %}
+                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
+                                            {% elif F.file_format == "word" %}
+                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
+                                            {% elif F.file_format == "pz2" %}
+                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
+                                            {% else %}
+                                              <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
+                                            {% endif %}
+                                          </li>
                                             
-                                        <li class="list-inline-item">
-                                          <button  class="button_table_data" type="button" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','vt','{{redirect_next_page}}')">
-                                            <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                          </button>
+                                            {{ F.file_name }}
+                                              
+                                          <li class="list-inline-item">
+                                            <button  class="button_table_data" type="button" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','vt','{{redirect_next_page}}','li_for_vt_{{item.cell_id}}_{{F.file_index}}')">
+                                              <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                            </button>
+                                          </li>
                                         </li>
-                                      </li>
                                           
-                                        {% endif %}
+                                      {% endif %}
                                     {% endfor %}
                                     
                                     <hr class="dropdown-divider">
@@ -422,7 +423,7 @@
                                     {% for F in datafiles_AuditV1 %}
                                       
                                       {% if F.file_id == item.cell_id %}
-                                        <li id="li_for_auditV1_{{item.cell_id}}">
+                                        <li id="li_for_auditV1_{{item.cell_id}}_{{F.file_index}}">
                                          <li class="list-inline-item">
                                            {% if F.file_format == "excel" %}
                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -442,7 +443,7 @@
                                            {{ F.file_name }}
                                              
                                          <li class="list-inline-item">
-                                           <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV1','{{redirect_next_page}}')">
+                                           <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV1','{{redirect_next_page}}','li_for_auditV1_{{item.cell_id}}_{{F.file_index}}')">
                                              <i class="ri-delete-bin-2-fill" style="color:red;"></i>
                                            </button>
                                          </li>
@@ -529,7 +530,7 @@
                                     {% for F in datafiles_AuditV2 %}
                                    
                                     {% if F.file_id == item.cell_id  and not F.file_removed %}
-                                    <li id="li_for_auditV2_{{item.cell_id}}">
+                                    <li id="li_for_auditV2_{{item.cell_id}}_{{F.file_index}}">
                                       <li class="list-inline-item">
                                         {% if F.file_format == "excel" %}
                                         <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -549,7 +550,7 @@
                                         {{ F.file_name }}
                                           
                                       <li class="list-inline-item">
-                                        <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV2',{{redirect_next_page}})">
+                                        <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV2','{{redirect_next_page}}','li_for_auditV2_{{item.cell_id}}_{{F.file_index}}')">
                                           <i class="ri-delete-bin-2-fill" style="color:red;"></i>
                                         </button>
                                       </li>
@@ -638,7 +639,7 @@
                                     {% for F in datafiles_AuditV3 %}
                                    
                                     {% if F.file_id == item.cell_id %}
-                                    <li id="li_for_auditV3_{{item.cell_id}}">
+                                    <li id="li_for_auditV3_{{item.cell_id}}_{{F.file_index}}">
                                       <li class="list-inline-item">
                                         {% if F.file_format == "excel" %}
                                         <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -658,7 +659,7 @@
                                         {{ F.file_name }}
                                           
                                       <li class="list-inline-item">
-                                        <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV3','{{redirect_next_page}}')">
+                                        <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV3','{{redirect_next_page}}','li_for_auditV3_{{item.cell_id}}_{{F.file_index}}')">
                                           <i class="ri-delete-bin-2-fill" style="color:red;"></i>
                                         </button>
                                       </li>
@@ -745,30 +746,32 @@
                                     {% for F in datafiles_AuditFinal %}
                                    
                                     {% if F.file_id == item.cell_id %}
-                                    <li id="li_for_auditFinal_{{item.cell_id}}">
-                                      <li class="list-inline-item">
-                                        {% if F.file_format == "excel" %}
-                                        <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                        {% elif F.file_format == "pdf" %}
-                                        <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                        {% elif F.file_format == "image" %}
-                                          <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                        {% elif F.file_format == "word" %}
-                                          <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                        {% elif F.file_format == "pz2" %}
-                                          <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                        {% else %}
-                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                        {% endif %}
-                                      </li>
-                                        
-                                        {{ F.file_name }}
-                                          
-                                      <li class="list-inline-item">
-                                        <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditFinal','{{redirect_next_page}}')">
-                                          <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                        </button>
-                                      </li>
+                                    <li id="li_for_auditFinal_{{item.cell_id}}_{{F.file_index}}">
+                                      <ul>
+                                        <li class="list-inline-item">
+                                          {% if F.file_format == "excel" %}
+                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
+                                          {% elif F.file_format == "pdf" %}
+                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
+                                          {% elif F.file_format == "image" %}
+                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
+                                          {% elif F.file_format == "word" %}
+                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
+                                          {% elif F.file_format == "pz2" %}
+                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
+                                          {% else %}
+                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
+                                          {% endif %}
+                                        </li>
+                                        <li class="list-inline-item">
+                                          <p>{{ F.file_name }}</p>
+                                        </li> 
+                                        <li class="list-inline-item">
+                                          <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditFinal','{{redirect_next_page}}','send_data','li_for_auditFinal_{{item.cell_id}}_{{F.file_index}}')">
+                                            <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                          </button>
+                                        </li>
+                                      </ul>
                                     </li>
                                        
                                      {% endif %}
@@ -777,7 +780,7 @@
                                    <li><input class="input_table_data" type="file" name="table_auditFinal_{{ item.cell_id }}" multiple></li>
                                    <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
                                    <li style="text-align:center;height:20px;">
-                                    <button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}"onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')">
+                                    <button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}"onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}')">
                                       <i class="bi bi-save2 save_button_i_style" ></i>
                                     </button>
                                   </li> 

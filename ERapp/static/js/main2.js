@@ -91,6 +91,10 @@ function submitForm__01(cellId, box, redirectPage,col){
         formData.append('table_auditFinal[]', table_auditFinal_input.files[i]);
     }
 
+    var loading_spinner_div = `<div class="upload_spinner" id="upload_spinner_1"></div> `  
+    $("body").prepend(loading_spinner_div);
+
+
     $.ajax({
         url: "/table-view/",
         type: "POST",
@@ -119,33 +123,34 @@ function submitForm__01(cellId, box, redirectPage,col){
             }
 
             
-                // Loop through files and prepend new list items
-                
-                for (var i = 0; i < data.files_date_for_response.length; i++) {
-                    var F = data.files_date_for_response[i];
-                    var element_id="#ul_for_"+F.column+"_"+F.file_id;
-                    var new_File = `
-
-                        <li id="li_for_${F.column}_${F.file_id}" class="color_red_important">
-                            <li class="list-inline-item">
-                                <a class="nav-link nav-icon show" ><i class=" ${F.I_icon_class} " ></i></a>
-                            </li>
-                            ${F.file_name} ${element_id}
-                            <li class="list-inline-item">
-                            <button  class="button_table_data" type="button" onclick="remove_file_from_m('${F.file_id}','${F.file_index}','${F.column}','${data.re_page}')">
-                            <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                            </button>
-                        </li>
-                        </li>
-                        
-                    `
-
-                    
-                    $(element_id).prepend(new_File);
-                    //$("#div_for_vt_DcvWOFJbEf").prepend(new_File);
-                }
-                
+            // Loop through files and prepend new list items
             
+            for (var i = 0; i < data.files_date_for_response.length; i++) {
+                var F = data.files_date_for_response[i];
+                var element_id="#ul_for_"+F.column+"_"+F.file_id;
+                var new_File = `
+
+                    <li id="li_for_${F.column}_${F.file_id}" class="color_red_important">
+                        <li class="list-inline-item">
+                            <a class="nav-link nav-icon show" ><i class=" ${F.I_icon_class} " ></i></a>
+                        </li>
+                        ${F.file_name}
+                        <li class="list-inline-item">
+                        <button  class="button_table_data" type="button"  disabled">
+                        <i class="ri-delete-bin-2-fill color_gray" style="color:gray;"></i>
+                        </button>
+                    </li>
+                    </li>
+                    
+                `
+
+                
+                $(element_id).prepend(new_File);
+                //$("#div_for_vt_DcvWOFJbEf").prepend(new_File);
+            }
+                
+            const remove_loading_spinner_div = document.getElementById("upload_spinner_1");
+            remove_loading_spinner_div.remove()
             
 
 
@@ -202,13 +207,44 @@ function updateRowColor(row,cellId) {
 }
 
 
-function remove_file_from_m(id, index, column, redirect_next_page) {
-    var url = "/remove_file_from_MODELS/?param0=" + encodeURIComponent(id) +
-                "&param1=" + encodeURIComponent(index) +
-                "&param2=" + encodeURIComponent(column) +
-                "&param3=" + encodeURIComponent(redirect_next_page);
+function remove_file_from_m(id, index, column, redirect_next_page,element_tag_id) {
 
-    window.location.href = url;
+    var element_tag_id_index=element_tag_id;
+    
+    var csrfToken = $("[name=csrfmiddlewaretoken]").val();
+    
+    $.ajax({
+        url: "/remove_file_from_MODELS/",
+        type: "POST",
+        data: {
+            param0: id,
+            param1:index,
+            param2:column,
+            param3:redirect_next_page,
+            element_tag_id_index:element_tag_id_index,
+            csrfmiddlewaretoken: csrfToken
+        },
+        success: function (response) {
+            
+             
+            var remove_file_from_box_2 = document.getElementById(element_tag_id_index);
+            remove_file_from_box_2.style.display="";
+            
+
+
+            //if(data.status =="success"){
+            var file_removed_status_box = `
+            <div class="file_removed_status_box" id="file_removed_status_box_1">
+                <h4>${response.title}</h4>
+            </div> `  ;
+            $("body").prepend(file_removed_status_box);
+            $("#file_removed_status_box_1").delay(2000).fadeOut(200);
+            
+            //$('#file_removed_status_box_1').remove();
+            //}
+
+        },
+    });
 }
 
 
@@ -228,8 +264,6 @@ function sendMessage(cellId, box, redirectNextPage,col) {
                     
     inpust_msg_col_id="input_msg_"+col+"_" + cellId;
     var message = document.getElementById(inpust_msg_col_id).value;
-    //window.location.href=col+"___"+cellId
-    //if (!message) {
     var csrfToken = $("[name=csrfmiddlewaretoken]").val();
     
     $.ajax({
@@ -268,7 +302,7 @@ function sendMessage(cellId, box, redirectNextPage,col) {
 
         },
     });
-    //}
+
 }
 
 function preventSubmit(event) {

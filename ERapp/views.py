@@ -516,18 +516,9 @@ def table_view_2(request):
                             format_file="pz2" 
                             I_icon_class="bi bi-file-ppt"
                         
-                        column_name_type_new = column_name_type
-                        if column_name_type == "VT":
-                            column_name_type_new="vt"
-                        files_date_for_response.append({'file_id':button_edit_data_on_table,
-                                                        'file_save_url':"file.name",
-                                                        'file_format':format_file,
-                                                        'file_name':file.name,
-                                                        'file_index':"1111",
-                                                        'column':column_name_type_new,
-                                                        'I_icon_class':I_icon_class,})
                         
-                        if not file_table.objects.filter(file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name):
+                        
+                        if not file_table.objects.filter(file_id=button_edit_data_on_table, file_name=file.name,file_removed=False):
                             Activities_audit.objects.create(
                                     Activity_id=generate_random_string(10),
                                     Activity_user = f"{request.user.last_name} {request.user.first_name}",
@@ -544,14 +535,18 @@ def table_view_2(request):
                                     file_save = file,
                                     file_format =format_file
                                 )
-                            
-                            obj_by_id = get_object_or_404(file_table,file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name,file_save = file)
-                            #obj_by_id = file_table.objects.filter(file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name,file_save = file)
-                            #GET_file_index = getattr(obj_by_id,'file_index')
                             column_name_type_new = column_name_type
                             if column_name_type == "VT":
                                 column_name_type_new="vt"
-                            
+                            files_date_for_response.append({'file_id':button_edit_data_on_table,
+                                                        'file_save_url':"file.name",
+                                                        'file_format':format_file,
+                                                        'file_name':file.name,
+                                                        'file_index':"",
+                                                        'column':column_name_type_new,
+                                                        'I_icon_class':I_icon_class,})
+
+                        
 
 
             response_date={
@@ -896,58 +891,65 @@ def ModelByColumn(model_by_column):
     
 @login_required   
 def remove_file_from_MODELS(request):
-    
-    user_ = request.user
-    user_role= user_.role
-    #if  "auditeur" in user_role:
-    file_id = request.GET.get('param0')
-    index = request.GET.get('param1')
-    model_by_column = request.GET.get('param2')
-    redirect_to_next_page = request.GET.get('param3')
-    file_table=ModelByColumn(model_by_column)
-    
-    try:
-        f_table_audit_v1 = file_table.objects.get(file_id=str(file_id),file_index=str(index))
+    if request.method == 'POST':
+        user_ = request.user
+        user_role= user_.role
+        #if  "auditeur" in user_role:
+        file_id = request.POST.get('param0')
+        index = request.POST.get('param1')
+        model_by_column = request.POST.get('param2')
+        redirect_to_next_page = request.POST.get('param3')
+        element_tag_id_index = request.POST.get('element_tag_id_index')
+        file_table=ModelByColumn(model_by_column)
+        
+        try:
+            f_table_audit_v1 = file_table.objects.get(file_id=str(file_id),file_index=str(index))
 
-        if f_table_audit_v1.file_removed == True:
-            file_removed_path=f_table_audit_v1.file_save
-            if os.path.exists(file_removed_path.path):
-                os.remove(file_removed_path.path)
+            if f_table_audit_v1.file_removed == True:
+                file_removed_path=f_table_audit_v1.file_save
+                if os.path.exists(file_removed_path.path):
+                    os.remove(file_removed_path.path)
 
-            f_table_audit_v1.delete()
-        else:
-            try:
-                Activity_table_object = TableData001.objects.get(cell_id=str(file_id)) #get_object_or_404(TableData001,cell_id=str(file_id))
-                if  Activity_table_object:
-                    if getattr(Activity_table_object,"be"):
-                                Activity_table="Bureau d'étude"
-                    elif getattr(Activity_table_object,"ai"):
-                                Activity_table="Agent immobilier"
-                        
-                f_table_audit_v1.file_removed = True
-                #f_table_audit_v1.file_removed_date = 
-                f_table_audit_v1.file_removed_user_email = user_.email
-                f_table_audit_v1.file_removed_user_FN = user_.first_name
-                f_table_audit_v1.file_removed_user_LN = user_.last_name
-                f_table_audit_v1.file_removed_date=datetime.now(tz_gmt_plus_1)
-                f_table_audit_v1.save(update_fields=['file_removed', 'file_removed_user_email', 'file_removed_user_FN', 'file_removed_user_LN','file_removed_date' ])
-                if model_by_column == "vt":
-                    model_by_column="Visite technique"
-                Activities_audit.objects.create(Activity_id=generate_random_string(10),
-                                                            Activity_user=f"{user_.last_name} {user_.first_name}",
-                                                            Activity_user_email=user_.email,
-                                                            Activity_table=Activity_table,
-                                                            Activity_project_id=str(file_id),
-                                                            Activity_before=getattr(f_table_audit_v1,"file_name"),
-                                                            Activity_after = model_by_column ,
-                                                            Activity_delete=True)
-            except:
-                pass
-    except file_table.DoesNotExist:
-        pass
+                f_table_audit_v1.delete()
+                return JsonResponse({'status': 'success',
+                                    'title': 'Le fichier a été déplacé vers la corbeille',
+                                    "element_tag_id_index":element_tag_id_index,})
+            else:
+                try:
+                    Activity_table_object = TableData001.objects.get(cell_id=str(file_id)) #get_object_or_404(TableData001,cell_id=str(file_id))
+                    if  Activity_table_object:
+                        if getattr(Activity_table_object,"be"):
+                                    Activity_table="Bureau d'étude"
+                        elif getattr(Activity_table_object,"ai"):
+                                    Activity_table="Agent immobilier"
+                            
+                    f_table_audit_v1.file_removed = True
+                    #f_table_audit_v1.file_removed_date = 
+                    f_table_audit_v1.file_removed_user_email = user_.email
+                    f_table_audit_v1.file_removed_user_FN = user_.first_name
+                    f_table_audit_v1.file_removed_user_LN = user_.last_name
+                    f_table_audit_v1.file_removed_date=datetime.now(tz_gmt_plus_1)
+                    f_table_audit_v1.save(update_fields=['file_removed', 'file_removed_user_email', 'file_removed_user_FN', 'file_removed_user_LN','file_removed_date' ])
+                    if model_by_column == "vt":
+                        model_by_column="Visite technique"
+                    Activities_audit.objects.create(Activity_id=generate_random_string(10),
+                                                                Activity_user=f"{user_.last_name} {user_.first_name}",
+                                                                Activity_user_email=user_.email,
+                                                                Activity_table=Activity_table,
+                                                                Activity_project_id=str(file_id),
+                                                                Activity_before=getattr(f_table_audit_v1,"file_name"),
+                                                                Activity_after = model_by_column ,
+                                                                Activity_delete=True)
+                    return JsonResponse({'status': 'success',
+                                    'title': 'Le fichier a été supprimé',
+                                    "element_tag_id_index":element_tag_id_index,})
+                except:
+                    pass
+        except file_table.DoesNotExist:
+            pass
+        
     
-    #
-    return redirect(redirect_to_next_page)
+        return JsonResponse({'status': 'error'})
 
 
 

@@ -233,7 +233,9 @@
               <!-- General Form Elements -->
               <input class="form-control" type="text" id="filterInput_{{ model_type.index }}" placeholder="Search..." style="width:30%;min-width:100px;">
               </br>
-              <form>
+              <form method="POST"   enctype="multipart/form-data" id="myForm">
+                {% csrf_token %}
+                
                 <table class="table  table-hover datatable datatable-table" id="tableDATA_{{model_type.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
   
                   <thead class="table-dark text-center">
@@ -250,7 +252,7 @@
                   <tbody  id="myTable_{{model_type.index}}">
                     {% for F in model_type.model|dictsortreversed:"file_removed_date" %}
 
-                    <tr>
+                    <tr id="div_for_{{model_type.name}}_{{F.file_id}}_{{F.file_index}}">
                         <td class="">
                           {% if F.file_format == "excel" %}
                             <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line fa-2x color_green" ></i></a>
@@ -274,8 +276,13 @@
                         <td class=""><p>{{ F.file_removed_date|date:_("d m Y H:i") }}</p></td>
                         <td class=""><p>{{ F.file_removed_date|naturaltime }}</p></td>
                         <td class="">
-                          <button  class="button_table_data " type="button" id="" name="" value="" onclick="remove_file_from_m('{{F.file_id}}','{{F.file_index}}','{{model_type.name}}',{{redirect_next_page}})">
+
+                          <button  class="button_table_data" type="button" onclick="remove_file_from_m('{{F.file_id}}','{{F.file_index}}','{{model_type.name}}','{{redirect_next_page}}','div_for_{{model_type.name}}_{{F.file_id}}_{{F.file_index}}')">
                             <i class="ri-delete-bin-2-fill fa-2x" style="color:red;"></i>
+                          </button>
+
+                          <button  class="button_table_data" type="button" onclick="remove_file_from_m('{{F.file_id}}','{{F.file_index}}','vt','{{redirect_next_page}}','li_for_vt_{{F.file_id}}')">
+                            <i class="ri-delete-bin-2-fill" style="color:red;"></i>
                           </button>
                         </td>
                       </tr>
@@ -305,7 +312,10 @@
 
   {% endif %}
 
-
+  <script>
+    const remove_loading_spinner_div = document.getElementById("div_for_vt_aUig83nGwsdv_120");
+  remove_loading_spinner_div.remove();
+  </script>
   
   
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
