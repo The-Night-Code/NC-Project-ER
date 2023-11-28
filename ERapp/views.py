@@ -551,6 +551,7 @@ def table_view_2(request):
 
             response_date={
                 're_page':re_page,
+                'cellId_new':button_edit_data_on_table,
                 'file_uploaded_state':file_uploaded_state,
                 'files_date_for_response':files_date_for_response,
                 #'message':'Form submitted successfully!',

@@ -302,10 +302,9 @@
                             <th onclick="sortTable('tableDATA_{{k.index}}',24)" >id </span></th>
                           </tr>
                         </thead>
-                          <tbody id="myTable_{{k.index}}">
-                              {% for item in data %}
-
-                              {% if item.etat == k.state and item.be == True %}
+                          <tbody id="myTable_{{k.index}}" >
+                            {% for item in data %}
+                            {% if item.etat == k.state and item.be == True %}
                               <input class="input_table_data" type="hidden" name="table{{k.index}}_id_{{ item.cell_id }}" id="table{{k.index}}_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             <tr id="tr_{{ item.cell_id }}">
                               <td class="fixed-column table-secondary"><button  class="button_table_data" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" ><i class="ri-checkbox-circle-fill fa-2x color_green " id="i_for_edit_button"></i></button></td>
@@ -776,7 +775,7 @@
                                      {% endif %}
                                   {% endfor %}
                                   <hr class="dropdown-divider">
-                                   <li><input class="input_table_data" type="file" name="table_auditV2_{{ item.cell_id }}" multiple></li>
+                                   <li><input class="input_table_data" type="file" name="table_auditFinal_{{ item.cell_id }}" multiple></li>
                                    <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
                                    <li style="text-align:center;height:20px;">
                                     <button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')">
@@ -930,6 +929,8 @@
                               <td><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
                               <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
                             </tr>
+
+                          
                               {% endif %}
                               {% endfor %}
                             
@@ -971,7 +972,7 @@
   {% endif %}
 
   <script>
-  
+    tr_v7xlwzMjDz
 </script>
 
 <script>

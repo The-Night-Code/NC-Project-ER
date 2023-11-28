@@ -91,9 +91,13 @@ function submitForm__01(cellId, box, redirectPage,col){
         formData.append('table_auditFinal[]', table_auditFinal_input.files[i]);
     }
 
-    var loading_spinner_div = `<div class="upload_spinner" id="upload_spinner_1"></div> `  
+    var loading_spinner_div = `<div class="upload_spinner" id="upload_spinner_1"></div> `  ;
     $("body").prepend(loading_spinner_div);
 
+    // Get the ID of the row to disable // Disable all inputs within the specified row
+    var tr_disabled_id = '#tr_'+cellId;
+    $(tr_disabled_id).find('input, select, textarea, button').prop('disabled', true);
+    
 
     $.ajax({
         url: "/table-view/",
@@ -148,7 +152,11 @@ function submitForm__01(cellId, box, redirectPage,col){
                 $(element_id).prepend(new_File);
                 //$("#div_for_vt_DcvWOFJbEf").prepend(new_File);
             }
-                
+            
+            // Get the ID of the row to disable // !Disable all inputs within the specified row
+            var tr_disabled_id = '#tr_'+cellId;
+            $(tr_disabled_id).find('input, select, textarea, button').prop('disabled', false);
+            
             const remove_loading_spinner_div = document.getElementById("upload_spinner_1");
             remove_loading_spinner_div.remove()
             
