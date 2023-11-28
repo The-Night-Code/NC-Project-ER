@@ -318,639 +318,639 @@
                             <th onclick="sortTable('tableDATA_{{k.index}}',24)" >id </span></th>
                           </tr>
                         </thead>
-                          <tbody id="myTable_{{k.index}}">
-                              {% for item in data %}
+                        <tbody id="myTable_{{k.index}}" >
+                          {% for item in data %}
+                          {% if item.etat == k.state and item.be == True and Audi in item.auditeur  %}
+                            <input class="input_table_data" type="hidden" name="table{{k.index}}_id_{{ item.cell_id }}" id="table{{k.index}}_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
+                          <tr id="tr_{{ item.cell_id }}">
+                            <td class="fixed-column table-secondary"><button  class="button_table_data" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" ><i class="ri-checkbox-circle-fill fa-2x color_green " id="i_for_edit_button"></i></button></td>
+                            
+                            <td class="td_input_cell" ><input class="input_table_data" type="text" name="table_firstname_{{ item.cell_id }}" id="table{{k.index}}_firstname{{ item.cell_id }}" value="{{ item.firstname }}" ></td>
+                            <td class="td_input_cell"><input class="input_table_data" type="text" name="table_lastname_{{ item.cell_id }}" id="table{{k.index}}_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
+                            <td class="td_input_cell"><input class="input_table_data" type="text" name="table_address_{{ item.cell_id }}" id="table{{k.index}}_address{{ item.cell_id }}" value="{{ item.address }}"  ></td>
+                            <td class="td_input_cell"><input class="input_table_data" type="text" name="table_num_{{ item.cell_id }}" id="table{{k.index}}_num{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
+                            <td class="td_input_cell"><input class="input_table_data" type="text" name="table_email_{{ item.cell_id }}" id="table{{k.index}}_email{{ item.cell_id }}" value="{{ item.email }}"  ></td>  
 
-                              {% if item.etat == k.state and item.be == True and Audi in item.auditeur %}
-                              <input class="input_table_data" type="hidden" name="table{{k.index}}_id_{{ item.cell_id }}" id="table{{k.index}}_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
-                            <tr id="tr_{{ item.cell_id }}">
-                                <td class="fixed-column table-secondary"><button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') "><i class="ri-checkbox-circle-fill fa-2x color_green "></i></button></td>
-                                
-                                <td class="td_input_cell" ><input class="input_table_data" type="text" name="table_firstname_{{ item.cell_id }}" id="table{{k.index}}_firstname{{ item.cell_id }}" value="{{ item.firstname }}"  ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table_lastname_{{ item.cell_id }}" id="table{{k.index}}_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table_address_{{ item.cell_id }}" id="table{{k.index}}_address{{ item.cell_id }}" value="{{ item.address }}"  ></td>
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table_num_{{ item.cell_id }}" id="table{{k.index}}_num{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
-                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table_email_{{ item.cell_id }}" id="table{{k.index}}_email{{ item.cell_id }}" value="{{ item.email }}"  ></td>  
+                            <td class="td_input_cell td_input_file_cell" > <!-- VT-->
+                              <nav class="header-nav ms-auto" >
+                                <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
+                                  <i class="ri-file-list-3-line"></i>
+                                  
+                                </a>
 
-                                <td class="td_input_cell" > <!-- VT-->
-                                  <nav class="header-nav ms-auto" >
-                                    <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                      <i class="ri-file-list-3-line"></i>
-                                      
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
-                                      
-                                         <!-- for i in datafiles  if item.cell_id == i.file_id -->
-                                      {% for F in datafiles_VT %}
-                                      
-                                        {% if F.file_id == item.cell_id %}
-                                        <li>
-                                          <li class="list-inline-item">
-                                            {% if F.file_format == "excel" %}
-                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                            {% elif F.file_format == "pdf" %}
-                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                            {% elif F.file_format == "image" %}
-                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                            {% elif F.file_format == "word" %}
-                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                            {% elif F.file_format == "pz2" %}
-                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                            {% else %}
-                                              <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                            {% endif %}
-                                          </li>
-                                            
-                                            {{ F.file_name }}
-                                              
-                                          <li class="list-inline-item">
-                                            <button  class="button_table_data" type="button" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','vt','{{redirect_next_page}}')">
-                                              <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                            </button>
-                                          </li>
-                                        </li>
-                                           
-                                         {% endif %}
-                                      {% endfor %}
-  
-                                      <hr class="dropdown-divider">
-
-                                      <li><input class="input_table_data" type="file" name="table_VT_{{ item.cell_id }}" multiple></li>
-                                      <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                      <li></li>
-                                      
-                      
-                                    </ul>
-                      
-                      
-                                  </nav>
-                                </td> 
-                                <td>
-                                  <a href="{% url 'download_K_file' file_id=item.cell_id %}" class="button_table_data" style="color:green;"><i class="bi bi-filetype-xlsx fa-2x"></i></a>
-                                </td>  <!--  target="_blank"-->
-                                
-                                <td class="badge-cell" data-state="badge"><!-- État -->
-  
-                                  <span class="badge" data-badge="A realiser">A réaliser</span>
-                                  <span class="badge" data-badge="En cours">En cours</span>
-                                  <span class="badge" data-badge="A modifier">A modifier</span>
-                                  <span class="badge" data-badge="Modification Faite">Modification Faite</span>
-                                  <span class="badge" data-badge="Reclamation">Reclamation</span>
-                                  <span class="badge" data-badge="Reclamation Faite">Réclamation Faite</span>
-                                  <span class="badge" data-badge="Envoye">Envoyé</span>
-                                  <span class="badge" data-badge="Annule">Annule</span>
-                                  <span class="badge" data-badge="Fini">Fini</span>
-  
-                                  <select class="form-select" aria-label="Default select example"  name="table_etat_{{ item.cell_id }}" id="table{{k.index}}_etat{{ item.cell_id }}" style="background-color:gray;">
-                                      <option value="A realiser" {% if item.etat  == "A realiser" %}selected{% endif %}>A réaliser</option>
-                                      <option value="En cours"  {% if item.etat  == "En cours" %}selected{% endif %} >En cours</option>
-                                      <option value="A modifier"  {% if item.etat  == "A modifier" %}selected{% endif %} >A modifier</option>
-                                      <option value="Modification Faite" {% if item.etat  == "Modification Faite" %}selected{% endif %}>Modification faite</option>
-                                      <option value="Reclamation" {% if item.etat  == "Reclamation" %}selected{% endif %} >Réclamation</option>
-                                      <option value="Reclamation Faite"  {% if item.etat  == "Reclamation Faite" %}selected{% endif %} >Réclamation faite</option>
-                                      <option value="Envoye"   {% if item.etat  == "Envoye" %}selected{% endif %} >Envoyé</option>
-                                      <option value="Annule" {% if item.etat  == "Annule" %}selected{% endif %} >Annule</option>
-                                      <option value="Fini"  {% if item.etat  == "Fini" %}selected{% endif %} >Fini</option>
-                                  </select>
-                                </td>
-  
-  
-                                <td class="td_input_cell"><!-- Travaux à preconise -->
-                                  <input class="input_table_data" type="text"  name="table_tp_{{ item.cell_id }}" value="{{item.tp}}" >
-                                </td>
-  
-  
-                              
-  
-                                                            
-  
-                                <td class="td_input_cell td_input_file_cell"> <!-- auditV1-->
-                                  <nav class="header-nav ms-auto" >
-                                    <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" >
-                                      <i class="ri-file-list-3-line"></i>
-                                      
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
-                                      
-                                         <!-- for i in datafiles  if item.cell_id == i.file_id -->
-                                      {% for F in datafiles_AuditV1 %}
-                                        
-                                        {% if F.file_id == item.cell_id %}
-                                          <li>
-                                           <li class="list-inline-item">
-                                             {% if F.file_format == "excel" %}
-                                             <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                             {% elif F.file_format == "pdf" %}
-                                             <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                             {% elif F.file_format == "image" %}
-                                               <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                             {% elif F.file_format == "word" %}
-                                               <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                             {% elif F.file_format == "pz2" %}
-                                               <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                             {% else %}
-                                               <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                             {% endif %}
-                                           </li>
-                                             
-                                             {{ F.file_name }}
-                                               
-                                           <li class="list-inline-item">
-                                             <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV1','{{redirect_next_page}}')">
-                                               <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                             </button>
-                                           </li>
-                                          </li>
-                                            
-                                        {% endif %}
-                                      {% endfor %}
-                                      <hr class="dropdown-divider">
-                                      <li><input class="input_table_data" type="file" name="table_auditV1_{{ item.cell_id }}" multiple></li>
-                                      <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                      <li style="text-align:center;height:20px;">
-                                        <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
-                                          <i class="bi bi-save2 save_button_i_style" ></i>
-                                        </button>
-                                      </li> 
-                                      <li></li>
-                                    </ul>
-                      
-                      
-                                  </nav>
-                                </td>
-                                <td class="td_input_cell"><!--commentaire-->
-                                  <nav class="header-nav ms-auto" >
-                                    <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
-                                      <i class="bi bi-chat-left-text"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
-                                      <li class="dropdown-header">
-                                        <input type="text" name="input_msg_auditV1_{{item.cell_id}}" id="input_msg_auditV1_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
-                                        <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','auditV1')" > <i class="bi bi-send" ></i></button>
-                                      </li>
-                                      <li>
-                                        <hr class="dropdown-divider">
-                                      </li>
-                                      <div id="chat-messages-container_auditV1_{{item.cell_id}}">
-                                      {% for msg in message_box_1 reversed %}
-                                      {% if item.cell_id == msg.row_id and msg.box == "auditV1" %}
-                                        <li class="message-item">
-                                          <a>
-                                            {% if msg.email %}  
-                                              <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
-                                            {% else %}
-                                              <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
-                                            {% endif %}
-                                            <div>
-                                              <h3>{{ msg.username }}</h3>
-                                              {% if msg_box_tagged.1 in msg.message %}
-                                                        <h4 class="color-red">{{ msg.message }}</h4>
-                                              {% else %}
-                                                {% if msg_box_tagged.2 in msg.message %}
-                                                    <h4 class="color-red">{{ msg.message }} </h4>
-                                                {% else %}
-                                                  {% if msg_box_tagged.3 in msg.message %}
-                                                    <h4 class="color-red">{{ msg.message }}</h4>
-                                                  {% else %}
-                                                    <h4>{{ msg.message }}</h4>
-                                                  {% endif%}
-                                                {% endif%}
-                                              {% endif%}
-                                              
-                                              <p>{{ msg.message_date|naturaltime }}</p>
-                                            </div>
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <hr class="dropdown-divider">
-                                        </li>
-                                        {% endif %}
-                                      {% endfor %}
-                                    </div>
-                                    </ul>
-                                  </nav>
-                                </td>
-  
-                      
-                                <td class="td_input_cell td_input_file_cell"> <!-- auditV2-->
-                                  <nav class="header-nav ms-auto" >
-                                    <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                      <i class="ri-file-list-3-line"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
-                                      
-                                      <!-- for i in datafiles  if item.cell_id == i.file_id -->
-                                      {% for F in datafiles_AuditV2 %}
-                                     
-                                      {% if F.file_id == item.cell_id  and not F.file_removed %}
-                                      <li>
-                                        <li class="list-inline-item">
-                                          {% if F.file_format == "excel" %}
-                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                          {% elif F.file_format == "pdf" %}
-                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                          {% elif F.file_format == "image" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                          {% elif F.file_format == "word" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                          {% elif F.file_format == "pz2" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                          {% else %}
-                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                          {% endif %}
-                                        </li>
-                                          
-                                          {{ F.file_name }}
-                                            
-                                        <li class="list-inline-item">
-                                          <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV2',{{redirect_next_page}})">
-                                            <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                          </button>
-                                        </li>
-                                      </li>
-                                         
-                                       {% endif %}
-                                    {% endfor %}
-                                    <hr class="dropdown-divider">
-                                     <li><input class="input_table_data" type="file" name="table_auditV2_{{ item.cell_id }}" multiple></li>
-                                     <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                     <li style="text-align:center;height:20px;">
-                                      <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
-                                        <i class="bi bi-save2 save_button_i_style" ></i>
-                                      </button>
-                                    </li> 
-                                    <li></li>
-                                     
-                                   
-                   
-                                 </ul>
-                      
-                      
-                                  </nav>
-                                </td>
-                                <td class="td_input_cell"><!--commentaire-->
-                                  <nav class="header-nav ms-auto" >
-                                    <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
-                                      <i class="bi bi-chat-left-text"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
-                                      <li class="dropdown-header">
-                                        <input type="text" name="input_msg_auditV2_{{item.cell_id}}" id="input_msg_auditV2_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
-                                        <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','auditV2')" > <i class="bi bi-send" ></i></button>
-                                      </li>
-                                      <li>
-                                        <hr class="dropdown-divider">
-                                      </li>
-                                      <div id="chat-messages-container_auditV2_{{item.cell_id}}">
-                                        {% for msg in message_box_1 reversed %}
-                                        {% if item.cell_id == msg.row_id and msg.box == "auditV2" %}
-                                          <li class="message-item">
-                                            <a>
-                                              {% if msg.email %}  
-                                                <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
-                                              {% else %}
-                                                <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
-                                              {% endif %}
-                                              <div>
-                                                <h3>{{ msg.username }}</h3>
-                                                {% if msg_box_tagged.1 in msg.message %}
-                                                          <h4 class="color-red">{{ msg.message }}</h4>
-                                                {% else %}
-                                                  {% if msg_box_tagged.2 in msg.message %}
-                                                      <h4 class="color-red">{{ msg.message }} </h4>
-                                                  {% else %}
-                                                    {% if msg_box_tagged.3 in msg.message %}
-                                                      <h4 class="color-red">{{ msg.message }}</h4>
-                                                    {% else %}
-                                                      <h4>{{ msg.message }}</h4>
-                                                    {% endif%}
-                                                  {% endif%}
-                                                {% endif%}
-                                                
-                                                <p>{{ msg.message_date|naturaltime }}</p>
-                                              </div>
-                                            </a>
-                                          </li>
-                                          <li>
-                                            <hr class="dropdown-divider">
-                                          </li>
-                                          {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                    </ul>
-                                  </nav>
-                                </td>
-  
-                                <td class="td_input_cell td_input_file_cell"> <!-- auditV3-->
-                                  <nav class="header-nav ms-auto" >
-                                    <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                      <i class="ri-file-list-3-line"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
-                                      
-                                      <!-- for i in datafiles  if item.cell_id == i.file_id -->
-                                      {% for F in datafiles_AuditV3 %}
-                                     
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" id="ul_for_vt_{{item.cell_id}}">
+                                  <!-- for i in datafiles  if item.cell_id == i.file_id  -->
+                                  {% for F in datafiles_VT %}
                                       {% if F.file_id == item.cell_id %}
-                                      <li>
-                                        <li class="list-inline-item">
-                                          {% if F.file_format == "excel" %}
-                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                          {% elif F.file_format == "pdf" %}
-                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                          {% elif F.file_format == "image" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                          {% elif F.file_format == "word" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                          {% elif F.file_format == "pz2" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                          {% else %}
-                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                          {% endif %}
-                                        </li>
-                                          
-                                          {{ F.file_name }}
-                                            
-                                        <li class="list-inline-item">
-                                          <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV3','{{redirect_next_page}}')">
-                                            <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                          </button>
-                                        </li>
-                                      </li>
-                                         
-                                       {% endif %}
-                                    {% endfor %}
-                                    <hr class="dropdown-divider">
-                                     <li><input class="input_table_data" type="file"  name="table_auditV3_{{ item.cell_id }}" multiple></li>
-                                     <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                     <li style="text-align:center;height:20px;">
-                                      <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
-                                        <i class="bi bi-save2 save_button_i_style" ></i>
-                                      </button>
-                                    </li> 
-                                    <li></li>
-                   
-                                 </ul>
-                      
-                      
-                                  </nav>
-                                </td>
-                                <td class="td_input_cell"><!--commentaire-->
-                                  <nav class="header-nav ms-auto" >
-                                    <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
-                                      <i class="bi bi-chat-left-text"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
-                                      <li class="dropdown-header">
-                                        <input type="text" name="input_msg_auditV3_{{item.cell_id}}" id="input_msg_auditV3_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
-                                        <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','auditV3')" > <i class="bi bi-send" ></i></button>
-                                      </li>
-                                      <li>
-                                        <hr class="dropdown-divider">
-                                      </li>
-                                      <div id="chat-messages-container_auditV3_{{item.cell_id}}">
-                                        {% for msg in message_box_1 reversed %}
-                                        {% if item.cell_id == msg.row_id and msg.box == "auditV3" %}
-                                          <li class="message-item">
-                                            <a>
-                                              {% if msg.email %}  
-                                                <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
-                                              {% else %}
-                                                <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
-                                              {% endif %}
-                                              <div>
-                                                <h3>{{ msg.username }}</h3>
-                                                {% if msg_box_tagged.1 in msg.message %}
-                                                          <h4 class="color-red">{{ msg.message }}</h4>
-                                                {% else %}
-                                                  {% if msg_box_tagged.2 in msg.message %}
-                                                      <h4 class="color-red">{{ msg.message }} </h4>
+                                          <li id="li_for_vt_{{item.cell_id}}_{{F.file_index}}">
+                                              <div class="list-inline-item">
+                                                  {% if F.file_format == "excel" %}
+                                                      <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
+                                                  {% elif F.file_format == "pdf" %}
+                                                      <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
+                                                  {% elif F.file_format == "image" %}
+                                                      <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
+                                                  {% elif F.file_format == "word" %}
+                                                      <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
+                                                  {% elif F.file_format == "pz2" %}
+                                                      <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
                                                   {% else %}
-                                                    {% if msg_box_tagged.3 in msg.message %}
-                                                      <h4 class="color-red">{{ msg.message }}</h4>
-                                                    {% else %}
-                                                      <h4>{{ msg.message }}</h4>
-                                                    {% endif%}
-                                                  {% endif%}
-                                                {% endif%}
-                                                
-                                                <p>{{ msg.message_date|naturaltime }}</p>
+                                                      <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
+                                                  {% endif %}
                                               </div>
-                                            </a>
-                                          </li>
-                                          <li>
-                                            <hr class="dropdown-divider">
-                                          </li>
-                                          {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                    </ul>
-                                  </nav>
-                                </td>
-                      
-                                <td class="td_input_cell  td_input_file_cell"> <!-- auditFinal-->
-                                  <nav class="header-nav ms-auto" >
-                                    <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                      <i class="ri-file-list-3-line"></i>
-                                    </a> 
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
-                                      
-                                      <!-- for i in datafiles  if item.cell_id == i.file_id -->
-                                      {% for F in datafiles_AuditFinal %}
-                                     
-                                      {% if F.file_id == item.cell_id %}
-                                      <li>
-                                        <li class="list-inline-item">
-                                          {% if F.file_format == "excel" %}
-                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                          {% elif F.file_format == "pdf" %}
-                                          <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                          {% elif F.file_format == "image" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                          {% elif F.file_format == "word" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                          {% elif F.file_format == "pz2" %}
-                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                          {% else %}
-                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                          {% endif %}
-                                        </li>
-                                          
-                                          {{ F.file_name }}
-                                            
-                                        <li class="list-inline-item">
-                                          <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditFinal','{{redirect_next_page}}')">
-                                            <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                          </button>
-                                        </li>
-                                      </li>
-                                         
-                                       {% endif %}
-                                    {% endfor %}
-                                    <hr class="dropdown-divider">
-                                     <li><input class="input_table_data" type="file" name="table_auditFinal_{{ item.cell_id }}" multiple></li>
-                                     <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                     <li style="text-align:center;height:20px;">
-                                      <button  class="button_table_data" type="submit" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="my_Func_edit_table_{{k.index}}('{{item.cell_id}}') ">
-                                        <i class="bi bi-save2 save_button_i_style" ></i>
-                                      </button>
-                                    </li> 
-                                    <li></li>
-                   
-                                 </ul>
-                      
-                      
-                                  </nav>
-                                </td>
-                                <td class="td_input_cell"><!--commentaire-->
-                                  <nav class="header-nav ms-auto" >
-                                    <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
-                                      <i class="bi bi-chat-left-text"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
-                                      <li class="dropdown-header">
-                                        <input type="text" name="input_msg_auditFinal_{{item.cell_id}}" id="input_msg_auditFinal_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
-                                        <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','auditFinal')" > <i class="bi bi-send" ></i></button>
-                                      </li>
-                                      <li>
-                                        <hr class="dropdown-divider">
-                                      </li>
-                                      <div id="chat-messages-container_auditFinal_{{item.cell_id}}">
-                                        {% for msg in message_box_1 reversed %}
-                                        {% if item.cell_id == msg.row_id and msg.box == "auditFinal" %}
-                                          <li class="message-item">
-                                            <a>
-                                              {% if msg.email %}  
-                                                <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
-                                              {% else %}
-                                                <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
-                                              {% endif %}
-                                              <div>
-                                                <h3>{{ msg.username }}</h3>
-                                                {% if msg_box_tagged.1 in msg.message %}
-                                                          <h4 class="color-red">{{ msg.message }}</h4>
-                                                {% else %}
-                                                  {% if msg_box_tagged.2 in msg.message %}
-                                                      <h4 class="color-red">{{ msg.message }} </h4>
-                                                  {% else %}
-                                                    {% if msg_box_tagged.3 in msg.message %}
-                                                      <h4 class="color-red">{{ msg.message }}</h4>
-                                                    {% else %}
-                                                      <h4>{{ msg.message }}</h4>
-                                                    {% endif%}
-                                                  {% endif%}
-                                                {% endif%}
-                                                
-                                                <p>{{ msg.message_date|naturaltime }}</p>
+                                              {{ F.file_name }}
+                                              <div class="list-inline-item">
+                                                  <button class="button_table_data" type="button" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','vt','{{redirect_next_page}}','li_for_vt_{{item.cell_id}}_{{F.file_index}}')">
+                                                      <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                                  </button>
                                               </div>
-                                            </a>
                                           </li>
-                                          <li>
-                                            <hr class="dropdown-divider">
-                                          </li>
-                                          {% endif %}
-                                        {% endfor %}
-                                    </div>
-                                    </ul>
-                                  </nav>
-                                </td>
-  
-  
-                              <td class="td_input_cell"><!-- Bureau d'étude -->
-                                <input class="input_table_data" type="text" name="table_cofrac_{{ item.cell_id }}" value="{{item.cofrac}}">
-                                
-                                
-                              </td>
-
-                                
-                              <td class="td_input_cell td-form-check-checkbox" > <!--paiement-->
-                                <input class="form-check-input form-check-checkbox" type="checkbox" value="True" name="table_paiement_{{ item.cell_id }}" id="table{{k.index}}_paiement{{ item.cell_id }}" {% if  item.paiement %}  checked  {% endif %}>
-                              </td>
-
-                              <td class="td_input_cell"> <!-- Bureau d'Etude -->
-                                <p>{{item.bureau_d_etude}}</p>
-                              </td>
-
-
-                              <td class="td_input_cell"><!--auditeur-->
-
-                                <select class="form-select" name="table_auditeur_{{ item.cell_id }}" id="auditeur" style="height:55px!important;width:250px!important;">
-                                  <option value="" >...</option>
-                                  {% for audi in auditeur %}
-                                    <option value="{{ audi.email }}" {% if audi.email == item.auditeur %} selected {% endif %}>
-                                      {{ audi.last_name }} {{ audi.first_name }}
-                                    </option>
-
+                                      {% endif %}
                                   {% endfor %}
-                                </select>
-
-                              </td>
-
                               
-                              <td class="td_input_cell"><!--commentaire-->
-                                <nav class="header-nav ms-auto" >
-                                  <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
-                                    <i class="bi bi-chat-left-text"></i>
-                                  </a>
-                                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
-                                    <li class="dropdown-header">
-                                      <input type="text" name="input_msg_chat_{{item.cell_id}}" id="input_msg_chat_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
-                                      <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','chat')" > <i class="bi bi-send" ></i></button>
+                                  <hr class="dropdown-divider">
+                              
+                                  <li>
+                                      <input class="input_table_data" type="file" name="table_VT_{{ item.cell_id }}" multiple>
+                                  </li>
+                                  <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                  <li style="text-align:center;height:20px;">
+                                      <button class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')">
+                                          <i class="bi bi-save2 save_button_i_style" ></i>
+                                      </button>
+                                  </li>
+                                  <li></li>
+                              </ul>
+
+
+                  
+                              </nav>
+                            </td> 
+
+                            <td>
+                              <a href="{% url 'download_K_file' file_id=item.cell_id %}" class="button_table_data" style="color:green;"><i class="bi bi-filetype-xlsx fa-2x"></i></a>
+                            </td>  <!--  target="_blank"-->
+                            
+                            <td class="badge-cell" data-state="badge"><!-- État -->
+
+                              <span class="badge" data-badge="A realiser">A réaliser</span>
+                              <span class="badge" data-badge="En cours">En cours</span>
+                              <span class="badge" data-badge="A modifier">A modifier</span>
+                              <span class="badge" data-badge="Modification Faite">Modification Faite</span>
+                              <span class="badge" data-badge="Reclamation">Reclamation</span>
+                              <span class="badge" data-badge="Reclamation Faite">Réclamation Faite</span>
+                              <span class="badge" data-badge="Envoye">Envoyé</span>
+                              <span class="badge" data-badge="Annule">Annule</span>
+                              <span class="badge" data-badge="Fini">Fini</span>
+
+                              <select class="form-select" aria-label="Default select example"  name="table_etat_{{ item.cell_id }}" id="table{{k.index}}_etat{{ item.cell_id }}" style="background-color:gray;">
+                                  <option value="A realiser" {% if item.etat  == "A realiser" %}selected{% endif %}>A réaliser</option>
+                                  <option value="En cours"  {% if item.etat  == "En cours" %}selected{% endif %} >En cours</option>
+                                  <option value="A modifier"  {% if item.etat  == "A modifier" %}selected{% endif %} >A modifier</option>
+                                  <option value="Modification Faite" {% if item.etat  == "Modification Faite" %}selected{% endif %}>Modification faite</option>
+                                  <option value="Reclamation" {% if item.etat  == "Reclamation" %}selected{% endif %} >Réclamation</option>
+                                  <option value="Reclamation Faite"  {% if item.etat  == "Reclamation Faite" %}selected{% endif %} >Réclamation faite</option>
+                                  <option value="Envoye"   {% if item.etat  == "Envoye" %}selected{% endif %} >Envoyé</option>
+                                  <option value="Annule" {% if item.etat  == "Annule" %}selected{% endif %} >Annule</option>
+                                  <option value="Fini"  {% if item.etat  == "Fini" %}selected{% endif %} >Fini</option>
+                              </select>
+                            </td>
+
+
+                            <td class="td_input_cell"><!-- Travaux à preconise -->
+                              <input class="input_table_data" type="text"  name="table_tp_{{ item.cell_id }}" value="{{item.tp}}" >
+                            </td>
+
+
+                            
+
+                            <td class="td_input_cell td_input_file_cell"> <!-- auditV1-->
+                              <nav class="header-nav ms-auto" >
+                                <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" >
+                                  <i class="ri-file-list-3-line"></i>
+                                  
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end"  id="ul_for_auditV1_{{item.cell_id}}" >
+                                  
+                                     <!-- for i in datafiles  if item.cell_id == i.file_id -->
+                                  {% for F in datafiles_AuditV1 %}
+                                    
+                                    {% if F.file_id == item.cell_id %}
+                                      <li id="li_for_auditV1_{{item.cell_id}}_{{F.file_index}}">
+                                       <div class="list-inline-item">
+                                         {% if F.file_format == "excel" %}
+                                         <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
+                                         {% elif F.file_format == "pdf" %}
+                                         <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
+                                         {% elif F.file_format == "image" %}
+                                           <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
+                                         {% elif F.file_format == "word" %}
+                                           <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
+                                         {% elif F.file_format == "pz2" %}
+                                           <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
+                                         {% else %}
+                                           <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
+                                         {% endif %}
+                                       </div>
+                                         
+                                         {{ F.file_name }}
+                                           
+                                       <div class="list-inline-item">
+                                         <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV1','{{redirect_next_page}}','li_for_auditV1_{{item.cell_id}}_{{F.file_index}}')">
+                                           <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                         </button>
+                                       </div>
+                                      </li>
+                                        
+                                    {% endif %}
+                                  {% endfor %}
+                                  <hr class="dropdown-divider">
+                                  <li><input class="input_table_data" type="file" name="table_auditV1_{{ item.cell_id }}" multiple></li>
+                                  <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                  <li style="text-align:center;height:20px;">
+                                    <button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')">
+                                      <i class="bi bi-save2 save_button_i_style" ></i>
+                                    </button>
+                                  </li> 
+                                  <li></li>
+                                </ul>
+                  
+                  
+                              </nav>
+                            </td>
+                            <td class="td_input_cell"><!--commentaire-->
+                              <nav class="header-nav ms-auto" >
+                                <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
+                                  <i class="bi bi-chat-left-text"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
+                                  <li class="dropdown-header">
+                                    <input type="text" name="input_msg_auditV1_{{item.cell_id}}" id="input_msg_auditV1_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
+                                    <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','auditV1')" > <i class="bi bi-send" ></i></button>
+                                  </li>
+                                  <li>
+                                    <hr class="dropdown-divider">
+                                  </li>
+                                  <div id="chat-messages-container_auditV1_{{item.cell_id}}">
+                                  {% for msg in message_box_1 reversed %}
+                                  {% if item.cell_id == msg.row_id and msg.box == "auditV1" %}
+                                    <li class="message-item">
+                                      <a>
+                                        {% if msg.email %}  
+                                          <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
+                                        {% else %}
+                                          <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
+                                        {% endif %}
+                                        <div>
+                                          <h3>{{ msg.username }}</h3>
+                                          {% if msg_box_tagged.1 in msg.message %}
+                                                    <h4 class="color-red">{{ msg.message }}</h4>
+                                          {% else %}
+                                            {% if msg_box_tagged.2 in msg.message %}
+                                                <h4 class="color-red">{{ msg.message }} </h4>
+                                            {% else %}
+                                              {% if msg_box_tagged.3 in msg.message %}
+                                                <h4 class="color-red">{{ msg.message }}</h4>
+                                              {% else %}
+                                                <h4>{{ msg.message }}</h4>
+                                              {% endif%}
+                                            {% endif%}
+                                          {% endif%}
+                                          
+                                          <p>{{ msg.message_date|naturaltime }}</p>
+                                        </div>
+                                      </a>
                                     </li>
                                     <li>
                                       <hr class="dropdown-divider">
                                     </li>
-                                    <div id="chat-messages-container_chat_{{item.cell_id}}">
-                                      {% for msg in message_box_1 reversed %}
-                                      {% if item.cell_id == msg.row_id and msg.box == "chat" %}
-                                        <li class="message-item">
-                                          <a>
-                                            {% if msg.email %}  
-                                              <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
+                                    {% endif %}
+                                  {% endfor %}
+                                </div>
+                                </ul>
+                              </nav>
+                            </td>
+
+                  
+                            <td class="td_input_cell td_input_file_cell"> <!-- auditV2-->
+                              <nav class="header-nav ms-auto" >
+                                <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
+                                  <i class="ri-file-list-3-line"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end"  id="ul_for_auditV2_{{item.cell_id}}">
+                                  
+                                  <!-- for i in datafiles  if item.cell_id == i.file_id -->
+                                  {% for F in datafiles_AuditV2 %}
+                                 
+                                  {% if F.file_id == item.cell_id  and not F.file_removed %}
+                                  <li id="li_for_auditV2_{{item.cell_id}}_{{F.file_index}}">
+                                    <div class="list-inline-item">
+                                      {% if F.file_format == "excel" %}
+                                      <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
+                                      {% elif F.file_format == "pdf" %}
+                                      <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
+                                      {% elif F.file_format == "image" %}
+                                        <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
+                                      {% elif F.file_format == "word" %}
+                                        <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
+                                      {% elif F.file_format == "pz2" %}
+                                        <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
+                                      {% else %}
+                                        <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
+                                      {% endif %}
+                                    </div>
+                                      
+                                      {{ F.file_name }}
+                                        
+                                    <div class="list-inline-item">
+                                      <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV2','{{redirect_next_page}}','li_for_auditV2_{{item.cell_id}}_{{F.file_index}}')">
+                                        <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                      </button>
+                                    </div>
+                                  </li>
+                                     
+                                   {% endif %}
+                                {% endfor %}
+                                <hr class="dropdown-divider">
+                                 <li><input class="input_table_data" type="file" name="table_auditV2_{{ item.cell_id }}" multiple></li>
+                                 <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                 <li style="text-align:center;height:20px;">
+                                  <button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')">
+                                    <i class="bi bi-save2 save_button_i_style" ></i>
+                                  </button>
+                                </li> 
+                                <li></li>
+                                 
+                               
+               
+                             </ul>
+                  
+                  
+                              </nav>
+                            </td>
+                            <td class="td_input_cell"><!--commentaire-->
+                              <nav class="header-nav ms-auto" >
+                                <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
+                                  <i class="bi bi-chat-left-text"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
+                                  <li class="dropdown-header">
+                                    <input type="text" name="input_msg_auditV2_{{item.cell_id}}" id="input_msg_auditV2_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
+                                    <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','auditV2')" > <i class="bi bi-send" ></i></button>
+                                  </li>
+                                  <li>
+                                    <hr class="dropdown-divider">
+                                  </li>
+                                  <div id="chat-messages-container_auditV2_{{item.cell_id}}">
+                                    {% for msg in message_box_1 reversed %}
+                                    {% if item.cell_id == msg.row_id and msg.box == "auditV2" %}
+                                      <li class="message-item">
+                                        <a>
+                                          {% if msg.email %}  
+                                            <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
+                                          {% else %}
+                                            <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
+                                          {% endif %}
+                                          <div>
+                                            <h3>{{ msg.username }}</h3>
+                                            {% if msg_box_tagged.1 in msg.message %}
+                                                      <h4 class="color-red">{{ msg.message }}</h4>
                                             {% else %}
-                                              <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
-                                            {% endif %}
-                                            <div>
-                                              <h3>{{ msg.username }}</h3>
-                                              {% if msg_box_tagged.1 in msg.message %}
-                                                        <h4 class="color-red">{{ msg.message }}</h4>
+                                              {% if msg_box_tagged.2 in msg.message %}
+                                                  <h4 class="color-red">{{ msg.message }} </h4>
                                               {% else %}
-                                                {% if msg_box_tagged.2 in msg.message %}
-                                                    <h4 class="color-red">{{ msg.message }} </h4>
+                                                {% if msg_box_tagged.3 in msg.message %}
+                                                  <h4 class="color-red">{{ msg.message }}</h4>
                                                 {% else %}
-                                                  {% if msg_box_tagged.3 in msg.message %}
-                                                    <h4 class="color-red">{{ msg.message }}</h4>
-                                                  {% else %}
-                                                    <h4>{{ msg.message }}</h4>
-                                                  {% endif%}
+                                                  <h4>{{ msg.message }}</h4>
                                                 {% endif%}
                                               {% endif%}
-                                              
-                                              <p>{{ msg.message_date|naturaltime }}</p>
-                                            </div>
-                                          </a>
-                                        </li>
-                                        <li>
-                                          <hr class="dropdown-divider">
-                                        </li>
-                                        {% endif %}
-                                      {% endfor %}
-                                  </div>
-                                  </ul>
-                                </nav>
-                              </td>
+                                            {% endif%}
+                                            
+                                            <p>{{ msg.message_date|naturaltime }}</p>
+                                          </div>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <hr class="dropdown-divider">
+                                      </li>
+                                      {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </ul>
+                              </nav>
+                            </td>
+
+                            <td class="td_input_cell td_input_file_cell"> <!-- auditV3-->
+                              <nav class="header-nav ms-auto" >
+                                <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
+                                  <i class="ri-file-list-3-line"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" id="ul_for_auditV3_{{item.cell_id}}" >
+                                  
+                                  <!-- for i in datafiles  if item.cell_id == i.file_id -->
+                                  {% for F in datafiles_AuditV3 %}
+                                 
+                                  {% if F.file_id == item.cell_id %}
+                                  <li id="li_for_auditV3_{{item.cell_id}}_{{F.file_index}}">
+                                    <div class="list-inline-item">
+                                      {% if F.file_format == "excel" %}
+                                      <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
+                                      {% elif F.file_format == "pdf" %}
+                                      <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
+                                      {% elif F.file_format == "image" %}
+                                        <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
+                                      {% elif F.file_format == "word" %}
+                                        <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
+                                      {% elif F.file_format == "pz2" %}
+                                        <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
+                                      {% else %}
+                                        <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
+                                      {% endif %}
+                                    </div>
+                                      
+                                      {{ F.file_name }}
+                                        
+                                    <div class="list-inline-item">
+                                      <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditV3','{{redirect_next_page}}','li_for_auditV3_{{item.cell_id}}_{{F.file_index}}')">
+                                        <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                      </button>
+                                    </div>
+                                  </li>
+                                     
+                                   {% endif %}
+                                {% endfor %}
+                                <hr class="dropdown-divider">
+                                 <li><input class="input_table_data" type="file"  name="table_auditV3_{{ item.cell_id }}" multiple></li>
+                                 <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                 <li style="text-align:center;height:20px;">
+                                  <button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')">
+                                    <i class="bi bi-save2 save_button_i_style" ></i>
+                                  </button>
+                                </li> 
+                                <li></li>
+               
+                             </ul>
+                  
+                  
+                              </nav>
+                            </td>
+                            <td class="td_input_cell"><!--commentaire-->
+                              <nav class="header-nav ms-auto" >
+                                <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
+                                  <i class="bi bi-chat-left-text"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
+                                  <li class="dropdown-header">
+                                    <input type="text" name="input_msg_auditV3_{{item.cell_id}}" id="input_msg_auditV3_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
+                                    <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','auditV3')" > <i class="bi bi-send" ></i></button>
+                                  </li>
+                                  <li>
+                                    <hr class="dropdown-divider">
+                                  </li>
+                                  <div id="chat-messages-container_auditV3_{{item.cell_id}}">
+                                    {% for msg in message_box_1 reversed %}
+                                    {% if item.cell_id == msg.row_id and msg.box == "auditV3" %}
+                                      <li class="message-item">
+                                        <a>
+                                          {% if msg.email %}  
+                                            <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
+                                          {% else %}
+                                            <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
+                                          {% endif %}
+                                          <div>
+                                            <h3>{{ msg.username }}</h3>
+                                            {% if msg_box_tagged.1 in msg.message %}
+                                                      <h4 class="color-red">{{ msg.message }}</h4>
+                                            {% else %}
+                                              {% if msg_box_tagged.2 in msg.message %}
+                                                  <h4 class="color-red">{{ msg.message }} </h4>
+                                              {% else %}
+                                                {% if msg_box_tagged.3 in msg.message %}
+                                                  <h4 class="color-red">{{ msg.message }}</h4>
+                                                {% else %}
+                                                  <h4>{{ msg.message }}</h4>
+                                                {% endif%}
+                                              {% endif%}
+                                            {% endif%}
+                                            
+                                            <p>{{ msg.message_date|naturaltime }}</p>
+                                          </div>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <hr class="dropdown-divider">
+                                      </li>
+                                      {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </ul>
+                              </nav>
+                            </td>
+                  
 
 
-                                
-                              
-                                <td><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
-                              
-                                <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
-                              </tr>
-                              {% endif %}
-                              {% endfor %}
+                                                
+                            <td class="td_input_cell td_input_file_cell"> <!-- auditFinal-->
+                              <nav class="header-nav ms-auto" >
+                                <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
+                                  <i class="ri-file-list-3-line"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end"  id="ul_for_auditV2_{{item.cell_id}}">
+                                  
+                                  <!-- for i in datafiles  if item.cell_id == i.file_id -->
+                                  {% for F in datafiles_AuditFinal %}
+                                 
+                                  {% if F.file_id == item.cell_id  and not F.file_removed %}
+                                  <li id="li_for_auditFinal_{{item.cell_id}}_{{F.file_index}}">
+                                    <div class="list-inline-item">
+                                      {% if F.file_format == "excel" %}
+                                      <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
+                                      {% elif F.file_format == "pdf" %}
+                                      <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
+                                      {% elif F.file_format == "image" %}
+                                        <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
+                                      {% elif F.file_format == "word" %}
+                                        <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
+                                      {% elif F.file_format == "pz2" %}
+                                        <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
+                                      {% else %}
+                                        <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
+                                      {% endif %}
+                                    </div>
+                                      
+                                      {{ F.file_name }}
+                                        
+                                    <div class="list-inline-item">
+                                      <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','auditFinal','{{redirect_next_page}}','li_for_auditFinal_{{item.cell_id}}_{{F.file_index}}')">
+                                        <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                      </button>
+                                    </div>
+                                  </li>
+                                     
+                                   {% endif %}
+                                {% endfor %}
+                                <hr class="dropdown-divider">
+                                 <li><input class="input_table_data" type="file" name="table_auditFinal_{{ item.cell_id }}" multiple></li>
+                                 <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                 <li style="text-align:center;height:20px;">
+                                  <button  class="button_table_data" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')">
+                                    <i class="bi bi-save2 save_button_i_style" ></i>
+                                  </button>
+                                </li> 
+                                <li></li>
+                                 
+                               
+               
+                             </ul>
+                  
+                  
+                              </nav>
+                            </td>
+                            <td class="td_input_cell"><!--commentaire-->
+                              <nav class="header-nav ms-auto" >
+                                <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
+                                  <i class="bi bi-chat-left-text"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
+                                  <li class="dropdown-header">
+                                    <input type="text" name="input_msg_auditFinal_{{item.cell_id}}" id="input_msg_auditFinal_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
+                                    <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','auditFinal')" > <i class="bi bi-send" ></i></button>
+                                  </li>
+                                  <li>
+                                    <hr class="dropdown-divider">
+                                  </li>
+                                  <div id="chat-messages-container_auditFinal_{{item.cell_id}}">
+                                    {% for msg in message_box_1 reversed %}
+                                    {% if item.cell_id == msg.row_id and msg.box == "auditFinal" %}
+                                      <li class="message-item">
+                                        <a>
+                                          {% if msg.email %}  
+                                            <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
+                                          {% else %}
+                                            <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
+                                          {% endif %}
+                                          <div>
+                                            <h3>{{ msg.username }}</h3>
+                                            {% if msg_box_tagged.1 in msg.message %}
+                                                      <h4 class="color-red">{{ msg.message }}</h4>
+                                            {% else %}
+                                              {% if msg_box_tagged.2 in msg.message %}
+                                                  <h4 class="color-red">{{ msg.message }} </h4>
+                                              {% else %}
+                                                {% if msg_box_tagged.3 in msg.message %}
+                                                  <h4 class="color-red">{{ msg.message }}</h4>
+                                                {% else %}
+                                                  <h4>{{ msg.message }}</h4>
+                                                {% endif%}
+                                              {% endif%}
+                                            {% endif%}
+                                            
+                                            <p>{{ msg.message_date|naturaltime }}</p>
+                                          </div>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <hr class="dropdown-divider">
+                                      </li>
+                                      {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </ul>
+                              </nav>
+                            </td>
+
                             
-                          </tbody>
+                            <td class="td_input_cell"><!-- cofrac -->
+                              <input class="input_table_data" type="text" name="table_cofrac_{{ item.cell_id }}" value="{{item.cofrac}}">
+                            </td>
+
+                              
+                            <td class="td_input_cell td-form-check-checkbox" > <!--paiement-->                
+                              <input class="form-check-input form-check-checkbox" type="checkbox" value="True" name="table_paiement_{{ item.cell_id }}" id="table_paiement_{{ item.cell_id }}" {% if  item.paiement %}  checked  {% endif %}>
+                            </td>
+
+                            <td class="td_input_cell"> <!-- Bureau d'Etude -->
+                              <p>{{item.bureau_d_etude}}</p>
+                            </td>
+
+                            <td class="td_input_cell"><!--auditeur-->
+
+                              <select class="form-select" name="table_auditeur_{{ item.cell_id }}" id="auditeur" style="height:55px!important;width:250px!important;">
+                                <option value="" >...</option>
+                                {% for audi in auditeur %}
+                                  <option value="{{ audi.email }}" {% if audi.email == item.auditeur %} selected {% endif %} >
+                                    {{ audi.last_name }} {{ audi.first_name }}
+                                  </option>
+
+                                {% endfor %}
+                              </select>
+
+                            </td>
+
+                            <td class="td_input_cell"><!--commentaire-->
+                              <nav class="header-nav ms-auto" >
+                                <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
+                                  <i class="bi bi-chat-left-text"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
+                                  <li class="dropdown-header">
+                                    <input type="text" name="input_msg_chat_{{item.cell_id}}" id="input_msg_chat_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
+                                    <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','chat')" > <i class="bi bi-send" ></i></button>
+                                  </li>
+                                  <li>
+                                    <hr class="dropdown-divider">
+                                  </li>
+                                  <div id="chat-messages-container_chat_{{item.cell_id}}">
+                                    {% for msg in message_box_1 reversed %}
+                                    {% if item.cell_id == msg.row_id and msg.box == "chat" %}
+                                      <li class="message-item">
+                                        <a>
+                                          {% if msg.email %}  
+                                            <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
+                                          {% else %}
+                                            <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
+                                          {% endif %}
+                                          <div>
+                                            <h3>{{ msg.username }}</h3>
+                                            {% if msg_box_tagged.1 in msg.message %}
+                                                      <h4 class="color-red">{{ msg.message }}</h4>
+                                            {% else %}
+                                              {% if msg_box_tagged.2 in msg.message %}
+                                                  <h4 class="color-red">{{ msg.message }} </h4>
+                                              {% else %}
+                                                {% if msg_box_tagged.3 in msg.message %}
+                                                  <h4 class="color-red">{{ msg.message }}</h4>
+                                                {% else %}
+                                                  <h4>{{ msg.message }}</h4>
+                                                {% endif%}
+                                              {% endif%}
+                                            {% endif%}
+                                            
+                                            <p>{{ msg.message_date|naturaltime }}</p>
+                                          </div>
+                                        </a>
+                                      </li>
+                                      <li>
+                                        <hr class="dropdown-divider">
+                                      </li>
+                                      {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </ul>
+                              </nav>
+                            </td>
+
+                               
+                            <td><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
+                            <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
+                          </tr>
+
+                        
+                            {% endif %}
+                            {% endfor %}
+                          
+                        </tbody>
                       </table>
                       <!--{} form.as_p -->
                       <!--<button class="btn ri-add-fill"></button>-->
