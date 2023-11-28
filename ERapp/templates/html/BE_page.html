@@ -210,21 +210,20 @@
                   <table class="table  table-hover  table-bordered  table-borderless border-info fixed-header-table" id="tableDATA_1" cellspacing="0" >  <!-- table-sm  table-responsive-->
 
                       <thead class="table-dark border-info ">
-                        <!--<th ></th>
-                        <th >id </th>-->
-                        <th onclick="sortTable('tableDATA_1',0)">Prénom</th>  
-                        <th onclick="sortTable('tableDATA_1',1)">Nom</th> 
-                        <th onclick="sortTable('tableDATA_1',2)">Adresse</th> 
-                        <th onclick="sortTable('tableDATA_1',3)">N° de tél</th>
-                        <th onclick="sortTable('tableDATA_1',4)">E-mail</th> 
+                        <th class="fixed-column" ></th>
+                        <th onclick="sortTable('tableDATA_1',1)">Prénom</th>  
+                        <th onclick="sortTable('tableDATA_1',2)">Nom</th> 
+                        <th onclick="sortTable('tableDATA_1',3)">Adresse</th> 
+                        <th onclick="sortTable('tableDATA_1',4)">N° de tél</th>
+                        <th onclick="sortTable('tableDATA_1',5)">E-mail</th> 
                         <th colspan=2>Visite technique</th> 
                         <th colspan=2>Audit v1</th> 
                         <th colspan=2>Audit v2</th> 
                         <th colspan=2>Audit v3</th> 
                         <th colspan=2>Audit fin</th> 
-                        <th onclick="sortTable('tableDATA_1',15)">Précarite</th> 
+                        <th onclick="sortTable('tableDATA_1',16)">Précarite</th> 
                         <th>Commentaire</th>
-                        <th onclick="sortTable('tableDATA_1',17 , 1)">Date de création</th>
+                        <th onclick="sortTable('tableDATA_1',18 , 1)">Date de création</th>
                       </thead>
                       <tbody id="myTable_1">
                         {% for item in data %}
@@ -232,18 +231,18 @@
                             <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             
                             <tr id="tr_{{ item.cell_id }}">
-                              <!--<td class="fixed-column fixed-column-backcolor" ><button  class="button_table_data " type="button" id="table1_edit_col" name="" value="" onclick="my_Func_edit_table_1('{{item.cell_id}}')"><i class="ri-edit-2-fill"></i></button></td>
-                              <td ><p style="width:auto;">{{ item.cell_id }}</p></td>-->
-                              <td class="td_p_cell2"><p>{{ item.firstname }}</p></td>
-                              <td class="td_p_cell2"><p>{{ item.lastname }}</p></td>
-                              <td class="td_p_cell2"><p>{{ item.address }}</p></td>
-                              <td class="td_p_cell2"><p>{{ item.num }}</p></td>  
-                              <td class="td_p_cell2"><p>{{ item.email }}</p></td> 
+                              <td class="fixed-column table-secondary"><button  class="button_table_data" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" ><i class="ri-checkbox-circle-fill fa-2x color_green " id="i_for_edit_button"></i></button></td>
                               
+                              <td class="td_input_cell" ><input class="input_table_data" type="text" name="table_firstname_{{ item.cell_id }}" id="table{{k.index}}_firstname{{ item.cell_id }}" value="{{ item.firstname }}" ></td>
+                              <td class="td_input_cell"><input class="input_table_data" type="text" name="table_lastname_{{ item.cell_id }}" id="table{{k.index}}_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  ></td>
+                              <td class="td_input_cell"><input class="input_table_data" type="text" name="table_address_{{ item.cell_id }}" id="table{{k.index}}_address{{ item.cell_id }}" value="{{ item.address }}"  ></td>
+                              <td class="td_input_cell"><input class="input_table_data" type="text" name="table_num_{{ item.cell_id }}" id="table{{k.index}}_num{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
+                              <td class="td_input_cell"><input class="input_table_data" type="text" name="table_email_{{ item.cell_id }}" id="table{{k.index}}_email{{ item.cell_id }}" value="{{ item.email }}"  ></td>  
+
 
                               <td class="td_input_cell td_input_file_cell" > <!-- VT-->
                                 <nav class="header-nav ms-auto" >
-                                  <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
+                                  <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" >
                                     <i class="ri-file-list-3-line"></i>
                                     
                                   </a>

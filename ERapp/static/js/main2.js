@@ -169,14 +169,8 @@ function submitForm__01(cellId, box, redirectPage,col){
 
 }
 function submitForm__02(cellId, box, redirectPage,col){
-    
     var myForm_id="myForm";
     var csrfToken = $("[name=csrfmiddlewaretoken]").val();
-    
-
-    
-
-
     var myid1 = document.getElementsByName("myid1")[0].value;
     var col_type1 = document.getElementsByName("col_type1")[0].value;
     var button_edit_data_on_table = document.getElementsByName("button_edit_data_on_table")[0].value;
