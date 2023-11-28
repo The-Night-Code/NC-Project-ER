@@ -209,8 +209,11 @@ function updateRowColor(row,cellId) {
 
 function remove_file_from_m(id, index, column, redirect_next_page ,element_tag_id) {
 
-    var csrfToken = $("[name=csrfmiddlewaretoken]").val();
+    var csrfToken = $("[name=csrfmiddlewaretoken]").val()
     
+
+
+
     $.ajax({
         url: "/remove_file_from_MODELS/",
         type: "POST",
@@ -220,13 +223,14 @@ function remove_file_from_m(id, index, column, redirect_next_page ,element_tag_i
             param2:column,
             param3:redirect_next_page,
             element_tag_id_index:element_tag_id,
-            csrfmiddlewaretoken: csrfToken
+            csrfmiddlewaretoken: csrfToken,
+            processData: false, // Important: tell jQuery not to process the data
+            contentType: false, // Important: tell jQuery not to set contentType
         },
         success: function (response) {
             
              
             var remove_file_from_box_2 = document.getElementById(response.element_tag_id_index);
-            remove_file_from_box_2.style.display="none";
             remove_file_from_box_2.remove()
 
 
