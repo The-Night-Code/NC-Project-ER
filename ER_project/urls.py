@@ -57,7 +57,7 @@ urlpatterns = [
     path('historique_des_fichiers/', files_history, name="files_history" ),
     path('Activities/', Activities, name="Activities" ),
     
-    path('remove_file_from_MODELS/',remove_file_from_MODELS ,name="remove_file_from_MODEL"),
+    path('remove_file_from_MODELS/',remove_file_from_MODELS ,name="remove_file_from_MODELS"),
     path('send-message/',send_message , name="send_message" ),
     
     

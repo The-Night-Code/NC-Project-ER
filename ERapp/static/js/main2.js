@@ -207,10 +207,8 @@ function updateRowColor(row,cellId) {
 }
 
 
-function remove_file_from_m(id, index, column, redirect_next_page,element_tag_id) {
+function remove_file_from_m(id, index, column, redirect_next_page ,element_tag_id) {
 
-    var element_tag_id_index=element_tag_id;
-    
     var csrfToken = $("[name=csrfmiddlewaretoken]").val();
     
     $.ajax({
@@ -221,15 +219,15 @@ function remove_file_from_m(id, index, column, redirect_next_page,element_tag_id
             param1:index,
             param2:column,
             param3:redirect_next_page,
-            element_tag_id_index:element_tag_id_index,
+            element_tag_id_index:element_tag_id,
             csrfmiddlewaretoken: csrfToken
         },
         success: function (response) {
             
              
-            var remove_file_from_box_2 = document.getElementById(element_tag_id_index);
-            remove_file_from_box_2.style.display="";
-            
+            var remove_file_from_box_2 = document.getElementById(response.element_tag_id_index);
+            remove_file_from_box_2.style.display="none";
+            remove_file_from_box_2.remove()
 
 
             //if(data.status =="success"){

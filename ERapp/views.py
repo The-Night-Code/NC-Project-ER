@@ -898,7 +898,7 @@ def remove_file_from_MODELS(request):
         file_id = request.POST.get('param0')
         index = request.POST.get('param1')
         model_by_column = request.POST.get('param2')
-        redirect_to_next_page = request.POST.get('param3')
+        #redirect_to_next_page = request.POST.get('param3')
         element_tag_id_index = request.POST.get('element_tag_id_index')
         file_table=ModelByColumn(model_by_column)
         
