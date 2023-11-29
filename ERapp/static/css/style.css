@@ -391,8 +391,18 @@ chat box icoon
 
 
 .logo_with_button{width:100px;}
+
 /*  Activities_audit */
-.Activities_audit_p{font-size:16px;;}
+.Activities_audit_p{font-size:16px;
+  position: relative;
+  width: auto;
+  max-width: 90%;}
+.activity .activity-item .activity-content{
+  position: rel ative;
+  padding: 0px 10px;
+  overflow: hidden;
+}
+
 /*  end Activities_audit */
 
 

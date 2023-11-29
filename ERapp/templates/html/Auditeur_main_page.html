@@ -345,8 +345,13 @@
                       </div>
       
                     </div>
-                  </div><!-- End Projet fini -->
-  
+                </div><!-- End Projet fini -->
+                
+
+                <hr class="dropdown-divider">
+
+
+                
             </div>
           </div><!-- End Left side columns -->
   
@@ -367,7 +372,7 @@
   
                 <div class="activity">
                   {% for A_AU in activities_audit %}
-                    {% if A_AU.Activity_edit %}
+                    {% if A_AU.Activity_edit %}  
                       <div class="activity-item d-flex">
                         <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
                         <i class="bi bi-circle-fill activity-badge text-primary align-self-start"></i>
