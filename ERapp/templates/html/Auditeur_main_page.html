@@ -349,13 +349,54 @@
                 
 
                 <hr class="dropdown-divider">
-
-
+              
+                <div class="col-xxl-4 col-md-4">
+                  {% for item in client_count_fini_year_by_A %}
+                  <h1>{{item.day}}   count: {{item.count}}</h1>
+                  {% endfor %}
+                </div>
+              <div class="col-lg-8">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Line Chart</h5>
+      
+                    <!-- Line Chart -->
+                    <canvas id="lineChart" style="max-height: 400px; display: block; box-sizing: border-box; height: 185px; width: 371px;" width="371" height="185"></canvas>
+                    <script>
+                      document.addEventListener("DOMContentLoaded", () => {
+                        new Chart(document.querySelector('#lineChart'), {
+                          type: 'line',
+                          data: {
+                            labels: ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi','dimanche'],
+                            datasets: [{
+                              label: '',
+                              data: [{{ final_result.lundi }}, {{final_result.mardi}}, {{final_result.mercredi}}, {{final_result.jeudi}}, {{final_result.vendredi}}, {{final_result.samedi}}, {{final_result.dimanche}}],
+                              fill: false,
+                              borderColor: 'rgb(75, 192, 192)',
+                              tension: 1
+                            }]
+                          },
+                          options: {
+                            scales: {
+                              y: {
+                                beginAtZero: true
+                              }
+                            }
+                          }
+                        });
+                      });
+                    </script>
+                    <!-- End Line CHart -->
+      
+                  </div>
+                </div>
+              </div>
                 
             </div>
           </div><!-- End Left side columns -->
-  
+          
 
+          
 
 
 

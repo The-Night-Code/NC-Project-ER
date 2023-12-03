@@ -111,8 +111,11 @@ class TableData001(models.Model):
     
     Envoye_time = models.DateTimeField(null=True, blank=True, default=None)
     Envoye_time_checker = models.BooleanField(default=False)
+    Envoye_by_user= models.CharField(max_length=255,blank=True,null=True)
+    
     fini_time = models.DateTimeField(null=True, blank=True, default=None)
     fini_time_checker = models.BooleanField(default=False)
+    fini_by_user=models.CharField(max_length=255,blank=True,null=True)
     
     def __str__(self):
         return f'{self.cell_id} {self.firstname} {self.lastname}'

@@ -9,7 +9,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from django.views.generic.edit import CreateView
-from django.db.models import Max
+from django.db.models import Max,Count
+from django.db.models.functions import TruncDate
 from .models import MyModel, UpdatedXLSXFile 
 from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1,kizeo_model_Pieces,AI_or_AGENT
 from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal,Activities_audit,file_table_AdA,file_table_comm
@@ -29,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 import random
 import string
-from datetime import datetime, date
+from datetime import datetime, date,timedelta
 import pytz
 # Get the current time in the GMT+1 time zone
 tz_gmt_plus_1 = pytz.timezone('Europe/Berlin') 
@@ -471,12 +472,14 @@ def table_view_2(request):
                 if request.POST.get(f"table_etat") == "Envoye" and not obj_by_id.Envoye_time_checker :
                     obj_by_id.Envoye_time_checker = True
                     obj_by_id.Envoye_time = datetime.now(tz_gmt_plus_1)
-                    obj_by_id.save(update_fields=['Envoye_time_checker','Envoye_time'])
+                    obj_by_id.Envoye_by_user = user_.email
+                    obj_by_id.save(update_fields=['Envoye_time_checker','Envoye_time','Envoye_by_user'])
                 
                 if request.POST.get(f"table_etat") =="Fini" and not obj_by_id.fini_time_checker :
                     obj_by_id.fini_time_checker = True
                     obj_by_id.fini_time = datetime.now(tz_gmt_plus_1)
-                    obj_by_id.save(update_fields=['fini_time_checker','fini_time'])
+                    obj_by_id.fini_by_user = user_.email
+                    obj_by_id.save(update_fields=['fini_time_checker','fini_time','fini_by_user'])
                     
                     
             except TableData001.DoesNotExist:
@@ -694,6 +697,7 @@ def table_view(request,redirect_page):
 
 @login_required
 def Auditeur_Accueil(request):
+    user_=request.user
     data = TableData001.objects.all()
     activities_audit = Activities_audit.objects.order_by("-Activity_date")[:6]
     today = date.today()
@@ -711,6 +715,36 @@ def Auditeur_Accueil(request):
     client_count_fini_today = TableData001.objects.filter(fini_time__date=today).count()
     client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month, datetime.now(tz_gmt_plus_1))).count()
     client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))).count()
+    
+    tw = datetime.now()
+    td = datetime.today() - timedelta(days=7)#tw.weekday()
+    #client_count_fini_year_by_A= TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1)))
+
+    
+    
+    
+    client_count_fini_year_by_A = TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))) \
+                                  .annotate(day=TruncDate('fini_time')) \
+                                  .values('day') \
+                                  .annotate(count=Count('id')) \
+                                  .order_by('day')
+                          
+    result = TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))) \
+                                  .annotate(day=TruncDate('fini_time')) \
+                                  .values('day') \
+                                  .annotate(count=Count('id')) \
+                                  .order_by('day')
+
+     # Convert the result to a dictionary for easy lookup
+    result_dict = {item['day'].strftime('%A').lower(): item['count'] for item in result}
+
+    # Create a list representing all days of the week
+    days_of_week = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi','dimanche']
+
+    # Fill in missing days with a count of 0
+    final_result = {day: result_dict.get(day, 0) for day in days_of_week}
+
+
 
 
     return render(request, "html/Auditeur_main_page.html",{'data':data,
@@ -725,7 +759,10 @@ def Auditeur_Accueil(request):
                                                         
                                                         'client_count_fini_today':client_count_fini_today,
                                                         'client_count_fini_month':client_count_fini_month,
-                                                        'client_count_fini_year':client_count_fini_year})
+                                                        'client_count_fini_year':client_count_fini_year,
+                                                        
+                                                        'final_result':final_result,
+                                                        'client_count_fini_year_by_A':client_count_fini_year_by_A})
 
 @login_required
 def audit_pages(request,redirect_page,html_page):
