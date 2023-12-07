@@ -716,56 +716,7 @@ def Auditeur_Accueil(request):
     client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month, datetime.now(tz_gmt_plus_1))).count()
     client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))).count()
     
-    
-    #client_count_fini_year_by_A= TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1)))
 
-    
-    
-    
-    client_count_fini_year_by_A = TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))) \
-                                  .annotate(day=TruncDate('fini_time')) \
-                                  .values('day') \
-                                  .annotate(count=Count('id')) \
-                                  .order_by('day')
-                          
-    result = TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))) \
-                                  .annotate(day=TruncDate('fini_time')) \
-                                  .values('day') \
-                                  .annotate(count=Count('id')) \
-                                  .order_by('day')
-
-     # Convert the result to a dictionary for easy lookup
-    result_dict = {item['day'].strftime('%A').lower(): item['count'] for item in result}
-
-    # Create a list representing all days of the week
-    days_of_week = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi','dimanche']
-
-    # Fill in missing days with a count of 0
-    final_result = {day: result_dict.get(day, 0) for day in days_of_week}
-
-    re=TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1)))
-
-    #s={'lundi':, 'mardi':, 'mercredi':, 'jeudi':, 'vendredi':, 'samedi':,'dimanche':}
-
-
-
-    # for i in range(0,7) 0 - 6
-    #   tod = datetime.datetime.now()
-    #   d = datetime.timedelta(days = 50)
-    #   a = tod - d
-    
-    today_date = datetime.now()
-    yesterday_date = today_date - timedelta(days=7)
-    
-    
-    td = today_date - timedelta(days=13)
-    #for dow in days_of_week:
-    re1=TableData001.objects.filter(fini_time__range=(td, today_date)) \
-                                  .annotate(day=TruncDate('fini_time'))\
-                                    .count()
-    re2=TableData001.objects.filter(fini_time__range=(td, today_date)) \
-                                  .annotate(day=TruncDate('fini_time'))\
-                                    .count()
     dt = datetime.now()
     tw=dt.weekday()
     fini_result={}
@@ -809,8 +760,9 @@ def Auditeur_Accueil(request):
                                                         'client_count_fini_year':client_count_fini_year,
                                                         
                                                         'fini_result':fini_result,
-                                                        'envoye_result':envoye_result,
-                                                        'client_count_fini_year_by_A':client_count_fini_year_by_A})
+                                                        'envoye_result':envoye_result
+                                                        
+                                                        })
 
 @login_required
 def audit_pages(request,redirect_page,html_page):
