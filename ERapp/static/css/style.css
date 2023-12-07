@@ -406,7 +406,7 @@ chat box icoon
 /*  end Activities_audit */
 
 
-/*  Kizeo form */
+/*  Kizeo form start */
 .tab_button_2 ul li {padding:0px 5px;}
 .tablinks_K{
   font-weight: bold!important;
@@ -421,7 +421,21 @@ chat box icoon
 .tablinks_K_active_b{color:rgb(1, 71, 81)!important;
   border: 1px solid  rgb(1, 71, 81)!important;
   background: white!important;}
+/*  Kizeo form end */
+
+/*  Kizeo form piece start*/
+#table_of_piece_add_edit,
+#table_of_piece_add_edit tr,
+#table_of_piece_add_edit td{
+  width:100%;
+  padding:10px;
+  margin:10px;}
   
+#table_of_piece_add_edit tr{border-top: 2px solid rgb(1, 71, 81);
+  border-bottom: 2px solid rgb(1, 71, 81);}
+
+/*  Kizeo form piece end*/
+
 .tab_button {
   display: block;
   padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);

@@ -716,8 +716,7 @@ def Auditeur_Accueil(request):
     client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month, datetime.now(tz_gmt_plus_1))).count()
     client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))).count()
     
-    tw = datetime.now()
-    td = datetime.today() - timedelta(days=7)#tw.weekday()
+    
     #client_count_fini_year_by_A= TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1)))
 
     
@@ -744,9 +743,57 @@ def Auditeur_Accueil(request):
     # Fill in missing days with a count of 0
     final_result = {day: result_dict.get(day, 0) for day in days_of_week}
 
+    re=TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1)))
+
+    #s={'lundi':, 'mardi':, 'mercredi':, 'jeudi':, 'vendredi':, 'samedi':,'dimanche':}
 
 
 
+    # for i in range(0,7) 0 - 6
+    #   tod = datetime.datetime.now()
+    #   d = datetime.timedelta(days = 50)
+    #   a = tod - d
+    
+    today_date = datetime.now()
+    yesterday_date = today_date - timedelta(days=7)
+    
+    
+    td = today_date - timedelta(days=13)
+    #for dow in days_of_week:
+    re1=TableData001.objects.filter(fini_time__range=(td, today_date)) \
+                                  .annotate(day=TruncDate('fini_time'))\
+                                    .count()
+    re2=TableData001.objects.filter(fini_time__range=(td, today_date)) \
+                                  .annotate(day=TruncDate('fini_time'))\
+                                    .count()
+    dt = datetime.now()
+    tw=dt.weekday()
+    fini_result={}
+    envoye_result={}
+    days_of_week = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi','dimanche']
+    j=0
+    time_range=[]
+    
+    for i in range(tw,0,-1):
+        time_range.append(i)
+    for i in range(tw+1,0,-1):
+        # 3-4 2-3 1-2 1-0
+        start_date = dt - timedelta(days=i-1) #today_date
+        end_date = dt - timedelta(days=i) # yesterday_date
+        resul1=TableData001.objects.filter(fini_time__range=( end_date,start_date),fini_time_checker=True,fini_by_user=user_.email) \
+                                  .annotate(day=TruncDate('fini_time'))\
+                                    .count()
+        fini_result[days_of_week[j]] = resul1
+        
+        resul2=TableData001.objects.filter(Envoye_time__range=( end_date, start_date),Envoye_time_checker=True,Envoye_by_user=user_.email) \
+                                  .annotate(day=TruncDate('Envoye_time'))\
+                                    .count()
+        envoye_result[days_of_week[j]] = resul2
+        
+        j+=1
+        
+        
+    #final_result={'lundi':re1 , 'mardi':re2}
     return render(request, "html/Auditeur_main_page.html",{'data':data,
                                                         'activities_audit':activities_audit,
                                                         'client_count_added_today':client_count_added_today,
@@ -761,7 +808,8 @@ def Auditeur_Accueil(request):
                                                         'client_count_fini_month':client_count_fini_month,
                                                         'client_count_fini_year':client_count_fini_year,
                                                         
-                                                        'final_result':final_result,
+                                                        'fini_result':fini_result,
+                                                        'envoye_result':envoye_result,
                                                         'client_count_fini_year_by_A':client_count_fini_year_by_A})
 
 @login_required
@@ -2008,7 +2056,7 @@ def kizeo_form_Pieces_delete(request,client_id,piece_id):
     user_role= user_.role
     if  "VT" in user_role:
         kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id).delete()
-        return redirect(f"{formK}{client_id}")
+        return redirect(f"{formK}{client_id}/5")
     
     return redirect("/")
     
@@ -2810,7 +2858,7 @@ def generate_pdf(template_path, context):
 
     return pdf_buffer
 
-if __name__ == "__main____":
+if __name__ == "__main__ _ _":
     # Define the template path and context
     template_path = "template.html"
     context = {

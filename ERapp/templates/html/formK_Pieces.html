@@ -7,7 +7,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <link rel="shortcut icon" type="image/png" href="{% static 'image/icon.png' %}">
-  <title></title>
+  <title>Pièce: {{ data.Pieces }}</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -128,7 +128,7 @@
 
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
-          <li class="breadcrumb-item "><a href="{% url 'Kizeo_form_page'  data.kizeo_id %}">Forms</a></li>
+          <li class="breadcrumb-item "><a href="{% url 'Kizeo_form_page'  client_id=data.kizeo_id page_number=5 %}">Forms</a></li>
           <li class="breadcrumb-item active">Pièce</li>
         </ol>
       </nav>
@@ -141,7 +141,7 @@
     </div>
 
 
-    <section class="section">
+    <section class="section" style="margin:10px 30px; padding:40px 10px;">
       <div class="row" >
           <div class="card" >
             <!-- ================================== -->
@@ -317,20 +317,22 @@
                     
                 </div>
                 
-
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary" name="submit_to_Kizeo" value="submit" >Sauvegarder</button>
+                </div>
               
               <!-- ================================== -->
               <!-- ================================== -->
           </div>
         </div>
       </div>
+      
+      
     </section>
 
 
 
-    <div class="text-center">
-      <button type="submit" class="btn btn-primary" name="submit_to_Kizeo" value="submit" >Sauvegarder</button>
-    </div>
+    
 
   </form>
   </main>

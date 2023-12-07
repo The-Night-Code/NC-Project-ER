@@ -8,7 +8,7 @@
 
 
   <link rel="shortcut icon" type="image/png" href="{% static 'image/icon.png' %}">
-  <title></title>
+  <title>Formulaire</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -560,7 +560,7 @@
         <section class="section">
 
           <div class="text-center">
-            <button type="submit" class="btn btn-danger" name="submit_to_Kizeo" value="1" >page suivante</button>
+            <button type="submit" class="btn btn-success" name="submit_to_Kizeo" value="1" >page suivante</button>
           </div>
         </section>
       </div>
@@ -877,7 +877,7 @@
         <section class="section">
 
           <div class="text-center">
-            <button type="submit" class="btn btn-danger" name="submit_to_Kizeo" value="2" >page suivante</button>
+            <button type="submit" class="btn btn-success" name="submit_to_Kizeo" value="2" >page suivante</button>
           </div>
         </section>
       </div>
@@ -1452,7 +1452,7 @@
         <section class="section">
 
           <div class="text-center">
-            <button type="submit" class="btn btn-danger" name="submit_to_Kizeo" value="3" >page suivante</button>
+            <button type="submit" class="btn btn-success" name="submit_to_Kizeo" value="3" >page suivante</button>
           </div>
         </section>
       </div>
@@ -1724,7 +1724,7 @@
         <section class="section">
 
           <div class="text-center">
-            <button type="submit" class="btn btn-danger" name="submit_to_Kizeo" value="4" >page suivante</button>
+            <button type="submit" class="btn btn-success" name="submit_to_Kizeo" value="4" >page suivante</button>
           </div>
         </section>
       </div>
@@ -1748,23 +1748,24 @@
                   <!-- General Form Elements -->
                   <div class=""  id="show_div_17" >
                     <div class="row g-3">
-
-                      
-
-
-                      {% if pieces %}
-                        {% for i in pieces %}
-                        
-                        <div class="col-md-12">
-                          <label  class="form-label form-label_formK">{{i.Pieces}}</label>
-                          <a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=i.Pieces_index %}" class="btn btn-secondary rounded-pill">modifier</a>
-                          <a href="{% url 'kizeo_form_Pieces_del' client_id=data.kizeo_id piece_id=i.Pieces_index %}" class="btn btn-secondary rounded-pill">Supprimer</a>
-                        </div>
-                        
-                        {% endfor %}
-                      {% endif %}
+                      <table id="table_of_piece_add_edit">
+                        {% if pieces %}
+                          {% for i in pieces %}
+                          <div class="col-md-12 center">
+                            
+                            <tr>
+                              <td><label  class="form-label form-label_formK">{{i.Pieces}}</label></td>
+                              <td><a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=i.Pieces_index %}" class="btn btn-secondary rounded-pill">modifier</a></td>
+                              <td><a href="{% url 'kizeo_form_Pieces_del' client_id=data.kizeo_id piece_id=i.Pieces_index %}" class="btn btn-danger rounded-pill">Supprimer</a></td>
+                            </tr>
+                          
+                          </div>
+                        <hr class="dropdown-divider"> 
+                          {% endfor %}
+                        {% endif %}
+                      </table>
                         <!--<button type="submit" name="add_P" value="submit"><button>-->
-                      <a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=Pieces_index_add %}" class="btn btn-dark rounded-pill col-md-2 ">Ajouter</a>
+                      <a href="{% url 'kizeo_form_Pieces' client_id=data.kizeo_id piece_id=Pieces_index_add %}" class="btn btn-primary rounded-pill col-md-2 ">Ajouter</a>
                       
                     </div>
                   </br>
@@ -1784,20 +1785,6 @@
                       {% if data.Saisie_par_piece_Signature_client %}<img src="{{ data.Saisie_par_piece_Signature_client.url }}"  alt="Image" width="70" >{% endif %}
                     </div>
 
-
-                    <section class="container_draw_image">
-                      <div id="toolbar">
-                          <h1>Draw.</h1>
-                          <label for="stroke">Stroke</label>
-                          <input id="stroke" name='stroke' type="color">
-                          <label for="lineWidth">Line Width</label>
-                          <input id="lineWidth" name='lineWidth' type="number" value="5">
-                          <button id="clear">Clear</button>
-                      </div>
-                      <div class="drawing-board">
-                          <canvas id="drawing-board"></canvas>
-                      </div>
-                  </section>
               </div>
             </div>
           </div>
@@ -1806,7 +1793,7 @@
         <section class="section">
 
           <div class="text-center">
-            <button type="submit" class="btn btn-danger" name="submit_to_Kizeo" value="5" >Sauvegarder</button>
+            <button type="submit" class="btn btn-success" name="submit_to_Kizeo" value="5" >Sauvegarder</button>
           </div>
         </section>
       </div>
