@@ -566,134 +566,7 @@ def table_view_2(request):
     return JsonResponse({'status': 'error'})
 
 
-@login_required
-def table_view(request,redirect_page):
-    #Activity_id,Activity_user,Activity_table,Activity_in,Activity_before,Activity_after
-    user_=request.user
-    if request.method == 'POST' :
-        myID1=request.POST.get("myid1")
-        column1=request.POST.get("col_type1")
-        Activity_table=''
-        button_edit_data_on_table=request.POST.get("button_edit_data_on_table")
-        if button_edit_data_on_table:
 
-            try:
-                obj_by_id = get_object_or_404(TableData001,cell_id=str(button_edit_data_on_table))  # TableData001.objects.get(cell_id=str(button_edit_data_on_table))
-
-                table_index=[   {'column_name':'firstname','name2':'Prénom'},
-                                {'column_name':'lastname', 'name2':'Nom'},
-                                {'column_name':'address',  'name2':'Adresse'},
-                                {'column_name':'email',    'name2':'Email'},
-                                {'column_name':'num',      'name2':'N° de tél'},
-                                {'column_name':'etat',     'name2':'État'},
-                                {'column_name':'tp',       'name2':'Travaux à préconiser'},
-                                {'column_name':'cofrac',   'name2':'Cofrac'},
-                                {'column_name':'auditeur', 'name2':'Auditeur'},
-                                {'column_name':'paiement', 'name2':'Paiement'},
-                                {'column_name':'precaite', 'name2':'Précarite'}]
-                
-                
-                if obj_by_id.be:
-                    Activity_table="Bureau d'étude"
-                elif obj_by_id.ai:
-                    Activity_table="Agent immobilier"
-                
-                for l in table_index :
-                    name = l['column_name']
-                    name2 = l['name2']
-
-                    
-                    
-                    if name == 'paiement':
-                        #Activity_before = str()
-                        Activity_after = str(request.POST.get(f"table_{name}_{button_edit_data_on_table}"))
-                        Activity_before_=""
-                        Activity_after_=""
-                        Activity_after_="impayé"
-                        AF_af = False
-                        
-                        if Activity_after == "True":
-                            Activity_after_="payé"
-                            AF_af = True
-                        else: 
-                            if not Activity_after == "True":
-                                Activity_after_="impayé"
-                                AF_af = False
-                            
-                        if getattr(obj_by_id, name) is True:
-                            Activity_before_="payé"
-                        else  :
-                            Activity_before_="impayé"
-                
-                        if Activity_before_ != Activity_after_:
-                            Activities_audit.objects.create(Activity_id=generate_random_string(10),
-                                                            Activity_user=f"{user_.last_name} {user_.first_name}",
-                                                            Activity_user_email=user_.email,
-                                                            Activity_table=Activity_table,
-                                                            Activity_project_id=str(button_edit_data_on_table),
-                                                            Activity_name=name2,
-                                                            Activity_before=Activity_before_,
-                                                            Activity_after=Activity_after_,
-                                                            Activity_edit=True)
-                        setattr(obj_by_id, 'paiement', AF_af)
-                        obj_by_id.save()
-                    else:
-                        Activity_before = str(getattr(obj_by_id, name) )+ ""
-                        Activity_after = str(request.POST.get(f"table_{name}_{button_edit_data_on_table}"))+ ""
-                        if Activity_before != Activity_after:
-                            Activities_audit.objects.create(Activity_id=generate_random_string(10),
-                                                            Activity_user=f"{user_.last_name} {user_.first_name}",
-                                                            Activity_user_email=user_.email,
-                                                            Activity_table=Activity_table,
-                                                            Activity_project_id=str(button_edit_data_on_table),
-                                                            Activity_name=name2,
-                                                            Activity_before=Activity_before,
-                                                            Activity_after=Activity_after,
-                                                            Activity_edit=True)
-
-                            
-                        setattr(obj_by_id, name, Activity_after)
-                        obj_by_id.save()
-                    
-                    
-
-                
-                if request.POST.get(f"table_etat_{button_edit_data_on_table}") == "Envoye" and not obj_by_id.Envoye_time_checker :
-                    obj_by_id.Envoye_time_checker = True
-                    obj_by_id.Envoye_time = timezone.now()
-                    obj_by_id.save(update_fields=['Envoye_time_checker','Envoye_time'])
-                
-                if request.POST.get(f"table_etat_{button_edit_data_on_table}") =="Fini" and not obj_by_id.fini_time_checker :
-                    obj_by_id.fini_time_checker = True
-                    obj_by_id.fini_time = timezone.now()
-                    obj_by_id.save(update_fields=['fini_time_checker','fini_time'])
-                    
-                    
-            except TableData001.DoesNotExist:
-                pass
-            
-
-            column_name_type="VT"   
-            if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
-                
-                
-
-            column_name_type="auditV1"
-            if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
-            column_name_type="auditV2"
-            if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
-            column_name_type="auditV3"
-            if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
-            column_name_type="auditFinal"
-            if request.FILES.getlist(f"table_{column_name_type}_{button_edit_data_on_table}"):
-                add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table)
-
-        return redirect(redirect_page)
-        
 
 
 @login_required
@@ -719,6 +592,7 @@ def Auditeur_Accueil(request):
     
     fini_result={}
     envoye_result={}
+    Modification_Faite_result={}
     days_of_week = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi','dimanche']
     
     # Get the current date
@@ -736,10 +610,14 @@ def Auditeur_Accueil(request):
         # Filter and count records for the specified date range
         count1 = TableData001.objects.filter(fini_time__range=(start_date, end_date),fini_time_checker=True,fini_by_user=user_.email).count()
         count2 = TableData001.objects.filter(Envoye_time__range=(start_date, end_date),Envoye_time_checker=True,Envoye_by_user=user_.email).count()
+        count3 = TableData001.objects.filter(Modification_Faite_time__range=(start_date, end_date),Modification_Faite_time_checker=True,Modification_Faite_by_user=user_.email).count()
+        
         # Store the count in the dictionary
         fini_result[days_of_week[k]] = count1
         envoye_result[days_of_week[k]] = count2
+        Modification_Faite_result[days_of_week[k]] = count3
         k-=1
+        
     #final_result={'lundi':re1 , 'mardi':re2}
     return render(request, "html/Auditeur_main_page.html",{'data':data,
                                                         'activities_audit':activities_audit,
@@ -756,14 +634,15 @@ def Auditeur_Accueil(request):
                                                         'client_count_fini_year':client_count_fini_year,
                                                         
                                                         'fini_result':fini_result,
-                                                        'envoye_result':envoye_result
+                                                        'envoye_result':envoye_result,
+                                                        'Modification_Faite_result':Modification_Faite_result
                                                         
                                                         })
 
 @login_required
 def audit_pages(request,redirect_page,html_page):
     
-    table_view(request,redirect_page)
+    
 
     data = TableData001.objects.all().order_by('-creation_time')
     
@@ -834,7 +713,7 @@ def audit_pages(request,redirect_page,html_page):
 def AI_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
     redirect_page="/AI_audit_ALL/"
     html_page="AI_audit_ALL.html"
-    table_view(request,redirect_page)
+    
 
     list=audit_pages(request,redirect_page,html_page)
     return render(request, f"html/{html_page}", list)
@@ -843,7 +722,7 @@ def AI_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,c
 def AI_audit_BY_A(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
     redirect_page="/AI_audit_BY_A/"
     html_page="AI_audit_BY_A.html"
-    table_view(request,redirect_page)
+    
     
     list=audit_pages(request,redirect_page,html_page)
     return render(request, f"html/{html_page}", list)
@@ -853,7 +732,7 @@ def AI_audit_BY_A(request): # add row (,firstname,lastname,addressm,num,etat,tp,
 def BE_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
     redirect_page="/BE_audit_ALL/"
     html_page="BE_audit_ALL.html"
-    table_view(request,redirect_page)
+    
     
     list=audit_pages(request,redirect_page,html_page)
     return render(request, f"html/{html_page}", list)
@@ -863,7 +742,7 @@ def BE_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,c
 def BE_audit_BY_A(request):
     redirect_page="/BE_audit_BY_A/"
     html_page="BE_audit_BY_A.html"
-    table_view(request,redirect_page)
+    
     
     
     list=audit_pages(request,redirect_page,html_page)
