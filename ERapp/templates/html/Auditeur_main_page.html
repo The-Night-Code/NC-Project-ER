@@ -354,28 +354,28 @@
               <div class="col-lg-12">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title">     </h5>
-      
+
+                    
                     <!-- Line Chart -->
                     <canvas id="lineChart" style="max-height: 400px; display: block; box-sizing: border-box; height: 185px; width: 371px;" width="371" height="185"></canvas>
                     <script>
                       document.addEventListener("DOMContentLoaded", () => {
                         new Chart(document.querySelector('#lineChart'), {
-                          type: 'line',
+                          type: 'bar',
                           data: {
                             labels: ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi','dimanche'],
                             datasets: [{
                               label: 'Projet fini',
                               data: [{{ fini_result.lundi }}, {{fini_result.mardi}}, {{fini_result.mercredi}}, {{fini_result.jeudi}}, {{fini_result.vendredi}}, {{fini_result.samedi}}, {{fini_result.dimanche}}],
                               fill: false,
-                              borderColor: '#2ECA6A',
+                              backgroundColor: '#2ECA6A',
                               tension: 0.1
                             },
                             {
                               label: 'Projet Envoyé',
                               data: [{{ envoye_result.lundi }}, {{envoye_result.mardi}}, {{envoye_result.mercredi}}, {{envoye_result.jeudi}}, {{envoye_result.vendredi}}, {{envoye_result.samedi}}, {{envoye_result.dimanche}}],
                               fill: false,
-                              borderColor: 'rgb(255, 119, 29)',
+                              backgroundColor: 'rgb(255, 119, 29)',
                               tension: 0.1
                             }
                             ]

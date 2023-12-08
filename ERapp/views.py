@@ -16,6 +16,7 @@ from .models import ImageModel,USER,TableData001,kizeo_model,message_box_1,kizeo
 from .models import file_table_auditV1,file_table_auditV2,file_table_auditV3,file_table_vt,file_table_auditFinal,Activities_audit,file_table_AdA,file_table_comm
 from .models import Activities_be,Activities_audit
 from django.template.loader import render_to_string
+from django.utils import timezone
 
 from django.core.mail import send_mail
 from django.core.files.storage import default_storage
@@ -30,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 import os
 import random
 import string
-from datetime import datetime, date,timedelta
+from datetime import  date,timedelta
 import pytz
 # Get the current time in the GMT+1 time zone
 tz_gmt_plus_1 = pytz.timezone('Europe/Berlin') 
@@ -471,13 +472,13 @@ def table_view_2(request):
                 
                 if request.POST.get(f"table_etat") == "Envoye" and not obj_by_id.Envoye_time_checker :
                     obj_by_id.Envoye_time_checker = True
-                    obj_by_id.Envoye_time = datetime.now(tz_gmt_plus_1)
+                    obj_by_id.Envoye_time = timezone.now()
                     obj_by_id.Envoye_by_user = user_.email
                     obj_by_id.save(update_fields=['Envoye_time_checker','Envoye_time','Envoye_by_user'])
                 
                 if request.POST.get(f"table_etat") =="Fini" and not obj_by_id.fini_time_checker :
                     obj_by_id.fini_time_checker = True
-                    obj_by_id.fini_time = datetime.now(tz_gmt_plus_1)
+                    obj_by_id.fini_time = timezone.now()
                     obj_by_id.fini_by_user = user_.email
                     obj_by_id.save(update_fields=['fini_time_checker','fini_time','fini_by_user'])
                     
@@ -659,12 +660,12 @@ def table_view(request,redirect_page):
                 
                 if request.POST.get(f"table_etat_{button_edit_data_on_table}") == "Envoye" and not obj_by_id.Envoye_time_checker :
                     obj_by_id.Envoye_time_checker = True
-                    obj_by_id.Envoye_time = datetime.now(tz_gmt_plus_1)
+                    obj_by_id.Envoye_time = timezone.now()
                     obj_by_id.save(update_fields=['Envoye_time_checker','Envoye_time'])
                 
                 if request.POST.get(f"table_etat_{button_edit_data_on_table}") =="Fini" and not obj_by_id.fini_time_checker :
                     obj_by_id.fini_time_checker = True
-                    obj_by_id.fini_time = datetime.now(tz_gmt_plus_1)
+                    obj_by_id.fini_time = timezone.now()
                     obj_by_id.save(update_fields=['fini_time_checker','fini_time'])
                     
                     
@@ -700,50 +701,45 @@ def Auditeur_Accueil(request):
     user_=request.user
     data = TableData001.objects.all()
     activities_audit = Activities_audit.objects.order_by("-Activity_date")[:6]
-    today = date.today()
+    today = timezone.now()
     first_day_of_year = date(today.year, 1, 1)
     first_day_of_month = date(today.year, today.month, 1)
 
     client_count_added_today = TableData001.objects.filter(creation_time__date=today).count()
-    client_count_added_month = TableData001.objects.filter(creation_time__range=(first_day_of_month, datetime.now(tz_gmt_plus_1))).count()
-    client_count_added_year= TableData001.objects.filter(creation_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))).count()
+    client_count_added_month = TableData001.objects.filter(creation_time__range=(first_day_of_month, timezone.now())).count()
+    client_count_added_year= TableData001.objects.filter(creation_time__range=(first_day_of_year, timezone.now())).count()
 
     client_count_envoye_today = TableData001.objects.filter(Envoye_time__date=today).count()
-    client_count_envoye_month = TableData001.objects.filter(Envoye_time__range=(first_day_of_month, datetime.now(tz_gmt_plus_1))).count()
-    client_count_envoye_year= TableData001.objects.filter(Envoye_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))).count()
+    client_count_envoye_month = TableData001.objects.filter(Envoye_time__range=(first_day_of_month, timezone.now())).count()
+    client_count_envoye_year= TableData001.objects.filter(Envoye_time__range=(first_day_of_year, timezone.now())).count()
     
     client_count_fini_today = TableData001.objects.filter(fini_time__date=today).count()
-    client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month, datetime.now(tz_gmt_plus_1))).count()
-    client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))).count()
+    client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month,timezone.now())).count()
+    client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, timezone.now())).count()
     
-
-    dt = datetime.now()
-    tw=dt.weekday()
     fini_result={}
     envoye_result={}
     days_of_week = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi','dimanche']
-    j=0
-    time_range=[]
     
-    for i in range(tw,0,-1):
-        time_range.append(i)
-    for i in range(tw+1,0,-1):
-        # 3-4 2-3 1-2 1-0
-        start_date = dt - timedelta(days=i-1) #today_date
-        end_date = dt - timedelta(days=i) # yesterday_date
-        resul1=TableData001.objects.filter(fini_time__range=( end_date,start_date),fini_time_checker=True,fini_by_user=user_.email) \
-                                  .annotate(day=TruncDate('fini_time'))\
-                                    .count()
-        fini_result[days_of_week[j]] = resul1
-        
-        resul2=TableData001.objects.filter(Envoye_time__range=( end_date, start_date),Envoye_time_checker=True,Envoye_by_user=user_.email) \
-                                  .annotate(day=TruncDate('Envoye_time'))\
-                                    .count()
-        envoye_result[days_of_week[j]] = resul2
-        
-        j+=1
-        
-        
+    # Get the current date
+    current_date = timezone.now().date()
+    # Get the current day of the week (0 for Monday, 1 for Tuesday, etc.)
+    current_weekday = current_date.weekday()
+
+    # Loop through the past N days, where N is the current day of the week
+    k=int(current_weekday)
+    for day_offset in range(current_weekday + 1):
+        # Calculate the date range for each day
+        start_date = current_date - timedelta(days=day_offset)
+        end_date = start_date + timedelta(days=1) - timedelta(seconds=1)
+
+        # Filter and count records for the specified date range
+        count1 = TableData001.objects.filter(fini_time__range=(start_date, end_date),fini_time_checker=True,fini_by_user=user_.email).count()
+        count2 = TableData001.objects.filter(Envoye_time__range=(start_date, end_date),Envoye_time_checker=True,Envoye_by_user=user_.email).count()
+        # Store the count in the dictionary
+        fini_result[days_of_week[k]] = count1
+        envoye_result[days_of_week[k]] = count2
+        k-=1
     #final_result={'lundi':re1 , 'mardi':re2}
     return render(request, "html/Auditeur_main_page.html",{'data':data,
                                                         'activities_audit':activities_audit,
@@ -957,16 +953,16 @@ def remove_file_from_MODELS(request):
                     Activity_table_object = TableData001.objects.get(cell_id=str(file_id)) #get_object_or_404(TableData001,cell_id=str(file_id))
                     if  Activity_table_object:
                         if getattr(Activity_table_object,"be"):
-                                    Activity_table="Bureau d'étude"
+                            Activity_table="Bureau d'étude"
                         elif getattr(Activity_table_object,"ai"):
-                                    Activity_table="Agent immobilier"
+                            Activity_table="Agent immobilier"
                             
                     f_table_audit_v1.file_removed = True
                     #f_table_audit_v1.file_removed_date = 
                     f_table_audit_v1.file_removed_user_email = user_.email
                     f_table_audit_v1.file_removed_user_FN = user_.first_name
                     f_table_audit_v1.file_removed_user_LN = user_.last_name
-                    f_table_audit_v1.file_removed_date=datetime.now(tz_gmt_plus_1)
+                    f_table_audit_v1.file_removed_date=timezone.now()
                     f_table_audit_v1.save(update_fields=['file_removed', 'file_removed_user_email', 'file_removed_user_FN', 'file_removed_user_LN','file_removed_date' ])
                     if model_by_column == "vt":
                         model_by_column="Visite technique"
@@ -1073,21 +1069,21 @@ def agent_immo_f(request):
 def BE_home_page(request):
     data = TableData001.objects.all()
     activities_audit = Activities_be.objects.order_by("-Activity_date")[:6]
-    today = date.today()
+    today = timezone.now()
     first_day_of_year = date(today.year, 1, 1)
     first_day_of_month = date(today.year, today.month, 1)
 
     client_count_added_today = TableData001.objects.filter(creation_time__date=today).count()
-    client_count_added_month = TableData001.objects.filter(creation_time__range=(first_day_of_month, datetime.now(tz_gmt_plus_1))).count()
-    client_count_added_year= TableData001.objects.filter(creation_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))).count()
+    client_count_added_month = TableData001.objects.filter(creation_time__range=(first_day_of_month, timezone.now())).count()
+    client_count_added_year= TableData001.objects.filter(creation_time__range=(first_day_of_year, timezone.now())).count()
 
     client_count_envoye_today = TableData001.objects.filter(Envoye_time__date=today).count()
-    client_count_envoye_month = TableData001.objects.filter(Envoye_time__range=(first_day_of_month, datetime.now(tz_gmt_plus_1))).count()
-    client_count_envoye_year= TableData001.objects.filter(Envoye_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))).count()
+    client_count_envoye_month = TableData001.objects.filter(Envoye_time__range=(first_day_of_month, timezone.now())).count()
+    client_count_envoye_year= TableData001.objects.filter(Envoye_time__range=(first_day_of_year, timezone.now())).count()
     
     client_count_fini_today = TableData001.objects.filter(fini_time__date=today).count()
-    client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month, datetime.now(tz_gmt_plus_1))).count()
-    client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, datetime.now(tz_gmt_plus_1))).count()
+    client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month, timezone.now())).count()
+    client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, timezone.now())).count()
 
 
 
@@ -1395,7 +1391,7 @@ def files_history(request):
 
 @login_required
 def download_media_folder(request):
-    date_time_now=datetime.now(tz_gmt_plus_1)
+    date_time_now=timezone.now()
     downloaded_folders=date_time_now.strftime("%Y-%m-%d_%H-%M-%S")
     
     user_ = request.user

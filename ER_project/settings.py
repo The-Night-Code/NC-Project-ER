@@ -116,7 +116,7 @@ DECIMAL_SEPARATOR = '.'
 
 LANGUAGE_CODE = 'en'
 
-TIME_ZONE = 'GMT'
+TIME_ZONE = 'Africa/Casablanca'
 
 USE_I18N = True
 
