@@ -310,6 +310,16 @@
                       </div><!-- End activity item-->
                     {% endif %}
 
+                    {% if A_AU.Activity_add_client %}
+                      <div class="activity-item d-flex">
+                        <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
+                        <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                        <div class="activity-content">
+                          <p class="Activities_audit_p"><b class=" text-danger">{{A_AU.Activity_user}}</b> a ajouté un client  <b class="fw-bold text-dark">{{A_AU.Activity_project_id}}</b></p>
+                        </div>
+                      </div><!-- End activity item-->
+                    {% endif %}
+
                     {% if A_AU.Activity_delete %}
                       <div class="activity-item d-flex">
                         <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>

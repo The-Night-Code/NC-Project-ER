@@ -226,6 +226,7 @@
                         <th onclick="sortTable('tableDATA_1',16)">Précarite</th> 
                         <th>Commentaire</th>
                         <th onclick="sortTable('tableDATA_1',18 , 1)">Date de création</th>
+                        <th onclick="sortTable('tableDATA_1',19)">id</th> 
                       </thead>
                       <tbody id="myTable_{{k.index}}">
                         {% for item in data %}
@@ -797,6 +798,7 @@
                               </td>
 
                               <td class="td_p_dateTime_cell2"><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
+                              <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
 
 
                             </tr>

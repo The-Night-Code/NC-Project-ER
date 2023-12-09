@@ -1206,7 +1206,15 @@ def BE_Page_f(request):
                                         bureau_d_etude=bureau_d_etude)
             
             kizeo_model.objects.create(kizeo_id=cell_id,)
+
             
+            Activities_be.objects.create(
+                            Activity_id=generate_random_string(10),
+                            Activity_user = f"{request.user.last_name} {request.user.first_name}",
+                            Activity_user_email = request.user.email,
+                            Activity_project_id = cell_id,
+                            Activity_add_client=True
+                        )
             
             for file in  request.FILES.getlist('vt'):
 

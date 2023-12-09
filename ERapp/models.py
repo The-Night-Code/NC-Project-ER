@@ -523,6 +523,8 @@ class Activities_be(models.Model):
     Activity_edit = models.BooleanField(default=False) 
     Activity_delete = models.BooleanField(default=False)
     
+    Activity_add_client = models.BooleanField(default=False) 
+    
     Activity_be = models.BooleanField(default=False) 
     
     def __str__(self):
