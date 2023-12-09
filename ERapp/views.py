@@ -979,12 +979,167 @@ def BE_home_page(request):
                                                         'client_count_fini_today':client_count_fini_today,
                                                         'client_count_fini_month':client_count_fini_month,
                                                         'client_count_fini_year':client_count_fini_year})
+
+def table_view_3(request):
+    #Activity_id,Activity_user,Activity_table,Activity_in,Activity_before,Activity_after
+    user_=request.user
+    
+    if request.method == 'POST':
+        #return redirect("/Accueil/")
+
+        
+        file_uploaded_state=False
+        files_date_for_response=[]
+        button_edit_data_on_table=request.POST.get("cellId_new")
+
+        if button_edit_data_on_table:
+
+            try:
+                obj_by_id = get_object_or_404(TableData001,cell_id=str(button_edit_data_on_table))  # TableData001.objects.get(cell_id=str(button_edit_data_on_table))
+
+                table_index=[   {'column_name':'firstname','name2':'Prénom'},
+                                {'column_name':'lastname', 'name2':'Nom'},
+                                {'column_name':'address',  'name2':'Adresse'},
+                                {'column_name':'email',    'name2':'Email'},
+                                {'column_name':'num',      'name2':'N° de tél'}
+                                
+                                #{'column_name':'precaite', 'name2':'Précarite'}
+                                
+                                #{'column_name':'etat',     'name2':'État'},
+                                ]
+                
+                
+
+                Activity_table="Bureau d'étude"
+
+                
+                for l in table_index :
+                    name = l['column_name']
+                    name2 = l['name2']
+                    re_page = False
+
+                        
+                    Activity_before = str(getattr(obj_by_id, name) )+ ""
+                    Activity_after = str(request.POST.get(f"table_{name}"))+ ""
+                    if Activity_before != Activity_after:
+                        if name == 'etat':
+                            re_page=True
+                        Activities_be.objects.create(Activity_id=generate_random_string(10),
+                                                        Activity_user=f"{user_.last_name} {user_.first_name}",
+                                                        Activity_user_email=user_.email,
+                                                        Activity_table=Activity_table,
+                                                        Activity_project_id=str(button_edit_data_on_table),
+                                                        Activity_name=name2,
+                                                        Activity_before=Activity_before,
+                                                        Activity_after=Activity_after,
+                                                        Activity_edit=True)
+                        
+                        
+                    setattr(obj_by_id, name, Activity_after)
+                    obj_by_id.save()
+                
+                   
+                        
+                    
+                    
+
+                
+                #if request.POST.get(f"table_etat") == "Envoye" and not obj_by_id.Envoye_time_checker :
+
+                    
+                    
+            except TableData001.DoesNotExist:
+                pass
+            
+            
+            column_name_types = ["VT", "auditV1", "auditV2", "auditV3", "auditFinal"]
+            for column_name_type in column_name_types:
+                files_uploaded = request.FILES.getlist(f"table_{column_name_type}[]")
+                if files_uploaded:
+
+                    file_uploaded_state = True
+                    
+                    l1=f"table_{column_name_type}[]"
+                    file_table = ModelByColumn(column_name_type)
+                    files_date_for_response=[]
+                    I_icon_class=""
+
+                    for file in request.FILES.getlist(l1, []):
+                        format_file=file.name.split(".")[1]
+                        if format_file not in ['jpg','png','jpeg','heic','doc','docx','xls','xlsm','pdf','pz2']:
+                            I_icon_class="ri-file-line"
+                            
+                        if format_file in ['jpg','png','jpeg','heic']:
+                            format_file="image"
+                            I_icon_class="bi bi-file-earmark-image"
+                        if format_file in ['doc','docx']:
+                            format_file="word"
+                            I_icon_class="bi bi-file-earmark-word"
+                        if format_file in ['xls','xlsm']:
+                            format_file="excel" 
+                            I_icon_class="ri-file-excel-2-line"
+                        if format_file in ['pdf']:
+                            format_file="pdf" 
+                            I_icon_class="bi bi-file-earmark-pdf"
+                        if format_file in ['pz2']:
+                            format_file="pz2" 
+                            I_icon_class="bi bi-file-ppt"
+                        
+                        
+                        
+                        if not file_table.objects.filter(file_id=button_edit_data_on_table, file_name=file.name,file_removed=False):
+                            Activities_be.objects.create(
+                                    Activity_id=generate_random_string(10),
+                                    Activity_user = f"{request.user.last_name} {request.user.first_name}",
+                                    Activity_user_email = request.user.email,
+                                    Activity_table=Activity_table,
+                                    Activity_project_id = button_edit_data_on_table,
+                                    Activity_before =f"le fichier {file.name}" ,
+                                    Activity_after = column_name_type ,
+                                    Activity_add=True
+                                )
+                            file_table.objects.create(
+                                    file_id = button_edit_data_on_table,
+                                    file_name = file.name,
+                                    file_save = file,
+                                    file_format =format_file
+                                )
+                            column_name_type_new = column_name_type
+                            if column_name_type == "VT":
+                                column_name_type_new="vt"
+                            files_date_for_response.append({'file_id':button_edit_data_on_table,
+                                                        'file_save_url':"file.name",
+                                                        'file_format':format_file,
+                                                        'file_name':file.name,
+                                                        'file_index':"",
+                                                        'column':column_name_type_new,
+                                                        'I_icon_class':I_icon_class,})
+
+                        
+
+
+            response_date={
+                're_page':re_page,
+                'cellId_new':button_edit_data_on_table,
+                'file_uploaded_state':file_uploaded_state,
+                'files_date_for_response':files_date_for_response,
+                #'message':'Form submitted successfully!',
+                #'data':'additional data if needed
+            }
+            
+            return JsonResponse(response_date)
+    return JsonResponse({'status': 'error'})
+
+
 @login_required
 def BE_Page(request):
     
     user_ = request.user
     bureau_d_etude = user_.com_name
     data = TableData001.objects.filter(be=True,bureau_d_etude=bureau_d_etude).order_by('-creation_time')
+    table_index=[{'index':1,'state':"A realiser"},
+                 {'index':2,'state':"Fini"},
+                 {'index':3,'state':"A modifier"}]
     
     col_count = data.count()
     # Get unique column names from the TableData model
@@ -1004,6 +1159,7 @@ def BE_Page(request):
     msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
     
     return render(request, 'html/BE_page.html', { 'data': data ,
+                                                 'table_index':table_index,
                                                   'col_count':col_count ,
                                                   'column_names': column_names,
                                                   'datafiles_VT': datafiles_VT ,

@@ -176,6 +176,12 @@ function submitForm__02(cellId, box, redirectPage,col){
     var button_edit_data_on_table = document.getElementsByName("button_edit_data_on_table")[0].value;
 
 
+    var table_firstname = document.getElementsByName("table_firstname_"+cellId)[0].value;
+    var table_lastname = document.getElementsByName("table_lastname_"+cellId)[0].value;
+    var table_address = document.getElementsByName("table_address_"+cellId)[0].value;
+    var table_num = document.getElementsByName("table_num_"+cellId)[0].value;
+    var table_email = document.getElementsByName("table_email_"+cellId)[0].value;
+    
     // Construct the names of the file input elements
     var table_VT_input_name = 'table_VT_' + cellId;
     var table_auditV1_input_name = 'table_auditV1_' + cellId;
@@ -192,11 +198,15 @@ function submitForm__02(cellId, box, redirectPage,col){
 
     var formData = new FormData();
 
+    formData.append('table_firstname', table_firstname);
+    formData.append('table_lastname', table_lastname);
+    formData.append('table_address', table_address);
+    formData.append('table_num', table_num);
+    formData.append('table_email', table_email);
+
     // Append other data to the FormData object
     formData.append('cellId_new', cellId);
-    formData.append('redirect_page', redirectPage);
-    formData.append('myid1', myid1);
-    formData.append('col_type1', col_type1);
+
     formData.append('button_edit_data_on_table', button_edit_data_on_table);
     formData.append('csrfmiddlewaretoken', csrfToken);
 
@@ -233,7 +243,7 @@ function submitForm__02(cellId, box, redirectPage,col){
     
 
     $.ajax({
-        url: "/table-view/",
+        url: "/table-view-3/",
         type: "POST",
         data:  formData,
         processData: false, // Important: tell jQuery not to process the data
