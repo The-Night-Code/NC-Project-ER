@@ -9,7 +9,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <link rel="shortcut icon" type="image/png" href="{% static 'image/icon.png' %}">
-  <title>Historique des fichiers</title>
+  <title>Corbeille</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -201,9 +201,9 @@
       {% endif %}
 
       <li class="nav-item">
-        <a class="nav-link " href="{% url 'files_history' %}">
-          <i class="bi bi-file-earmark-x"></i>
-          <span>Historique des fichiers</span>
+        <a class="nav-link " href="{% url 'corbeille' %}">
+          <i class="bi bi-trash"></i>
+          <span>Corbeille</span>
         </a>
       </li>
 

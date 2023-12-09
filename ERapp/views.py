@@ -1405,7 +1405,7 @@ def create_acc_be(request):
        
     
 @login_required
-def files_history(request):
+def corbeille(request):
     redirect_page="/historique_des_fichiers/"
     datafiles_VT = file_table_vt.objects.filter(file_removed=True)
     datafiles_AuditV1 = file_table_auditV1.objects.filter(file_removed=True)
@@ -1418,7 +1418,7 @@ def files_history(request):
                 {'index':3,'model':datafiles_AuditV2,'name':"auditV2"},
                 {'index':4,'model':datafiles_AuditV3,'name':"auditV3"},
                 {'index':5,'model':datafiles_AuditFinal,'name':"auditFinal"}]
-    return render(request, 'html/files_history.html',{'datafiles_VT': datafiles_VT ,
+    return render(request, 'html/corbeille.html',{'datafiles_VT': datafiles_VT ,
                                                   'datafiles_AuditV1': datafiles_AuditV1 ,
                                                   'datafiles_AuditV2': datafiles_AuditV2 ,
                                                   'datafiles_AuditV3': datafiles_AuditV3 ,
