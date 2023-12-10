@@ -253,9 +253,9 @@
                       <th rowspan=2 >Email</th>
                       <th rowspan=2 >Nom</th>
                       <th rowspan=2 >Prénom</th>
-                      <th class="table_Auditeur_state_th" colspan=7>Projet fini </th>
-                      <th class="table_Auditeur_state_th" colspan=7>Projet Envoyé</th>
-                      <th class="table_Auditeur_state_th" colspan=7>Modification Faite</th>
+                      <th class="table_Auditeur_state_th" colspan=7 >Projet fini </th>
+                      <th class="table_Auditeur_state_th" colspan=7 >Projet Envoyé</th>
+                      <th class="table_Auditeur_state_th" colspan=7 >Modification Faite</th>
                     </tr>
 
                     <tr class="table_Auditeur_state_tr">
@@ -292,29 +292,29 @@
                       <td><p>{{ D.email }}</p></td>
                       <td><p>{{ D.last_name}}</p></td>
                       <td><p>{{ D.first_name  }}</p></td>
-                      <td>{{ D.s_today_fini_time }}</td>
-                      <td>{{ D.s_yesterday_fini_time }}</td>
-                      <td>{{ D.s_this_week_fini_time }}</td>
-                      <td>{{ D.s_last_week_fini_time }}</td>
-                      <td>{{ D.s_this_month_fini_time }}</td>
-                      <td>{{ D.s_last_month_fini_time }}</td>
-                      <td>{{ D.s_this_year_fini_time }}</td>
+                      <td style="background:#e0f8e9;">{{ D.s_today_fini_time }}</td>
+                      <td style="background:#e0f8e9;">{{ D.s_yesterday_fini_time }}</td>
+                      <td style="background:#e0f8e9;">{{ D.s_this_week_fini_time }}</td>
+                      <td style="background:#e0f8e9;">{{ D.s_last_week_fini_time }}</td>
+                      <td style="background:#e0f8e9;">{{ D.s_this_month_fini_time }}</td>
+                      <td style="background:#e0f8e9;">{{ D.s_last_month_fini_time }}</td>
+                      <td style="background:#e0f8e9;">{{ D.s_this_year_fini_time }}</td>
 
-                      <td>{{ D.s_today_Envoye_time }}</td>
-                      <td>{{ D.s_yesterday_Envoye_time }}</td>
-                      <td>{{ D.s_this_week_Envoye_time }}</td>
-                      <td>{{ D.s_last_week_Envoye_time }}</td>
-                      <td>{{ D.s_this_month_Envoye_time }}</td>
-                      <td>{{ D.s_last_month_Envoye_time }}</td>
-                      <td>{{ D.s_this_year_Envoye_time }}</td>
+                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_today_Envoye_time }}</td>
+                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_yesterday_Envoye_time }}</td>
+                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_this_week_Envoye_time }}</td>
+                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_last_week_Envoye_time }}</td>
+                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_this_month_Envoye_time }}</td>
+                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_last_month_Envoye_time }}</td>
+                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_this_year_Envoye_time }}</td>
 
-                      <td>{{ D.s_today_MF_time }}</td>
-                      <td>{{ D.s_yesterday_MF_time }}</td>
-                      <td>{{ D.s_this_week_MF_time }}</td>
-                      <td>{{ D.s_last_week_MF_time }}</td>
-                      <td>{{ D.s_this_month_MF_time }}</td>
-                      <td>{{ D.s_last_month_MF_time }}</td>
-                      <td>{{ D.s_this_year_MF_time }}</td>
+                      <td style="background:#ffecdf;">{{ D.s_today_MF_time }}</td>
+                      <td style="background:#ffecdf;">{{ D.s_yesterday_MF_time }}</td>
+                      <td style="background:#ffecdf;">{{ D.s_this_week_MF_time }}</td>
+                      <td style="background:#ffecdf;">{{ D.s_last_week_MF_time }}</td>
+                      <td style="background:#ffecdf;">{{ D.s_this_month_MF_time }}</td>
+                      <td style="background:#ffecdf;">{{ D.s_last_month_MF_time }}</td>
+                      <td style="background:#ffecdf;">{{ D.s_this_year_MF_time }}</td>
 
                     </tr>
                     {% endfor %}
