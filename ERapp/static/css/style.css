@@ -405,6 +405,13 @@ chat box icoon
 
 /*  end Activities_audit */
 
+/* start table_Auditeur_state */
+.table_Auditeur_state_tr,
+.table_Auditeur_state_tr th{
+  text-align: center!important ;}
+/* end table_Auditeur_state */
+
+
 
 /*  Kizeo form start */
 .tab_button_2 ul li {padding:0px 5px;}
@@ -633,6 +640,27 @@ h6 {
   border: 1px solid rgba(4, 170, 109, 0.6);
   border-radius: 7px;}
 .file_removed_status_box h4{font-size: 17px;}
+
+/* -----------------------------------------------------------
+
+------------------------------------------------------------*/
+.confirmation_box_for_change_state{position: fixed; 
+  top:40%;
+  right:40%;
+  left:40%;
+
+  z-index: 1000;
+  
+  padding: 10px;
+  margin: auto;
+ }
+.confirmation_box_for_change_state #button_etat_a_modif{
+  margin-left: 40%;
+  margin-right: 40%;
+  right:40%;
+  left:40%;
+}
+
 
 /* Safari */
 @-webkit-keyframes spin {

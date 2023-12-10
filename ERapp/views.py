@@ -32,6 +32,7 @@ import os
 import random
 import string
 from datetime import  date,timedelta
+import calendar
 import pytz
 # Get the current time in the GMT+1 time zone
 tz_gmt_plus_1 = pytz.timezone('Europe/Berlin') 
@@ -748,8 +749,104 @@ def BE_audit_BY_A(request):
     list=audit_pages(request,redirect_page,html_page)
     return render(request, f"html/{html_page}", list)
     
+
+@login_required
+def Auditeur_state(request):  
     
-       
+
+    current_date = timezone.now().date()
+
+    # Find the first day of the current month
+    first_day_current_month = current_date.replace(day=1)
+
+    # Find the first day of the last month
+    first_day_last_month = (first_day_current_month - timedelta(days=1)).replace(day=1)
+
+    # Find the last day of the last month
+    last_day_last_month = first_day_current_month - timedelta(days=1)
+    
+    
+    
+    today = timezone.now().date()
+    yesterday = today - timedelta(days=1)
+    start_of_week = today - timedelta(days=today.weekday())
+    end_of_week = start_of_week + timedelta(days=6)
+    
+    end_of_last_week = today - timedelta(days=today.weekday() + 1)
+    start_of_last_week = end_of_last_week - timedelta(days=6)
+    
+    start_of_month = first_day_current_month # today.replace(day=1)
+    end_of_month = today #start_of_month.replace(day=1, month=start_of_month.month % 12 + 1) - timedelta(days=1)
+    
+    start_of_last_month = first_day_last_month # today.replace(day=1) - timedelta(days=1) 
+    end_of_last_month = last_day_last_month  # start_of_last_month.replace(day=1, month=start_of_last_month.month % 12 + 1) - timedelta(days=1)
+
+    start_of_year = today.replace(month=1, day=1)
+    end_of_year = start_of_year.replace(month=12, day=31)
+
+    data=[]
+    for audi in USER.objects.all():
+        audi_role = str(audi.role)
+        if "auditeur" in audi_role : #auditeur
+            #auditeur+=[{'email':audi.email,'first_name':audi.first_name,'last_name':audi.last_name}]
+            
+            s_today_fini_time = TableData001.objects.filter(fini_time=today,fini_time_checker=True,fini_by_user=audi.email).count()
+            s_yesterday_fini_time = TableData001.objects.filter(fini_time=yesterday,fini_time_checker=True,fini_by_user=audi.email).count()
+            s_this_week_fini_time = TableData001.objects.filter(fini_time__range=[start_of_week, end_of_week],fini_time_checker=True,fini_by_user=audi.email).count()
+            s_last_week_fini_time = TableData001.objects.filter(fini_time__range=[start_of_last_week, end_of_last_week],fini_time_checker=True,fini_by_user=audi.email).count()
+            s_this_month_fini_time = TableData001.objects.filter(fini_time__range=[start_of_month, end_of_month],fini_time_checker=True,fini_by_user=audi.email).count()
+            s_last_month_fini_time = TableData001.objects.filter(fini_time__range=[start_of_last_month, end_of_last_month],fini_time_checker=True,fini_by_user=audi.email).count()
+            s_this_year_fini_time = TableData001.objects.filter(fini_time__range=[start_of_year, end_of_year],fini_time_checker=True,fini_by_user=audi.email).count()
+            
+            s_today_Envoye_time = TableData001.objects.filter(Envoye_time=today,Envoye_time_checker=True,Envoye_by_user=audi.email).count()
+            s_yesterday_Envoye_time = TableData001.objects.filter(Envoye_time=yesterday,Envoye_time_checker=True,Envoye_by_user=audi.email).count()
+            s_this_week_Envoye_time = TableData001.objects.filter(Envoye_time__range=[start_of_week, end_of_week],Envoye_time_checker=True,Envoye_by_user=audi.email).count()
+            s_last_week_Envoye_time = TableData001.objects.filter(Envoye_time__range=[start_of_last_week, end_of_last_week],Envoye_time_checker=True,Envoye_by_user=audi.email).count()
+            s_this_month_Envoye_time = TableData001.objects.filter(Envoye_time__range=[start_of_month, end_of_month],Envoye_time_checker=True,Envoye_by_user=audi.email).count()
+            s_last_month_Envoye_time = TableData001.objects.filter(Envoye_time__range=[start_of_last_month, end_of_last_month],Envoye_time_checker=True,Envoye_by_user=audi.email).count()
+            s_this_year_Envoye_time = TableData001.objects.filter(Envoye_time__range=[start_of_year, end_of_year],Envoye_time_checker=True,Envoye_by_user=audi.email).count()
+            
+            s_today_MF_time = TableData001.objects.filter(Modification_Faite_time=today,Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
+            s_yesterday_MF_time = TableData001.objects.filter(Modification_Faite_time=yesterday,Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
+            s_this_week_MF_time = TableData001.objects.filter(Modification_Faite_time__range=[start_of_week, end_of_week],Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
+            s_last_week_MF_time = TableData001.objects.filter(Modification_Faite_time__range=[start_of_last_week, end_of_last_week],Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
+            s_this_month_MF_time = TableData001.objects.filter(Modification_Faite_time__range=[start_of_month, end_of_month],Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
+            s_last_month_MF_time = TableData001.objects.filter(Modification_Faite_time__range=[start_of_last_month, end_of_last_month],Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
+            s_this_year_MF_time = TableData001.objects.filter(Modification_Faite_time__range=[start_of_year, end_of_year],Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
+            
+            data.append({'email':audi.email,'first_name':audi.first_name,'last_name':audi.last_name,
+                        
+                        's_today_fini_time':s_today_fini_time,
+                        's_yesterday_fini_time':s_yesterday_fini_time,
+                        's_this_week_fini_time':s_this_week_fini_time,
+                        's_last_week_fini_time':s_last_week_fini_time,
+                        's_this_month_fini_time':s_this_month_fini_time,
+                        's_last_month_fini_time':s_last_month_fini_time,
+                        's_this_year_fini_time':s_this_year_fini_time,
+                        
+                        's_today_Envoye_time':s_today_Envoye_time,
+                        's_yesterday_Envoye_time':s_yesterday_Envoye_time,
+                        's_this_week_Envoye_time':s_this_week_Envoye_time,
+                        's_last_week_Envoye_time':s_last_week_Envoye_time,
+                        's_this_month_Envoye_time':s_this_month_Envoye_time,
+                        's_last_month_Envoye_time':s_last_month_Envoye_time,
+                        's_this_year_Envoye_time':s_this_year_Envoye_time,
+                        
+                        's_today_MF_time':s_today_MF_time,
+                        's_yesterday_MF_time':s_yesterday_MF_time,
+                        's_this_week_MF_time':s_this_week_MF_time,
+                        's_last_week_MF_time':s_last_week_MF_time,
+                        's_this_month_MF_time':s_this_month_MF_time,
+                        's_last_month_MF_time':s_last_month_MF_time,
+                        's_this_year_MF_time':s_this_year_MF_time,
+                        })
+
+
+            
+    
+    
+    return render(request, 'html/Auditeur_state.html',{'data':data} )
+
 
 
 @login_required
@@ -946,23 +1043,24 @@ def agent_immo_f(request):
 
 @login_required
 def BE_home_page(request):
+    user_=request.user
     data = TableData001.objects.all()
     activities_audit = Activities_be.objects.order_by("-Activity_date")[:6]
     today = timezone.now()
     first_day_of_year = date(today.year, 1, 1)
     first_day_of_month = date(today.year, today.month, 1)
 
-    client_count_added_today = TableData001.objects.filter(creation_time__date=today).count()
-    client_count_added_month = TableData001.objects.filter(creation_time__range=(first_day_of_month, timezone.now())).count()
-    client_count_added_year= TableData001.objects.filter(creation_time__range=(first_day_of_year, timezone.now())).count()
+    client_count_added_today = TableData001.objects.filter(creation_time__date=today,bureau_d_etude=user_.com_name).count()
+    client_count_added_month = TableData001.objects.filter(creation_time__range=(first_day_of_month, timezone.now()),bureau_d_etude=user_.com_name).count()
+    client_count_added_year= TableData001.objects.filter(creation_time__range=(first_day_of_year, timezone.now()),bureau_d_etude=user_.com_name).count()
 
-    client_count_envoye_today = TableData001.objects.filter(Envoye_time__date=today).count()
-    client_count_envoye_month = TableData001.objects.filter(Envoye_time__range=(first_day_of_month, timezone.now())).count()
-    client_count_envoye_year= TableData001.objects.filter(Envoye_time__range=(first_day_of_year, timezone.now())).count()
+    client_count_envoye_today = TableData001.objects.filter(Envoye_time__date=today,bureau_d_etude=user_.com_name).count()
+    client_count_envoye_month = TableData001.objects.filter(Envoye_time__range=(first_day_of_month, timezone.now()),bureau_d_etude=user_.com_name).count()
+    client_count_envoye_year= TableData001.objects.filter(Envoye_time__range=(first_day_of_year, timezone.now()),bureau_d_etude=user_.com_name).count()
     
-    client_count_fini_today = TableData001.objects.filter(fini_time__date=today).count()
-    client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month, timezone.now())).count()
-    client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, timezone.now())).count()
+    client_count_fini_today = TableData001.objects.filter(fini_time__date=today,bureau_d_etude=user_.com_name).count()
+    client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month, timezone.now()),bureau_d_etude=user_.com_name).count()
+    client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, timezone.now()),bureau_d_etude=user_.com_name).count()
 
 
 
@@ -980,6 +1078,7 @@ def BE_home_page(request):
                                                         'client_count_fini_month':client_count_fini_month,
                                                         'client_count_fini_year':client_count_fini_year})
 
+@login_required
 def table_view_3(request):
     #Activity_id,Activity_user,Activity_table,Activity_in,Activity_before,Activity_after
     user_=request.user
@@ -1130,7 +1229,49 @@ def table_view_3(request):
             return JsonResponse(response_date)
     return JsonResponse({'status': 'error'})
 
+@login_required
+def CBFCS(request):
+    user_=request.user
+    
+    if request.method == 'POST':
+        cell_id = request.POST.get("param0")
+        try:
+                obj_by_id = get_object_or_404(TableData001,cell_id=str(cell_id))  # TableData001.objects.get(cell_id=str(button_edit_data_on_table))
 
+
+                name = "etat"
+                name2 = "État"
+                re_page = False
+
+                    
+                Activity_before = "Fini"
+                Activity_after = "A modifier"
+                if Activity_before != Activity_after:
+
+                    re_page=True
+                    Activities_be.objects.create(Activity_id=generate_random_string(10),
+                                                    Activity_user=f"{user_.last_name} {user_.first_name}",
+                                                    Activity_user_email=user_.email,
+                                                    Activity_project_id=str(cell_id),
+                                                    Activity_name=name2,
+                                                    Activity_before=Activity_before,
+                                                    Activity_after=Activity_after,
+                                                    Activity_edit=True)
+                    
+                    
+                setattr(obj_by_id, name, Activity_after)
+                obj_by_id.save()
+                
+                response_date={
+                        're_page':re_page,
+                    }
+                    
+        except:
+            pass
+        
+            
+        return JsonResponse(response_date)
+    return JsonResponse({'status': 'error'})
 @login_required
 def BE_Page(request):
     
@@ -1147,13 +1288,9 @@ def BE_Page(request):
     datafiles_VT = file_table_vt.objects.filter(file_removed=False)
     countfiles_VT = file_table_vt.objects.filter(file_removed=False).count()
     datafiles_AuditV1 = file_table_auditV1.objects.filter(file_removed=False)
-    countfiles_AuditV1 = file_table_auditV1.objects.filter(file_removed=False).count()
     datafiles_AuditV2 = file_table_auditV2.objects.filter(file_removed=False)
-    countfiles_AuditV2 = file_table_auditV2.objects.filter(file_removed=False).count()
     datafiles_AuditV3 = file_table_auditV3.objects.filter(file_removed=False)
-    countfiles_AuditV3 = file_table_auditV3.objects.filter(file_removed=False).count()
     datafiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False)
-    countfiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False).count()
     message_box_01 = message_box_1.objects.all()
     
     msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
@@ -1165,13 +1302,9 @@ def BE_Page(request):
                                                   'datafiles_VT': datafiles_VT ,
                                                   'countfiles_VT': countfiles_VT ,
                                                   'datafiles_AuditV1': datafiles_AuditV1 ,
-                                                  'countfiles_AuditV1': countfiles_AuditV1,
                                                   'datafiles_AuditV2': datafiles_AuditV2 ,
-                                                  'countfiles_AuditV2': countfiles_AuditV2,
                                                   'datafiles_AuditV3': datafiles_AuditV3 ,
-                                                  'countfiles_AuditV3': countfiles_AuditV3,
                                                   'datafiles_AuditFinal':datafiles_AuditFinal,
-                                                  'countfiles_AuditFinal': countfiles_AuditFinal,
                                                   'message_box_1':message_box_01,
                                                   'redirect_next_page':redirect_page_be,
                                                   'msg_box_tagged':msg_box_tagged,})

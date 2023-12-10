@@ -532,60 +532,6 @@ selectElement.addEventListener('change', updateBadgefoot);
 
 
 
-function sortTable12(table_id, n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById(table_id);
-    switching = true;
-    // Set the sorting direction to ascending:
-    dir = "asc"; 
-    /* Make a loop that will continue until
-    no switching has been done: */
-    while (switching) {
-      // Start by saying: no switching is done:
-      switching = false;
-      rows = table.rows;
-      /* Loop through all table rows (except the
-      first, which contains table headers): */
-      for (i = 1; i < (rows.length - 1); i++) {
-        // Start by saying there should be no switching:
-        shouldSwitch = false;
-        /* Get the two elements you want to compare,
-        one from the current row and one from the next: */
-        x = rows[i].getElementsByTagName("TD")[n].textContent;
-        y = rows[i + 1].getElementsByTagName("TD")[n].textContent;
-        /* Check if the two rows should switch place,
-        based on the direction, asc or desc: */
-        if (dir == "asc") {
-          if (x.toLowerCase() > y.toLowerCase()) {
-            // If so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        } else if (dir == "desc") {
-          if (x.toLowerCase() < y.toLowerCase()) {
-            // If so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        }
-      }
-      if (shouldSwitch) {
-        /* If a switch has been marked, make the switch
-        and mark that a switch has been done: */
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        switching = true;
-        // Each time a switch is done, increase this count by 1:
-        switchcount++;
-      } else {
-        /* If no switching has been done AND the direction is "asc",
-        set the direction to "desc" and run the while loop again. */
-        if (switchcount == 0 && dir == "asc") {
-          dir = "desc";
-          switching = true;
-        }
-      }
-    }
-  }
 
 function sortTable(table_id,n,Date_Time_TD) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -698,3 +644,44 @@ function sortTable(table_id,n,Date_Time_TD) {
 }
 
 
+
+
+// button  to change project from state{fini > a modifier}
+function button_etat_a_modif(id){
+    var csrfToken = $("[name=csrfmiddlewaretoken]").val()
+    $.ajax({
+        url: "/CBFCS/",
+        type: "POST",
+        data: {
+            param0: id,
+            csrfmiddlewaretoken:csrfToken
+        },
+        success: function (response) {
+            if(response.re_page){
+                location.reload();
+            }
+
+        },
+    });
+    
+}
+function etat_a_modif(id) {
+    let text = "Appuyez sur OK pour confirmer les modifications";
+    //if (confirm(text) == true) {
+        var confirmation_box_for_change_state =`<div class="confirmation_box_for_change_state" id="CBFCS_${id}">
+        <div class="alert alert-secondary alert-dismissible fade show" role="alert" style="margin:auto;">
+        <h4 class="alert-heading">Confirmer les modifications</h4>
+        <p>Appuyez sur OUI pour confirmer les modifications</p>
+        <hr>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" id="button_etat_a_modif" onclick="button_etat_a_modif('${id}')"">OUI</button>
+        </div>
+    </div>`;
+
+
+    $("body").prepend(confirmation_box_for_change_state);
+    //} 
+    
+
+
+  }

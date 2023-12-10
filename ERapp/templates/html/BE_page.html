@@ -227,6 +227,9 @@
                         <th>Commentaire</th>
                         <th onclick="sortTable('tableDATA_1',18 , 1)">Date de création</th>
                         <th onclick="sortTable('tableDATA_1',19)">id</th> 
+                        {% if k.state == "Fini"  %}
+                          <th></th> 
+                        {% endif %}
                       </thead>
                       <tbody id="myTable_{{k.index}}">
                         {% for item in data %}
@@ -800,6 +803,10 @@
                               <td class="td_p_dateTime_cell2"><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
                               <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
 
+                              {% if k.state == "Fini"  %}
+                                <td><button  class="button_table_data" type="button" onclick="etat_a_modif('{{ item.cell_id }}')"  ><i class="ri-checkbox-circle-fill fa-2x color_green "></i></button></td> 
+                              {% endif %}
+                              
 
                             </tr>
 
