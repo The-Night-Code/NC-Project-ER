@@ -121,7 +121,6 @@ def SignupU(request):
         
         per = True
         
-        
         if str(pw1) == str(pw2):
             pm=True
             for i in str(pw1):
@@ -132,7 +131,6 @@ def SignupU(request):
                 if i in "0123456789":
                     pn = True
 
-        
         if len(str(pw1)) >= 8 :
             pl=True
             
@@ -451,6 +449,11 @@ def table_view_2(request):
                         if Activity_before != Activity_after:
                             if name == 'etat':
                                 re_page=True
+                                if (Activity_after == "Fini" or Activity_after == "fini") and getattr(obj_by_id, 'Modification_Faite_time_checker_2') is True:
+                                    setattr(obj_by_id, 'Modification_Faite_by_user', user_.email)
+                                    setattr(obj_by_id, 'Modification_Faite_time_checker_2', False)
+                                    setattr(obj_by_id, 'Modification_Faite_time', timezone.now())
+                                    
                             Activities_audit.objects.create(Activity_id=generate_random_string(10),
                                                             Activity_user=f"{user_.last_name} {user_.first_name}",
                                                             Activity_user_email=user_.email,
@@ -990,29 +993,31 @@ def agent_immo(request):
                                                   'message_box_1':message_box_01})
 @login_required
 def add_files_to_project_1(request,project_id,file_input_name,model_name):
-    file_table = ModelByColumn(model_name)
-    for file in request.FILES.getlist(file_input_name):
-        format_file=file.name.split(".")[1]
-        if format_file in ['jpg','png','jpeg','heic']:
-            format_file="image"
-        if format_file in ['doc','docx']:
-            format_file="word"
-        if format_file in ['xls','xlsm']:
-            format_file="excel" 
-        if not file_table.objects.filter(file_id=project_id, file_format=format_file,file_name=file.name):
-            file_table.objects.create(
-                    file_id = project_id,
-                    file_name = file.name,
-                    file_save = file,
-                    file_format =format_file
-                )
+    user_ =request.user
+    if "ai" in user_.role:
+        file_table = ModelByColumn(model_name)
+        for file in request.FILES.getlist(file_input_name):
+            format_file=file.name.split(".")[1]
+            if format_file in ['jpg','png','jpeg','heic']:
+                format_file="image"
+            if format_file in ['doc','docx']:
+                format_file="word"
+            if format_file in ['xls','xlsm']:
+                format_file="excel" 
+            if not file_table.objects.filter(file_id=project_id, file_format=format_file,file_name=file.name):
+                file_table.objects.create(
+                        file_id = project_id,
+                        file_name = file.name,
+                        file_save = file,
+                        file_format =format_file
+                    )
 
 
 @login_required
 def agent_immo_f(request):
     acc_state=False
     user_ = request.user
-    if "VT" in user_.role:
+    if "ai" in user_.role:
         
         if request.method == 'POST':
             
@@ -1090,71 +1095,60 @@ def table_view_3(request):
     
     if request.method == 'POST':
         #return redirect("/Accueil/")
-
+        if "be" in user_.role:
         
-        file_uploaded_state=False
-        files_date_for_response=[]
-        button_edit_data_on_table=request.POST.get("cellId_new")
+            file_uploaded_state=False
+            files_date_for_response=[]
+            button_edit_data_on_table=request.POST.get("cellId_new")
 
-        if button_edit_data_on_table:
+            if button_edit_data_on_table:
 
-            try:
-                obj_by_id = get_object_or_404(TableData001,cell_id=str(button_edit_data_on_table))  # TableData001.objects.get(cell_id=str(button_edit_data_on_table))
+                try:
+                    obj_by_id = get_object_or_404(TableData001,cell_id=str(button_edit_data_on_table))  # TableData001.objects.get(cell_id=str(button_edit_data_on_table))
 
-                table_index=[   {'column_name':'firstname','name2':'Prénom'},
-                                {'column_name':'lastname', 'name2':'Nom'},
-                                {'column_name':'address',  'name2':'Adresse'},
-                                {'column_name':'email',    'name2':'Email'},
-                                {'column_name':'num',      'name2':'N° de tél'}
-                                
-                                #{'column_name':'precaite', 'name2':'Précarite'}
-                                
-                                #{'column_name':'etat',     'name2':'État'},
-                                ]
-                
-                
-
-                Activity_table="Bureau d'étude"
-
-                
-                for l in table_index :
-                    name = l['column_name']
-                    name2 = l['name2']
-                    re_page = False
-
-                        
-                    Activity_before = str(getattr(obj_by_id, name) )+ ""
-                    Activity_after = str(request.POST.get(f"table_{name}"))+ ""
-                    if Activity_before != Activity_after:
-                        if name == 'etat':
-                            re_page=True
-                        Activities_be.objects.create(Activity_id=generate_random_string(10),
-                                                        Activity_user=f"{user_.last_name} {user_.first_name}",
-                                                        Activity_user_email=user_.email,
-                                                        Activity_table=Activity_table,
-                                                        Activity_project_id=str(button_edit_data_on_table),
-                                                        Activity_name=name2,
-                                                        Activity_before=Activity_before,
-                                                        Activity_after=Activity_after,
-                                                        Activity_edit=True)
-                        
-                        
-                    setattr(obj_by_id, name, Activity_after)
-                    obj_by_id.save()
-                
-                   
-                        
+                    table_index=[   {'column_name':'firstname','name2':'Prénom'},
+                                    {'column_name':'lastname', 'name2':'Nom'},
+                                    {'column_name':'address',  'name2':'Adresse'},
+                                    {'column_name':'email',    'name2':'Email'},
+                                    {'column_name':'num',      'name2':'N° de tél'}
+                                    
+                                    #{'column_name':'precaite', 'name2':'Précarite'}
+                                    
+                                    #{'column_name':'etat',     'name2':'État'},
+                                    ]
                     
                     
 
-                
-                #if request.POST.get(f"table_etat") == "Envoye" and not obj_by_id.Envoye_time_checker :
+                    Activity_table="Bureau d'étude"
+                    
+                    for l in table_index :
+                        name = l['column_name']
+                        name2 = l['name2']
+                        re_page = False
 
+                        Activity_before = str(getattr(obj_by_id, name) )+ ""
+                        Activity_after = str(request.POST.get(f"table_{name}"))+ ""
+                        if Activity_before != Activity_after:
+                            if name == 'etat':
+                                re_page=True
+                            Activities_be.objects.create(Activity_id=generate_random_string(10),
+                                                            Activity_user=f"{user_.last_name} {user_.first_name}",
+                                                            Activity_user_email=user_.email,
+                                                            Activity_table=Activity_table,
+                                                            Activity_project_id=str(button_edit_data_on_table),
+                                                            Activity_name=name2,
+                                                            Activity_before=Activity_before,
+                                                            Activity_after=Activity_after,
+                                                            Activity_edit=True)
+                            
+                        setattr(obj_by_id, name, Activity_after)
+                        obj_by_id.save()
                     
-                    
-            except TableData001.DoesNotExist:
-                pass
-            
+                    #if request.POST.get(f"table_etat") == "Envoye" and not obj_by_id.Envoye_time_checker :
+
+                except TableData001.DoesNotExist:
+                    pass
+                
             
             column_name_types = ["VT", "auditV1", "auditV2", "auditV3", "auditFinal"]
             for column_name_type in column_name_types:
@@ -1239,43 +1233,46 @@ def CBFCS(request):
     user_=request.user
     
     if request.method == 'POST':
-        cell_id = request.POST.get("param0")
-        try:
-                obj_by_id = get_object_or_404(TableData001,cell_id=str(cell_id))  # TableData001.objects.get(cell_id=str(button_edit_data_on_table))
+        if "be" in user_.role:
+            cell_id = request.POST.get("param0")
+            try:
+                    obj_by_id = get_object_or_404(TableData001,cell_id=str(cell_id))  # TableData001.objects.get(cell_id=str(button_edit_data_on_table))
 
 
-                name = "etat"
-                name2 = "État"
-                re_page = False
+                    name = "etat"
+                    name2 = "État"
+                    re_page = False
 
-                    
-                Activity_before = "Fini"
-                Activity_after = "A modifier"
-                if Activity_before != Activity_after:
+                        
+                    Activity_before = "Fini"
+                    Activity_after = "A modifier"
+                    if Activity_before != Activity_after:
 
-                    re_page=True
-                    Activities_be.objects.create(Activity_id=generate_random_string(10),
-                                                    Activity_user=f"{user_.last_name} {user_.first_name}",
-                                                    Activity_user_email=user_.email,
-                                                    Activity_project_id=str(cell_id),
-                                                    Activity_name=name2,
-                                                    Activity_before=Activity_before,
-                                                    Activity_after=Activity_after,
-                                                    Activity_edit=True)
+                        re_page=True
+                        Activities_be.objects.create(Activity_id=generate_random_string(10),
+                                                        Activity_user=f"{user_.last_name} {user_.first_name}",
+                                                        Activity_user_email=user_.email,
+                                                        Activity_project_id=str(cell_id),
+                                                        Activity_name=name2,
+                                                        Activity_before=Activity_before,
+                                                        Activity_after=Activity_after,
+                                                        Activity_edit=True)
+                        
+                        
+                    setattr(obj_by_id, name, Activity_after)
+                    setattr(obj_by_id, 'Modification_Faite_time_checker', True)
+                    setattr(obj_by_id, 'Modification_Faite_time_checker_2', True)
+                    obj_by_id.save()
                     
-                    
-                setattr(obj_by_id, name, Activity_after)
-                obj_by_id.save()
-                
-                response_date={
-                        're_page':re_page,
-                    }
-                    
-        except:
-            pass
-        
+                    response_date={
+                            're_page':re_page,
+                        }
+                        
+            except:
+                pass
             
-        return JsonResponse(response_date)
+                
+            return JsonResponse(response_date)
     return JsonResponse({'status': 'error'})
 @login_required
 def BE_Page(request):
@@ -1319,7 +1316,6 @@ def BE_Page_f(request):
     user_role= user_.role
     if  "be" in user_role:
         
-        change_password_state = False
         if request.method == 'POST' :
             cell_id =generate_random_string(10)
             while TableData001.objects.filter(cell_id=cell_id).exists():
@@ -1398,71 +1394,67 @@ def VT_Page_edit_state(request):
 def create_acc_ai(request):
     acc_state = False
     user_=request.user
-    if request.method == 'POST': 
-        if request.POST.get('add_com') == "submit":
-            nom = request.POST.get('nom')
-            AI_or_AGENT_id = generate_random_string(10)
-            while AI_or_AGENT.objects.filter(AI_or_AGENT_id = AI_or_AGENT_id):
+    if "a1" in user_.role:
+        if request.method == 'POST': 
+            if request.POST.get('add_com') == "submit":
+                nom = request.POST.get('nom')
                 AI_or_AGENT_id = generate_random_string(10)
-            AI_or_AGENT.objects.create(AI_or_AGENT_id=AI_or_AGENT_id,
-                                       comp_name=nom,
-                                       ai=True)
-            Activities_audit.objects.create(
-                    Activity_id=generate_random_string(10),
-                    Activity_user = f"{user_.last_name} {user_.first_name}",
-                    Activity_user_email = user_.email,
-                    Activity_before = f"un agent immobilier ( {nom} )",
-                    Activity_add_2=True
-                )
-            return redirect("/create_account_for_ai/")
-            
-        if request.POST.get('create_acc_button') == "submit":
-            
-            firstname = request.POST.get('firstname')
-            lastname = request.POST.get('lastname')
-            email = request.POST.get('email')
-            Num = int(request.POST.get('num'))
-            Agent = request.POST.get('agent')
-            acc_for = "; ai ;"
-            user_id = generate_random_string(10)
-            password = generate_random_string(12)
-            profile_pic="uploads/default_user_avatar.png"
-            while USER.objects.filter(user_id__contains = user_id):
-                user_id = generate_random_string(10)
-                
-            user_checker=USER.objects.filter(email__icontains = email).exists()
-            if not user_checker:
-                
-                subject = 'Votre compte a été créé avec succès'
-                message = f'Email: {email} Mot de passe: {password} '
-                from_email = 'Night'
-                recipient_list = [email]
-                send_mail(subject, message, from_email, recipient_list) 
-                
-                USER.objects.create_user(first_name=firstname,
-                                    last_name=lastname,
-                                    email=email,
-                                    num=Num,
-                                    role=acc_for, 
-                                    password=password,
-                                    ai=True,
-                                    com_name=Agent,
-                                    profile_pic=profile_pic)
-                acc_state = True
+                while AI_or_AGENT.objects.filter(AI_or_AGENT_id = AI_or_AGENT_id):
+                    AI_or_AGENT_id = generate_random_string(10)
+                AI_or_AGENT.objects.create(AI_or_AGENT_id=AI_or_AGENT_id,
+                                        comp_name=nom,
+                                        ai=True)
                 Activities_audit.objects.create(
-                    Activity_id=generate_random_string(10),
-                    Activity_user = f"{user_.last_name} {user_.first_name}",
-                    Activity_user_email = user_.email,
-                    Activity_before = f"un utilisateur ' Agent immobilier ' ( {email} - {lastname} {firstname} )",
-                    Activity_add_2=True
-                )
-            
-
+                        Activity_id=generate_random_string(10),
+                        Activity_user = f"{user_.last_name} {user_.first_name}",
+                        Activity_user_email = user_.email,
+                        Activity_before = f"un agent immobilier ( {nom} )",
+                        Activity_add_2=True
+                    )
+                return redirect("/create_account_for_ai/")
+                
+            if request.POST.get('create_acc_button') == "submit":
+                
+                firstname = request.POST.get('firstname')
+                lastname = request.POST.get('lastname')
+                email = request.POST.get('email')
+                Num = int(request.POST.get('num'))
+                Agent = request.POST.get('agent')
+                acc_for = "; ai ;"
+                user_id = generate_random_string(10)
+                password = generate_random_string(12)
+                profile_pic="uploads/default_user_avatar.png"
+                while USER.objects.filter(user_id__contains = user_id):
+                    user_id = generate_random_string(10)
                     
+                user_checker=USER.objects.filter(email__icontains = email).exists()
+                if not user_checker:
+                    
+                    subject = 'Votre compte a été créé avec succès'
+                    message = f'Email: {email} Mot de passe: {password} '
+                    from_email = 'Night'
+                    recipient_list = [email]
+                    send_mail(subject, message, from_email, recipient_list) 
+                    
+                    USER.objects.create_user(first_name=firstname,
+                                        last_name=lastname,
+                                        email=email,
+                                        num=Num,
+                                        role=acc_for, 
+                                        password=password,
+                                        ai=True,
+                                        com_name=Agent,
+                                        profile_pic=profile_pic)
+                    acc_state = True
+                    Activities_audit.objects.create(
+                        Activity_id=generate_random_string(10),
+                        Activity_user = f"{user_.last_name} {user_.first_name}",
+                        Activity_user_email = user_.email,
+                        Activity_before = f"un utilisateur ' Agent immobilier ' ( {email} - {lastname} {firstname} )",
+                        Activity_add_2=True
+                    )
                 
-                
-                
-                           
+                  
     comp = AI_or_AGENT.objects.all()
     
     return render(request, 'html/create_acc_ai.html',{'acc_state':acc_state,
@@ -1472,75 +1464,70 @@ def create_acc_ai(request):
 def create_acc_be(request):
     acc_state = False
     user_=request.user
-    if request.method == 'POST': 
-        if request.POST.get('add_com') == "submit":
-            nom = request.POST.get('nom')
-            AI_or_AGENT_id = generate_random_string(10)
-            while AI_or_AGENT.objects.filter(AI_or_AGENT_id = AI_or_AGENT_id):
+    if "a1" in user_.role:
+        if request.method == 'POST': 
+            if request.POST.get('add_com') == "submit":
+                nom = request.POST.get('nom')
                 AI_or_AGENT_id = generate_random_string(10)
-            AI_or_AGENT.objects.create(AI_or_AGENT_id=AI_or_AGENT_id,
-                                       comp_name=nom,
-                                       be=True)
-            Activities_audit.objects.create(
-                    Activity_id=generate_random_string(10),
-                    Activity_user = f"{user_.last_name} {user_.first_name}",
-                    Activity_user_email = user_.email,
-                    Activity_before = f"un bureau d'études ( {nom} )",
-                    Activity_add_2=True
-                )
-            return redirect("/create_account_for_be/")
-        
-        if request.POST.get('create_acc_button') == "submit":
+                while AI_or_AGENT.objects.filter(AI_or_AGENT_id = AI_or_AGENT_id):
+                    AI_or_AGENT_id = generate_random_string(10)
+                AI_or_AGENT.objects.create(AI_or_AGENT_id=AI_or_AGENT_id,
+                                        comp_name=nom,
+                                        be=True)
+                Activities_audit.objects.create(
+                        Activity_id=generate_random_string(10),
+                        Activity_user = f"{user_.last_name} {user_.first_name}",
+                        Activity_user_email = user_.email,
+                        Activity_before = f"un bureau d'études ( {nom} )",
+                        Activity_add_2=True
+                    )
+                return redirect("/create_account_for_be/")
             
-            firstname = request.POST.get('firstname')
-            lastname = request.POST.get('lastname')
-            email = request.POST.get('email')
-            Num = int(request.POST.get('num'))
-            Agent = request.POST.get('agent')
-            acc_for = "; be ;"
-            
-            Bureau_etude = request.POST.get('Bureau_etude')
-            
-            user_id = generate_random_string(10)
-            
-            password = generate_random_string(12)
-            profile_pic="uploads/default_user_avatar.png"
-            while USER.objects.filter(user_id__contains = user_id):
+            if request.POST.get('create_acc_button') == "submit":
+                
+                firstname = request.POST.get('firstname')
+                lastname = request.POST.get('lastname')
+                email = request.POST.get('email')
+                Num = int(request.POST.get('num'))
+                Agent = request.POST.get('agent')
+                acc_for = "; be ;"
+                
+                Bureau_etude = request.POST.get('Bureau_etude')
+                
                 user_id = generate_random_string(10)
                 
-            user_checker=USER.objects.filter(email__icontains = email).exists()
-            if not user_checker:
-                
-                subject = 'Votre compte a été créé avec succès'
-                message = f'Email: {email}  ||   Mot de passe: {password} '
-                from_email = f'{FROM_EMAIL}'
-                recipient_list = [email]
-                send_mail(subject, message, from_email, recipient_list) 
-                
-                USER.objects.create_user(first_name=firstname,
-                                    last_name=lastname,
-                                    email=email,
-                                    num=Num,
-                                    role=acc_for, 
-                                    password=password,
-                                    be=True,
-                                    com_name=Bureau_etude,
-                                    profile_pic=profile_pic)
-                acc_state = True
-                Activities_audit.objects.create(
-                    Activity_id=generate_random_string(10),
-                    Activity_user = f"{user_.last_name} {user_.first_name}",
-                    Activity_user_email = user_.email,
-                    Activity_before = f"un utilisateur ' Bureau d'études ' ( {email} - {lastname} {firstname} )",
-                    Activity_add_2=True
-                )
-
+                password = generate_random_string(12)
+                profile_pic="uploads/default_user_avatar.png"
+                while USER.objects.filter(user_id__contains = user_id):
+                    user_id = generate_random_string(10)
                     
-                
-                
-                
-                           
-        
+                user_checker=USER.objects.filter(email__icontains = email).exists()
+                if not user_checker:
+                    
+                    subject = 'Votre compte a été créé avec succès'
+                    message = f'Email: {email}  ||   Mot de passe: {password} '
+                    from_email = f'{FROM_EMAIL}'
+                    recipient_list = [email]
+                    send_mail(subject, message, from_email, recipient_list) 
+                    
+                    USER.objects.create_user(first_name=firstname,
+                                        last_name=lastname,
+                                        email=email,
+                                        num=Num,
+                                        role=acc_for, 
+                                        password=password,
+                                        be=True,
+                                        com_name=Bureau_etude,
+                                        profile_pic=profile_pic)
+                    acc_state = True
+                    Activities_audit.objects.create(
+                        Activity_id=generate_random_string(10),
+                        Activity_user = f"{user_.last_name} {user_.first_name}",
+                        Activity_user_email = user_.email,
+                        Activity_before = f"un utilisateur ' Bureau d'études ' ( {email} - {lastname} {firstname} )",
+                        Activity_add_2=True
+                    )
+
 
     comp = AI_or_AGENT.objects.all()
     return render(request, 'html/create_acc_be.html',{'acc_state':acc_state,
@@ -1550,69 +1537,68 @@ def create_acc_be(request):
 def create_acc_auditeur(request):
     acc_state = False
     user_=request.user
-    if request.method == 'POST': 
-        if request.POST.get('add_com') == "submit":
-            nom = request.POST.get('nom')
-            AI_or_AGENT_id = generate_random_string(10)
-            while AI_or_AGENT.objects.filter(AI_or_AGENT_id = AI_or_AGENT_id):
+    if "a1" in user_.role:
+        if request.method == 'POST': 
+            if request.POST.get('add_com') == "submit":
+                nom = request.POST.get('nom')
                 AI_or_AGENT_id = generate_random_string(10)
-            AI_or_AGENT.objects.create(AI_or_AGENT_id=AI_or_AGENT_id,
-                                       comp_name=nom,
-                                       ai=True)
-            Activities_audit.objects.create(
-                    Activity_id=generate_random_string(10),
-                    Activity_user = f"{user_.last_name} {user_.first_name}",
-                    Activity_user_email = user_.email,
-                    Activity_before = f"un auditeur ( {nom} )",
-                    Activity_add_2=True
-                )
-            return redirect("/create_account_for_ai/")
-            
-        if request.POST.get('create_acc_button') == "submit":
-            
-            firstname = request.POST.get('firstname')
-            lastname = request.POST.get('lastname')
-            email = request.POST.get('email')
-            Num = int(request.POST.get('num'))
-            Agent = request.POST.get('agent')
-            acc_for = "; auditeur ;"
-            user_id = generate_random_string(10)
-            password = generate_random_string(12)
-            profile_pic="uploads/default_user_avatar.png"
-            while USER.objects.filter(user_id__contains = user_id):
-                user_id = generate_random_string(10)
-                
-            user_checker=USER.objects.filter(email__icontains = email).exists()
-            if not user_checker:
-                
-                subject = 'Votre compte a été créé avec succès'
-                message = f'Email: {email} Mot de passe: {password} '
-                from_email = 'Night'
-                recipient_list = [email]
-                send_mail(subject, message, from_email, recipient_list) 
-                
-                USER.objects.create_user(first_name=firstname,
-                                    last_name=lastname,
-                                    email=email,
-                                    num=Num,
-                                    role=acc_for, 
-                                    password=password,
-                                    com_name=Agent,
-                                    auditeur=True,
-                                    profile_pic=profile_pic)
-                acc_state = True
+                while AI_or_AGENT.objects.filter(AI_or_AGENT_id = AI_or_AGENT_id):
+                    AI_or_AGENT_id = generate_random_string(10)
+                AI_or_AGENT.objects.create(AI_or_AGENT_id=AI_or_AGENT_id,
+                                        comp_name=nom,
+                                        ai=True)
                 Activities_audit.objects.create(
-                    Activity_id=generate_random_string(10),
-                    Activity_user = f"{user_.last_name} {user_.first_name}",
-                    Activity_user_email = user_.email,
-                    Activity_before = f"un utilisateur ' Auditeur ' ( {email} - {lastname} {firstname} )",
-                    Activity_add_2=True
-                )
+                        Activity_id=generate_random_string(10),
+                        Activity_user = f"{user_.last_name} {user_.first_name}",
+                        Activity_user_email = user_.email,
+                        Activity_before = f"un auditeur ( {nom} )",
+                        Activity_add_2=True
+                    )
+                return redirect("/create_account_for_ai/")
+                
+            if request.POST.get('create_acc_button') == "submit":
+                
+                firstname = request.POST.get('firstname')
+                lastname = request.POST.get('lastname')
+                email = request.POST.get('email')
+                Num = int(request.POST.get('num'))
+                Agent = request.POST.get('agent')
+                acc_for = "; auditeur ;"
+                user_id = generate_random_string(10)
+                password = generate_random_string(12)
+                profile_pic="uploads/default_user_avatar.png"
+                while USER.objects.filter(user_id__contains = user_id):
+                    user_id = generate_random_string(10)
+                    
+                user_checker=USER.objects.filter(email__icontains = email).exists()
+                if not user_checker:
+                    
+                    subject = 'Votre compte a été créé avec succès'
+                    message = f'Email: {email} Mot de passe: {password} '
+                    from_email = 'Night'
+                    recipient_list = [email]
+                    send_mail(subject, message, from_email, recipient_list) 
+                    
+                    USER.objects.create_user(first_name=firstname,
+                                        last_name=lastname,
+                                        email=email,
+                                        num=Num,
+                                        role=acc_for, 
+                                        password=password,
+                                        com_name=Agent,
+                                        auditeur=True,
+                                        profile_pic=profile_pic)
+                    acc_state = True
+                    Activities_audit.objects.create(
+                        Activity_id=generate_random_string(10),
+                        Activity_user = f"{user_.last_name} {user_.first_name}",
+                        Activity_user_email = user_.email,
+                        Activity_before = f"un utilisateur ' Auditeur ' ( {email} - {lastname} {firstname} )",
+                        Activity_add_2=True
+                    )
 
-                
-                
-                
-                           
+                    
+                       
     comp = AI_or_AGENT.objects.all()
     
     return render(request, 'html/create_acc_auditeur.html',{'acc_state':acc_state,
@@ -1904,231 +1890,231 @@ def update_xlsx_template(request):
     return HttpResponse('XLSX file updated and saved to another model.')
 
 
-class table_index_image:
+class table_index_image_fgfg:
     def __init__(self,index,obj_image):
         self.index=index
         self.obj_image=obj_image
         
 @login_required        
 def Kizeo_form_page(request,client_id,page_number):
-
+    user_ = request.user
     if kizeo_model.objects.filter(kizeo_id=client_id):
             pass
     else:
         kizeo_model.objects.create(kizeo_id=client_id)
     
     obj = kizeo_model.objects.get(kizeo_id=client_id)
-    
-    if request.method == 'POST':
-        
-        myButton = request.POST.get("mybutton1")
-        if myButton=="mybutton1":
-
-            input_cell_name = request.POST.get("input_value")
-            img_get= request.FILES[input_cell_name]
-        
-            if hasattr(obj, input_cell_name):
-                # Check if the field exists in the model
-                setattr(obj, input_cell_name, img_get)
-                obj.save()        
-        
-        next_page_index=""
-        submit_to_Kizeo = request.POST.get("submit_to_Kizeo")
-        list_inputs=[]
-        table_index=[]
-        if str(submit_to_Kizeo)=="1":
-            next_page_index='2'
-            list_inputs=[### Données Générales
-                                    'latitude',
-                                    'longitude',
-                                    'altitude',
-                                    'Donnees_Generales_Nom_d_intervenant',
-                                    'Donnees_Generales_Date_de_visite',
-                                    'Donnees_Generales_Adresse',
-                                    'Donnees_Generales_Zip_Code',
-                                    'Donnees_Generales_City',
-                                    'Donnees_Generales_Annee_de_construction',
-                                    'Donnees_Generales_Etat_d_occupation',
-                                    'Donnees_Generales_Nom_client',
-                                    'Donnees_Generales_Tel_client',
-                                    'Donnees_Generales_Email',
-                                    'Donnees_Generales_Horaire_d_occupation_des_lieux',
-                                    'Donnees_Generales_Destination_du_lieu',
-                                    'Donnees_Generales_Nombre_d_occupant',
-                                    'Donnees_Generales_Nombre_de_niveau',
-                                    'Donnees_Generales_Surface_TOTALE',
-                                    'Donnees_Generales_Preuve_Surface',
-                                    'Donnees_Generales_Surface_ajoute_depuis_moins_de_15_ans',
-                                    'Donnees_Generales_Besoin_du_client_Chauffage',
-                                    'Donnees_Generales_Besoin_du_client_Isolation',
-                                    'Donnees_Generales_Scenario_souhaite_par_le_client',
-                                    
-                                    ### Façades
-                                    'Facade_1_Orientation', 'Facade_1_Mitoyennete','Facade_1_Longueur','Facade_1_Hauteur','Facade_1_Surface',#'Facade_1_Photo_Principale',
-                                    'Facade_2_Orientation', 'Facade_2_Mitoyennete','Facade_2_Longueur','Facade_2_Hauteur','Facade_2_Surface',#'Facade_2_Photo_Principale',
-                                    'Facade_3_Orientation', 'Facade_3_Mitoyennete','Facade_3_Longueur','Facade_3_Hauteur','Facade_3_Surface',#'Facade_3_Photo_Principale',
-                                    'Facade_4_Orientation', 'Facade_4_Mitoyennete','Facade_4_Longueur','Facade_4_Hauteur','Facade_4_Surface',#'Facade_4_Photo_Principale',
-                         ]
-            table_index=['Donnees_Generales_Preuve_Surface_Photo',
-                         'Donnees_Generales_Factures',
-                        'Facade_1_Photo_Principale',
-                        'Facade_2_Photo_Principale',
-                        'Facade_3_Photo_Principale',
-                        'Facade_4_Photo_Principale',
-                        ]
-        if str(submit_to_Kizeo)=="2":
-            next_page_index='3'
-            list_inputs=[### Cauffage
-                                    "Cauffage_systeme",
-                                    "Cauffage_annee_de_mise_en_oeuvre",
-                                    "Cauffage_type_de_regulation",
-                                    "Cauffage_system_d_appoint",
-                                    "Cauffage_commentaire" ,
-                                    
-                                    ### ECS
-                                    "ECS_type",
-                                    "ECS_system_d_appoint",
-                                    "ECS_commentaire",
-                                    
-                                    ### Ventilation
-                                    "Ventilation_type" ,
-                                    
-                                    ### Refroidissement
-                                    "Refroidissement_type" ,
-                                    "Refroidissement_commentaire" ,
-                                    
-                                    ### Compteur Electrique
-                                    "Compteur_Electrique_Puissance_souscrite" ,
-                                    "Compteur_Electrique_type" ,
-                                    "Compteur_Electrique_commentaire" ,]
-            table_index=['Cauffage_photo_systeme_de_production',
-                        'Cauffage_photo_fiche_signaletique',
-                        'Cauffage_photo_appoint',
-                        'ECS_photo_appoint',
-                        'Ventilation_photo_ventilation',
-                        'Compteur_Electrique_photo_compteur',
-                        ]
-        if str(submit_to_Kizeo)=="3":
-            next_page_index='4'
-            list_inputs=[### Mur 1
-                                    "Mur_1_Position", 
-                                    "Mur_1_Composition",
-                                    "Mur_1_Epaisseur_mur",
-                                    "Mur_1_Isolation",
-                                    "Mur_1_Epaisseur_isolant",
-                                    "Mur_1_Date_d_isolation",
-                                    "Mur_1_Preuve_d_isolation",
-                                    ### Mur 2
-                                    "Mur_2_Position", 
-                                    "Mur_2_Composition",
-                                    "Mur_2_Epaisseur_mur",
-                                    "Mur_2_Isolation",
-                                    "Mur_2_Epaisseur_isolant",
-                                    "Mur_2_Date_d_isolation",
-                                    "Mur_2_Preuve_d_isolation",
-                                    
-                                    ### Plancher bas 1
-                                    "Plancher_bas_1_Position",
-                                    "Plancher_bas_1_Composition" ,
-                                    "Plancher_bas_1_Isolation" ,
-                                    "Plancher_bas_1_Epaisseur_isolant" ,
-                                    "Plancher_bas_1_Date_d_isolation" ,
-                                    "Plancher_bas_1_Preuve_d_isolation" ,
-                                    #"Plancher_bas_1_Photo_plancher_bas" ,
-                                    ### Plancher bas 2
-                                    "Plancher_bas_2_Position",
-                                    "Plancher_bas_2_Composition" ,
-                                    "Plancher_bas_2_Isolation" ,
-                                    "Plancher_bas_2_Epaisseur_isolant" ,
-                                    "Plancher_bas_2_Date_d_isolation" ,
-                                    "Plancher_bas_2_Preuve_d_isolation" ,
-                                    #"Plancher_bas_2_Photo_plancher_bas" ,
-                                    
-                                    ### Plancher haut 1
-                                    "Plancher_Haut_1_Type",
-                                    "Plancher_Haut_1_Composition",
-                                    "Plancher_Haut_1_Surface",
-                                    "Plancher_Haut_1_Isolation" ,
-                                    "Plancher_Haut_1_Epaisseur_isolant" ,
-                                    "Plancher_Haut_1_Date_d_isolation",
-                                    "Plancher_Haut_1_Preuve_d_isolation" ,
-                                    #"Plancher_Haut_1_Photo_plancher_bas" ,
-                                    ### Plancher haut 2
-                                    "Plancher_Haut_2_Type",
-                                    "Plancher_Haut_2_Composition",
-                                    "Plancher_Haut_2_Surface",
-                                    "Plancher_Haut_2_Isolation" ,
-                                    "Plancher_Haut_2_Epaisseur_isolant" ,
-                                    "Plancher_Haut_2_Date_d_isolation",
-                                    "Plancher_Haut_2_Preuve_d_isolation" ,
-                                    #"Plancher_Haut_2_Photo_plancher_bas" ,
-                                    ]
-            table_index=['Mur_1_Photo_mur',
-                        'Mur_2_Photo_mur',
-                        'Plancher_bas_1_Photo_plancher_bas',
-                        'Plancher_bas_2_Photo_plancher_bas',
-                        'Plancher_Haut_1_Photo_plancher_bas',
-                        'Plancher_Haut_2_Photo_plancher_bas',
-                ]
-        if str(submit_to_Kizeo)=="4":
-            next_page_index='5'
-            list_inputs=[### Fenetre type 1
-                                    "Fenetre_type_1_Menuiserie" ,
-                                    "Fenetre_type_1_Materiaux",
-                                    "Fenetre_type_1_Type_de_vitrage" ,
-                                    "Fenetre_type_1_Volets" ,
-                                    "Fenetre_type_1_Nombre",
-                                    #"Fenetre_type_1_Photo" ,
-                                    ### Fenetre type 2
-                                    "Fenetre_type_2_Menuiserie" ,
-                                    "Fenetre_type_2_Materiaux",
-                                    "Fenetre_type_2_Type_de_vitrage" ,
-                                    "Fenetre_type_2_Volets" ,
-                                    "Fenetre_type_2_Nombre",
-                                    #"Fenetre_type_2_Photo" ,
-                                    
-                                    ### Porte 1
-                                    "Porte_1_Materiaux",
-                                    "Porte_1_Type_porte",
-                                    "Porte_1_Nombre",
-                                    ### Porte 2
-                                    "Porte_2_Materiaux",
-                                    "Porte_2_Type_porte",
-                                    "Porte_2_Nombre",]
-            table_index=['Fenetre_type_1_Photo',
-                        'Fenetre_type_2_Photo',
-                        'Porte_1_Photo_porte',
-                        'Porte_2_Photo_porte',
-                ]
+    if "kize" in user_.role:
+        if request.method == 'POST':
             
-        if str(submit_to_Kizeo)=="5":
-            next_page_index='0'
-            list_inputs=[   ###  Saisie par pièce
-                        'Saisie_par_piece_Surface_Mesuree',
-                        ]
-            table_index=[
-                        'Saisie_par_piece_Signature_intervenant',
-                        'Saisie_par_piece_Signature_client'
-                ]
-        for lis_inp in list_inputs:
-                input_get= request.POST.get(lis_inp)
-                if input_get:
-                    setattr(obj, lis_inp, input_get)
-                    obj.save()
-                    
-        for lis in table_index:
-                img_get= request.FILES.get(lis)
-                if img_get:
-                    if hasattr(obj, lis):
-                        if getattr(obj,lis):
-                            if len(getattr(obj,lis)) > 0 :
-                                os.remove(getattr(obj,lis).path)
-                        # Check if the field exists in the model
-                        setattr(obj, lis, img_get)
-                        obj.save()  
-       
-       
-        return redirect(f"/formK/{client_id}/{next_page_index}")
+            myButton = request.POST.get("mybutton1")
+            if myButton=="mybutton1":
+
+                input_cell_name = request.POST.get("input_value")
+                img_get= request.FILES[input_cell_name]
+            
+                if hasattr(obj, input_cell_name):
+                    # Check if the field exists in the model
+                    setattr(obj, input_cell_name, img_get)
+                    obj.save()        
+            
+            next_page_index=""
+            submit_to_Kizeo = request.POST.get("submit_to_Kizeo")
+            list_inputs=[]
+            table_index=[]
+            if str(submit_to_Kizeo)=="1":
+                next_page_index='2'
+                list_inputs=[### Données Générales
+                                        'latitude',
+                                        'longitude',
+                                        'altitude',
+                                        'Donnees_Generales_Nom_d_intervenant',
+                                        'Donnees_Generales_Date_de_visite',
+                                        'Donnees_Generales_Adresse',
+                                        'Donnees_Generales_Zip_Code',
+                                        'Donnees_Generales_City',
+                                        'Donnees_Generales_Annee_de_construction',
+                                        'Donnees_Generales_Etat_d_occupation',
+                                        'Donnees_Generales_Nom_client',
+                                        'Donnees_Generales_Tel_client',
+                                        'Donnees_Generales_Email',
+                                        'Donnees_Generales_Horaire_d_occupation_des_lieux',
+                                        'Donnees_Generales_Destination_du_lieu',
+                                        'Donnees_Generales_Nombre_d_occupant',
+                                        'Donnees_Generales_Nombre_de_niveau',
+                                        'Donnees_Generales_Surface_TOTALE',
+                                        'Donnees_Generales_Preuve_Surface',
+                                        'Donnees_Generales_Surface_ajoute_depuis_moins_de_15_ans',
+                                        'Donnees_Generales_Besoin_du_client_Chauffage',
+                                        'Donnees_Generales_Besoin_du_client_Isolation',
+                                        'Donnees_Generales_Scenario_souhaite_par_le_client',
+                                        
+                                        ### Façades
+                                        'Facade_1_Orientation', 'Facade_1_Mitoyennete','Facade_1_Longueur','Facade_1_Hauteur','Facade_1_Surface',#'Facade_1_Photo_Principale',
+                                        'Facade_2_Orientation', 'Facade_2_Mitoyennete','Facade_2_Longueur','Facade_2_Hauteur','Facade_2_Surface',#'Facade_2_Photo_Principale',
+                                        'Facade_3_Orientation', 'Facade_3_Mitoyennete','Facade_3_Longueur','Facade_3_Hauteur','Facade_3_Surface',#'Facade_3_Photo_Principale',
+                                        'Facade_4_Orientation', 'Facade_4_Mitoyennete','Facade_4_Longueur','Facade_4_Hauteur','Facade_4_Surface',#'Facade_4_Photo_Principale',
+                            ]
+                table_index=['Donnees_Generales_Preuve_Surface_Photo',
+                            'Donnees_Generales_Factures',
+                            'Facade_1_Photo_Principale',
+                            'Facade_2_Photo_Principale',
+                            'Facade_3_Photo_Principale',
+                            'Facade_4_Photo_Principale',
+                            ]
+            if str(submit_to_Kizeo)=="2":
+                next_page_index='3'
+                list_inputs=[### Cauffage
+                                        "Cauffage_systeme",
+                                        "Cauffage_annee_de_mise_en_oeuvre",
+                                        "Cauffage_type_de_regulation",
+                                        "Cauffage_system_d_appoint",
+                                        "Cauffage_commentaire" ,
+                                        
+                                        ### ECS
+                                        "ECS_type",
+                                        "ECS_system_d_appoint",
+                                        "ECS_commentaire",
+                                        
+                                        ### Ventilation
+                                        "Ventilation_type" ,
+                                        
+                                        ### Refroidissement
+                                        "Refroidissement_type" ,
+                                        "Refroidissement_commentaire" ,
+                                        
+                                        ### Compteur Electrique
+                                        "Compteur_Electrique_Puissance_souscrite" ,
+                                        "Compteur_Electrique_type" ,
+                                        "Compteur_Electrique_commentaire" ,]
+                table_index=['Cauffage_photo_systeme_de_production',
+                            'Cauffage_photo_fiche_signaletique',
+                            'Cauffage_photo_appoint',
+                            'ECS_photo_appoint',
+                            'Ventilation_photo_ventilation',
+                            'Compteur_Electrique_photo_compteur',
+                            ]
+            if str(submit_to_Kizeo)=="3":
+                next_page_index='4'
+                list_inputs=[### Mur 1
+                                        "Mur_1_Position", 
+                                        "Mur_1_Composition",
+                                        "Mur_1_Epaisseur_mur",
+                                        "Mur_1_Isolation",
+                                        "Mur_1_Epaisseur_isolant",
+                                        "Mur_1_Date_d_isolation",
+                                        "Mur_1_Preuve_d_isolation",
+                                        ### Mur 2
+                                        "Mur_2_Position", 
+                                        "Mur_2_Composition",
+                                        "Mur_2_Epaisseur_mur",
+                                        "Mur_2_Isolation",
+                                        "Mur_2_Epaisseur_isolant",
+                                        "Mur_2_Date_d_isolation",
+                                        "Mur_2_Preuve_d_isolation",
+                                        
+                                        ### Plancher bas 1
+                                        "Plancher_bas_1_Position",
+                                        "Plancher_bas_1_Composition" ,
+                                        "Plancher_bas_1_Isolation" ,
+                                        "Plancher_bas_1_Epaisseur_isolant" ,
+                                        "Plancher_bas_1_Date_d_isolation" ,
+                                        "Plancher_bas_1_Preuve_d_isolation" ,
+                                        #"Plancher_bas_1_Photo_plancher_bas" ,
+                                        ### Plancher bas 2
+                                        "Plancher_bas_2_Position",
+                                        "Plancher_bas_2_Composition" ,
+                                        "Plancher_bas_2_Isolation" ,
+                                        "Plancher_bas_2_Epaisseur_isolant" ,
+                                        "Plancher_bas_2_Date_d_isolation" ,
+                                        "Plancher_bas_2_Preuve_d_isolation" ,
+                                        #"Plancher_bas_2_Photo_plancher_bas" ,
+                                        
+                                        ### Plancher haut 1
+                                        "Plancher_Haut_1_Type",
+                                        "Plancher_Haut_1_Composition",
+                                        "Plancher_Haut_1_Surface",
+                                        "Plancher_Haut_1_Isolation" ,
+                                        "Plancher_Haut_1_Epaisseur_isolant" ,
+                                        "Plancher_Haut_1_Date_d_isolation",
+                                        "Plancher_Haut_1_Preuve_d_isolation" ,
+                                        #"Plancher_Haut_1_Photo_plancher_bas" ,
+                                        ### Plancher haut 2
+                                        "Plancher_Haut_2_Type",
+                                        "Plancher_Haut_2_Composition",
+                                        "Plancher_Haut_2_Surface",
+                                        "Plancher_Haut_2_Isolation" ,
+                                        "Plancher_Haut_2_Epaisseur_isolant" ,
+                                        "Plancher_Haut_2_Date_d_isolation",
+                                        "Plancher_Haut_2_Preuve_d_isolation" ,
+                                        #"Plancher_Haut_2_Photo_plancher_bas" ,
+                                        ]
+                table_index=['Mur_1_Photo_mur',
+                            'Mur_2_Photo_mur',
+                            'Plancher_bas_1_Photo_plancher_bas',
+                            'Plancher_bas_2_Photo_plancher_bas',
+                            'Plancher_Haut_1_Photo_plancher_bas',
+                            'Plancher_Haut_2_Photo_plancher_bas',
+                    ]
+            if str(submit_to_Kizeo)=="4":
+                next_page_index='5'
+                list_inputs=[### Fenetre type 1
+                                        "Fenetre_type_1_Menuiserie" ,
+                                        "Fenetre_type_1_Materiaux",
+                                        "Fenetre_type_1_Type_de_vitrage" ,
+                                        "Fenetre_type_1_Volets" ,
+                                        "Fenetre_type_1_Nombre",
+                                        #"Fenetre_type_1_Photo" ,
+                                        ### Fenetre type 2
+                                        "Fenetre_type_2_Menuiserie" ,
+                                        "Fenetre_type_2_Materiaux",
+                                        "Fenetre_type_2_Type_de_vitrage" ,
+                                        "Fenetre_type_2_Volets" ,
+                                        "Fenetre_type_2_Nombre",
+                                        #"Fenetre_type_2_Photo" ,
+                                        
+                                        ### Porte 1
+                                        "Porte_1_Materiaux",
+                                        "Porte_1_Type_porte",
+                                        "Porte_1_Nombre",
+                                        ### Porte 2
+                                        "Porte_2_Materiaux",
+                                        "Porte_2_Type_porte",
+                                        "Porte_2_Nombre",]
+                table_index=['Fenetre_type_1_Photo',
+                            'Fenetre_type_2_Photo',
+                            'Porte_1_Photo_porte',
+                            'Porte_2_Photo_porte',
+                    ]
+                
+            if str(submit_to_Kizeo)=="5":
+                next_page_index='0'
+                list_inputs=[   ###  Saisie par pièce
+                            'Saisie_par_piece_Surface_Mesuree',
+                            ]
+                table_index=[
+                            'Saisie_par_piece_Signature_intervenant',
+                            'Saisie_par_piece_Signature_client'
+                    ]
+            for lis_inp in list_inputs:
+                    input_get= request.POST.get(lis_inp)
+                    if input_get:
+                        setattr(obj, lis_inp, input_get)
+                        obj.save()
+                        
+            for lis in table_index:
+                    img_get= request.FILES.get(lis)
+                    if img_get:
+                        if hasattr(obj, lis):
+                            if getattr(obj,lis):
+                                if len(getattr(obj,lis)) > 0 :
+                                    os.remove(getattr(obj,lis).path)
+                            # Check if the field exists in the model
+                            setattr(obj, lis, img_get)
+                            obj.save()  
+        
+        
+            return redirect(f"/formK/{client_id}/{next_page_index}")
     Pieces_index_add = kizeo_model_Pieces.objects.filter(kizeo_id=client_id).aggregate(Max('Pieces_index'))['Pieces_index__max']
     if not Pieces_index_add:
         Pieces_index_add = 1
@@ -2151,107 +2137,110 @@ def Kizeo_form_page(request,client_id,page_number):
 
 @login_required
 def kizeo_form_Pieces(request,client_id,piece_id):
+    user_ = request.user
+
     try:
         data=kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id)
     except:
         Pieces_index_add = kizeo_model_Pieces.objects.filter(kizeo_id=client_id).aggregate(Max('Pieces_index'))['Pieces_index__max']
         kizeo_model_Pieces.objects.create(kizeo_id=client_id,Pieces_index=piece_id)
     
-    if request.method == 'POST':
-        
-                      
-        obj = kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id)  
+    if "kize" in user_.role:
+        if request.method == 'POST':
+            
+                        
+            obj = kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id)  
+                
+
+            table_index=['Pieces_image_1',
+                            'Pieces_image_2',
+                            'Pieces_image_3'
+                        ]
+            for lis in table_index:
+                img_get= request.FILES.get(lis)
+                if img_get:
+                    if hasattr(obj, lis):
+                        if getattr(obj,lis):
+                            if len(getattr(obj,lis)) > 0 :
+                                os.remove(getattr(obj,lis).path)
+                        # Check if the field exists in the model
+                        setattr(obj, lis, img_get)
+                        obj.save()  
+            
+            obj.Niveau = request.POST.get("Niveau")
+            
+            obj.Pieces = request.POST.get("Pieces")
+            
+            obj.Chauffage ="Non"
+            Chauffage = request.POST.get("Chauffage")
+            if Chauffage:
+                obj.Chauffage ="Oui"
+                
+                
+            Mansardee = request.POST.get("Mansardee")
+            obj.Mansardee ="Non"
+            
+            obj.IF_mansardee = False
+            if request.POST.get("IF_mansardee"):
+                obj.IF_mansardee = True
+                obj.HSF = request.POST.get("HSF")
+                obj.HPP = request.POST.get("HPP")
+                obj.LP = request.POST.get("LP")
+                obj.S_rampants_1 = request.POST.get("S_rampants_1")
+                obj.S_rampants_2 = request.POST.get("S_rampants_2")
+                obj.save(update_fields=['HSF','HPP','LP','S_rampants_1','S_rampants_2'])
             
 
-        table_index=['Pieces_image_1',
-                        'Pieces_image_2',
-                        'Pieces_image_3'
-                    ]
-        for lis in table_index:
-            img_get= request.FILES.get(lis)
-            if img_get:
-                if hasattr(obj, lis):
-                    if getattr(obj,lis):
-                        if len(getattr(obj,lis)) > 0 :
-                            os.remove(getattr(obj,lis).path)
-                    # Check if the field exists in the model
-                    setattr(obj, lis, img_get)
-                    obj.save()  
-        
-        obj.Niveau = request.POST.get("Niveau")
-        
-        obj.Pieces = request.POST.get("Pieces")
-        
-        obj.Chauffage ="Non"
-        Chauffage = request.POST.get("Chauffage")
-        if Chauffage:
-            obj.Chauffage ="Oui"
             
+
+
+
             
-        Mansardee = request.POST.get("Mansardee")
-        obj.Mansardee ="Non"
-        
-        obj.IF_mansardee = False
-        if request.POST.get("IF_mansardee"):
-            obj.IF_mansardee = True
-            obj.HSF = request.POST.get("HSF")
-            obj.HPP = request.POST.get("HPP")
-            obj.LP = request.POST.get("LP")
-            obj.S_rampants_1 = request.POST.get("S_rampants_1")
-            obj.S_rampants_2 = request.POST.get("S_rampants_2")
-            obj.save(update_fields=['HSF','HPP','LP','S_rampants_1','S_rampants_2'])
-        
-
-        
-
-
-
-        
+                
             
-        
-        obj.HSP = float(request.POST.get("HSP"))
-        
-        obj.Longueur = float(request.POST.get("Longueur"))
-        obj.Largeur = float(request.POST.get("Largeur"))
-        obj.Surface = float(request.POST.get("Longueur"))*float(request.POST.get("Largeur"))
-        
-        obj.Decrochement_Longueur = float(request.POST.get("Decrochement_Longueur"))
-        obj.Decrochement_Largeur = float(request.POST.get("Decrochement_Largeur"))
-        obj.Decrochement_Surface = float(request.POST.get("Decrochement_Longueur")) * float(request.POST.get("Decrochement_Largeur"))
-        
-        obj.Surface_nette = float(request.POST.get("Surface_nette"))
-        
-        obj.Menuiseries_F = request.POST.get("Menuiseries_F")
-        obj.Menuiseries_L = float(request.POST.get("Menuiseries_L"))
-        obj.Menuiseries_H = float(request.POST.get("Menuiseries_H"))
-        obj.Menuiseries_N = int(request.POST.get("Menuiseries_N"))
-        
-        obj.save(update_fields=[
-                                'Niveau',
-        
-                                'Pieces',
-                                'Chauffage',
-                                'Mansardee',
-                                'HSP',
-                                
-                                'Longueur',
-                                'Largeur',
-                                'Surface',
-                                
-                                'IF_mansardee',
-                                
-                                'Decrochement_Longueur',
-                                'Decrochement_Largeur',
-                                'Decrochement_Surface',
-                                
-                                'Surface_nette',
-                                
-                                'Menuiseries_F',
-                                'Menuiseries_L',
-                                'Menuiseries_H',
-                                'Menuiseries_N',
-            ])
-                                 
+            obj.HSP = float(request.POST.get("HSP"))
+            
+            obj.Longueur = float(request.POST.get("Longueur"))
+            obj.Largeur = float(request.POST.get("Largeur"))
+            obj.Surface = float(request.POST.get("Longueur"))*float(request.POST.get("Largeur"))
+            
+            obj.Decrochement_Longueur = float(request.POST.get("Decrochement_Longueur"))
+            obj.Decrochement_Largeur = float(request.POST.get("Decrochement_Largeur"))
+            obj.Decrochement_Surface = float(request.POST.get("Decrochement_Longueur")) * float(request.POST.get("Decrochement_Largeur"))
+            
+            obj.Surface_nette = float(request.POST.get("Surface_nette"))
+            
+            obj.Menuiseries_F = request.POST.get("Menuiseries_F")
+            obj.Menuiseries_L = float(request.POST.get("Menuiseries_L"))
+            obj.Menuiseries_H = float(request.POST.get("Menuiseries_H"))
+            obj.Menuiseries_N = int(request.POST.get("Menuiseries_N"))
+            
+            obj.save(update_fields=[
+                                    'Niveau',
+            
+                                    'Pieces',
+                                    'Chauffage',
+                                    'Mansardee',
+                                    'HSP',
+                                    
+                                    'Longueur',
+                                    'Largeur',
+                                    'Surface',
+                                    
+                                    'IF_mansardee',
+                                    
+                                    'Decrochement_Longueur',
+                                    'Decrochement_Largeur',
+                                    'Decrochement_Surface',
+                                    
+                                    'Surface_nette',
+                                    
+                                    'Menuiseries_F',
+                                    'Menuiseries_L',
+                                    'Menuiseries_H',
+                                    'Menuiseries_N',
+                ])
+                                    
     data = kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id)
     
     return render(request, 'html/formK_Pieces.html',{'data':data})
@@ -2261,7 +2250,7 @@ def kizeo_form_Pieces(request,client_id,piece_id):
 def kizeo_form_Pieces_delete(request,client_id,piece_id):
     user_= request.user
     user_role= user_.role
-    if  "VT" in user_role:
+    if  "kize" in user_role:
         kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id).delete()
         return redirect(f"{formK}{client_id}/5")
     
