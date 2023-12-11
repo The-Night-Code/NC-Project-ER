@@ -9,7 +9,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <link rel="shortcut icon" type="image/png" href="{% static 'image/icon.png' %}">
-  <title></title>
+  <title>Résumé des Tâches par Auditeur</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -184,6 +184,12 @@
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'create_acc_for_Auditeur' %}">
+              <i class="bi bi-person-add fa-10x"></i>
+              <span>Pour l'auditeur</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link collapsed" href="{% url 'create_acc_for_AI' %}">
               <i class="bi bi-person-add fa-10x"></i>
               <span>Pour l'agent immobilier</span>
@@ -198,14 +204,15 @@
 
         </ul>
       </li>
-      {% endif %}
-
       <li class="nav-item">
-        <a class="nav-link " href="">
-          <i class="bi bi-bx-stats  "></i>
-          <span>sdfgdfg</span>
+        <a class="nav-link " href="{% url 'Auditor_Task_Summary' %}">
+          <i class="bi bi-activity"></i>
+          <span>Résumé des Tâches par Auditeur</span>
         </a>
       </li>
+      {% endif %}
+
+      
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'corbeille' %}">
@@ -230,107 +237,226 @@
 
     
     <section class="section">
-      <div class="row" >
-        
-        <div class="card ">
-        <div class="overflow-auto">
-            <div class="card-body">
+      {% for k  in table_index %}
+        <div class="row">
+           
+          <div class="col-12">
                 
-              <!-- General Form Elements -->
-              </br>
-              <input class="form-control" type="text" id="filterInput_1" placeholder="Search..." style="width:30%;min-width:100px;">
-              <div class="overflow-auto" style="padding:1px;">
-              <form method="POST"   enctype="multipart/form-data" id="myForm">
-              {% csrf_token %}
-              <input type="hidden" name="myid1" id="myid1">
-              <input type="hidden" name="col_type1" id="col_type1">
-              <input type="hidden" name="mybutton1" id="mybutton1">
-              
-                <table class="table  table-hover  table-bordered table_Auditeur_state" id="tableDATA_1" cellspacing="0" >  <!-- table-sm  table-responsive-->
+            <div class="card recent-sales">
+
   
-                  <thead class="table-dark table_Auditeur_state_thead">
-                    <tr class="table_Auditeur_state_tr">
-                      <th rowspan=2 >Email</th>
-                      <th rowspan=2 >Nom</th>
-                      <th rowspan=2 >Prénom</th>
-                      <th class="table_Auditeur_state_th" colspan=7 >Projet fini </th>
-                      <th class="table_Auditeur_state_th" colspan=7 >Projet Envoyé</th>
-                      <th class="table_Auditeur_state_th" colspan=7 >Modification Faite</th>
-                    </tr>
+              <div class="card-body">
+                <h5 class="card-title"><span class="badge" data-badge="{{k.state}}"> {{k.state}}</span> </h5>
 
-                    <tr class="table_Auditeur_state_tr">
-                      <th>Aujourd'hui</th>
-                      <th>Hier</th>
-                      <th>Cette semaine</th>
-                      <th>La semaine dernière</th>
-                      <th>Ce mois-ci</th>
-                      <th>Le mois dernier</th>
-                      <th>Cette année</th>
+                
+                
+                <input class="form-control" type="text" id="filterInput_{{ k.index }}" placeholder="Search..." style="width:30%;min-width:100px;">
+                <div class="overflow-auto" style="padding:1px;">
+                  <form method="post"  enctype="multipart/form-data" id="myForm">
+                    {% csrf_token %}
+                    <input type="hidden" name="myid{{ k.index }}" id="myid{{ k.index }}">
+                    <input type="hidden" name="col_type{{ k.index }}" id="col_type{{ k.index }}">
+                    <input type="hidden" name="mybutton{{ k.index }}" id="mybutton{{ k.index }}">
+                    <table class="table  table-hover  table-bordered table_Auditeur_state" id="tableDATA_{{k.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
 
-                      <th>Aujourd'hui</th>
-                      <th>Hier</th>
-                      <th>Cette semaine</th>
-                      <th>La semaine dernière</th>
-                      <th>Ce mois-ci</th>
-                      <th>Le mois dernier</th>
-                      <th>Cette année</th>
+                      <thead class="table-dark table_Auditeur_state_thead">
 
-                      <th>Aujourd'hui</th>
-                      <th>Hier</th>
-                      <th>Cette semaine</th>
-                      <th>La semaine dernière</th>
-                      <th>Ce mois-ci</th>
-                      <th>Le mois dernier</th>
-                      <th>Cette année</th>
-                    </tr>
+                        <tr class="table_Auditeur_state_tr">
+                          <th rowspan=2 >Email</th>
+                          <th rowspan=2 >Nom</th>
+                          <th rowspan=2 >Prénom</th>
+                          {% if k.index == 1 %}
+                          <th class="table_Auditeur_state_th" colspan=7 >Projet fini </th>
+                          {% endif %}
+                          {% if k.index == 2 %}
+                          <th class="table_Auditeur_state_th" colspan=7 >Projet Envoyé</th>
+                          {% endif %}
+                          {% if k.index == 3 %}
+                          <th class="table_Auditeur_state_th" colspan=7 >Modification Faite</th>
+                          {% endif %}
+                        </tr>
 
-                  </thead>
-                  <tbody  class="table-bordered" id="myTable_1" >
+                        <tr class="table_Auditeur_state_tr">
+                          <th>Aujourd'hui</th>
+                          <th>Hier</th>
+                          <th>Cette semaine</th>
+                          <th>La semaine dernière</th>
+                          <th>Ce mois-ci</th>
+                          <th>Le mois dernier</th>
+                          <th>Cette année</th>
+                        </tr>
 
-                    {% for D in data  %}
-                    <tr>
-                      <td><p>{{ D.email }}</p></td>
-                      <td><p>{{ D.last_name}}</p></td>
-                      <td><p>{{ D.first_name  }}</p></td>
-                      <td style="background:#e0f8e9;">{{ D.s_today_fini_time }}</td>
-                      <td style="background:#e0f8e9;">{{ D.s_yesterday_fini_time }}</td>
-                      <td style="background:#e0f8e9;">{{ D.s_this_week_fini_time }}</td>
-                      <td style="background:#e0f8e9;">{{ D.s_last_week_fini_time }}</td>
-                      <td style="background:#e0f8e9;">{{ D.s_this_month_fini_time }}</td>
-                      <td style="background:#e0f8e9;">{{ D.s_last_month_fini_time }}</td>
-                      <td style="background:#e0f8e9;">{{ D.s_this_year_fini_time }}</td>
+                      </thead>
+                      <tbody  class="table-bordered" id="myTable_{{k.index}}" >
 
-                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_today_Envoye_time }}</td>
-                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_yesterday_Envoye_time }}</td>
-                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_this_week_Envoye_time }}</td>
-                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_last_week_Envoye_time }}</td>
-                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_this_month_Envoye_time }}</td>
-                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_last_month_Envoye_time }}</td>
-                      <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_this_year_Envoye_time }}</td>
+                        {% for D in data  %}
+                        <tr id="myTable_{{k.index}}">
+                          <td><p>{{ D.email }}</p></td>
+                          <td><p>{{ D.last_name}}</p></td>
+                          <td><p>{{ D.first_name  }}</p></td>
 
-                      <td style="background:#ffecdf;">{{ D.s_today_MF_time }}</td>
-                      <td style="background:#ffecdf;">{{ D.s_yesterday_MF_time }}</td>
-                      <td style="background:#ffecdf;">{{ D.s_this_week_MF_time }}</td>
-                      <td style="background:#ffecdf;">{{ D.s_last_week_MF_time }}</td>
-                      <td style="background:#ffecdf;">{{ D.s_this_month_MF_time }}</td>
-                      <td style="background:#ffecdf;">{{ D.s_last_month_MF_time }}</td>
-                      <td style="background:#ffecdf;">{{ D.s_this_year_MF_time }}</td>
+                          {% if k.index == 1 %}
+                          <td style="background:#e0f8e9;">{{ D.s_today_fini_time }}</td> 
+                          <td style="background:#e0f8e9;">{{ D.s_yesterday_fini_time }}</td>
+                          <td style="background:#e0f8e9;">{{ D.s_this_week_fini_time }}</td>
+                          <td style="background:#e0f8e9;">{{ D.s_last_week_fini_time }}</td>
+                          <td style="background:#e0f8e9;">{{ D.s_this_month_fini_time }}</td>
+                          <td style="background:#e0f8e9;">{{ D.s_last_month_fini_time }}</td> 
+                          <td style="background:#e0f8e9;">{{ D.s_this_year_fini_time }}</td>
+                          {% endif %}
+                          {% if k.index == 2 %}
+                          <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_today_Envoye_time }}</td>
+                          <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_yesterday_Envoye_time }}</td>
+                          <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_this_week_Envoye_time }}</td>
+                          <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_last_week_Envoye_time }}</td>
+                          <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_this_month_Envoye_time }}</td>
+                          <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_last_month_Envoye_time }}</td>
+                          <td style="background:rgba(0, 255, 255, 0.1);">{{ D.s_this_year_Envoye_time }}</td>
+                          {% endif %}
+                          {% if k.index == 3 %}
+                          <td style="background:#ffecdf;">{{ D.s_today_MF_time }}</td> 
+                          <td style="background:#ffecdf;">{{ D.s_yesterday_MF_time }}</td>
+                          <td style="background:#ffecdf;">{{ D.s_this_week_MF_time }}</td>
+                          <td style="background:#ffecdf;">{{ D.s_last_week_MF_time }}</td>
+                          <td style="background:#ffecdf;">{{ D.s_this_month_MF_time }}</td>
+                          <td style="background:#ffecdf;">{{ D.s_last_month_MF_time }}</td>
+                          <td style="background:#ffecdf;">{{ D.s_this_year_MF_time }}</td>
+                          {% endif %}
+                        </tr>
+                        {% endfor %}
+                        
+                      </tbody>
 
-                    </tr>
-                    {% endfor %}
-                    
-                  </tbody>
+                    </table>
 
-                </table>
+                  </form><!-- End General Form Elements -->
 
-              </form><!-- End General Form Elements -->
-
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
+          
+          <div class="col-8">
+            <div class="card">
+              <div class="card-body">
 
-        </div>
+                
+                <!-- Line Chart -->
+                <canvas id="lineChart_{{ k.index }}" style="max-height: 400px; display: block; box-sizing: border-box; height: 185px; width: 371px;" width="371" height="185"></canvas>
+                <script>
+                  document.addEventListener("DOMContentLoaded", () => {
+                    new Chart(document.querySelector('#lineChart_{{ k.index }}'), {
+                      type: 'bar',
+                      data: {
+                        labels: [{% for D in data  %}'{{ D.last_name}} {{ D.first_name}}',{% endfor %}],
+                        
+                        {% if k.index == 1 %}
+                        datasets: [
+                        
+                        {
+                          label: "Aujourd'hui",
+                          data: [{% for D in data  %} {{ D.s_today_fini_time }},{% endfor %} ],
+                          fill: false,
+                          backgroundColor: '#00aba9',
+                          tension: 0.1
+                        },
+                        {
+                          label: "Hier",
+                          data: [{% for D in data  %} {{ D.s_yesterday_fini_time }},{% endfor %} ],
+                          fill: false,
+                          backgroundColor: '#e8c3b9',
+                          tension: 0.1
+                        },
+                        {
+                          label: "Cette semaine",
+                          data: [{% for D in data  %} {{ D.s_this_week_fini_time }},{% endfor %} ],
+                          fill: false,
+                          backgroundColor: '#b91d47',
+                          tension: 0.1
+                        }
+                        ]
+                        {% endif %}
 
-      </div>
+                        {% if k.index == 2 %}
+                        datasets: [
+
+                        {
+                          label: "Aujourd'hui",
+                          data: [{% for D in data  %} {{ D.s_today_Envoye_time }},{% endfor %} ],
+                          fill: false,
+                          backgroundColor: '#00aba9',
+                          tension: 0.1
+                        },
+                        {
+                          label: "Hier",
+                          data: [{% for D in data  %} {{ D.s_yesterday_Envoye_time }},{% endfor %} ],
+                          fill: false,
+                          backgroundColor: '#e8c3b9',
+                          tension: 0.1
+                        },
+                        {
+                          label: "Cette semaine",
+                          data: [{% for D in data  %} {{ D.s_this_week_Envoye_time }},{% endfor %} ],
+                          fill: false,
+                          backgroundColor: '#b91d47',
+                          tension: 0.1
+                        }
+                        ]
+                        {% endif %}
+
+                        {% if k.index == 3 %}
+                        datasets: [
+
+                        {
+                          label: "Aujourd'hui",
+                          data: [{% for D in data  %} {{ D.s_today_MF_time }},{% endfor %} ],   
+                          fill: false,
+                          backgroundColor: '#00aba9',
+                          tension: 0.1
+                        },
+                        {
+                          label: "Hier",
+                          data: [{% for D in data  %} {{ D.s_yesterday_MF_time }},{% endfor %} ],
+                          fill: false,
+                          backgroundColor: '#e8c3b9',
+                          tension: 0.1
+                        },
+                        {
+                          label: "Cette semaine",
+                          data: [{% for D in data  %} {{ D.s_this_week_MF_time }},{% endfor %} ],
+                          fill: false,
+                          backgroundColor: '#b91d47',
+                          tension: 0.1
+                        }
+                        ]
+                        {% endif %}
+
+                      },
+                      
+                      options: {
+                        scales: {
+                          y: {
+                            beginAtZero: true,
+                            ticks: {
+                              stepSize: 1
+                            }
+                          }
+                        }
+                      }
+                    });
+                  });
+                </script>
+                <!-- End Line CHart -->
+  
+              </div>
+              
+
+              
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      
     </section>
     
   </main>

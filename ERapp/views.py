@@ -751,9 +751,12 @@ def BE_audit_BY_A(request):
     
 
 @login_required
-def Auditeur_state(request):  
+def Auditor_Task_Summary(request):   #Tableau de Bord  # Résumé des Tâches par Auditeur
     
-
+    table_index=[{'index':1,'state':"Projet fini"},
+                 {'index':2,'state':"Projet Envoyé"},
+                 {'index':3,'state':"Modification Faite"}]
+    
     current_date = timezone.now().date()
 
     # Find the first day of the current month
@@ -767,8 +770,9 @@ def Auditeur_state(request):
     
     
     
-    today = timezone.now().date()
+    today = timezone.now().date() + timedelta(days=1) 
     yesterday = today - timedelta(days=1)
+    before_yesterday = today - timedelta(days=2)
     start_of_week = today - timedelta(days=today.weekday())
     end_of_week = start_of_week + timedelta(days=6)
     
@@ -790,24 +794,24 @@ def Auditeur_state(request):
         if "auditeur" in audi_role : #auditeur
             #auditeur+=[{'email':audi.email,'first_name':audi.first_name,'last_name':audi.last_name}]
             
-            s_today_fini_time = TableData001.objects.filter(fini_time=today,fini_time_checker=True,fini_by_user=audi.email).count()
-            s_yesterday_fini_time = TableData001.objects.filter(fini_time=yesterday,fini_time_checker=True,fini_by_user=audi.email).count()
+            s_today_fini_time = TableData001.objects.filter(fini_time__range=[yesterday, today],fini_time_checker=True,fini_by_user=audi.email).count()
+            s_yesterday_fini_time = TableData001.objects.filter(fini_time__range=[before_yesterday, yesterday],fini_time_checker=True,fini_by_user=audi.email).count()
             s_this_week_fini_time = TableData001.objects.filter(fini_time__range=[start_of_week, end_of_week],fini_time_checker=True,fini_by_user=audi.email).count()
             s_last_week_fini_time = TableData001.objects.filter(fini_time__range=[start_of_last_week, end_of_last_week],fini_time_checker=True,fini_by_user=audi.email).count()
             s_this_month_fini_time = TableData001.objects.filter(fini_time__range=[start_of_month, end_of_month],fini_time_checker=True,fini_by_user=audi.email).count()
             s_last_month_fini_time = TableData001.objects.filter(fini_time__range=[start_of_last_month, end_of_last_month],fini_time_checker=True,fini_by_user=audi.email).count()
             s_this_year_fini_time = TableData001.objects.filter(fini_time__range=[start_of_year, end_of_year],fini_time_checker=True,fini_by_user=audi.email).count()
             
-            s_today_Envoye_time = TableData001.objects.filter(Envoye_time=today,Envoye_time_checker=True,Envoye_by_user=audi.email).count()
-            s_yesterday_Envoye_time = TableData001.objects.filter(Envoye_time=yesterday,Envoye_time_checker=True,Envoye_by_user=audi.email).count()
+            s_today_Envoye_time = TableData001.objects.filter(Envoye_time__range=[yesterday, today],Envoye_time_checker=True,Envoye_by_user=audi.email).count()
+            s_yesterday_Envoye_time = TableData001.objects.filter(Envoye_time__range=[before_yesterday, yesterday],Envoye_time_checker=True,Envoye_by_user=audi.email).count()
             s_this_week_Envoye_time = TableData001.objects.filter(Envoye_time__range=[start_of_week, end_of_week],Envoye_time_checker=True,Envoye_by_user=audi.email).count()
             s_last_week_Envoye_time = TableData001.objects.filter(Envoye_time__range=[start_of_last_week, end_of_last_week],Envoye_time_checker=True,Envoye_by_user=audi.email).count()
             s_this_month_Envoye_time = TableData001.objects.filter(Envoye_time__range=[start_of_month, end_of_month],Envoye_time_checker=True,Envoye_by_user=audi.email).count()
             s_last_month_Envoye_time = TableData001.objects.filter(Envoye_time__range=[start_of_last_month, end_of_last_month],Envoye_time_checker=True,Envoye_by_user=audi.email).count()
             s_this_year_Envoye_time = TableData001.objects.filter(Envoye_time__range=[start_of_year, end_of_year],Envoye_time_checker=True,Envoye_by_user=audi.email).count()
             
-            s_today_MF_time = TableData001.objects.filter(Modification_Faite_time=today,Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
-            s_yesterday_MF_time = TableData001.objects.filter(Modification_Faite_time=yesterday,Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
+            s_today_MF_time = TableData001.objects.filter(Modification_Faite_time__range=[yesterday, today],Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
+            s_yesterday_MF_time = TableData001.objects.filter(Modification_Faite_time__range=[before_yesterday, yesterday],Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
             s_this_week_MF_time = TableData001.objects.filter(Modification_Faite_time__range=[start_of_week, end_of_week],Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
             s_last_week_MF_time = TableData001.objects.filter(Modification_Faite_time__range=[start_of_last_week, end_of_last_week],Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
             s_this_month_MF_time = TableData001.objects.filter(Modification_Faite_time__range=[start_of_month, end_of_month],Modification_Faite_time_checker=True,Modification_Faite_by_user=audi.email).count()
@@ -845,7 +849,8 @@ def Auditeur_state(request):
             
     
     
-    return render(request, 'html/Auditeur_state.html',{'data':data} )
+    return render(request, 'html/Auditeur_state.html',{'data':data,
+                                                       'table_index':table_index,} )
 
 
 
@@ -1418,7 +1423,7 @@ def create_acc_ai(request):
             email = request.POST.get('email')
             Num = int(request.POST.get('num'))
             Agent = request.POST.get('agent')
-            acc_for = request.POST.get('role1')
+            acc_for = "; ai ;"
             user_id = generate_random_string(10)
             password = generate_random_string(12)
             profile_pic="uploads/default_user_avatar.png"
@@ -1431,7 +1436,7 @@ def create_acc_ai(request):
                 subject = 'Votre compte a été créé avec succès'
                 message = f'Email: {email} Mot de passe: {password} '
                 from_email = 'Night'
-                recipient_list = ['lazariatik@gmail.com']
+                recipient_list = [email]
                 send_mail(subject, message, from_email, recipient_list) 
                 
                 USER.objects.create_user(first_name=firstname,
@@ -1444,11 +1449,15 @@ def create_acc_ai(request):
                                     com_name=Agent,
                                     profile_pic=profile_pic)
                 acc_state = True
+                Activities_audit.objects.create(
+                    Activity_id=generate_random_string(10),
+                    Activity_user = f"{user_.last_name} {user_.first_name}",
+                    Activity_user_email = user_.email,
+                    Activity_before = f"un utilisateur ' Agent immobilier ' ( {email} - {lastname} {firstname} )",
+                    Activity_add_2=True
+                )
             
-                if acc_for == "ai":
-                    obj=USER.objects.get(email=email,firstname=firstname,lastname=lastname,num=Num)
-                    obj.agent=str(Agent)
-                    obj.save(update_fields=['agent'])
+
                     
                 
                 
@@ -1488,7 +1497,7 @@ def create_acc_be(request):
             email = request.POST.get('email')
             Num = int(request.POST.get('num'))
             Agent = request.POST.get('agent')
-            acc_for = request.POST.get('role1')
+            acc_for = "; be ;"
             
             Bureau_etude = request.POST.get('Bureau_etude')
             
@@ -1518,11 +1527,14 @@ def create_acc_be(request):
                                     com_name=Bureau_etude,
                                     profile_pic=profile_pic)
                 acc_state = True
-            
-                if acc_for == "ai":
-                    obj=USER.objects.get(email=email,firstname=firstname,lastname=lastname,num=Num)
-                    obj.agent=str(Agent)
-                    obj.save(update_fields=['agent'])
+                Activities_audit.objects.create(
+                    Activity_id=generate_random_string(10),
+                    Activity_user = f"{user_.last_name} {user_.first_name}",
+                    Activity_user_email = user_.email,
+                    Activity_before = f"un utilisateur ' Bureau d'études ' ( {email} - {lastname} {firstname} )",
+                    Activity_add_2=True
+                )
+
                     
                 
                 
@@ -1534,7 +1546,78 @@ def create_acc_be(request):
     return render(request, 'html/create_acc_be.html',{'acc_state':acc_state,
                                                       'comp':comp})
     
+@login_required
+def create_acc_auditeur(request):
+    acc_state = False
+    user_=request.user
+    if request.method == 'POST': 
+        if request.POST.get('add_com') == "submit":
+            nom = request.POST.get('nom')
+            AI_or_AGENT_id = generate_random_string(10)
+            while AI_or_AGENT.objects.filter(AI_or_AGENT_id = AI_or_AGENT_id):
+                AI_or_AGENT_id = generate_random_string(10)
+            AI_or_AGENT.objects.create(AI_or_AGENT_id=AI_or_AGENT_id,
+                                       comp_name=nom,
+                                       ai=True)
+            Activities_audit.objects.create(
+                    Activity_id=generate_random_string(10),
+                    Activity_user = f"{user_.last_name} {user_.first_name}",
+                    Activity_user_email = user_.email,
+                    Activity_before = f"un auditeur ( {nom} )",
+                    Activity_add_2=True
+                )
+            return redirect("/create_account_for_ai/")
+            
+        if request.POST.get('create_acc_button') == "submit":
+            
+            firstname = request.POST.get('firstname')
+            lastname = request.POST.get('lastname')
+            email = request.POST.get('email')
+            Num = int(request.POST.get('num'))
+            Agent = request.POST.get('agent')
+            acc_for = "; auditeur ;"
+            user_id = generate_random_string(10)
+            password = generate_random_string(12)
+            profile_pic="uploads/default_user_avatar.png"
+            while USER.objects.filter(user_id__contains = user_id):
+                user_id = generate_random_string(10)
+                
+            user_checker=USER.objects.filter(email__icontains = email).exists()
+            if not user_checker:
+                
+                subject = 'Votre compte a été créé avec succès'
+                message = f'Email: {email} Mot de passe: {password} '
+                from_email = 'Night'
+                recipient_list = [email]
+                send_mail(subject, message, from_email, recipient_list) 
+                
+                USER.objects.create_user(first_name=firstname,
+                                    last_name=lastname,
+                                    email=email,
+                                    num=Num,
+                                    role=acc_for, 
+                                    password=password,
+                                    com_name=Agent,
+                                    auditeur=True,
+                                    profile_pic=profile_pic)
+                acc_state = True
+                Activities_audit.objects.create(
+                    Activity_id=generate_random_string(10),
+                    Activity_user = f"{user_.last_name} {user_.first_name}",
+                    Activity_user_email = user_.email,
+                    Activity_before = f"un utilisateur ' Auditeur ' ( {email} - {lastname} {firstname} )",
+                    Activity_add_2=True
+                )
+
+                
+                
+                
+                           
+    comp = AI_or_AGENT.objects.all()
     
+    return render(request, 'html/create_acc_auditeur.html',{'acc_state':acc_state,
+                                                      'comp':comp})
+  
        
     
 @login_required

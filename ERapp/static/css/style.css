@@ -273,7 +273,9 @@ tr .badge ,tr .badgefoot{
   color: white;
 }
 .badge[data-badge="Envoye"] , .badgefoot[data-badgefoot="Envoye"],
-.badge-cell select option[value="Envoye"] ,  .badge-cellfoot select option[value="Envoye"]{
+.badge-cell select option[value="Envoye"] ,  .badge-cellfoot select option[value="Envoye"],
+.badge[data-badge="Projet Envoyé"] , .badgefoot[data-badgefoot="Projet Envoyé"],
+.badge-cell select option[value="Projet Envoyé"] ,  .badge-cellfoot select option[value="Projet Envoyé"]{
   font-size:medium;
   background-color: purple;
   color: white;
@@ -287,7 +289,9 @@ tr .badge ,tr .badgefoot{
 }
 
 .badge[data-badge="Fini"] , .badgefoot[data-badgefoot="Fini"],
-.badge-cell select option[value="Fini"] , .badge-cellfoot select option[value="Fini"]{
+.badge-cell select option[value="Fini"] , .badge-cellfoot select option[value="Fini"],
+.badge[data-badge="Projet fini"] , .badgefoot[data-badgefoot="Projet fini"],
+.badge-cell select option[value="Projet fini"] , .badge-cellfoot select option[value="Projet fini"]{
   font-size:medium;
   background-color: green;
   color: white;

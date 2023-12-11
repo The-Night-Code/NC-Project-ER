@@ -21,10 +21,10 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from ERapp.views import  LoginU, LogoutU , ProfileU,forgot_password ,showimage,VT_Page_edit_state
-from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,corbeille,Activities
+from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,create_acc_auditeur,corbeille,Activities
 from ERapp.views import remove_file_from_MODELS,agent_immo,agent_immo_f,send_message
 from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,BE_home_page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
-from ERapp.views import download_media_folder,table_view_2,table_view_3,CBFCS,Auditeur_state
+from ERapp.views import download_media_folder,table_view_2,table_view_3,CBFCS,Auditor_Task_Summary
 
 ai="ai"
 form="form"
@@ -54,9 +54,10 @@ urlpatterns = [
 
     path('create_account_for_ai/', create_acc_ai, name="create_acc_for_AI" ),
     path('create_account_for_be/', create_acc_be, name="create_acc_for_BE" ),
+    path('create_account_for_auditeur/', create_acc_auditeur, name="create_acc_for_Auditeur" ),
     path('corbeille/', corbeille, name="corbeille" ),
     path('Activities/', Activities, name="Activities" ),
-    path('Auditeur_state/',Auditeur_state ,name="Auditeur_state"),
+    path('Auditor_Task_Summary/',Auditor_Task_Summary ,name="Auditor_Task_Summary"),
     
     path('remove_file_from_MODELS/',remove_file_from_MODELS ,name="remove_file_from_MODELS"),
     path('send-message/',send_message , name="send_message" ),

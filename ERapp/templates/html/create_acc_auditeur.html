@@ -1,6 +1,4 @@
 {% load static %}
-{% load l10n %}
-{% load humanize %}
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -9,7 +7,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <link rel="shortcut icon" type="image/png" href="{% static 'image/icon.png' %}">
-  <title>Corbeille</title>
+  <title>Créer un compte</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -44,7 +42,8 @@
 </head>
 
 <body onload="load()">
-  {% if user.is_authenticated and "auditeur" in user.role %}
+  {% if user.is_authenticated %}
+  {% if "a1" in user.role %}
  <!-- ======= Header ======= -->
  <header id="header" class="header fixed-top d-flex align-items-center">
     
@@ -67,7 +66,6 @@
 
   <nav class="header-nav ms-auto">
     <ul class="d-flex align-items-center">
-
 
       <li class="nav-item dropdown pe-3">
 
@@ -120,6 +118,7 @@
 
 
 
+
   <!-- ======= Sidebar =================================================================================================================================================================== -->
   <!-- ======= Sidebar =================================================================================================================================================================== -->
 
@@ -133,6 +132,7 @@
           <span>Accueil</span>
         </a>
       </li><!-- End Dashboard Nav -->
+
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#BE_ul" data-bs-toggle="collapse" href="#">
@@ -176,15 +176,13 @@
         </ul>
       </li>
 
-
-      {% if "a1" in user.role   %}
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-person-add"></i><span>Créer un compte</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li class="nav-item">
-            <a class="nav-link collapsed" href="{% url 'create_acc_for_Auditeur' %}">
+            <a class="nav-link " href="{% url 'create_acc_for_Auditeur' %}">
               <i class="bi bi-person-add fa-10x"></i>
               <span>Pour l'auditeur</span>
             </a>
@@ -204,16 +202,16 @@
 
         </ul>
       </li>
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'Auditor_Task_Summary' %}">
           <i class="bi bi-activity"></i>
           <span>Résumé des Tâches par Auditeur</span>
         </a>
       </li>
-      {% endif %}
 
       <li class="nav-item">
-        <a class="nav-link " href="{% url 'corbeille' %}">
+        <a class="nav-link collapsed" href="{% url 'corbeille' %}">
           <i class="bi bi-trash"></i>
           <span>Corbeille</span>
         </a>
@@ -231,85 +229,96 @@
   <!-- End Sidebar ==========================================================================================================================-->
 
   <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Créer un compte pour l'auditeur</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main_page' %}">Accueil</a></li>
+          <li class="breadcrumb-item active">Créer un compte</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    </br>
+
+    
+    {% if acc_state %}
+    <script>
+      
+      alert("Le compte a été créé","");
+      
+    </script>
+    {% endif %}
+
+    
+      
+      <section class="section justify-content-center"  >
+        <form  enctype="multipart/form-data" method="POST" >
+          {% csrf_token %}
+        <div class="row" style="max-width:700px;margin:auto;">
+          
+
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"></h5>
+
+                <!-- General Form Elements -->
+                  <div class="row mb-3">
+                    <label for="inputText" class="col-sm-2 col-form-label">Nom</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="lastname" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Prénom</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="firstname" required>
+                    </div>
+                  </div>
+
+                  
+                  <div class="row mb-3">
+                      <label for="inputPassword" class="col-sm-2 col-form-label">E-mail</label>
+                      <div class="col-sm-10">
+                        <input type="email" class="form-control" name="email" required>
+                      </div>
+                    </div>
+
+                  <div class="row mb-3">
+                    <label for="inputNumber" class="col-sm-2 col-form-label">N° de tél</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" name="num" required>
+                    </div>
+                  </div>
 
 
-    {% for model_type in model_type %}
-    <section class="section">
-      <div class="row" >
-        
-        <div class="card ">
-        <div class="overflow-auto">
-            <div class="card-body">
-              <h5 class="card-title ">{{model_type.name}}</h5>
-                
-              <!-- General Form Elements -->
-              <input class="form-control" type="text" id="filterInput_{{ model_type.index }}" placeholder="Search..." style="width:30%;min-width:100px;">
-              </br>
-              <form method="POST"   enctype="multipart/form-data" id="myForm">
-                {% csrf_token %}
-                
-                <table class="table  table-hover datatable datatable-table" id="tableDATA_{{model_type.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
-  
-                  <thead class="table-dark text-center">
-                    <th></th><!--style="width:auto;"-->
-                    <th>Client: ID</th> 
-                    <th>Ficher: ID</th> 
-                    <th>Ficher</th>  
-                    <th colspan=2 class="text-center">Utilisateur</th> 
-                    <th colspan=2 class="text-center">Date de retrait</th> 
-                    <th></th>
-                  </thead>
-                  <tbody  id="myTable_{{model_type.index}}">
-                    {% for F in model_type.model|dictsortreversed:"file_removed_date" %}
-                      <tr id="tr_for_{{model_type.name}}_{{F.file_id}}_{{F.file_index}}">
-                        <td class="">
-                          {% if F.file_format == "excel" %}
-                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line fa-2x color_green" ></i></a>
-                          {% elif F.file_format == "pdf" %}
-                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf fa-2x color_red_important" ></i></a>
-                          {% elif F.file_format == "image" %}
-                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image fa-2x color_blue" ></i></a>
-                          {% elif F.file_format == "word" %}
-                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word fa-2x color_blue_2" ></i></a>
-                          {% elif F.file_format == "pz2" %}
-                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt fa-2x " ></i></a>
-                          {% else %}
-                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line fa-2x" ></i></a>
-                          {% endif %}
-                        </td>
-                        <td class=""><p>{{ F.file_id }}</p></td>
-                        <td class=""><p>{{ F.file_index }}</p></td>
-                        <td class=""><p>{{ F.file_name }}</p></td>
-                        <td class=""><p>{{ F.file_removed_user_email }}</p></td>
-                        <td class=""><p>{{ F.file_removed_user_LN }} {{ F.file_removed_user_FN }}</p></td>
-                        <td class=""><p>{{ F.file_removed_date|date:_("d m Y H:i") }}</p></td>
-                        <td class=""><p>{{ F.file_removed_date|naturaltime }}</p></td>
-                        <td class="">
+                  </br>
+                  
 
-                          <button  class="button_table_data" type="button" onclick="remove_file_from_m('{{F.file_id}}','{{F.file_index}}','{{model_type.name}}','{{redirect_next_page}}','tr_for_{{model_type.name}}_{{F.file_id}}_{{F.file_index}}')">
-                            <i class="ri-delete-bin-2-fill fa-2x" style="color:red;"></i>
-                          </button>
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                      <button type="submit" class="btn btn-primary" name="create_acc_button" value="submit">Créer un compte</button>
+                    </div>
+                  </div>
 
-                        </td>
-                      </tr>
-                    {% endfor %}
-                  </tbody>
 
-                </table>
+              </div>
+            
 
-              </form><!-- End General Form Elements -->
+          </div>
 
-            </div>
+          
         </div>
+        </form>
+      </section>
+    
 
-        </div>
-
-      </div>
-    </section>
-    {% endfor %}
   </main>
 
   <!-- ======= Footer ======= -->
+  {% endif %}
   {% else %}
       
   <script>
@@ -318,11 +327,9 @@
 
   {% endif %}
 
-  
-  
-  
 
-
+  
+  
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/chart.js/chart.umd.js' %}"></script>
@@ -335,7 +342,6 @@
   
 
   <!-- Template Main JS File -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main2.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main3.js'%}"></script>

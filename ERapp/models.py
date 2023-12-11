@@ -49,6 +49,7 @@ class USER(AbstractBaseUser, PermissionsMixin):
     
     user_id = models.CharField(max_length=255,blank=True, null=True)
     
+    auditeur = models.BooleanField(default=False)
     be = models.BooleanField(default=False)
     ai = models.BooleanField(default=False)
     com_name = models.CharField(max_length=255,blank=True, null=True)
