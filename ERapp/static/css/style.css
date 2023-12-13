@@ -608,8 +608,15 @@ h6 {
 .color_gray{color:gray;}
 .bg-color-red{background-color:red!important;}
 .bg-color-white{background-color:white!important;}
+.info_color{color:#0dcaf0;}
+.info_color_background{background-color:#0dcaf0;}
+.info_color_important{color:#0dcaf0!important;}
 
 
+/* Auditor_Task_Summary_BY_A */
+.tr_fini td{background:rgb(156, 255, 184)!important;}
+.tr_Envoye td{background:rgba(128, 0, 128, 0.5)!important;}
+.tr_Modification_Faite_result td{background: rgba(0, 255, 255, 0.2)!important;}
 
 /*--------------------------------------------------------------
 # upload_spinner

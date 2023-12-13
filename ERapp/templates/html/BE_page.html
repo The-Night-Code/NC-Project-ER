@@ -233,7 +233,7 @@
                       </thead>
                       <tbody id="myTable_{{k.index}}">
                         {% for item in data %}
-                          {% if item.etat == k.state and item.bureau_d_etude == user.com_name and item.be  %}
+                          {% if item.etat in k.state_2 and item.bureau_d_etude == user.com_name and item.be %}
                             <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
                             
                             <tr id="tr_{{ item.cell_id }}">

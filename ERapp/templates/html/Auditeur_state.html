@@ -234,7 +234,59 @@
 
   <main id="main" class="main">
 
+    <section class="section">
+      <div class="row">
+          
+        <div class="col-12">
+              
+          <div class="card recent-sales">
 
+
+            <div class="card-body">
+              <h5 class="card-title"><span class="badge" data-badge="{{k.state}}"> {{k.state}}</span> </h5>
+              <div class="overflow-auto" style="padding:1px;">
+                <form method="post"  enctype="multipart/form-data" id="myForm">
+                  {% csrf_token %}
+
+                  <table class="table  table-hover  table-bordered table_Auditeur_state"  cellspacing="0" >  <!-- table-sm  table-responsive-->
+
+                    <thead class="table-dark table_Auditeur_state_thead">
+
+                      <tr class="table_Auditeur_state_tr">
+                        <th rowspan=2 style="width:40px;"></th>
+                        <th rowspan=2 >Email</th>
+                        <th rowspan=2 >Nom</th>
+                        <th rowspan=2 >Prénom</th>
+                      </tr>
+                    </thead>
+                    <tbody  class="table-bordered" id="myTable_{{k.index}}" >
+
+                      {% for D in data  %}
+                      <tr >
+                        <td><a class="btn-info" style="text-decoration:none" href="{% url 'Auditor_Task_Summary_BY_A' auditeur_email=D.email %}"><i class="ri-file-search-line fa-2x info_color "></i></a></td>
+                        <td><p>{{ D.email }}</p></td>
+                        <td><p>{{ D.last_name}}</p></td>
+                        <td><p>{{ D.first_name  }}</p></td>
+
+                        
+                      </tr>
+                      {% endfor %}
+                      
+                    </tbody>
+
+                  </table>
+
+                </form><!-- End General Form Elements -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    
+      
+    </section>
     
     <section class="section">
       {% for k  in table_index %}
@@ -262,6 +314,7 @@
                       <thead class="table-dark table_Auditeur_state_thead">
 
                         <tr class="table_Auditeur_state_tr">
+                          <th rowspan=2 >plus de détails</th>
                           <th rowspan=2 >Email</th>
                           <th rowspan=2 >Nom</th>
                           <th rowspan=2 >Prénom</th>
@@ -291,6 +344,7 @@
 
                         {% for D in data  %}
                         <tr id="myTable_{{k.index}}">
+                          <td></td>
                           <td><p>{{ D.email }}</p></td>
                           <td><p>{{ D.last_name}}</p></td>
                           <td><p>{{ D.first_name  }}</p></td>
@@ -458,6 +512,7 @@
       {% endfor %}
       
     </section>
+    
     
   </main>
 

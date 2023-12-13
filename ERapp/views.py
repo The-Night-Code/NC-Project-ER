@@ -578,21 +578,26 @@ def Auditeur_Accueil(request):
     user_=request.user
     data = TableData001.objects.all()
     activities_audit = Activities_audit.objects.order_by("-Activity_date")[:6]
-    today = timezone.now()
+    today = timezone.now().date()
+    yesterday = today - timedelta(days=1)
     first_day_of_year = date(today.year, 1, 1)
     first_day_of_month = date(today.year, today.month, 1)
 
-    client_count_added_today = TableData001.objects.filter(creation_time__date=today).count()
+    client_count_added_today = TableData001.objects.filter(creation_time__range=(yesterday,today)).count()
     client_count_added_month = TableData001.objects.filter(creation_time__range=(first_day_of_month, timezone.now())).count()
     client_count_added_year= TableData001.objects.filter(creation_time__range=(first_day_of_year, timezone.now())).count()
 
-    client_count_envoye_today = TableData001.objects.filter(Envoye_time__date=today).count()
+    client_count_envoye_today = TableData001.objects.filter(Envoye_time__range=(yesterday,today)).count()
     client_count_envoye_month = TableData001.objects.filter(Envoye_time__range=(first_day_of_month, timezone.now())).count()
     client_count_envoye_year= TableData001.objects.filter(Envoye_time__range=(first_day_of_year, timezone.now())).count()
     
-    client_count_fini_today = TableData001.objects.filter(fini_time__date=today).count()
+    client_count_fini_today = TableData001.objects.filter(fini_time__range=(yesterday,today)).count()
     client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month,timezone.now())).count()
     client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, timezone.now())).count()
+    
+    client_count_Modification_Faite_today = TableData001.objects.filter(Modification_Faite_time__range=(yesterday,today)).count()
+    client_count_Modification_Faite_month = TableData001.objects.filter(Modification_Faite_time__range=(first_day_of_month,timezone.now())).count()
+    client_count_Modification_Faite_year= TableData001.objects.filter(Modification_Faite_time__range=(first_day_of_year, timezone.now())).count()
     
     fini_result={}
     envoye_result={}
@@ -639,8 +644,11 @@ def Auditeur_Accueil(request):
                                                         
                                                         'fini_result':fini_result,
                                                         'envoye_result':envoye_result,
-                                                        'Modification_Faite_result':Modification_Faite_result
+                                                        'Modification_Faite_result':Modification_Faite_result,
                                                         
+                                                        'client_count_Modification_Faite_today':client_count_Modification_Faite_today,
+                                                        'client_count_Modification_Faite_month':client_count_Modification_Faite_month,
+                                                        'client_count_Modification_Faite_year':client_count_Modification_Faite_year,
                                                         })
 
 @login_required
@@ -855,6 +863,135 @@ def Auditor_Task_Summary(request):   #Tableau de Bord  # Résumé des Tâches pa
     return render(request, 'html/Auditeur_state.html',{'data':data,
                                                        'table_index':table_index,} )
 
+@login_required
+def Auditor_Task_Summary_BY_A(request,auditeur_email):
+    
+    table_index_=[{'index':1,'state':"Aujourd'hui"},
+                 {'index':2,'state':"Hier"},
+                 {'index':3,'state':""},
+                 {'index':4,'state':""},
+                 {'index':5,'state':""},
+                 {'index':6,'state':""},
+                 {'index':7,'state':""}]
+    table_index=[]
+    fini_result={}
+    envoye_result={}
+    Modification_Faite_result={}
+    days_of_week = ['day-7', 'day-6', 'day-5', 'day-4', 'day-3', 'day-2','day-1']
+    
+    current_date = timezone.now().date()
+    # Get the current day of the week (0 for Monday, 1 for Tuesday, etc.)
+    current_weekday = 6
+
+    # Loop through the past N days, where N is the current day of the week
+    k=int(current_weekday)
+    for day_offset in range(current_weekday +1):
+        
+        # Calculate the date range for each day
+        start_date = current_date - timedelta(days=day_offset)
+        end_date = start_date - timedelta(days=1) 
+        table_index.append({'index':k,'state':start_date})
+        # Filter and count records for the specified date range
+        count1 = TableData001.objects.filter(fini_time__range=(end_date, start_date),fini_time_checker=True,fini_by_user=auditeur_email)
+        count2 = TableData001.objects.filter(Envoye_time__range=(start_date, end_date),Envoye_time_checker=True,Envoye_by_user=auditeur_email)
+        count3 = TableData001.objects.filter(Modification_Faite_time__range=(end_date, start_date),Modification_Faite_time_checker=True,Modification_Faite_by_user=auditeur_email)
+        
+        # Store the count in the dictionary
+        fini_result[days_of_week[k]] = count1
+        envoye_result[days_of_week[k]] = count2
+        Modification_Faite_result[days_of_week[k]] = count3
+        k-=1
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    day_0 = timezone.now().date() + timedelta(days=1) 
+    day_1 = day_0 - timedelta(days=1)
+    day_2 = day_0 - timedelta(days=2)
+    day_3 = day_0 - timedelta(days=3)
+    day_4 = day_0 - timedelta(days=4)
+    day_5 = day_0 - timedelta(days=5)
+    day_6 = day_0 - timedelta(days=6)
+    day_7 = day_0 - timedelta(days=7)
+    
+
+
+    data=[]
+    table_index_2=[]
+           
+    day_1_fini_time = TableData001.objects.filter(fini_time__range=[day_1, day_0],fini_time_checker=True,fini_by_user=auditeur_email)
+    day_2_fini_time = TableData001.objects.filter(fini_time__range=[day_2, day_1],fini_time_checker=True,fini_by_user=auditeur_email)
+    day_3_fini_time = TableData001.objects.filter(fini_time__range=[day_3, day_2],fini_time_checker=True,fini_by_user=auditeur_email)
+    day_4_fini_time = TableData001.objects.filter(fini_time__range=[day_4, day_3],fini_time_checker=True,fini_by_user=auditeur_email)
+    day_5_fini_time = TableData001.objects.filter(fini_time__range=[day_5, day_4],fini_time_checker=True,fini_by_user=auditeur_email)
+    day_6_fini_time = TableData001.objects.filter(fini_time__range=[day_6, day_5],fini_time_checker=True,fini_by_user=auditeur_email)
+    day_7_fini_time = TableData001.objects.filter(fini_time__range=[day_7, day_6],fini_time_checker=True,fini_by_user=auditeur_email)
+    
+    days_of_week = ['day_7', 'day_6', 'day_5', 'day_4', 'day_3', 'day_2','day_1']
+    Envoye_time={}
+    day_0 = timezone.now().date() + timedelta(days=1) 
+    j=1
+    for i in range(7):
+        start_date = day_0 - timedelta(days=i)
+        end_date = day_0 - timedelta(days=i+1)
+        day_fini_time = TableData001.objects.filter(fini_time__range=[end_date, start_date],fini_time_checker=True,fini_by_user=auditeur_email)
+        day_Envoye_time = TableData001.objects.filter(Envoye_time__range=[end_date , start_date ],Envoye_time_checker=True,Envoye_by_user=auditeur_email)
+        day_Modification_Faite_result_time = TableData001.objects.filter(Modification_Faite_time__range=[end_date , start_date ],Modification_Faite_time_checker=True,Modification_Faite_by_user=auditeur_email)
+        table_index_2.append({'state':end_date,
+                              'index':j,
+                            'fini_result':day_fini_time,
+                            'envoye_result':day_Envoye_time,
+                            'Modification_Faite_result':day_Modification_Faite_result_time})
+        j+=1
+                        
+
+        
+        
+    
+    #day_1_ = TableData001.objects.filter(__range=[day_1, day_0],fini_time_checker=True,fini_by_user=auditeur_email)
+    #day_2_ = TableData001.objects.filter(__range=[day_2, day_1],fini_time_checker=True,fini_by_user=auditeur_email)
+    #day_3_ = TableData001.objects.filter(__range=[day_3, day_2],fini_time_checker=True,fini_by_user=auditeur_email)
+    #day_4_ = TableData001.objects.filter(__range=[day_4, day_3],fini_time_checker=True,fini_by_user=auditeur_email)
+    #day_5_ = TableData001.objects.filter(__range=[day_5, day_3],fini_time_checker=True,fini_by_user=auditeur_email)
+    #day_6_ = TableData001.objects.filter(__range=[day_6, day_5],fini_time_checker=True,fini_by_user=auditeur_email)
+    #day_7_ = TableData001.objects.filter(__range=[day_7, day_6],fini_time_checker=True,fini_by_user=auditeur_email)
+
+
+    #day_1_ 
+    #day_2_ 
+    #day_3_ 
+    #day_4_ 
+    #day_5_
+    #day_6_ 
+    #day_7_
+    
+    
+
+    data.append({'email':auditeur_email,#'first_name':audi.first_name,'last_name':audi.last_name,
+
+                'fini_result':fini_result,
+                'envoye_result':envoye_result,
+                'Modification_Faite_result':Modification_Faite_result})
+    
+    return render(request, 'html/Auditeur_state_by_a.html',{'data':data,
+                                                       'table_index':table_index,
+                                                       'table_index_2':table_index_2,
+                                                       "day_1_fini_time":day_1_fini_time,
+                                                        "day_2_fini_time":day_2_fini_time,
+                                                        'day_3_fini_time':day_3_fini_time,
+                                                        'day_4_fini_time':day_4_fini_time,
+                                                        'day_5_fini_time':day_5_fini_time,
+                                                        'day_6_fini_time':day_6_fini_time,
+                                                        'day_7_fini_time':day_7_fini_time,
+                                                        } )
 
 
 @login_required
@@ -1280,9 +1417,9 @@ def BE_Page(request):
     user_ = request.user
     bureau_d_etude = user_.com_name
     data = TableData001.objects.filter(be=True,bureau_d_etude=bureau_d_etude).order_by('-creation_time')
-    table_index=[{'index':1,'state':"A realiser"},
-                 {'index':2,'state':"Fini"},
-                 {'index':3,'state':"A modifier"}]
+    table_index=[{'index':1,'state':"A realiser",'state_2':"A realiser ;  En cours ; "},
+                 {'index':2,'state':"Fini",'state_2':"Fini"},
+                 {'index':3,'state':"A modifier",'state_2':"A modifier ; Modification Faite"}]
     
     col_count = data.count()
     # Get unique column names from the TableData model

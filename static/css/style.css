@@ -518,6 +518,9 @@ h6 {
 .color_gray_dark{color:rgba(54, 54, 54, 0.733)!important;}
 .bg-color-red{background-color:red!important;}
 .bg-color-white{background-color:white!important;}
+.info_color{color:#0dcaf0;}
+.info_color_background{background-color:#0dcaf0;}
+.info_color_important{color:#0dcaf0!important;}
 /*--------------------------------------------------------------
 # Page Title
 --------------------------------------------------------------*/
