@@ -1,11 +1,403 @@
   // table1_remove_file_from_model
-function remove_file_from_m(id, index, column, redirect_next_page) {
-    var url = "/remove_file_from_MODELS/?param0=" + encodeURIComponent(id) +
-                "&param1=" + encodeURIComponent(index) +
-                "&param2=" + encodeURIComponent(column) +
-                "&param3=" + encodeURIComponent(redirect_next_page);
+function submitForm__uploadfiles(cellId, box, redirectPage,col){
+    submitForm__01(cellId, box, redirectPage,col);
+}
+function submitForm__01(cellId, box, redirectPage,col){
+    
+    var myForm_id="myForm";
+    var csrfToken = $("[name=csrfmiddlewaretoken]").val();
+    
 
-    window.location.href = url;
+    
+
+
+    var myid1 = document.getElementsByName("myid1")[0].value;
+    var col_type1 = document.getElementsByName("col_type1")[0].value;
+    var button_edit_data_on_table = document.getElementsByName("button_edit_data_on_table")[0].value;
+
+    var table_firstname = document.getElementsByName("table_firstname_"+cellId)[0].value;
+    var table_lastname = document.getElementsByName("table_lastname_"+cellId)[0].value;
+    var table_address = document.getElementsByName("table_address_"+cellId)[0].value;
+    var table_num = document.getElementsByName("table_num_"+cellId)[0].value;
+    var table_email = document.getElementsByName("table_email_"+cellId)[0].value;
+    var table_etat = document.getElementsByName("table_etat_"+cellId)[0].value;
+    var table_tp = document.getElementsByName("table_tp_"+cellId)[0].value;
+    var table_cofrac = document.getElementsByName("table_cofrac_"+cellId)[0].value;
+    var table_auditeur = document.getElementsByName("table_auditeur_"+cellId)[0].value;
+    
+    var table_paiement = document.getElementById("table_paiement_"+cellId);
+    if (table_paiement.checked == true){
+        var table_paiement_send_state = "True";
+    } else {
+        var table_paiement_send_state = "False";
+    }
+   
+
+    // Construct the names of the file input elements
+    var table_VT_input_name = 'table_VT_' + cellId;
+    var table_auditV1_input_name = 'table_auditV1_' + cellId;
+    var table_auditV2_input_name = 'table_auditV2_' + cellId;
+    var table_auditV3_input_name = 'table_auditV3_' + cellId;
+    var table_auditFinal_input_name = 'table_auditFinal_' + cellId;
+    // Get the file input elements using the constructed names
+    var table_VT_input = document.querySelector('input[name="' + table_VT_input_name + '"]');
+    var table_auditV1_input = document.querySelector('input[name="' + table_auditV1_input_name + '"]');
+    var table_auditV2_input = document.querySelector('input[name="' + table_auditV2_input_name + '"]');
+    var table_auditV3_input = document.querySelector('input[name="' + table_auditV3_input_name + '"]');
+    var table_auditFinal_input = document.querySelector('input[name="' + table_auditFinal_input_name + '"]');
+
+
+    var formData = new FormData();
+
+    // Append other data to the FormData object
+    formData.append('cellId_new', cellId);
+    formData.append('table_firstname', table_firstname);
+    formData.append('table_lastname', table_lastname);
+    formData.append('table_address', table_address);
+    formData.append('table_num', table_num);
+    formData.append('table_email', table_email);
+    formData.append('table_etat', table_etat);
+    formData.append('table_tp', table_tp);
+    formData.append('table_cofrac', table_cofrac);
+    formData.append('table_auditeur', table_auditeur);
+    formData.append('table_paiement', table_paiement_send_state);
+    formData.append('redirect_page', redirectPage);
+    formData.append('myid1', myid1);
+    formData.append('col_type1', col_type1);
+    formData.append('button_edit_data_on_table', button_edit_data_on_table);
+    formData.append('csrfmiddlewaretoken', csrfToken);
+
+
+    // Append all files from table_VT_input to the FormData object
+    for (var i = 0; i < table_VT_input.files.length; i++) {
+        formData.append('table_VT[]', table_VT_input.files[i]);
+    }
+
+    // Append all files from table_auditV1_input to the FormData object
+    for (var i = 0; i < table_auditV1_input.files.length; i++) {
+        formData.append('table_auditV1[]', table_auditV1_input.files[i]);
+    }
+
+    // Append all files from table_auditV2_input to the FormData object
+    for (var i = 0; i < table_auditV2_input.files.length; i++) {
+        formData.append('table_auditV2[]', table_auditV2_input.files[i]);
+    }
+    // Append all files from table_auditV2_input to the FormData object
+    for (var i = 0; i < table_auditV3_input.files.length; i++) {
+        formData.append('table_auditV3[]', table_auditV3_input.files[i]);
+    }
+    // Append all files from table_auditV2_input to the FormData object
+    for (var i = 0; i < table_auditFinal_input.files.length; i++) {
+        formData.append('table_auditFinal[]', table_auditFinal_input.files[i]);
+    }
+
+    var loading_spinner_div = `<div class="upload_spinner" id="upload_spinner_1"></div> `  ;
+    $("body").prepend(loading_spinner_div);
+
+    // Get the ID of the row to disable // Disable all inputs within the specified row
+    var tr_disabled_id = '#tr_'+cellId;
+    $(tr_disabled_id).find('input, select, textarea, button').prop('disabled', true);
+    
+
+    $.ajax({
+        url: "/table-view/",
+        type: "POST",
+        data:  formData,
+        processData: false, // Important: tell jQuery not to process the data
+        contentType: false, // Important: tell jQuery not to set contentType
+        
+        success: function(data){
+            //window.location.href=table_firstname 
+            // update the specific  div {new contant}
+            //("#resultDiv").html(data);
+            if(data.re_page){
+                location.reload();
+            }
+            table_VT_input.value = null;
+            table_auditV1_input.value = null;
+            table_auditV2_input.value = null;
+            table_auditV3_input.value = null;
+            table_auditFinal_input.value=null
+            var row = document.getElementById("tr_"+cellId);
+            var button_edit_data_on_T = row.querySelector('i');
+            if (row) {
+                row.style.borderColor = "#0dcaf0";
+                button_edit_data_on_T.style.color="green";
+ 
+            }
+
+            
+            // Loop through files and prepend new list items
+            
+            for (var i = 0; i < data.files_date_for_response.length; i++) {
+                var F = data.files_date_for_response[i];
+                var element_id="#ul_for_"+F.column+"_"+F.file_id;
+                var new_File = `
+
+                    <li id="li_for_${F.column}_${F.file_id}" class="color_red_important">
+                        <li class="list-inline-item">
+                            <a class="nav-link nav-icon show" ><i class=" ${F.I_icon_class} " ></i></a>
+                        </li>
+                        ${F.file_name}
+                        <li class="list-inline-item">
+                        <button  class="button_table_data" type="button"  disabled">
+                        <i class="ri-delete-bin-2-fill color_gray" style="color:gray;"></i>
+                        </button>
+                    </li>
+                    </li>
+                    
+                `
+
+                
+                $(element_id).prepend(new_File);
+                //$("#div_for_vt_DcvWOFJbEf").prepend(new_File);
+            }
+            
+            // Get the ID of the row to disable // !Disable all inputs within the specified row
+            var tr_disabled_id = '#tr_'+cellId;
+            $(tr_disabled_id).find('input, select, textarea, button').prop('disabled', false);
+            
+            const remove_loading_spinner_div = document.getElementById("upload_spinner_1");
+            remove_loading_spinner_div.remove()
+            
+
+
+
+        },
+
+    });
+
+}
+function submitForm__02(cellId, box, redirectPage,col){
+    var myForm_id="myForm";
+    var csrfToken = $("[name=csrfmiddlewaretoken]").val();
+    var myid1 = document.getElementsByName("myid1")[0].value;
+    var col_type1 = document.getElementsByName("col_type1")[0].value;
+    var button_edit_data_on_table = document.getElementsByName("button_edit_data_on_table")[0].value;
+
+
+    var table_firstname = document.getElementsByName("table_firstname_"+cellId)[0].value;
+    var table_lastname = document.getElementsByName("table_lastname_"+cellId)[0].value;
+    var table_address = document.getElementsByName("table_address_"+cellId)[0].value;
+    var table_num = document.getElementsByName("table_num_"+cellId)[0].value;
+    var table_email = document.getElementsByName("table_email_"+cellId)[0].value;
+    
+    // Construct the names of the file input elements
+    var table_VT_input_name = 'table_VT_' + cellId;
+    var table_auditV1_input_name = 'table_auditV1_' + cellId;
+    var table_auditV2_input_name = 'table_auditV2_' + cellId;
+    var table_auditV3_input_name = 'table_auditV3_' + cellId;
+    var table_auditFinal_input_name = 'table_auditFinal_' + cellId;
+    // Get the file input elements using the constructed names
+    var table_VT_input = document.querySelector('input[name="' + table_VT_input_name + '"]');
+    var table_auditV1_input = document.querySelector('input[name="' + table_auditV1_input_name + '"]');
+    var table_auditV2_input = document.querySelector('input[name="' + table_auditV2_input_name + '"]');
+    var table_auditV3_input = document.querySelector('input[name="' + table_auditV3_input_name + '"]');
+    var table_auditFinal_input = document.querySelector('input[name="' + table_auditFinal_input_name + '"]');
+
+
+    var formData = new FormData();
+
+    formData.append('table_firstname', table_firstname);
+    formData.append('table_lastname', table_lastname);
+    formData.append('table_address', table_address);
+    formData.append('table_num', table_num);
+    formData.append('table_email', table_email);
+
+    // Append other data to the FormData object
+    formData.append('cellId_new', cellId);
+
+    formData.append('button_edit_data_on_table', button_edit_data_on_table);
+    formData.append('csrfmiddlewaretoken', csrfToken);
+
+
+    // Append all files from table_VT_input to the FormData object
+    for (var i = 0; i < table_VT_input.files.length; i++) {
+        formData.append('table_VT[]', table_VT_input.files[i]);
+    }
+
+    // Append all files from table_auditV1_input to the FormData object
+    for (var i = 0; i < table_auditV1_input.files.length; i++) {
+        formData.append('table_auditV1[]', table_auditV1_input.files[i]);
+    }
+
+    // Append all files from table_auditV2_input to the FormData object
+    for (var i = 0; i < table_auditV2_input.files.length; i++) {
+        formData.append('table_auditV2[]', table_auditV2_input.files[i]);
+    }
+    // Append all files from table_auditV2_input to the FormData object
+    for (var i = 0; i < table_auditV3_input.files.length; i++) {
+        formData.append('table_auditV3[]', table_auditV3_input.files[i]);
+    }
+    // Append all files from table_auditV2_input to the FormData object
+    for (var i = 0; i < table_auditFinal_input.files.length; i++) {
+        formData.append('table_auditFinal[]', table_auditFinal_input.files[i]);
+    }
+
+    var loading_spinner_div = `<div class="upload_spinner" id="upload_spinner_1"></div> `  ;
+    $("body").prepend(loading_spinner_div);
+
+    // Get the ID of the row to disable // Disable all inputs within the specified row
+    var tr_disabled_id = '#tr_'+cellId;
+    $(tr_disabled_id).find('input, select, textarea, button').prop('disabled', true);
+    
+
+    $.ajax({
+        url: "/table-view-3/",
+        type: "POST",
+        data:  formData,
+        processData: false, // Important: tell jQuery not to process the data
+        contentType: false, // Important: tell jQuery not to set contentType
+        
+        success: function(data){
+            //window.location.href=table_firstname 
+            // update the specific  div {new contant}
+            //("#resultDiv").html(data);
+            if(data.re_page){
+                location.reload();
+            }
+            table_VT_input.value = null;
+            table_auditV1_input.value = null;
+            table_auditV2_input.value = null;
+            table_auditV3_input.value = null;
+            table_auditFinal_input.value=null
+            var row = document.getElementById("tr_"+cellId);
+            var button_edit_data_on_T = row.querySelector('i');
+            if (row) {
+                row.style.borderColor = "#0dcaf0";
+                button_edit_data_on_T.style.color="green";
+ 
+            }
+
+            
+            // Loop through files and prepend new list items
+            
+            for (var i = 0; i < data.files_date_for_response.length; i++) {
+                var F = data.files_date_for_response[i];
+                var element_id="#ul_for_"+F.column+"_"+F.file_id;
+                var new_File = `
+
+                    <li id="li_for_${F.column}_${F.file_id}" class="color_red_important">
+                        <li class="list-inline-item">
+                            <a class="nav-link nav-icon show" ><i class=" ${F.I_icon_class} " ></i></a>
+                        </li>
+                        ${F.file_name}
+                        <li class="list-inline-item">
+                        <button  class="button_table_data" type="button"  disabled">
+                        <i class="ri-delete-bin-2-fill color_gray" style="color:gray;"></i>
+                        </button>
+                    </li>
+                    </li>
+                    
+                `
+
+                
+                $(element_id).prepend(new_File);
+                //$("#div_for_vt_DcvWOFJbEf").prepend(new_File);
+            }
+            
+            // Get the ID of the row to disable // !Disable all inputs within the specified row
+            var tr_disabled_id = '#tr_'+cellId;
+            $(tr_disabled_id).find('input, select, textarea, button').prop('disabled', false);
+            
+            const remove_loading_spinner_div = document.getElementById("upload_spinner_1");
+            remove_loading_spinner_div.remove()
+            
+
+
+
+        },
+
+    });
+
+}
+
+initializeInput_change('tableDATA_1');
+initializeInput_change('tableDATA_2');
+initializeInput_change('tableDATA_3');
+initializeInput_change('tableDATA_4');
+initializeInput_change('tableDATA_5');
+initializeInput_change('tableDATA_6');
+initializeInput_change('tableDATA_7');
+initializeInput_change('tableDATA_8');
+initializeInput_change('tableDATA_9');
+
+function initializeInput_change(tableId) {
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get all input elements within the table
+        var inputElements = document.querySelectorAll("#"+tableId+" tbody input[type='text'], #"+tableId+" tbody input[type='file'], #"+tableId+" tbody select ");
+
+        // Store the original values in a data attribute
+        inputElements.forEach(function(input) {
+            input.dataset.originalValue = input.value;
+        });
+
+        // Listen for input changes
+        inputElements.forEach(function(input) {
+            input.addEventListener("input", function() {
+                updateRowColor(input.closest("tr"),tableId);
+            });
+        });
+    });
+}
+function updateRowColor(row,cellId) {
+    // Check if at least one input has a different value from its original value
+    var rowShouldBeRed = Array.from(row.querySelectorAll("input[type='text'], input[type='file'],  tbody select ")).some(function(input) {
+        return input.value !== input.dataset.originalValue;
+    });
+    //var button_edit_data_on_T = document.getElementById("i_for_edit_button_"+cellId); //document.getElementsByClassName("i_for_edit_button")[0];
+    const button_edit_data_on_T = row.querySelector('i');
+    // Set the row color based on the check
+    if (rowShouldBeRed) {
+        row.style.borderColor = "red";
+        button_edit_data_on_T.style.color="red";
+    } else {
+        row.style.borderColor = "#0dcaf0"; // Reset to the default background color
+        button_edit_data_on_T.style.color="green";
+    }
+}
+
+
+function remove_file_from_m(id, index, column, redirect_next_page ,element_tag_id) {
+
+    var csrfToken = $("[name=csrfmiddlewaretoken]").val()
+    
+
+
+
+    $.ajax({
+        url: "/remove_file_from_MODELS/",
+        type: "POST",
+        data: {
+            param0: id,
+            param1:index,
+            param2:column,
+            param3:redirect_next_page,
+            element_tag_id_index:element_tag_id,
+            csrfmiddlewaretoken: csrfToken,
+            processData: false, // Important: tell jQuery not to process the data
+            contentType: false, // Important: tell jQuery not to set contentType
+        },
+        success: function (response) {
+            
+             
+            var remove_file_from_box_2 = document.getElementById(response.element_tag_id_index);
+            remove_file_from_box_2.remove()
+
+
+            //if(data.status =="success"){
+            var file_removed_status_box = `
+            <div class="file_removed_status_box" id="file_removed_status_box_1">
+                <h4>${response.title}</h4>
+            </div> `  ;
+            $("body").prepend(file_removed_status_box);
+            $("#file_removed_status_box_1").delay(2000).fadeOut(200);
+            
+            //$('#file_removed_status_box_1').remove();
+            //}
+
+        },
+    });
 }
 
 
@@ -22,48 +414,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function sendMessage(cellId, box, redirectNextPage,col) {
-    inpust_msg_col_id="input_msg_"+col+"_" + cellId
+                    
+    inpust_msg_col_id="input_msg_"+col+"_" + cellId;
     var message = document.getElementById(inpust_msg_col_id).value;
+    var csrfToken = $("[name=csrfmiddlewaretoken]").val();
     
-    if (message !== '') {
-        var csrfToken = $("[name=csrfmiddlewaretoken]").val();
+    $.ajax({
+        url: "/send-message/",
+        type: "POST",
+        data: {
+            message: message,
+            box:box,
+            redirectNextPage:redirectNextPage,
+            cellId:cellId,
+            col:col,
+            csrfmiddlewaretoken: csrfToken
+        },
+        success: function (data) {
+            document.getElementById(inpust_msg_col_id).value = ''; // Clear the input field
+            var newMessage = `
+                <li class="message-item">
+                    <a>
+                        <img src="${data.userProfilePic}" alt="Image" width="50"class="rounded-circle">
+                        <div>
+                            <h3>${data.username}</h3>
+                            <h4>${data.message}</h4>
+                            <p> quelques secondes </p>  <!-- Use the naturaltime filter here -->
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+            `;
 
-        $.ajax({
-            url: "/send-message/",
-            type: "POST",
-            data: {
-                message: message,
-                box:box,
-                redirectNextPage:redirectNextPage,
-                cellId:cellId,
-                csrfmiddlewaretoken: csrfToken
-            },
-            success: function (data) {
-                document.getElementById(inpust_msg_col_id).value = ''; // Clear the input field
-                var newMessage = `
-                    <li class="message-item">
-                        <a>
-                            <img src="${data.userProfilePic}" alt="Image" class="rounded-circle">
-                            <div>
-                                <h3>${data.username}</h3>
-                                <h4>${data.message}</h4>
-                                <p> quelques secondes </p>  <!-- Use the naturaltime filter here -->
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                `;
+            // Append the new message to the chat box
+            $("#chat-messages-container_"+col+"_"+cellId).prepend(newMessage);
 
-                // Append the new message to the chat box
-                $("#chat-messages-container_"+col).prepend(newMessage);
+            document.getElementById(inpust_msg_col_id).value = '';
 
-                document.getElementById(inpust_msg_col_id).value = '';
+        },
+    });
 
-            },
-        });
-    }
 }
 
 function preventSubmit(event) {
@@ -140,60 +532,6 @@ selectElement.addEventListener('change', updateBadgefoot);
 
 
 
-function sortTable12(table_id, n) {
-    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById(table_id);
-    switching = true;
-    // Set the sorting direction to ascending:
-    dir = "asc"; 
-    /* Make a loop that will continue until
-    no switching has been done: */
-    while (switching) {
-      // Start by saying: no switching is done:
-      switching = false;
-      rows = table.rows;
-      /* Loop through all table rows (except the
-      first, which contains table headers): */
-      for (i = 1; i < (rows.length - 1); i++) {
-        // Start by saying there should be no switching:
-        shouldSwitch = false;
-        /* Get the two elements you want to compare,
-        one from the current row and one from the next: */
-        x = rows[i].getElementsByTagName("TD")[n].textContent;
-        y = rows[i + 1].getElementsByTagName("TD")[n].textContent;
-        /* Check if the two rows should switch place,
-        based on the direction, asc or desc: */
-        if (dir == "asc") {
-          if (x.toLowerCase() > y.toLowerCase()) {
-            // If so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        } else if (dir == "desc") {
-          if (x.toLowerCase() < y.toLowerCase()) {
-            // If so, mark as a switch and break the loop:
-            shouldSwitch = true;
-            break;
-          }
-        }
-      }
-      if (shouldSwitch) {
-        /* If a switch has been marked, make the switch
-        and mark that a switch has been done: */
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        switching = true;
-        // Each time a switch is done, increase this count by 1:
-        switchcount++;
-      } else {
-        /* If no switching has been done AND the direction is "asc",
-        set the direction to "desc" and run the while loop again. */
-        if (switchcount == 0 && dir == "asc") {
-          dir = "desc";
-          switching = true;
-        }
-      }
-    }
-  }
 
 function sortTable(table_id,n,Date_Time_TD) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -304,3 +642,46 @@ function sortTable(table_id,n,Date_Time_TD) {
         }
     }
 }
+
+
+
+
+// button  to change project from state{fini > a modifier}
+function button_etat_a_modif(id){
+    var csrfToken = $("[name=csrfmiddlewaretoken]").val()
+    $.ajax({
+        url: "/CBFCS/",
+        type: "POST",
+        data: {
+            param0: id,
+            csrfmiddlewaretoken:csrfToken
+        },
+        success: function (response) {
+            if(response.re_page){
+                location.reload();
+            }
+
+        },
+    });
+    
+}
+function etat_a_modif(id) {
+    let text = "Appuyez sur OK pour confirmer les modifications";
+    //if (confirm(text) == true) {
+        var confirmation_box_for_change_state =`<div class="confirmation_box_for_change_state" id="CBFCS_${id}">
+        <div class="alert alert-secondary alert-dismissible fade show" role="alert" style="margin:auto;">
+        <h4 class="alert-heading">Confirmer les modifications</h4>
+        <p>Appuyez sur OUI pour confirmer les modifications</p>
+        <hr>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" id="button_etat_a_modif" onclick="button_etat_a_modif('${id}')"">OUI</button>
+        </div>
+    </div>`;
+
+
+    $("body").prepend(confirmation_box_for_change_state);
+    //} 
+    
+
+
+  }
