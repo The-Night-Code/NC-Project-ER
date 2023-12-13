@@ -235,102 +235,114 @@
   <main id="main" class="main">
 
     <section class="section">
-        {% for k  in table_index_2 %}
-          <div class="row">
-             
-            <div class="col-12">
-                  
-              <div class="card recent-sales">
-                <p>{{Envoye_time}}</p>
-    
-                <div class="card-body">
-                    <h2><span class="badge bg-secondary" style="width:100%;">{{k.state_2}}</span></h2>
-                    {% if k.index == 1 %}
-                        <h2><span class="badge bg-secondary">Aujourd'hui</span></h2>
-                    {% else %}
-                        {% if k.index == 2 %}
-                            <h2><span class="badge bg-secondary">Hier</span></h2>
-                        {% else %}
-                            <h2><span class="badge bg-secondary" style="width:100%;">{{k.state}}</span></h2>
-                        {% endif %}
-                    {% endif %}
+        <div class="row">
+
+            <div class="col-lg-9">
+                {% for k  in table_index_2 %}
+                <div class="col-12">
                     
-  
-                  
-                  
-                  <input class="form-control" type="text" id="filterInput_{{ k.index }}" placeholder="Search..." style="width:30%;min-width:100px;">
-                  <div class="overflow-auto" style="padding:1px;">
-                    <form method="post"  enctype="multipart/form-data" id="myForm">
-                      {% csrf_token %}
-                      <input type="hidden" name="myid{{ k.index }}" id="myid{{ k.index }}">
-                      <input type="hidden" name="col_type{{ k.index }}" id="col_type{{ k.index }}">
-                      <input type="hidden" name="mybutton{{ k.index }}" id="mybutton{{ k.index }}">
-                      <table class="table  table-hover  table-bordered table_Auditeur_state" id="tableDATA_{{k.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
-  
-                        <thead class="table-dark table_Auditeur_state_thead">
-  
-                          <tr class="table_Auditeur_state_tr">
-                            <th ></th>
-                            <th >id</th>
-                            <th >Email</th>
-                            <th >Nom</th>
-                            <th >Prénom</th>
-                            <th >AI/BE</th>
-                          </tr>
-
-  
-                        </thead>
-                        <tbody  class="table-bordered" id="myTable_{{k.index}}" >
-                            <!-- fini_result-->
-                          {% for D in k.fini_result  %}
-                            <tr id="myTable_{{k.index}}" class="tr_fini">
-                                <td>Projet fini</td>
-                                <td><p>{{ D.cell_id}}</p></td>
-                                <td><p>{{ D.email }}</p></td>
-                                <td><p>{{ D.lastname  }}</p></td>
-                                <td><p>{{ D.firstname  }}</p></td>
-                                {% if D.be %}
-                                    <td><p>{{ D.bureau_d_etude  }}</p></td>
-                                {% endif %}
-                                {% if D.ai %}
-                                    <td><p>{{ D.agent  }}</p></td>
-                                {% endif %}
-                            </tr>
-                          {% endfor %}
-                            <!-- envoye_result-->
-
-                            
-                            <!-- Modification_Faite_result-->
-                          {% for D in k.Modification_Faite_result  %}
-                            <tr id="myTable_{{k.index}}" class="tr_Modification_Faite_result" >
-                                <td>Projet fini</td>
-                                <td><p>{{ D.cell_id}}</p></td>
-                                <td><p>{{ D.email }}</p></td>
-                                <td><p>{{ D.lastname  }}</p></td>
-                                <td><p>{{ D.firstname  }}</p></td>
-                                {% if D.be %}
-                                    <td><p>{{ D.bureau_d_etude  }}</p></td>
-                                {% endif %}
-                                {% if D.ai %}
-                                    <td><p>{{ D.agent  }}</p></td>
-                                {% endif %}
-                            </tr>
-                          {% endfor %}
-
-                        </tbody>
-  
-                      </table>
-  
-                    </form><!-- End General Form Elements -->
-  
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        {% endfor %}
+                <div class="card recent-sales">
+                    <p>{{Envoye_time}}</p>
         
+                    <div class="card-body">
+                        {% if k.index == 1 %}
+                            <h3><span class="badge bg-secondary">Aujourd'hui</span></h3>
+                        {% else %}
+                            {% if k.index == 2 %}
+                                <h3><span class="badge bg-secondary">Hier</span></h3>
+                            {% else %}
+                                <h3><span class="badge bg-secondary" >{{k.state|date:_("d/m/Y ") }}</span></h3>
+                            {% endif %}
+                        {% endif %}
+                        
+    
+                    
+                    
+                    <input class="form-control" type="text" id="filterInput_{{ k.index }}" placeholder="Search..." style="width:30%;min-width:100px;">
+                    <div class="overflow-auto" style="padding:1px;">
+                        <form method="post"  enctype="multipart/form-data" id="myForm">
+                        {% csrf_token %}
+                        <input type="hidden" name="myid{{ k.index }}" id="myid{{ k.index }}">
+                        <input type="hidden" name="col_type{{ k.index }}" id="col_type{{ k.index }}">
+                        <input type="hidden" name="mybutton{{ k.index }}" id="mybutton{{ k.index }}">
+                        <table class="table  table-hover  table-bordered table_Auditeur_state" id="tableDATA_{{k.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
+    
+                            <thead class="table-dark table_Auditeur_state_thead">
+    
+                            <tr class="table_Auditeur_state_tr">
+                                <th ></th>
+                                <th >id</th>
+                                <th >Email</th>
+                                <th >Nom</th>
+                                <th >Prénom</th>
+                                <th >AI/BE</th>
+                            </tr>
+
+    
+                            </thead>
+                            <tbody  class="table-bordered" id="myTable_{{k.index}}" >
+                                <!-- fini_result-->
+                            {% for D in k.fini_result  %}
+                                <tr id="myTable_{{k.index}}" class="tr_fini">
+                                    <td>Projet fini</td>
+                                    <td><p>{{ D.cell_id}}</p></td>
+                                    <td><p>{{ D.email }}</p></td>
+                                    <td><p>{{ D.lastname  }}</p></td>
+                                    <td><p>{{ D.firstname  }}</p></td>
+                                    {% if D.be %}
+                                        <td><p>{{ D.bureau_d_etude  }}</p></td>
+                                    {% endif %}
+                                    {% if D.ai %}
+                                        <td><p>{{ D.agent  }}</p></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                                <!-- envoye_result-->
+
+
+                                <!-- Modification_Faite_result-->
+                            {% for D in k.Modification_Faite_result  %}
+                                <tr id="myTable_{{k.index}}" class="tr_Modification_Faite_result" >
+                                    <td>Projet fini</td>
+                                    <td><p>{{ D.cell_id}}</p></td>
+                                    <td><p>{{ D.email }}</p></td>
+                                    <td><p>{{ D.lastname  }}</p></td>
+                                    <td><p>{{ D.firstname  }}</p></td>
+                                    {% if D.be %}
+                                        <td><p>{{ D.bureau_d_etude  }}</p></td>
+                                    {% endif %}
+                                    {% if D.ai %}
+                                        <td><p>{{ D.agent  }}</p></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+    
+                        </table>
+    
+                        </form><!-- End General Form Elements -->
+    
+                    </div>
+                    </div>
+                </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="col-xl-3" style="position: fixed; z-index: 1000;right:0%;">
+
+                <div class="card">
+                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                    <img src="{{user_Au.profile_pic.url}}" alt="Profile"  width="50%" style="border-radius: 25%;">
+                    <h2>{{user_Au.lastname}} {{user_Au.firstname}}</h2>
+                    <h3>{{user_Au.email}}</h3>
+
+                </div>
+                </div>
+    
+            </div>
+        </div>
     </section>
     
   

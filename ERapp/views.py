@@ -865,6 +865,13 @@ def Auditor_Task_Summary(request):   #Tableau de Bord  # Résumé des Tâches pa
 
 @login_required
 def Auditor_Task_Summary_BY_A(request,auditeur_email):
+
+    
+    user_A = USER.objects.get(email=auditeur_email)
+    user_Au={'firstname':user_A.first_name,
+            'lastname':user_A.last_name,
+            'email':user_A.email,
+            'profile_pic':user_A.profile_pic}
     
     table_index_=[{'index':1,'state':"Aujourd'hui"},
                  {'index':2,'state':"Hier"},
@@ -951,29 +958,7 @@ def Auditor_Task_Summary_BY_A(request,auditeur_email):
                             'envoye_result':day_Envoye_time,
                             'Modification_Faite_result':day_Modification_Faite_result_time})
         j+=1
-                        
-
-        
-        
-    
-    #day_1_ = TableData001.objects.filter(__range=[day_1, day_0],fini_time_checker=True,fini_by_user=auditeur_email)
-    #day_2_ = TableData001.objects.filter(__range=[day_2, day_1],fini_time_checker=True,fini_by_user=auditeur_email)
-    #day_3_ = TableData001.objects.filter(__range=[day_3, day_2],fini_time_checker=True,fini_by_user=auditeur_email)
-    #day_4_ = TableData001.objects.filter(__range=[day_4, day_3],fini_time_checker=True,fini_by_user=auditeur_email)
-    #day_5_ = TableData001.objects.filter(__range=[day_5, day_3],fini_time_checker=True,fini_by_user=auditeur_email)
-    #day_6_ = TableData001.objects.filter(__range=[day_6, day_5],fini_time_checker=True,fini_by_user=auditeur_email)
-    #day_7_ = TableData001.objects.filter(__range=[day_7, day_6],fini_time_checker=True,fini_by_user=auditeur_email)
-
-
     #day_1_ 
-    #day_2_ 
-    #day_3_ 
-    #day_4_ 
-    #day_5_
-    #day_6_ 
-    #day_7_
-    
-    
 
     data.append({'email':auditeur_email,#'first_name':audi.first_name,'last_name':audi.last_name,
 
@@ -982,10 +967,11 @@ def Auditor_Task_Summary_BY_A(request,auditeur_email):
                 'Modification_Faite_result':Modification_Faite_result})
     
     return render(request, 'html/Auditeur_state_by_a.html',{'data':data,
-                                                       'table_index':table_index,
-                                                       'table_index_2':table_index_2,
-                                                       "day_1_fini_time":day_1_fini_time,
-                                                        "day_2_fini_time":day_2_fini_time,
+                                                        'user_Au':user_Au,
+                                                        'table_index':table_index,
+                                                        'table_index_2':table_index_2,
+                                                        'day_1_fini_time':day_1_fini_time,
+                                                        'day_2_fini_time':day_2_fini_time,
                                                         'day_3_fini_time':day_3_fini_time,
                                                         'day_4_fini_time':day_4_fini_time,
                                                         'day_5_fini_time':day_5_fini_time,
