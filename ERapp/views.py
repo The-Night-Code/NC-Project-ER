@@ -1171,7 +1171,7 @@ def agent_immo_f(request):
                 
    
                         
-    return render(request, 'html/agentimmof.html',{"acc_state":acc_state} )
+    return render(request, 'html/agentimmoF.html',{"acc_state":acc_state} )
 
 
 @login_required
