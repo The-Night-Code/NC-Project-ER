@@ -314,6 +314,7 @@
                             <th onclick="sortTable('tableDATA_{{k.index}}',24)" >id </span></th>
                           </tr>
                         </thead>
+                        
                           <tbody id="myTable_{{k.index}}" >
                             {% for item in data %}
                             {% if item.etat == k.state and item.be == True %}
@@ -330,15 +331,17 @@
                               <td class="td_input_cell td_input_file_cell" > <!-- VT-->
                                 <nav class="header-nav ms-auto" >
                                   <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                    <i class="ri-file-list-3-line"></i>
-                                    
+                                    <i class="ri-file-list-3-line" ><span id="table_i_VT_{{ item.cell_id }}" style="background:red;color:white; padding:2px 5px; marggin:5px; border-radius:25px;font-size:20px;position: relative; top:10px; " >0</span></i>
                                   </a>
 
+                                  
+                                  
                                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" id="ul_for_vt_{{item.cell_id}}">
                                     <!-- for i in datafiles  if item.cell_id == i.file_id  -->
                                     {% for F in datafiles_VT %}
                                         {% if F.file_id == item.cell_id %}
-                                            <li id="li_for_vt_{{item.cell_id}}_{{F.file_index}}">
+                                            <li onload="add_1_to_i_files_box('table_i_VT_{{ item.cell_id }}')" id="li_for_vt_{{item.cell_id}}_{{F.file_index}}">
+                                              
                                                 <div class="list-inline-item">
                                                     {% if F.file_format == "excel" %}
                                                         <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -360,6 +363,24 @@
                                                         <i class="ri-delete-bin-2-fill" style="color:red;"></i>
                                                     </button>
                                                 </div>
+
+
+                                                <script>
+                                                  // Dynamically generate JavaScript calls
+                                                  add_1_to_i_files_box("table_i_VT_x3LKeEMFpE");
+                                                  
+                                                </script>
+                                                <script>
+                                                  
+
+                                                  // Get the span element by its ID
+                                                  var spanElement = document.getElementById("table_i_VT_{{ item.cell_id }}");
+                                                  var currentValue = parseInt(spanElement.innerHTML, 10);
+                                                    // Add 1 to the current value
+                                                  var newValue = currentValue + 1;
+                                                    // Update the span with the new value
+                                                  spanElement.innerHTML = newValue;
+                                              </script>
                                             </li>
                                         {% endif %}
                                     {% endfor %}
@@ -1021,7 +1042,7 @@
   <!-- Template Main JS File -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
-  <script type="text/javascript" src="{% static 'js/main2.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main2.js'%}">add_1_to_i_files_box2();</script>
   <script type="text/javascript" src="{% static 'js/main3.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main4.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main5.js'%}"></script>

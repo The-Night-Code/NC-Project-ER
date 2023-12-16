@@ -398,8 +398,23 @@ function remove_file_from_m(id, index, column, redirect_next_page ,element_tag_i
 
         },
     });
-}
+};
+function add_1_to_i_files_box2(iddd) {
+    var spanElement1 = document.getElementById("table_i_VT_p3zbGdJCFH");
+    spanElement1.innerHTML = "newValue";
 
+};
+function add_1_to_i_files_box(iddd) {
+
+    // Get the span element by its ID
+    var spanElement = document.getElementById(iddd);
+    var currentValue = parseInt(spanElement.innerHTML, 10);
+      // Add 1 to the current value
+    var newValue = currentValue + 1;
+      // Update the span with the new value
+    spanElement.innerHTML = newValue;
+
+};
 
 document.addEventListener("DOMContentLoaded", function () {
     const toggleIcon = document.getElementById("toggle-dropdown");
@@ -410,6 +425,7 @@ document.addEventListener("DOMContentLoaded", function () {
       dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
     });
 });
+
 
 
 
