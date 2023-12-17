@@ -35,16 +35,9 @@
   <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
-  <script>
-    
-      
-    
-    </script>
 
-  <style>
+  <script type="text/javascript" src="{% static 'js/main10.js'%}"></script>
 
-
-  </style>
     
 </head>
 
@@ -346,7 +339,7 @@
                             <td class="td_input_cell td_input_file_cell" > <!-- VT-->
                               <nav class="header-nav ms-auto" >
                                 <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                  <i class="ri-file-list-3-line"></i>
+                                  <i class="ri-file-list-3-line" ><span id="table_i_VT_{{ item.cell_id }}" style="background:red;color:white; padding:2px 5px; marggin:5px; border-radius:25px;font-size:20px;position: relative; top:10px; " >0</span></i>
                                   
                                 </a>
 
@@ -355,6 +348,9 @@
                                   {% for F in datafiles_VT %}
                                       {% if F.file_id == item.cell_id %}
                                           <li id="li_for_vt_{{item.cell_id}}_{{F.file_index}}">
+                                            <script>
+                                              add_1_to_i_files_box("table_i_VT_{{ item.cell_id }}");
+                                            </script>
                                               <div class="list-inline-item">
                                                   {% if F.file_format == "excel" %}
                                                       <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>

@@ -301,7 +301,7 @@ function submitForm__02(cellId, box, redirectPage,col){
             $(tr_disabled_id).find('input, select, textarea, button').prop('disabled', false);
             
             const remove_loading_spinner_div = document.getElementById("upload_spinner_1");
-            remove_loading_spinner_div.remove()
+            remove_loading_spinner_div.remove();
             
 
 
@@ -380,7 +380,7 @@ function remove_file_from_m(id, index, column, redirect_next_page ,element_tag_i
         },
         success: function (response) {
             
-             
+            
             var remove_file_from_box_2 = document.getElementById(response.element_tag_id_index);
             remove_file_from_box_2.remove()
 
@@ -393,28 +393,20 @@ function remove_file_from_m(id, index, column, redirect_next_page ,element_tag_i
             $("body").prepend(file_removed_status_box);
             $("#file_removed_status_box_1").delay(2000).fadeOut(200);
             
-            //$('#file_removed_status_box_1').remove();
-            //}
 
+            var elem_i_id ="table_i_"+response.column+"_"+response.id;
+            var spanElement = document.getElementById(elem_i_id);
+            
+            var currentValue = parseInt(spanElement.innerHTML, 10);
+            // Add 1 to the current value
+            var newValue = currentValue - 1;
+            // Update the span with the new value
+            spanElement.innerHTML = newValue;
         },
     });
 };
-function add_1_to_i_files_box2(iddd) {
-    var spanElement1 = document.getElementById("table_i_VT_p3zbGdJCFH");
-    spanElement1.innerHTML = "newValue";
 
-};
-function add_1_to_i_files_box(iddd) {
 
-    // Get the span element by its ID
-    var spanElement = document.getElementById(iddd);
-    var currentValue = parseInt(spanElement.innerHTML, 10);
-      // Add 1 to the current value
-    var newValue = currentValue + 1;
-      // Update the span with the new value
-    spanElement.innerHTML = newValue;
-
-};
 
 document.addEventListener("DOMContentLoaded", function () {
     const toggleIcon = document.getElementById("toggle-dropdown");
@@ -506,45 +498,6 @@ function initializeTable(tableId) {
         });
     });
 }
-
-
-// <select> with <span>badge for tbody
-// Function to update the badge based on the selected option in a row
-function updateBadge(row) {
-    const selectElement = row.querySelector('.form-select');
-    const badgeElements = row.querySelectorAll('.badge');
-    const selectedOption = selectElement.value;
-
-    badgeElements.forEach(badge => {
-        if (badge.getAttribute('data-badge') === selectedOption) {
-            badge.style.display = 'inline-block';
-        } else {
-            badge.style.display = 'none';
-        }
-    });
-}
-
-
-
-//<select> with <span>badge for tfoot  
-const selectElement = document.querySelector('.form-selectfoot');
-const badgeElements = document.querySelectorAll('.badgefoot');
-
-// Function to update the badge based on the selected option
-function updateBadgefoot() {
-    const selectedOption = selectElement.value;
-    badgeElements.forEach(badgefoot => {
-        badgefoot.style.display = 'none';
-    });
-    document.querySelector(`.badgefoot[data-badgefoot="${selectedOption}"]`).style.display = 'inline-block';
-}
-
-// Initial call to set the badge based on the default selected option
-updateBadgefoot();
-
-// Add event listener to update the badge when the select element changes
-selectElement.addEventListener('change', updateBadgefoot);
-
 
 
 
@@ -701,3 +654,43 @@ function etat_a_modif(id) {
 
 
   }
+
+
+// <select> with <span>badge for tbody
+// Function to update the badge based on the selected option in a row
+function updateBadge(row) {
+    const selectElement = row.querySelector('.form-select');
+    const badgeElements = row.querySelectorAll('.badge');
+    const selectedOption = selectElement.value;
+
+    badgeElements.forEach(badge => {
+        if (badge.getAttribute('data-badge') === selectedOption) {
+            badge.style.display = 'inline-block';
+        } else {
+            badge.style.display = 'none';
+        }
+    });
+}
+
+
+
+//<select> with <span>badge for tfoot  
+const selectElement = document.querySelector('.form-selectfoot');
+const badgeElements = document.querySelectorAll('.badgefoot');
+
+// Function to update the badge based on the selected option
+function updateBadgefoot() {
+    const selectedOption = selectElement.value;
+    badgeElements.forEach(badgefoot => {
+        badgefoot.style.display = 'none';
+    });
+    document.querySelector(`.badgefoot[data-badgefoot="${selectedOption}"]`).style.display = 'inline-block';
+}
+
+// Initial call to set the badge based on the default selected option
+updateBadgefoot();
+
+// Add event listener to update the badge when the select element changes
+selectElement.addEventListener('change', updateBadgefoot);
+
+

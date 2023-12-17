@@ -1042,7 +1042,7 @@ def remove_file_from_MODELS(request):
         #redirect_to_next_page = request.POST.get('param3')
         element_tag_id_index = request.POST.get('element_tag_id_index')
         file_table=ModelByColumn(model_by_column)
-        
+        elem_i_id ="table_i_"+model_by_column+"_"+file_id
         try:
             f_table_audit_v1 = file_table.objects.get(file_id=str(file_id),file_index=str(index))
 
@@ -1073,6 +1073,7 @@ def remove_file_from_MODELS(request):
                     f_table_audit_v1.save(update_fields=['file_removed', 'file_removed_user_email', 'file_removed_user_FN', 'file_removed_user_LN','file_removed_date' ])
                     if model_by_column == "vt":
                         model_by_column="Visite technique"
+                        model_by_column2= "VT"
                     Activities_audit.objects.create(Activity_id=generate_random_string(10),
                                                                 Activity_user=f"{user_.last_name} {user_.first_name}",
                                                                 Activity_user_email=user_.email,
@@ -1083,7 +1084,11 @@ def remove_file_from_MODELS(request):
                                                                 Activity_delete=True)
                     return JsonResponse({'status': 'success',
                                     'title': 'Le fichier a été supprimé',
-                                    "element_tag_id_index":element_tag_id_index,})
+                                    "element_tag_id_index":element_tag_id_index,
+                                    "id":file_id ,
+                                    "index":index ,
+                                    "column":model_by_column2,
+                                    "elem_i_id":elem_i_id,})
                 except:
                     pass
         except file_table.DoesNotExist:
