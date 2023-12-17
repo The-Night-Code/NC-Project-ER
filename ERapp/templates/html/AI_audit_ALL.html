@@ -35,16 +35,9 @@
   <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
-  <script>
-    
-      
-    
-    </script>
 
-  <style>
+  <script type="text/javascript" src="{% static 'js/main10.js'%}"></script>
 
-
-  </style>
     
 </head>
 
@@ -342,15 +335,19 @@
                                 <td class="td_input_cell td_input_file_cell" > <!-- VT-->
                                   <nav class="header-nav ms-auto" >
                                     <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                      <i class="ri-file-list-3-line"></i>
-                                      
+                                      <i class="ri-file-list-3-line" ><span class="table_span_calc_files" id="table_span_VT_{{ item.cell_id }}"  >0</span></i>
                                     </a>
-  
+
+                                    
+                                    
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" id="ul_for_vt_{{item.cell_id}}">
                                       <!-- for i in datafiles  if item.cell_id == i.file_id  -->
                                       {% for F in datafiles_VT %}
                                           {% if F.file_id == item.cell_id %}
                                               <li id="li_for_vt_{{item.cell_id}}_{{F.file_index}}">
+                                                <script>
+                                                  add_1_to_i_files_box("table_span_VT_{{ item.cell_id }}");
+                                                </script>
                                                   <div class="list-inline-item">
                                                       {% if F.file_format == "excel" %}
                                                           <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -372,6 +369,10 @@
                                                           <i class="ri-delete-bin-2-fill" style="color:red;"></i>
                                                       </button>
                                                   </div>
+
+
+                                                  
+                                                  
                                               </li>
                                           {% endif %}
                                       {% endfor %}
@@ -389,8 +390,8 @@
                                       </li>
                                       <li></li>
                                   </ul>
-  
-  
+
+
                       
                                   </nav>
                                 </td> 
@@ -435,7 +436,7 @@
                                 <td class="td_input_cell td_input_file_cell"> <!-- auditV1-->
                                   <nav class="header-nav ms-auto" >
                                     <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" >
-                                      <i class="ri-file-list-3-line"></i>
+                                      <i class="ri-file-list-3-line" ><span class="table_span_calc_files" id="table_span_auditV1_{{ item.cell_id }}" >0</span></i>
                                       
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end"  id="ul_for_auditV1_{{item.cell_id}}" >
@@ -445,6 +446,9 @@
                                         
                                         {% if F.file_id == item.cell_id %}
                                           <li id="li_for_auditV1_{{item.cell_id}}_{{F.file_index}}">
+                                            <script>
+                                              add_1_to_i_files_box("table_span_auditV1_{{ item.cell_id }}");
+                                            </script>
                                           <div class="list-inline-item">
                                             {% if F.file_format == "excel" %}
                                             <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -486,12 +490,12 @@
                       
                                   </nav>
                                 </td>
-                                
                       
+                                
                                 <td class="td_input_cell td_input_file_cell"> <!-- auditV2-->
                                   <nav class="header-nav ms-auto" >
                                     <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                      <i class="ri-file-list-3-line"></i>
+                                      <i class="ri-file-list-3-line" ><span class="table_span_calc_files" id="table_span_auditV2_{{ item.cell_id }}" >0</span></i>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end"  id="ul_for_auditV2_{{item.cell_id}}">
                                       
@@ -500,6 +504,9 @@
                                     
                                       {% if F.file_id == item.cell_id  and not F.file_removed %}
                                       <li id="li_for_auditV2_{{item.cell_id}}_{{F.file_index}}">
+                                        <script>
+                                          add_1_to_i_files_box("table_span_auditV2_{{ item.cell_id }}");
+                                        </script>
                                         <div class="list-inline-item">
                                           {% if F.file_format == "excel" %}
                                           <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -539,16 +546,17 @@
                                     
                                   
                   
-                                </ul>
+                                  </ul>
                       
                       
                                   </nav>
                                 </td>
   
+
                                 <td class="td_input_cell td_input_file_cell"> <!-- auditV3-->
                                   <nav class="header-nav ms-auto" >
                                     <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                      <i class="ri-file-list-3-line"></i>
+                                      <i class="ri-file-list-3-line" ><span class="table_span_calc_files" id="table_span_auditV3_{{ item.cell_id }}" >0</span></i>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" id="ul_for_auditV3_{{item.cell_id}}" >
                                       
@@ -557,6 +565,9 @@
                                     
                                       {% if F.file_id == item.cell_id %}
                                       <li id="li_for_auditV3_{{item.cell_id}}_{{F.file_index}}">
+                                        <script>
+                                          add_1_to_i_files_box("table_span_auditV3_{{ item.cell_id }}");
+                                        </script>
                                         <div class="list-inline-item">
                                           {% if F.file_format == "excel" %}
                                           <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -595,17 +606,16 @@
                                     <li></li>
                   
                                     </ul>
-  
+                      
+                      
                                   </nav>
                                 </td>
   
-  
-  
-                                                    
+                  
                                 <td class="td_input_cell td_input_file_cell"> <!-- auditFinal-->
                                   <nav class="header-nav ms-auto" >
                                     <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                      <i class="ri-file-list-3-line"></i>
+                                      <i class="ri-file-list-3-line" ><span class="table_span_calc_files" id="table_span_auditFinal_{{ item.cell_id }}" >0</span></i>
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end"  id="ul_for_auditV2_{{item.cell_id}}">
                                       
@@ -614,6 +624,9 @@
                                     
                                       {% if F.file_id == item.cell_id  and not F.file_removed %}
                                       <li id="li_for_auditFinal_{{item.cell_id}}_{{F.file_index}}">
+                                        <script>
+                                          add_1_to_i_files_box("table_span_auditFinal_{{ item.cell_id }}");
+                                        </script>
                                         <div class="list-inline-item">
                                           {% if F.file_format == "excel" %}
                                           <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
@@ -653,7 +666,7 @@
                                     
                                   
                   
-                                </ul>
+                                    </ul>
                       
                       
                                   </nav>

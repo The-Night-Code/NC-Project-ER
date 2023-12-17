@@ -32,7 +32,7 @@ function submitForm__01(cellId, box, redirectPage,col){
         var table_paiement_send_state = "False";
     }
    
-
+ 
     // Construct the names of the file input elements
     var table_VT_input_name = 'table_VT_' + cellId;
     var table_auditV1_input_name = 'table_auditV1_' + cellId;
@@ -67,12 +67,14 @@ function submitForm__01(cellId, box, redirectPage,col){
     formData.append('button_edit_data_on_table', button_edit_data_on_table);
     formData.append('csrfmiddlewaretoken', csrfToken);
 
-
+    var index_for_calc = 0;
     // Append all files from table_VT_input to the FormData object
     for (var i = 0; i < table_VT_input.files.length; i++) {
         formData.append('table_VT[]', table_VT_input.files[i]);
+        index_for_calc++;
     }
 
+    formData.append('table_VT[]', index_for_calc);
     // Append all files from table_auditV1_input to the FormData object
     for (var i = 0; i < table_auditV1_input.files.length; i++) {
         formData.append('table_auditV1[]', table_auditV1_input.files[i]);
@@ -131,6 +133,8 @@ function submitForm__01(cellId, box, redirectPage,col){
             
             for (var i = 0; i < data.files_date_for_response.length; i++) {
                 var F = data.files_date_for_response[i];
+                var col_n = F.column
+                
                 var element_id="#ul_for_"+F.column+"_"+F.file_id;
                 var new_File = `
 
@@ -147,12 +151,25 @@ function submitForm__01(cellId, box, redirectPage,col){
                     </li>
                     
                 `
-
-                
                 $(element_id).prepend(new_File);
                 //$("#div_for_vt_DcvWOFJbEf").prepend(new_File);
+
+                
+                console.log(" F.column === "+ F.column);
+                console.log(" length === "+ data.files_date_for_response.length);
             }
-            
+            for (var k = 0; k < data.files_added_list.length; k++){   
+                var added_F = data.files_added_list[k];
+                
+                var iddd = "table_span_"+added_F.col_n+"_"+added_F.file_id;
+                // Get the span element by its ID
+                var spanElement = document.getElementById(iddd);
+                var currentValue = parseInt(spanElement.innerHTML, 10);
+                // Add 1 to the current value
+                var newValue = currentValue + added_F.files_added;
+                // Update the span with the new value
+                spanElement.innerHTML = newValue;
+            }
             // Get the ID of the row to disable // !Disable all inputs within the specified row
             var tr_disabled_id = '#tr_'+cellId;
             $(tr_disabled_id).find('input, select, textarea, button').prop('disabled', false);
@@ -273,6 +290,7 @@ function submitForm__02(cellId, box, redirectPage,col){
             // Loop through files and prepend new list items
             
             for (var i = 0; i < data.files_date_for_response.length; i++) {
+                var col_n = F.column
                 var F = data.files_date_for_response[i];
                 var element_id="#ul_for_"+F.column+"_"+F.file_id;
                 var new_File = `
@@ -294,6 +312,32 @@ function submitForm__02(cellId, box, redirectPage,col){
                 
                 $(element_id).prepend(new_File);
                 //$("#div_for_vt_DcvWOFJbEf").prepend(new_File);
+
+
+                if(col_n=="vt"){
+                    col_n="VT"
+                }
+                var iddd = "table_span_"+col_n+"_"+F.file_id;
+                // Get the span element by its ID
+                var spanElement = document.getElementById(iddd);
+                var currentValue = parseInt(spanElement.innerHTML, 10);
+                // Add 1 to the current value
+                var newValue = currentValue + 1;
+                // Update the span with the new value
+                spanElement.innerHTML = newValue;
+            }
+
+            for (var k = 0; k < data.files_added_list.length; k++){   
+                var added_F = data.files_added_list[k];
+                
+                var iddd = "table_span_"+added_F.col_n+"_"+added_F.file_id;
+                // Get the span element by its ID
+                var spanElement = document.getElementById(iddd);
+                var currentValue = parseInt(spanElement.innerHTML, 10);
+                // Add 1 to the current value
+                var newValue = currentValue + added_F.files_added;
+                // Update the span with the new value
+                spanElement.innerHTML = newValue;
             }
             
             // Get the ID of the row to disable // !Disable all inputs within the specified row
@@ -381,27 +425,58 @@ function remove_file_from_m(id, index, column, redirect_next_page ,element_tag_i
         success: function (response) {
             
             
-            var remove_file_from_box_2 = document.getElementById(response.element_tag_id_index);
-            remove_file_from_box_2.remove()
+            if(response.status=="success"){   
+                var remove_file_from_box_2 = document.getElementById(response.element_tag_id_index);
+                if (remove_file_from_box_2){remove_file_from_box_2.remove();}
+                
 
 
-            //if(data.status =="success"){
-            var file_removed_status_box = `
-            <div class="file_removed_status_box" id="file_removed_status_box_1">
-                <h4>${response.title}</h4>
-            </div> `  ;
-            $("body").prepend(file_removed_status_box);
-            $("#file_removed_status_box_1").delay(2000).fadeOut(200);
+                //if(data.status =="success"){
+                var file_removed_status_box = `
+                <div class="file_removed_status_box" id="file_removed_status_box_1">
+                    <h4>${response.title}</h4>
+                </div> `  ;
+                $("body").prepend(file_removed_status_box);
+                $("#file_removed_status_box_1").delay(2000).fadeOut(200);
+                
+
+                var ul_for_vt_= 'ul_for_vt_'+response.id;
+                var ul_for_auditV1_= 'ul_for_auditV1_'+response.id;
+                var ul_for_auditV2_= 'ul_for_auditV2_'+response.id;
+                var ul_for_auditV3_= 'ul_for_auditV3_'+response.id;
+                var ul_for_auditFinal_= 'ul_for_auditFinal_'+response.id;
+                var ulElement_id_list = [ul_for_vt_, ul_for_auditV1_, ul_for_auditV2_, ul_for_auditV3_, ul_for_auditFinal_];
+                for (var k = 0; k < ulElement_id_list.length; k++){   
+                    var ulElement_id = ulElement_id_list[k];
+                    var ulElement = document.getElementById(ulElement_id);
+                    
+                    if (ulElement == "noting ") {
+                        // Get all <li> elements inside the <ul> element
+                        var liElements = ulElement.getElementsByTagName("li");
+
+                        // Count the number of <li> elements
+                        var liCount = liElements.length;
+                        
+                        var elem_i_id ="table_span_"+response.column+"_"+response.id;
+                        var spanElement = document.getElementById(elem_i_id);
+
+                        spanElement.innerHTML =  liElements.length-3;
+                        // Output the result
+                    } else {
+                    }
+                }
+
+                var iddd = "table_span_"+response.column+"_"+response.id;
+                // Get the span element by its ID
+                var spanElement = document.getElementById(response.elem_i_id);
+                var currentValue = parseInt(spanElement.innerHTML, 10);
+                // Add 1 to the current value
+                var newValue = currentValue -1 ;
+                // Update the span with the new value
+                spanElement.innerHTML = newValue;
+
+            }
             
-
-            var elem_i_id ="table_i_"+response.column+"_"+response.id;
-            var spanElement = document.getElementById(elem_i_id);
-            
-            var currentValue = parseInt(spanElement.innerHTML, 10);
-            // Add 1 to the current value
-            var newValue = currentValue - 1;
-            // Update the span with the new value
-            spanElement.innerHTML = newValue;
         },
     });
 };
