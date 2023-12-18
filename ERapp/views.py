@@ -614,11 +614,13 @@ def Auditeur_Accueil(request):
     user_=request.user
     data = TableData001.objects.all()
     activities_audit = Activities_audit.objects.order_by("-Activity_date")[:6]
-    today = timezone.now().date()
+    today = timezone.now().date() +timedelta(days=1)
     yesterday = today - timedelta(days=1)
     first_day_of_year = date(today.year, 1, 1)
     first_day_of_month = date(today.year, today.month, 1)
+    
 
+        
     client_count_added_today = TableData001.objects.filter(creation_time__range=(yesterday,today)).count()
     client_count_added_month = TableData001.objects.filter(creation_time__range=(first_day_of_month, timezone.now())).count()
     client_count_added_year= TableData001.objects.filter(creation_time__range=(first_day_of_year, timezone.now())).count()
