@@ -154,9 +154,6 @@ function submitForm__01(cellId, box, redirectPage,col){
                 $(element_id).prepend(new_File);
                 //$("#div_for_vt_DcvWOFJbEf").prepend(new_File);
 
-                
-                console.log(" F.column === "+ F.column);
-                console.log(" length === "+ data.files_date_for_response.length);
             }
             for (var k = 0; k < data.files_added_list.length; k++){   
                 var added_F = data.files_added_list[k];

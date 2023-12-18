@@ -495,25 +495,19 @@ def table_view_2(request):
             auditV2_files_added = 0
             auditV3_files_added = 0
             auditFinal_files_added = 0
-                
+            files_date_for_response=[]
             column_name_types = ["VT", "auditV1", "auditV2", "auditV3", "auditFinal"]
             for column_name_type in column_name_types:
                 files_uploaded = request.FILES.getlist(f"table_{column_name_type}[]")
-
                 if files_uploaded:
-
                     file_uploaded_state = True
-                    
-                        
                     l1=f"table_{column_name_type}[]"
                     file_table = ModelByColumn(column_name_type)
-                    files_date_for_response=[]
                     I_icon_class=""
 
+                    
                     for file in request.FILES.getlist(l1, []):
-                        
-                            
-                            
+                                                
                         format_file=file.name.split(".")[1]
                         if format_file not in ['jpg','png','jpeg','heic','doc','docx','xls','xlsm','pdf','pz2']:
                             I_icon_class="ri-file-line"
@@ -564,9 +558,14 @@ def table_view_2(request):
                                         Activity_after = column_name_type ,
                                         Activity_add=True
                                     )
-                                
-                                
 
+                                file_table.objects.create(
+                                        file_id = button_edit_data_on_table,
+                                        file_name = file.name,
+                                        file_save = file,
+                                        file_format =format_file
+                                    )
+                    
                                 files_date_for_response.append({'file_id':button_edit_data_on_table,
                                                             'file_save_url':"file.name",
                                                             'file_format':format_file,
@@ -574,12 +573,7 @@ def table_view_2(request):
                                                             'file_index':"",
                                                             'column':column_name_type_new,
                                                             'I_icon_class':I_icon_class,})
-                                file_table.objects.create(
-                                        file_id = button_edit_data_on_table,
-                                        file_name = file.name,
-                                        file_save = file,
-                                        file_format =format_file
-                                    )
+                                
                             except:
                                 pass
             
