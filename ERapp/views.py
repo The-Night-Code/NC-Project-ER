@@ -369,240 +369,229 @@ def table_view_2(request):
     user_=request.user
     
     if request.method == 'POST':
-        #return redirect("/Accueil/")
-        redirect_page = request.POST.get("redirect_page")
-        myID1=request.POST.get("myid1")
-        column1=request.POST.get("col_type1")
-        Activity_table=''
-        file_uploaded_state=False
-        files_date_for_response=[]
-        button_edit_data_on_table=request.POST.get("cellId_new")
-        file_Project_id =request.POST.get("cellId_new")
-        if button_edit_data_on_table:
-
-            try:
-                obj_by_id = get_object_or_404(TableData001,cell_id=str(button_edit_data_on_table))  # TableData001.objects.get(cell_id=str(button_edit_data_on_table))
-
-                table_index=[   {'column_name':'firstname','name2':'Prénom'},
-                                {'column_name':'lastname', 'name2':'Nom'},
-                                {'column_name':'address',  'name2':'Adresse'},
-                                {'column_name':'email',    'name2':'Email'},
-                                {'column_name':'num',      'name2':'N° de tél'},
-                                
-                                {'column_name':'tp',       'name2':'Travaux à préconiser'},
-                                {'column_name':'cofrac',   'name2':'Cofrac'},
-                                {'column_name':'auditeur', 'name2':'Auditeur'},
-                                {'column_name':'paiement', 'name2':'Paiement'},
-                                #{'column_name':'precaite', 'name2':'Précarite'}
-                                
-                                {'column_name':'etat',     'name2':'État'},
-                                ]
-                
-                
-                if obj_by_id.be:
-                    Activity_table="Bureau d'étude"
-                elif obj_by_id.ai:
-                    Activity_table="Agent immobilier"
-                
-                for l in table_index :
-                    name = l['column_name']
-                    name2 = l['name2']
-                    re_page = False
-                    
-                    
-                    if name == 'paiement':
-                        #Activity_before = str()
-                        Activity_after = request.POST.get(f"table_paiement")
-                        Activity_before_=""
-                        Activity_after_=""
-                        Activity_after_="impayé"
-                        AF_af = False                    
-                        if Activity_after == "True":
-                            Activity_after_="payé"
-                            AF_af = True
-                        else: 
-                            if not Activity_after == "True":
-                                Activity_after_="impayé"
-                                AF_af = False
-                            
-                        if getattr(obj_by_id, name) is True:
-                            Activity_before_="payé"
-                        else  :
-                            Activity_before_="impayé"
-                
-                        if Activity_before_ != Activity_after_:
-                            Activities_audit.objects.create(Activity_id=generate_random_string(10),
-                                                            Activity_user=f"{user_.last_name} {user_.first_name}",
-                                                            Activity_user_email=user_.email,
-                                                            Activity_table=Activity_table,
-                                                            Activity_project_id=str(button_edit_data_on_table),
-                                                            Activity_name=name2,
-                                                            Activity_before=Activity_before_,
-                                                            Activity_after=Activity_after_,
-                                                            Activity_edit=True)
-                        setattr(obj_by_id, 'paiement', AF_af)
-                        obj_by_id.save()
-                    else:
-                        
-                        Activity_before = str(getattr(obj_by_id, name) )+ ""
-                        Activity_after = str(request.POST.get(f"table_{name}"))+ ""
-                        if Activity_before != Activity_after:
-                            if name == 'etat':
-                                re_page=True
-                                if (Activity_after == "Fini" or Activity_after == "fini") and getattr(obj_by_id, 'Modification_Faite_time_checker_2') is True:
-                                    setattr(obj_by_id, 'Modification_Faite_by_user', user_.email)
-                                    setattr(obj_by_id, 'Modification_Faite_time_checker_2', False)
-                                    setattr(obj_by_id, 'Modification_Faite_time', timezone.now())
-                                    
-                            Activities_audit.objects.create(Activity_id=generate_random_string(10),
-                                                            Activity_user=f"{user_.last_name} {user_.first_name}",
-                                                            Activity_user_email=user_.email,
-                                                            Activity_table=Activity_table,
-                                                            Activity_project_id=str(button_edit_data_on_table),
-                                                            Activity_name=name2,
-                                                            Activity_before=Activity_before,
-                                                            Activity_after=Activity_after,
-                                                            Activity_edit=True)
-                            
-                            
-                        setattr(obj_by_id, name, Activity_after)
-                        obj_by_id.save()
-                
-                   
-                        
-                    
-                    
-
-                
-                if request.POST.get(f"table_etat") == "Envoye" and not obj_by_id.Envoye_time_checker :
-                    obj_by_id.Envoye_time_checker = True
-                    obj_by_id.Envoye_time = timezone.now()
-                    obj_by_id.Envoye_by_user = user_.email
-                    obj_by_id.save(update_fields=['Envoye_time_checker','Envoye_time','Envoye_by_user'])
-                
-                if request.POST.get(f"table_etat") =="Fini" and not obj_by_id.fini_time_checker :
-                    obj_by_id.fini_time_checker = True
-                    obj_by_id.fini_time = timezone.now()
-                    obj_by_id.fini_by_user = user_.email
-                    obj_by_id.save(update_fields=['fini_time_checker','fini_time','fini_by_user'])
-                    
-                    
-            except TableData001.DoesNotExist:
-                pass
-            
-            VT_files_added = 0 
-            auditV1_files_added = 0
-            auditV2_files_added = 0
-            auditV3_files_added = 0
-            auditFinal_files_added = 0
+        if "auditeur" in user_.role:
+            #return redirect("/Accueil/")
+            redirect_page = request.POST.get("redirect_page")
+            myID1=request.POST.get("myid1")
+            column1=request.POST.get("col_type1")
+            Activity_table=''
+            file_uploaded_state=False
             files_date_for_response=[]
-            column_name_types = ["VT", "auditV1", "auditV2", "auditV3", "auditFinal"]
-            for column_name_type in column_name_types:
-                files_uploaded = request.FILES.getlist(f"table_{column_name_type}[]")
-                if files_uploaded:
-                    file_uploaded_state = True
-                    l1=f"table_{column_name_type}[]"
-                    file_table = ModelByColumn(column_name_type)
-                    I_icon_class=""
+            button_edit_data_on_table=request.POST.get("cellId_new")
+            file_Project_id =request.POST.get("cellId_new")
+            if button_edit_data_on_table:
+
+                try:
+                    obj_by_id = get_object_or_404(TableData001,cell_id=str(button_edit_data_on_table))  # TableData001.objects.get(cell_id=str(button_edit_data_on_table))
+
+                    table_index=[   {'column_name':'firstname','name2':'Prénom'},
+                                    {'column_name':'lastname', 'name2':'Nom'},
+                                    {'column_name':'address',  'name2':'Adresse'},
+                                    {'column_name':'email',    'name2':'Email'},
+                                    {'column_name':'num',      'name2':'N° de tél'},
+                                    
+                                    {'column_name':'tp',       'name2':'Travaux à préconiser'},
+                                    {'column_name':'cofrac',   'name2':'Cofrac'},
+                                    {'column_name':'auditeur', 'name2':'Auditeur'},
+                                    {'column_name':'paiement', 'name2':'Paiement'},
+                                    #{'column_name':'precaite', 'name2':'Précarite'}
+                                    
+                                    {'column_name':'etat',     'name2':'État'},
+                                    ]
+                    
+                    
+                    if obj_by_id.be:
+                        Activity_table="Bureau d'étude"
+                    elif obj_by_id.ai:
+                        Activity_table="Agent immobilier"
+                    
+                    for l in table_index :
+                        name = l['column_name']
+                        name2 = l['name2']
+                        re_page = False
+                        
+                        
+                        if name == 'paiement':
+                            #Activity_before = str()
+                            Activity_after = request.POST.get(f"table_paiement")
+                            Activity_before_=""
+                            Activity_after_=""
+                            Activity_after_="impayé"
+                            AF_af = False                    
+                            if Activity_after == "True":
+                                Activity_after_="payé"
+                                AF_af = True
+                            else: 
+                                if not Activity_after == "True":
+                                    Activity_after_="impayé"
+                                    AF_af = False
+                                
+                            if getattr(obj_by_id, name) is True:
+                                Activity_before_="payé"
+                            else  :
+                                Activity_before_="impayé"
+                    
+                            if Activity_before_ != Activity_after_:
+                                Activities_audit.objects.create(Activity_id=generate_random_string(10),
+                                                                Activity_user=f"{user_.last_name} {user_.first_name}",
+                                                                Activity_user_email=user_.email,
+                                                                Activity_table=Activity_table,
+                                                                Activity_project_id=str(button_edit_data_on_table),
+                                                                Activity_name=name2,
+                                                                Activity_before=Activity_before_,
+                                                                Activity_after=Activity_after_,
+                                                                Activity_edit=True)
+                            setattr(obj_by_id, 'paiement', AF_af)
+                            obj_by_id.save()
+                        else:
+                            
+                            Activity_before = str(getattr(obj_by_id, name) )+ ""
+                            Activity_after = str(request.POST.get(f"table_{name}"))+ ""
+                            if Activity_before != Activity_after:
+                                if name == 'etat':
+                                    re_page=True
+                                    if (Activity_after == "Fini" or Activity_after == "fini") and getattr(obj_by_id, 'Modification_Faite_time_checker_2') is True:
+                                        setattr(obj_by_id, 'Modification_Faite_by_user', user_.email)
+                                        setattr(obj_by_id, 'Modification_Faite_time_checker_2', False)
+                                        setattr(obj_by_id, 'Modification_Faite_time', timezone.now())
+                                        
+                                Activities_audit.objects.create(Activity_id=generate_random_string(10),
+                                                                Activity_user=f"{user_.last_name} {user_.first_name}",
+                                                                Activity_user_email=user_.email,
+                                                                Activity_table=Activity_table,
+                                                                Activity_project_id=str(button_edit_data_on_table),
+                                                                Activity_name=name2,
+                                                                Activity_before=Activity_before,
+                                                                Activity_after=Activity_after,
+                                                                Activity_edit=True)
+                                
+                                
+                            setattr(obj_by_id, name, Activity_after)
+                            obj_by_id.save()
+                    
+                    
+                            
+                        
+                        
 
                     
-                    for file in request.FILES.getlist(l1, []):
-                                                
-                        format_file=file.name.split(".")[1]
-                        if format_file not in ['jpg','png','jpeg','heic','doc','docx','xls','xlsm','pdf','pz2']:
-                            I_icon_class="ri-file-line"
-                            
-                        if format_file in ['jpg','png','jpeg','heic']:
-                            format_file="image"
-                            I_icon_class="bi bi-file-earmark-image"
-                        if format_file in ['doc','docx']:
-                            format_file="word"
-                            I_icon_class="bi bi-file-earmark-word"
-                        if format_file in ['xls','xlsm']:
-                            format_file="excel" 
-                            I_icon_class="ri-file-excel-2-line"
-                        if format_file in ['pdf']:
-                            format_file="pdf" 
-                            I_icon_class="bi bi-file-earmark-pdf"
-                        if format_file in ['pz2']:
-                            format_file="pz2" 
-                            I_icon_class="bi bi-file-ppt"
-                        
-                        
-                        
-                        if not file_table.objects.filter(file_id=button_edit_data_on_table, file_name=file.name,file_removed=False):
-                            column_name_type_new = column_name_type
-                            if column_name_type == "VT":
-                                VT_files_added +=1
-                                column_name_type_new="vt"
-                                
-                            if column_name_type == "auditV1":
-                                auditV1_files_added +=1
-                            
-                            if column_name_type == "auditV2":
-                                auditV2_files_added +=1
-                            
-                            if column_name_type == "auditV3":
-                                auditV3_files_added +=1
-                                
-                            if column_name_type == "auditFinal":
-                                auditFinal_files_added +=1
-                            try:
-                                Activities_audit.objects.create(
-                                        Activity_id=generate_random_string(10),
-                                        Activity_user = f"{request.user.last_name} {request.user.first_name}",
-                                        Activity_user_email = request.user.email,
-                                        Activity_table=Activity_table,
-                                        Activity_project_id = button_edit_data_on_table,
-                                        Activity_before =f"le fichier {file.name}" ,
-                                        Activity_after = column_name_type ,
-                                        Activity_add=True
-                                    )
-
-                                file_table.objects.create(
-                                        file_id = button_edit_data_on_table,
-                                        file_name = file.name,
-                                        file_save = file,
-                                        file_format =format_file
-                                    )
+                    if request.POST.get(f"table_etat") == "Envoye" and not obj_by_id.Envoye_time_checker :
+                        obj_by_id.Envoye_time_checker = True
+                        obj_by_id.Envoye_time = timezone.now()
+                        obj_by_id.Envoye_by_user = user_.email
+                        obj_by_id.save(update_fields=['Envoye_time_checker','Envoye_time','Envoye_by_user'])
                     
-                                files_date_for_response.append({'file_id':button_edit_data_on_table,
-                                                            'file_save_url':"file.name",
-                                                            'file_format':format_file,
-                                                            'file_name':file.name,
-                                                            'file_index':"",
-                                                            'column':column_name_type_new,
-                                                            'I_icon_class':I_icon_class,})
-                                
-                            except:
-                                pass
-            
-            
+                    if request.POST.get(f"table_etat") =="Fini" and not obj_by_id.fini_time_checker :
+                        obj_by_id.fini_time_checker = True
+                        obj_by_id.fini_time = timezone.now()
+                        obj_by_id.fini_by_user = user_.email
+                        obj_by_id.save(update_fields=['fini_time_checker','fini_time','fini_by_user'])
                         
-            VT_col_n = "VT"
-            auditV1_col_n = "auditV1"
-            auditV2_col_n = "auditV2"
-            auditV3_col_n = "auditV3"
-            auditFinal_col_n = "auditFinal"
-            files_added_list3=[{'VT_files_added':VT_files_added,'file_id':file_Project_id,'col_n':"VT"},
-                              {'auditV1_files_added':auditV1_files_added,'file_id':file_Project_id,'col_n':"auditV1"},
-                              {'auditV2_files_added':auditV2_files_added,'file_id':file_Project_id,'col_n':"auditV2"},
-                              {'auditV3_files_added':auditV3_files_added,'file_id':file_Project_id,'col_n':"auditV3"},
-                              {'auditFinal_files_added':auditFinal_files_added,'file_id':file_Project_id,'col_n':"auditFinal"}]
-            files_added_list=[{'files_added':VT_files_added,'file_id':file_Project_id,'col_n':"VT"},
-                              {'files_added':auditV1_files_added,'file_id':file_Project_id,'col_n':"auditV1"},
-                              {'files_added':auditV2_files_added,'file_id':file_Project_id,'col_n':"auditV2"},
-                              {'files_added':auditV3_files_added,'file_id':file_Project_id,'col_n':"auditV3"},
-                              {'files_added':auditFinal_files_added,'file_id':file_Project_id,'col_n':"auditFinal"}]
-            response_date={
-                're_page':re_page,
-                'cellId_new':button_edit_data_on_table,
-                'file_uploaded_state':file_uploaded_state,
-                'files_date_for_response':files_date_for_response,
-                'files_added_list':files_added_list,
-            }
-            
-            return JsonResponse(response_date)
+                        
+                except TableData001.DoesNotExist:
+                    pass
+                
+                VT_files_added = 0 
+                auditV1_files_added = 0
+                auditV2_files_added = 0
+                auditV3_files_added = 0
+                auditFinal_files_added = 0
+                files_date_for_response=[]
+                column_name_types = ["VT", "auditV1", "auditV2", "auditV3", "auditFinal"]
+                for column_name_type in column_name_types:
+                    files_uploaded = request.FILES.getlist(f"table_{column_name_type}[]")
+                    if files_uploaded:
+                        file_uploaded_state = True
+                        l1=f"table_{column_name_type}[]"
+                        file_table = ModelByColumn(column_name_type)
+                        I_icon_class=""
+
+                        
+                        for file in request.FILES.getlist(l1, []):
+                                                    
+                            format_file=file.name.split(".")[1]
+                            if format_file not in ['jpg','png','jpeg','heic','doc','docx','xls','xlsm','pdf','pz2']:
+                                I_icon_class="ri-file-line"
+                                
+                            if format_file in ['jpg','png','jpeg','heic']:
+                                format_file="image"
+                                I_icon_class="bi bi-file-earmark-image"
+                            if format_file in ['doc','docx']:
+                                format_file="word"
+                                I_icon_class="bi bi-file-earmark-word"
+                            if format_file in ['xls','xlsm']:
+                                format_file="excel" 
+                                I_icon_class="ri-file-excel-2-line"
+                            if format_file in ['pdf']:
+                                format_file="pdf" 
+                                I_icon_class="bi bi-file-earmark-pdf"
+                            if format_file in ['pz2']:
+                                format_file="pz2" 
+                                I_icon_class="bi bi-file-ppt"
+                            
+                            
+                            
+                            if not file_table.objects.filter(file_id=button_edit_data_on_table, file_name=file.name,file_removed=False):
+                                column_name_type_new = column_name_type
+                                if column_name_type == "VT":
+                                    VT_files_added +=1
+                                    column_name_type_new="vt"
+                                    
+                                if column_name_type == "auditV1":
+                                    auditV1_files_added +=1
+                                
+                                if column_name_type == "auditV2":
+                                    auditV2_files_added +=1
+                                
+                                if column_name_type == "auditV3":
+                                    auditV3_files_added +=1
+                                    
+                                if column_name_type == "auditFinal":
+                                    auditFinal_files_added +=1
+                                try:
+                                    Activities_audit.objects.create(
+                                            Activity_id=generate_random_string(10),
+                                            Activity_user = f"{request.user.last_name} {request.user.first_name}",
+                                            Activity_user_email = request.user.email,
+                                            Activity_table=Activity_table,
+                                            Activity_project_id = button_edit_data_on_table,
+                                            Activity_before =f"le fichier {file.name}" ,
+                                            Activity_after = column_name_type ,
+                                            Activity_add=True
+                                        )
+
+                                    file_table.objects.create(
+                                            file_id = button_edit_data_on_table,
+                                            file_name = file.name,
+                                            file_save = file,
+                                            file_format =format_file
+                                        )
+                        
+                                    files_date_for_response.append({'file_id':button_edit_data_on_table,
+                                                                'file_save_url':"file.name",
+                                                                'file_format':format_file,
+                                                                'file_name':file.name,
+                                                                'file_index':"",
+                                                                'column':column_name_type_new,
+                                                                'I_icon_class':I_icon_class,})
+                                    
+                                except:
+                                    pass
+                
+                files_added_list=[{'files_added':VT_files_added,'file_id':file_Project_id,'col_n':"VT"},
+                                {'files_added':auditV1_files_added,'file_id':file_Project_id,'col_n':"auditV1"},
+                                {'files_added':auditV2_files_added,'file_id':file_Project_id,'col_n':"auditV2"},
+                                {'files_added':auditV3_files_added,'file_id':file_Project_id,'col_n':"auditV3"},
+                                {'files_added':auditFinal_files_added,'file_id':file_Project_id,'col_n':"auditFinal"}]
+                response_date={
+                    're_page':re_page,
+                    'cellId_new':button_edit_data_on_table,
+                    'file_uploaded_state':file_uploaded_state,
+                    'files_date_for_response':files_date_for_response,
+                    'files_added_list':files_added_list,
+                }
+                
+                return JsonResponse(response_date)
     return JsonResponse({'status': 'error'})
 
 
@@ -1318,105 +1307,107 @@ def table_view_3(request):
                 except TableData001.DoesNotExist:
                     pass
                 
-            VT_files_added = 0 
-            auditV1_files_added = 0
-            auditV2_files_added = 0
-            auditV3_files_added = 0
-            auditFinal_files_added = 0
-            
-            column_name_types = ["VT", "auditV1", "auditV2", "auditV3", "auditFinal"]
-            for column_name_type in column_name_types:
-                files_uploaded = request.FILES.getlist(f"table_{column_name_type}[]")
-                if files_uploaded:
-
-                    file_uploaded_state = True
-                    
-                    l1=f"table_{column_name_type}[]"
-                    file_table = ModelByColumn(column_name_type)
-                    files_date_for_response=[]
-                    I_icon_class=""
-
-                    for file in request.FILES.getlist(l1, []):
-                        if column_name_type == "VT":
-                            VT_files_added +=1
-                            
-                        if column_name_type == "auditV1":
-                            auditV1_files_added +=1
-                           
-                        if column_name_type == "auditV2":
-                            auditV2_files_added +=1
-                           
-                        if column_name_type == "auditV3":
-                            auditV3_files_added +=1
-                            
-                        if column_name_type == "auditFinal":
-                            auditFinal_files_added +=1
-                            
-                        format_file=file.name.split(".")[1]
-                        if format_file not in ['jpg','png','jpeg','heic','doc','docx','xls','xlsm','pdf','pz2']:
-                            I_icon_class="ri-file-line"
-                            
-                        if format_file in ['jpg','png','jpeg','heic']:
-                            format_file="image"
-                            I_icon_class="bi bi-file-earmark-image"
-                        if format_file in ['doc','docx']:
-                            format_file="word"
-                            I_icon_class="bi bi-file-earmark-word"
-                        if format_file in ['xls','xlsm']:
-                            format_file="excel" 
-                            I_icon_class="ri-file-excel-2-line"
-                        if format_file in ['pdf']:
-                            format_file="pdf" 
-                            I_icon_class="bi bi-file-earmark-pdf"
-                        if format_file in ['pz2']:
-                            format_file="pz2" 
-                            I_icon_class="bi bi-file-ppt"
-                        
-                        
-                        
-                        if not file_table.objects.filter(file_id=button_edit_data_on_table, file_name=file.name,file_removed=False):
-                            Activities_be.objects.create(
-                                    Activity_id=generate_random_string(10),
-                                    Activity_user = f"{request.user.last_name} {request.user.first_name}",
-                                    Activity_user_email = request.user.email,
-                                    Activity_table=Activity_table,
-                                    Activity_project_id = button_edit_data_on_table,
-                                    Activity_before =f"le fichier {file.name}" ,
-                                    Activity_after = column_name_type ,
-                                    Activity_add=True
-                                )
-                            file_table.objects.create(
-                                    file_id = button_edit_data_on_table,
-                                    file_name = file.name,
-                                    file_save = file,
-                                    file_format =format_file
-                                )
-                            column_name_type_new = column_name_type
-                            if column_name_type == "VT":
-                                column_name_type_new="vt"
-                            files_date_for_response.append({'file_id':button_edit_data_on_table,
-                                                        'file_save_url':"file.name",
-                                                        'file_format':format_file,
-                                                        'file_name':file.name,
-                                                        'file_index':"",
-                                                        'column':column_name_type_new,
-                                                        'I_icon_class':I_icon_class,})
+                VT_files_added = 0 
+                auditV1_files_added = 0
+                auditV2_files_added = 0
+                auditV3_files_added = 0
+                auditFinal_files_added = 0
+                files_date_for_response=[]
+                column_name_types = ["VT", "auditV1", "auditV2", "auditV3", "auditFinal"]
+                for column_name_type in column_name_types:
+                    files_uploaded = request.FILES.getlist(f"table_{column_name_type}[]")
+                    if files_uploaded:
+                        file_uploaded_state = True
+                        l1=f"table_{column_name_type}[]"
+                        file_table = ModelByColumn(column_name_type)
+                        I_icon_class=""
 
                         
-            files_added_list=[{'files_added':VT_files_added,'file_id':file_Project_id,'col_n':"VT"},
-                              {'files_added':auditV1_files_added,'file_id':file_Project_id,'col_n':"auditV1"},
-                              {'files_added':auditV2_files_added,'file_id':file_Project_id,'col_n':"auditV2"},
-                              {'files_added':auditV3_files_added,'file_id':file_Project_id,'col_n':"auditV3"},
-                              {'files_added':auditFinal_files_added,'file_id':file_Project_id,'col_n':"auditFinal"}]
-            response_date={
-                're_page':re_page,
-                'cellId_new':button_edit_data_on_table,
-                'file_uploaded_state':file_uploaded_state,
-                'files_date_for_response':files_date_for_response,
-                'files_added_list':files_added_list,
-            }
-            
-            return JsonResponse(response_date)
+                        for file in request.FILES.getlist(l1, []):
+                                                    
+                            format_file=file.name.split(".")[1]
+                            if format_file not in ['jpg','png','jpeg','heic','doc','docx','xls','xlsm','pdf','pz2']:
+                                I_icon_class="ri-file-line"
+                                
+                            if format_file in ['jpg','png','jpeg','heic']:
+                                format_file="image"
+                                I_icon_class="bi bi-file-earmark-image"
+                            if format_file in ['doc','docx']:
+                                format_file="word"
+                                I_icon_class="bi bi-file-earmark-word"
+                            if format_file in ['xls','xlsm']:
+                                format_file="excel" 
+                                I_icon_class="ri-file-excel-2-line"
+                            if format_file in ['pdf']:
+                                format_file="pdf" 
+                                I_icon_class="bi bi-file-earmark-pdf"
+                            if format_file in ['pz2']:
+                                format_file="pz2" 
+                                I_icon_class="bi bi-file-ppt"
+                            
+                            
+                            
+                            if not file_table.objects.filter(file_id=button_edit_data_on_table, file_name=file.name,file_removed=False):
+                                column_name_type_new = column_name_type
+                                if column_name_type == "VT":
+                                    VT_files_added +=1
+                                    column_name_type_new="vt"
+                                    
+                                if column_name_type == "auditV1":
+                                    auditV1_files_added +=1
+                                
+                                if column_name_type == "auditV2":
+                                    auditV2_files_added +=1
+                                
+                                if column_name_type == "auditV3":
+                                    auditV3_files_added +=1
+                                    
+                                if column_name_type == "auditFinal":
+                                    auditFinal_files_added +=1
+                                try:
+                                    Activities_audit.objects.create(
+                                            Activity_id=generate_random_string(10),
+                                            Activity_user = f"{request.user.last_name} {request.user.first_name}",
+                                            Activity_user_email = request.user.email,
+                                            Activity_table=Activity_table,
+                                            Activity_project_id = button_edit_data_on_table,
+                                            Activity_before =f"le fichier {file.name}" ,
+                                            Activity_after = column_name_type ,
+                                            Activity_add=True
+                                        )
+
+                                    file_table.objects.create(
+                                            file_id = button_edit_data_on_table,
+                                            file_name = file.name,
+                                            file_save = file,
+                                            file_format =format_file
+                                        )
+                        
+                                    files_date_for_response.append({'file_id':button_edit_data_on_table,
+                                                                'file_save_url':"file.name",
+                                                                'file_format':format_file,
+                                                                'file_name':file.name,
+                                                                'file_index':"",
+                                                                'column':column_name_type_new,
+                                                                'I_icon_class':I_icon_class,})
+                                    
+                                except:
+                                    pass
+                
+                files_added_list=[{'files_added':VT_files_added,'file_id':file_Project_id,'col_n':"VT"},
+                                {'files_added':auditV1_files_added,'file_id':file_Project_id,'col_n':"auditV1"},
+                                {'files_added':auditV2_files_added,'file_id':file_Project_id,'col_n':"auditV2"},
+                                {'files_added':auditV3_files_added,'file_id':file_Project_id,'col_n':"auditV3"},
+                                {'files_added':auditFinal_files_added,'file_id':file_Project_id,'col_n':"auditFinal"}]
+                response_date={
+                    're_page':re_page,
+                    'cellId_new':button_edit_data_on_table,
+                    'file_uploaded_state':file_uploaded_state,
+                    'files_date_for_response':files_date_for_response,
+                    'files_added_list':files_added_list,
+                }
+                
+                return JsonResponse(response_date)
     return JsonResponse({'status': 'error'})
 
 @login_required

@@ -133,7 +133,7 @@ function submitForm__01(cellId, box, redirectPage,col){
             
             for (var i = 0; i < data.files_date_for_response.length; i++) {
                 var F = data.files_date_for_response[i];
-                var col_n = F.column
+                var col_n = F.column;
                 
                 var element_id="#ul_for_"+F.column+"_"+F.file_id;
                 var new_File = `
@@ -285,10 +285,10 @@ function submitForm__02(cellId, box, redirectPage,col){
 
             
             // Loop through files and prepend new list items
-            
             for (var i = 0; i < data.files_date_for_response.length; i++) {
-                var col_n = F.column
                 var F = data.files_date_for_response[i];
+                var col_n = F.column;
+                
                 var element_id="#ul_for_"+F.column+"_"+F.file_id;
                 var new_File = `
 
@@ -305,25 +305,10 @@ function submitForm__02(cellId, box, redirectPage,col){
                     </li>
                     
                 `
-
-                
                 $(element_id).prepend(new_File);
                 //$("#div_for_vt_DcvWOFJbEf").prepend(new_File);
 
-
-                if(col_n=="vt"){
-                    col_n="VT"
-                }
-                var iddd = "table_span_"+col_n+"_"+F.file_id;
-                // Get the span element by its ID
-                var spanElement = document.getElementById(iddd);
-                var currentValue = parseInt(spanElement.innerHTML, 10);
-                // Add 1 to the current value
-                var newValue = currentValue + 1;
-                // Update the span with the new value
-                spanElement.innerHTML = newValue;
             }
-
             for (var k = 0; k < data.files_added_list.length; k++){   
                 var added_F = data.files_added_list[k];
                 
@@ -336,13 +321,12 @@ function submitForm__02(cellId, box, redirectPage,col){
                 // Update the span with the new value
                 spanElement.innerHTML = newValue;
             }
-            
             // Get the ID of the row to disable // !Disable all inputs within the specified row
             var tr_disabled_id = '#tr_'+cellId;
             $(tr_disabled_id).find('input, select, textarea, button').prop('disabled', false);
             
             const remove_loading_spinner_div = document.getElementById("upload_spinner_1");
-            remove_loading_spinner_div.remove();
+            remove_loading_spinner_div.remove()
             
 
 
