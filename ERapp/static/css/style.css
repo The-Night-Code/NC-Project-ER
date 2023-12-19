@@ -666,12 +666,23 @@ h6 {
   border-radius:25px;
   font-size:20px;
   position: relative; 
-  top:10px; }
+  top:10px; 
+  display:none;}
 
+.table_span_calc_files_show{background:red;
+  color:white;
+  padding:2px 5px;
+  margin:5px; 
+  border-radius:25px;
+  font-size:20px;
+  position: relative; 
+  top:10px; 
+  }
 
 /* -----------------------------------------------------------
-
 ------------------------------------------------------------*/
+
+
 
 .confirmation_box_for_change_state{position: fixed; 
   top:40%;

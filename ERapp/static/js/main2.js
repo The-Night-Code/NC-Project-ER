@@ -166,6 +166,10 @@ function submitForm__01(cellId, box, redirectPage,col){
                 var newValue = currentValue + added_F.files_added;
                 // Update the span with the new value
                 spanElement.innerHTML = newValue;
+                if(newValue>0){
+                    document.getElementById(iddd).classList.remove("table_span_calc_files");
+                    document.getElementById(iddd).classList.add("table_span_calc_files_show");
+                }
             }
             // Get the ID of the row to disable // !Disable all inputs within the specified row
             var tr_disabled_id = '#tr_'+cellId;
@@ -320,6 +324,11 @@ function submitForm__02(cellId, box, redirectPage,col){
                 var newValue = currentValue + added_F.files_added;
                 // Update the span with the new value
                 spanElement.innerHTML = newValue;
+                if(newValue>0){
+                    document.getElementById(iddd).classList.remove("table_span_calc_files");
+                    document.getElementById(iddd).classList.add("table_span_calc_files_show");
+                }
+                
             }
             // Get the ID of the row to disable // !Disable all inputs within the specified row
             var tr_disabled_id = '#tr_'+cellId;
@@ -455,6 +464,10 @@ function remove_file_from_m(id, index, column, redirect_next_page ,element_tag_i
                 var newValue = currentValue -1 ;
                 // Update the span with the new value
                 spanElement.innerHTML = newValue;
+                if(newValue==0){
+                    document.getElementById(iddd).classList.remove("table_span_calc_files_show");
+                    document.getElementById(iddd).classList.add("table_span_calc_files");
+                }
 
             }
             
