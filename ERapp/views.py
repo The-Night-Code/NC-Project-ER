@@ -35,7 +35,7 @@ from datetime import  date,timedelta
 import calendar
 import pytz
 # Get the current time in the GMT+1 time zone
-tz_gmt_plus_1 = pytz.timezone('Europe/Berlin') 
+#tz_gmt_plus_1 = pytz.timezone('Europe/Berlin') 
 
 ## generate xlsx
 import openpyxl
