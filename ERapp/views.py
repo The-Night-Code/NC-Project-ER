@@ -61,6 +61,9 @@ import zipfile
 import subprocess
 
 
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 #from ..ER_project.settings import EMAIL_HOST_USER
 FROM_EMAIL="guhgi155@gmail.com"
 EMAIL_SENDER = FROM_EMAIL
@@ -595,6 +598,12 @@ def table_view_2(request):
     return JsonResponse({'status': 'error'})
 
 
+def chatPage(request, *args, **kwargs):
+    if not request.user.is_authenticated:
+       #return redirect("Accueil")
+        return redirect("login-user")
+    context = {}
+    return render(request, "html/chatPage.html", context)
 
 
 
@@ -638,6 +647,7 @@ def Auditeur_Accueil(request):
 
     # Loop through the past N days, where N is the current day of the week
     k=int(current_weekday)
+    days_of_week_today=days_of_week[k]
     for day_offset in range(current_weekday + 1):
         # Calculate the date range for each day
         start_date = current_date - timedelta(days=day_offset)
@@ -655,6 +665,9 @@ def Auditeur_Accueil(request):
         k-=1
         
     #final_result={'lundi':re1 , 'mardi':re2}
+    
+    if request.method == "GET":
+        pass
     return render(request, "html/Auditeur_main_page.html",{'data':data,
                                                         'activities_audit':activities_audit,
                                                         'client_count_added_today':client_count_added_today,
@@ -676,7 +689,9 @@ def Auditeur_Accueil(request):
                                                         'client_count_Modification_Faite_today':client_count_Modification_Faite_today,
                                                         'client_count_Modification_Faite_month':client_count_Modification_Faite_month,
                                                         'client_count_Modification_Faite_year':client_count_Modification_Faite_year,
-                                                        })
+                                                        
+                                                        'days_of_week_today':days_of_week_today,})
+    
 
 @login_required
 def audit_pages(request,redirect_page,html_page):

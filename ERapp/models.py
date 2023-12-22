@@ -1,6 +1,6 @@
 from django.db import  models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
+from django.contrib.auth import get_user_model
 from django.utils import timezone
 from PIL import Image
 import subprocess
@@ -67,7 +67,11 @@ class USER(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
     
-
+class UserStatus(models.Model):
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE)
+    is_online = models.BooleanField(default=False)
+    
+    
 class AI_or_AGENT(models.Model):
     AI_or_AGENT_id = models.CharField(max_length=255,blank=True)
     comp_name = models.CharField(max_length=255,blank=True)

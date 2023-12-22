@@ -16,7 +16,8 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,re_path
+from ERapp import consumers
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -26,12 +27,23 @@ from ERapp.views import remove_file_from_MODELS,agent_immo,agent_immo_f,send_mes
 from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,BE_home_page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
 from ERapp.views import download_media_folder,table_view_2,table_view_3,CBFCS,Auditor_Task_Summary,Auditor_Task_Summary_BY_A
 
+
+
+from ERapp.views import chatPage
+from django.contrib.auth.views import LoginView, LogoutView
+
+
 ai="ai"
 form="form"
 formK="formK"
 be="be"
 
 urlpatterns = [
+    path('', chatPage, name="chat-page"),    
+
+    # login-section
+    path("auth/login/", LoginView.as_view(template_name="chat/Auditeur_main_page.html"), name="login-user"),
+    path("auth/logout/", LogoutView.as_view(), name="logout-user"),
     
     path('', LoginU, name="not_logged_in"),
     path('', LoginU, name="main_page"),
@@ -47,6 +59,10 @@ urlpatterns = [
     # Auditeur Pages
     path('table-view/',table_view_2 ,name="table_view_2"),
     path('Accueil/',Auditeur_Accueil ,name="Auditeur_main_page"),
+    
+    
+
+    
     path('BE_audit_ALL/',BE_audit_ALL ,name="BE_audit_ALL"),
     path('BE_audit_BY_A/',BE_audit_BY_A ,name="BE_audit_BY_A"),
     path('AI_audit_ALL/',AI_audit_ALL ,name="AI_audit_ALL"),

@@ -31,18 +31,29 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'ERapp',
-    'django.contrib.humanize',
+    'daphne',
+    'channels',
     
+    'django.contrib.humanize',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    
 
 ]
+ASGI_APPLICATION = 'ER_project.asgi.application'
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 MIDDLEWARE = [
+    #'channels.middleware.ChannelsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     #'whitenoise..middleware.security.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -52,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     #'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     #'django.contrib.staticfiles.finders.FileSystemFinder',
+    
     
 
 ]

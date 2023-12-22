@@ -466,7 +466,77 @@
 
           <!-- Right side columns -->
           <div class="col-lg-4">
+            
+
+            <!-- User Status -->
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Activité récente <span>| <a>Plus</a></span></h5>
   
+                <div class="activity user_status">
+
+
+
+
+
+                </div>
+                
+              </div>
+
+  
+              <div class="card-body">
+                <h5 class="card-title">Activité récente <span>| <a>Plus</a></span></h5>
+  
+                <div class="activity user_status">
+
+
+
+
+                  
+
+                  <div id="chat-log"></div>
+    <input type="text" id="chat-message-input" />
+    <button  onclick="sendMessage_box('id')">Send</button>
+
+    <script>
+      const socket = new WebSocket('ws://' + window.location.host + '/ws/chat/');
+      socket.onmessage = (event) => {
+          const data = JSON.parse(event.data);
+          const chatLog = document.getElementById('chat-log');
+          chatLog.innerHTML += `<p>${data.message}</p>`;
+          console.log('Received message:', data.message);
+      };
+
+      socket.onclose = (event) => {
+          console.error('WebSocket closed:', event);
+          // Optionally, perform cleanup or display a message to the user
+      };
+
+      socket.onopen = (event) => {
+        console.log('WebSocket connection is open.');
+        // Now you can safely send messages
+        socket.send(JSON.stringify({ 'message': 'Hello, server!' }));
+    };
+      socket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+    };
+      function sendMessage_box(id) {
+
+      const messageInput = document.getElementById('chat-message-input');
+      const message = messageInput.value;
+
+      if (message.trim() !== '') {
+          socket.send(JSON.stringify({ 'message': message }));
+          messageInput.value = '';
+      }
+      }
+  </script>
+                </div>
+  
+              </div>
+            </div><!-- End User Status -->
+
+
             <!-- Recent Activity -->
             <div class="card">
               
@@ -524,6 +594,8 @@
               </div>
             </div><!-- End Recent Activity -->
   
+             
+  
             
           </div><!-- End Right side columns -->
   
@@ -564,6 +636,7 @@
   <script type="text/javascript" src="{% static 'js/main4.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main5.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main9.js'%}"></script>
+  
 </body>
 
 </html>
