@@ -35,7 +35,14 @@
   <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
   <script type="text/javascript" src="{% static 'js/main10.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main11.js'%}"></script>
+  <script>
+    var USER_email = "{{user.email}}";
+    var USER_last_name = "{{user.last_name}}";
+    var USER_first_name = "{{user.first_name}}";
+  </script>
 
     
 </head>

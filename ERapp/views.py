@@ -74,7 +74,7 @@ link2="/agentimmo/"
 beaudit="/beaudit/"
 redirect_page_be="/be/"
 VT="/VT/"
-
+kize="VT"
 def main_Page(request):
     return render(request,'html/mainPage.html')
 def Home(request):
@@ -1189,10 +1189,10 @@ def add_files_to_project_1(request,project_id,file_input_name,model_name):
 def agent_immo_f(request):
     acc_state=False
     user_ = request.user
-    if "ai" in user_.role:
+    
         
-        if request.method == 'POST':
-            
+    if request.method == 'POST':
+        if "ai" in user_.role:
             project_id=generate_random_string(10)
             while TableData001.objects.filter(cell_id__contains = project_id,ai=True):
                 project_id = generate_random_string(10)
@@ -1591,8 +1591,9 @@ def VT_Page_edit_state(request):
 def create_acc_ai(request):
     acc_state = False
     user_=request.user
-    if "a1" in user_.role:
-        if request.method == 'POST': 
+    
+    if request.method == 'POST': 
+        if "a1" in user_.role:
             if request.POST.get('add_com') == "submit":
                 nom = request.POST.get('nom')
                 AI_or_AGENT_id = generate_random_string(10)
@@ -1661,8 +1662,9 @@ def create_acc_ai(request):
 def create_acc_be(request):
     acc_state = False
     user_=request.user
-    if "a1" in user_.role:
-        if request.method == 'POST': 
+    
+    if request.method == 'POST': 
+        if "a1" in user_.role:
             if request.POST.get('add_com') == "submit":
                 nom = request.POST.get('nom')
                 AI_or_AGENT_id = generate_random_string(10)
@@ -1734,8 +1736,9 @@ def create_acc_be(request):
 def create_acc_auditeur(request):
     acc_state = False
     user_=request.user
-    if "a1" in user_.role:
-        if request.method == 'POST': 
+    
+    if request.method == 'POST': 
+        if "a1" in user_.role:
             if request.POST.get('add_com') == "submit":
                 nom = request.POST.get('nom')
                 AI_or_AGENT_id = generate_random_string(10)
@@ -2101,9 +2104,9 @@ def Kizeo_form_page(request,client_id,page_number):
         kizeo_model.objects.create(kizeo_id=client_id)
     
     obj = kizeo_model.objects.get(kizeo_id=client_id)
-    if "kize" in user_.role:
-        if request.method == 'POST':
-            
+    #if "VT" in user_.role:
+    if request.method == 'POST':
+        if kize in user_.role:
             myButton = request.POST.get("mybutton1")
             if myButton=="mybutton1":
 
@@ -2342,16 +2345,14 @@ def kizeo_form_Pieces(request,client_id,piece_id):
         Pieces_index_add = kizeo_model_Pieces.objects.filter(kizeo_id=client_id).aggregate(Max('Pieces_index'))['Pieces_index__max']
         kizeo_model_Pieces.objects.create(kizeo_id=client_id,Pieces_index=piece_id)
     
-    if "kize" in user_.role:
-        if request.method == 'POST':
-            
-                        
+    if request.method == 'POST':
+        if kize in user_.role:
+
             obj = kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id)  
-                
 
             table_index=['Pieces_image_1',
-                            'Pieces_image_2',
-                            'Pieces_image_3'
+                        'Pieces_image_2',
+                        'Pieces_image_3'
                         ]
             for lis in table_index:
                 img_get= request.FILES.get(lis)
@@ -2447,7 +2448,7 @@ def kizeo_form_Pieces(request,client_id,piece_id):
 def kizeo_form_Pieces_delete(request,client_id,piece_id):
     user_= request.user
     user_role= user_.role
-    if  "kize" in user_role:
+    if  kize in user_role:
         kizeo_model_Pieces.objects.get(kizeo_id=client_id,Pieces_index=piece_id).delete()
         return redirect(f"{formK}{client_id}/5")
     

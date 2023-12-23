@@ -490,7 +490,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-function sendMessage(cellId, box, redirectNextPage,col) {
+
+function sendMessage43(cellId, box, redirectNextPage,col) {
                     
     inpust_msg_col_id="input_msg_"+col+"_" + cellId;
     var message = document.getElementById(inpust_msg_col_id).value;

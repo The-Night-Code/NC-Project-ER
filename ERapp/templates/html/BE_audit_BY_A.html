@@ -37,7 +37,11 @@
   <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
 
   <script type="text/javascript" src="{% static 'js/main10.js'%}"></script>
-
+  <script>
+    var USER_email = "{{user.email}}";
+    var USER_last_name = "{{user.last_name}}";
+    var USER_first_name = "{{user.first_name}}";
+  </script>
     
 </head>
 
@@ -1011,8 +1015,6 @@
   </script>
 
   {% endif %}
-
-
   
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>

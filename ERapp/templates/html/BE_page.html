@@ -40,6 +40,12 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
   <script type="text/javascript" src="{% static 'js/main10.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main11.js'%}"></script>
+  <script>
+    var USER_email = "{{user.email}}";
+    var USER_last_name = "{{user.last_name}}";
+    var USER_first_name = "{{user.first_name}}";
+  </script>
 </head>
 
 <body onload="load()">

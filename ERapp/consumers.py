@@ -1,9 +1,22 @@
 # consumers.py
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
 from django.contrib.auth.models import User
-from .models import UserStatus
+from django.shortcuts import get_object_or_404
+from .models import USER,UserStatus,message_box_1
 import logging
+
+import random
+import string
+
+
+def generate_random_string(length):
+    characters = string.ascii_letters + string.digits  # You can customize this for your needs
+    random_string = ''.join(random.choice(characters) for _ in range(length))
+    random_string=random_string.replace("%20","")
+    random_string=random_string.replace(" ","")
+    return random_string
 
 class UserStatusConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -57,52 +70,25 @@ class MyConsumer(AsyncWebsocketConsumer):
     
 
     
+@database_sync_to_async
+def get_user_object(email):
+    return USER.objects.get(email=email)
 
-class ChatConsumer234(AsyncWebsocketConsumer):
-    async def connect(self):
-        # Extract user ID from the URL or any other source (e.g., token)
-        user_ = self.scope.get('user')
+@database_sync_to_async
+def create_new_message(msg_id, cell_id, username, email, message_text, col, user_profile_pic):
+    return message_box_1.objects.create(
+        message_id=msg_id,
+        row_id=cell_id,
+        username=username,
+        email=email,
+        message=message_text,
+        box=col,
+        profile_pic=user_profile_pic
+    )
 
-        # Create a unique group name for each user
-        self.roomGroupName = "group_chat_gfg" # f"{user_.id}"
-
-        # Add the user to the group
-        await self.channel_layer.group_add(
-            self.roomGroupName,
-            self.channel_name
-        )
-
-        # Accept the WebSocket connection
-        await self.accept()
-
-    async def disconnect(self, close_code):
-        # Remove the user from the group when the WebSocket is closed
-        await self.channel_layer.group_discard(
-            self.roomGroupName,
-            self.channel_name
-        )
-
-    async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-
-        # Send the received message to the group (all connected clients of the same user)
-        await self.channel_layer.group_send(
-            self.roomGroupName,
-            {
-                'type': 'chat.message',
-                'message': message
-            }
-        )
-
-    async def chat_message(self, event):
-        # Send the message to the WebSocket
-        await self.send(text_data=json.dumps({'message': event['message']}))
-        
-        
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.roomGroupName = "group_chat_gfg"
+        self.roomGroupName = "chat_rooms"
         await self.channel_layer.group_add(
             self.roomGroupName ,
             self.channel_name
@@ -111,32 +97,52 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def disconnect(self , close_code):
         await self.channel_layer.group_discard(
             self.roomGroupName , 
-            self.channel_layer 
+            self.channel_name #self.channel_name channel_layer
         )
     async def receive(self, text_data):
+        user_ = self.scope.get('user')
+
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         email = text_data_json["email"]
-        
-        box = text_data_json["box"]
+        username = text_data_json["username"]
+        #userProfilePic = text_data_json["userProfilePic"]
+        col = text_data_json["col"]
         cellId = text_data_json["cellId"]
         
+        obj_user = await get_user_object(email)
+        user_profile_pic = getattr(obj_user, "profile_pic", None)
+
+        if message:
+            msg_id = generate_random_string(10)
+
+            # Use database_sync_to_async to execute the create operation asynchronously
+            await create_new_message(msg_id, cellId, username, email, message, col, user_profile_pic)
+                
         
         await self.channel_layer.group_send(
             self.roomGroupName,{
                 "type" : "sendMessage" ,
-                "message" : message , 
-                "email" : email ,
-                "box":box ,
-                "cellId":cellId,
+                "email":email,
+                "username":username ,
+                #"userProfilePic":userProfilePic,
+                "message":message ,
+                "col":col ,
+                "cellId":cellId
             })
     async def sendMessage(self , event) : 
         user_ = self.scope.get('user')
-        message = event["message"]
         email = event["email"]
-        box = event["box"]
+        username = event["username"]
+        #userProfilePic = event["userProfilePic"]
+        message = event["message"]
+        col = event["col"]
         cellId = event["cellId"]
-        await self.send(text_data = json.dumps({"message":message ,
+
+        await self.send(text_data = json.dumps({
                                                 "email":email,
-                                                "box":box ,
+                                                "username":username ,
+                                                #"userProfilePic":userProfilePic,
+                                                "message":message ,
+                                                "col":col ,
                                                 "cellId":cellId}))
