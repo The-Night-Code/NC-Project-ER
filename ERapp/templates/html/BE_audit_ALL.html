@@ -44,12 +44,13 @@
     var USER_email = "{{user.email}}";
     var USER_last_name = "{{user.last_name}}";
     var USER_first_name = "{{user.first_name}}";
+    var userProfilePic = "{{user.profile_pic.url}}";
     
   </script>
     
 </head>
 
-<body onload="load()">
+<body >
   {% if user.is_authenticated  and "auditeur" in user.role  %} <!-- and "admin" in user.role -->
 
   <input  type="hidden" name="user_email" id="user_email" value="{{ user.email }}">
@@ -496,67 +497,78 @@
                                     </nav>
                                   </td>
                                   <td class="td_input_cell"><!--commentaire-->
-                                    <nav class="header-nav ms-auto" >
-                                      <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
-                                        <i class="bi bi-chat-left-text"></i>
-                                      </a>
-                                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
-                                        <li class="dropdown-header">
-                                          <input type="text" name="input_msg_auditV1_{{item.cell_id}}" id="input_msg_auditV1_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
-                                          <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','auditV1')" > <i class="bi bi-send" ></i></button>
-                                        </li>
-                                        <li>
+                                    
+                                    <a  onclick="OPEN_popUP_chat('chat_popup_auditV1_{{item.cell_id}}')">
+                                      <i class="bi bi-chat-left-text"></i>
+                                    </a>
+
+                                      
+
+                                      
+                                      
+
+                                    <div class="chat_popup" id="chat_popup_auditV1_{{item.cell_id}}">
+                                      
+                                      <div class="row_chat_popup">
+                                        <button type="button" class="btn-close popUP_chat_close_btn"  aria-label="Close" onclick="CLOSE_popUP_chat('chat_popup_auditV1_{{item.cell_id}}')"></button>
+                                      </div>
+
+                                      
+                                      <div class="row_chat_popup">
                                           <hr class="dropdown-divider">
-                                        </li>
-                                        <div id="chat-messages-container_auditV1_{{item.cell_id}}">
+                                      </div>
+                                      <div class="row_chat_popup chat_popup_content" id="chat-messages-container_auditV1_{{item.cell_id}}">
                                         {% for msg in message_box_1 reversed %}
-                                        {% if item.cell_id == msg.row_id and msg.box == "auditV1" %}
-                                          <li class="message-item">
-                                            <a>
-                                              {% if msg.email %}  
-                                                <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
-                                              {% else %}
-                                                <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
-                                              {% endif %}
-                                              <div>
-                                                <h3>{{ msg.username }}</h3>
-                                                {% if msg_box_tagged.1 in msg.message %}
-                                                          <h4 class="color-red">{{ msg.message }}</h4>
+                                          {% if item.cell_id == msg.row_id and msg.box == "auditV1" %}
+                                            <div class="message-item row_chat_popup ">
+
+                                              <div class="row_chat_popup">
+                                                {% if msg.email %}  
+                                                  <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
                                                 {% else %}
-                                                  {% if msg_box_tagged.2 in msg.message %}
-                                                      <h4 class="color-red">{{ msg.message }} </h4>
+                                                  <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
+                                                {% endif %}
+                                              </div>
+                                                <div class="column">
+                                                  <h3>{{ msg.username }}</h3>
+                                              </div>
+                                              <div class="column">
+                                                  {% if msg_box_tagged.1 in msg.message %}
+                                                            <h4 class="color-red">{{ msg.message }}</h4>
                                                   {% else %}
-                                                    {% if msg_box_tagged.3 in msg.message %}
-                                                      <h4 class="color-red">{{ msg.message }}</h4>
+                                                    {% if msg_box_tagged.2 in msg.message %}
+                                                        <h4 class="color-red">{{ msg.message }} </h4>
                                                     {% else %}
-                                                      <h4>{{ msg.message }}</h4>
+                                                      {% if msg_box_tagged.3 in msg.message %}
+                                                        <h4 class="color-red">{{ msg.message }}</h4>
+                                                      {% else %}
+                                                        <h4>{{ msg.message }}</h4>
+                                                      {% endif%}
                                                     {% endif%}
                                                   {% endif%}
-                                                {% endif%}
-                                                
-                                                <p>{{ msg.message_date|naturaltime }}</p>
+                                                  
+                                                  <p>{{ msg.message_date|naturaltime }}</p>
                                               </div>
-                                            </a>
-                                          </li>
-                                          <li>
-                                            <hr class="dropdown-divider">
-                                          </li>
+                                            </div>
+
+                                            <div class="row_chat_popup">
+                                              <hr class="dropdown-divider">
+                                            </div>
                                           {% endif %}
                                         {% endfor %}
-
-
-
-
-
-
-
-
-
-
-                                          
                                       </div>
-                                      </ul>
-                                    </nav>
+
+                                      <div class="row_chat_popup">
+                                        <input type="text" name="input_msg_auditV1_{{item.cell_id}}" id="input_msg_auditV1_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
+                                        <button class="popUP_chat_send_btn style_none_border  style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','auditV1')" > 
+                                          <i class="bi bi-send popUP_chat_send_btn_icon " style=""></i></button>
+                                    </div>
+                                    </div>
+                                      
+                                  
+                                      
+
+
                                   </td>
 
                         
@@ -1012,6 +1024,7 @@
           
       </div>
     </section>
+
 
   </main><!-- End #main -->
 

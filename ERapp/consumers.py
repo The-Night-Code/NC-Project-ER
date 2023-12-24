@@ -106,12 +106,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = text_data_json["message"]
         email = text_data_json["email"]
         username = text_data_json["username"]
-        #userProfilePic = text_data_json["userProfilePic"]
+        userProfilePic = text_data_json["userProfilePic"]
         col = text_data_json["col"]
         cellId = text_data_json["cellId"]
         
         obj_user = await get_user_object(email)
-        user_profile_pic = getattr(obj_user, "profile_pic", None)
+        user_profile_pic = getattr(obj_user, "profile_pic")
 
         if message:
             msg_id = generate_random_string(10)
@@ -120,29 +120,34 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await create_new_message(msg_id, cellId, username, email, message, col, user_profile_pic)
                 
         
-        await self.channel_layer.group_send(
-            self.roomGroupName,{
-                "type" : "sendMessage" ,
-                "email":email,
-                "username":username ,
-                #"userProfilePic":userProfilePic,
-                "message":message ,
-                "col":col ,
-                "cellId":cellId
-            })
+            await self.channel_layer.group_send(
+                self.roomGroupName,{
+                    "type" : "sendMessage" ,
+                    "email":email,
+                    "username":username ,
+                    "userProfilePic":userProfilePic,
+                    "message":message ,
+                    "col":col ,
+                    "cellId":cellId
+                })
+        
+        
     async def sendMessage(self , event) : 
         user_ = self.scope.get('user')
         email = event["email"]
         username = event["username"]
-        #userProfilePic = event["userProfilePic"]
+        userProfilePic = event["userProfilePic"]
         message = event["message"]
         col = event["col"]
         cellId = event["cellId"]
 
-        await self.send(text_data = json.dumps({
-                                                "email":email,
-                                                "username":username ,
-                                                #"userProfilePic":userProfilePic,
-                                                "message":message ,
-                                                "col":col ,
-                                                "cellId":cellId}))
+        obj_user = await get_user_object(email)
+        user_profile_pic = getattr(obj_user, "profile_pic")
+        if message:
+            await self.send(text_data = json.dumps({
+                                                    "email":email,
+                                                    "username":username ,
+                                                    "userProfilePic":userProfilePic,
+                                                    "message":message ,
+                                                    "col":col ,
+                                                    "cellId":cellId}))

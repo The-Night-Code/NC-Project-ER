@@ -359,7 +359,7 @@ initializeInput_change('tableDATA_9');
 function initializeInput_change(tableId) {
     document.addEventListener("DOMContentLoaded", function() {
         // Get all input elements within the table
-        var inputElements = document.querySelectorAll("#"+tableId+" tbody input[type='text'], #"+tableId+" tbody input[type='file'], #"+tableId+" tbody select ");
+        var inputElements = document.querySelectorAll("#"+tableId+" tbody input[class='input_table_data' ], #"+tableId+" tbody input[type='file']  ,  #"+tableId+"input[class='form-check-checkbox'] , #"+tableId+" tbody select ");
 
         // Store the original values in a data attribute
         inputElements.forEach(function(input) {
@@ -376,7 +376,7 @@ function initializeInput_change(tableId) {
 }
 function updateRowColor(row,cellId) {
     // Check if at least one input has a different value from its original value
-    var rowShouldBeRed = Array.from(row.querySelectorAll("input[type='text'], input[type='file'],  tbody select ")).some(function(input) {
+    var rowShouldBeRed = Array.from(row.querySelectorAll("input[class='input_table_data'], input[type='file'],  tbody select , input[class='form-check-checkbox'] ")).some(function(input) {
         return input.value !== input.dataset.originalValue;
     });
     //var button_edit_data_on_T = document.getElementById("i_for_edit_button_"+cellId); //document.getElementsByClassName("i_for_edit_button")[0];
