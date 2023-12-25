@@ -497,9 +497,9 @@
                                     </nav>
                                   </td>
                                   <td class="td_input_cell"><!--commentaire-->
-                                    
-                                    <a  onclick="OPEN_popUP_chat('chat_popup_auditV1_{{item.cell_id}}')">
-                                      <i class="bi bi-chat-left-text"></i>
+
+                                    <a  class="OPEN_popUP_chat_icon" onclick="OPEN_popUP_chat('chat_popup_auditV1_{{item.cell_id}}')">
+                                      <i class="bi bi-chat-left-text"><span class="OPEN_popUP_chat_span" id="chat_span_noti_auditV1_{{item.cell_id}}" >643</span></i>
                                     </a>
 
                                       
@@ -508,12 +508,10 @@
                                       
 
                                     <div class="chat_popup" id="chat_popup_auditV1_{{item.cell_id}}">
-                                      
                                       <div class="row_chat_popup">
                                         <button type="button" class="btn-close popUP_chat_close_btn"  aria-label="Close" onclick="CLOSE_popUP_chat('chat_popup_auditV1_{{item.cell_id}}')"></button>
                                       </div>
 
-                                      
                                       <div class="row_chat_popup">
                                           <hr class="dropdown-divider">
                                       </div>
@@ -567,10 +565,6 @@
                                     </div>
                                     </div>
                                       
-                                  
-                                      
-
-
                                   </td>
 
                         

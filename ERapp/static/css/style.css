@@ -355,6 +355,24 @@ table.dataTable thead .sorting_desc_disabled:before {
   background-color: #f1f1f1;
   border: 1px solid rgb(1, 71, 81);}
 
+.OPEN_popUP_chat_icon{font-size: 1.5em;
+  color:rgb(15, 243, 129);
+  border: none;}
+
+.OPEN_popUP_chat_span{display:none;}
+.OPEN_popUP_chat_span_show{
+  font-size: 6px;
+  background-color:red;
+  color:white;
+  text-decoration: none; 
+  padding:2px 5px;
+  margin:5px 0px; 
+  border-radius:25px;
+  font-size:16px;
+  position: relative; 
+  top:10px; 
+  display:block;
+  } 
 .row_chat_popup:after{content: "";
   display: table;
   clear: both;
@@ -748,6 +766,7 @@ h6 {
 --------------------------------------------------------------*/
 .table_span_calc_files{background:red;
   color:white;
+  text-decoration: none; 
   padding:2px 5px;
   margin:5px; 
   border-radius:25px;
@@ -758,6 +777,7 @@ h6 {
 
 .table_span_calc_files_show{background:red;
   color:white;
+  text-decoration: none; 
   padding:2px 5px;
   margin:5px; 
   border-radius:25px;
