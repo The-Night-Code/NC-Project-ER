@@ -347,12 +347,12 @@ table.dataTable thead .sorting_desc_disabled:before {
   border-radius: 25px;
   display:none;
   position: fixed;
-  bottom: 0;
+  bottom: 5px;
   right: 15px;
   border: 3px solid #f1f1f1;
   width:500px;
   z-index: 999999;
-  background-color: rgba(28, 97, 107, 0.9);
+  background-color: #f1f1f1;
   border: 1px solid rgb(1, 71, 81);}
 
 .row_chat_popup:after{content: "";
@@ -365,13 +365,14 @@ table.dataTable thead .sorting_desc_disabled:before {
   width: 75%;
   }
 .popUP_chat_close_btn{right: 0%;
-  
+  margin: 8px 5px;
   }
-.popUP_chat_send_btn_icon{color: white;
+.popUP_chat_send_btn_icon{color: rgb(1, 71, 81);
   background: transparent !important;
   font-size: 1.5em;
 }
 .chat_popup_content{width:100%; 
+  border-radius: 20px;
   height: auto;
   max-height: 300px;
   margin-bottom: 10px;
@@ -383,29 +384,53 @@ table.dataTable thead .sorting_desc_disabled:before {
   margin: 0 auto;
 }
 .chat_popup_content_si{
+
+  background-color: rgba(28, 97, 107, 0.3);
+  border-radius: 15px;
+  margin: 3px 5px;
+  padding:2px;
   height: auto;
   padding:5px ;
-  border-bottom: 1px solid rgb(1, 71, 81);}
+  }
 .chat_popup_content_si_header{
-  padding-top:5px ;
-  float: left;
-  width: 100px;}
 
-.chat_popup_content_si_header h3{font-size: 18px;}
-.chat_popup_content_si_timer{float: right;}
-.chat_popup_content_para, .column_chat_popup_3{
+  text-align: center;
+  padding:5px ;
+  float: left;
+  max-width: 150px;
+  width: auto;}
+.chat_popup_content_si_header img{width:50px;}
+.chat_popup_content_si_header h3{
+
+  word-break: break-word;
+  white-space: normal;
+  font-size: 18px;
+  font-weight: bold;
+}
+.chat_popup_content_si_timer{float: right;
+  bottom:1px;
+  margin-bottom:0px;
+  padding-bottom:0px;}
+
+.chat_popup_content_para{
   all: unset;
-  word-break: break-all;
+
+  font-size: medium!important;
+  font-family: arial!important;
+  margin-top:10px; 
+  word-break: break-word;
   white-space: normal;
 
-  color: white;
+  color: black;
   width: 300px!important; 
   }
 
-.chat_popup input{border-radius: 25px;
+.chat_popup input{
+  border-radius: 25px;
   background-color: rgb(127, 167, 173);
   border: none;
-  padding:0px 10px;}
+  padding:0px 10px;
+  margin-left: 5px;}
 
 .chat_popup input:focus {
   outline: none;

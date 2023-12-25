@@ -536,9 +536,10 @@ function sendMessage43(cellId, box, redirectNextPage,col) {
 
 }
 
-function preventSubmit(event) {
+function preventSubmit(event,cellId,numb,redirect_next_page,col) {
     if (event.key === "Enter") {
         event.preventDefault(); // Prevent the form submission
+        sendMessage(cellId,numb,redirect_next_page,col)
     }
 }
 

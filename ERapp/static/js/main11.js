@@ -18,20 +18,33 @@ chatSocket.onmessage = function (e) {
     div.innerHTML = data.email + " : " + data.message;
     document.querySelector("#input_msg_"+data.col+"_"+data.cellId).value = "";
     var newMessage = `
-        <li class="message-item">
-            <a>
-                <img src="${data.userProfilePic}" alt="Image" width="50"class="rounded-circle">
-                <div>
-                    <h3>${data.username}</h3>
-                    <h4>${data.message}</h4>
-                    <p> quelques secondes </p>  <!-- Use the naturaltime filter here -->
+
+        
+        
+        
+        <div class="message-item row_chat_popup chat_popup_content_si">
+
+            <div class="chat_popup_content_si_header">
+                <div class="row_chat_popup">
+                    <img src="${data.userProfilePic}" alt="Image" class="rounded-circle">  <!-- alt="image.title"-->
                 </div>
-            </a>
-        </li>
-        <li>
-            <hr class="dropdown-divider">
-        </li>
-    `;
+                <div class="row_chat_popup">
+                    <h3>${data.username}</h3>
+                </div>
+            </div>
+            <div class="column_chat_popup">
+            <div class="row_chat_popup">
+                <p class="chat_popup_content_para">${data.message}</p>
+            </div>
+            </div>
+            <p class="chat_popup_content_si_timer">quelques secondes</p>
+        </div>
+        
+        
+        
+        
+        
+        `;
 
     // Append the new message to the chat box
     $("#chat-messages-container_"+data.col+"_"+data.cellId).prepend(newMessage);

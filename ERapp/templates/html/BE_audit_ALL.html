@@ -525,7 +525,7 @@
                                               <div class="chat_popup_content_si_header">
                                                 <div class="row_chat_popup">
                                                 {% if msg.email %}  
-                                                  <img src="{{ msg.profile_pic.url }}" alt="Image" width="40" class="rounded-circle">  <!-- alt="image.title"-->
+                                                  <img src="{{ msg.profile_pic.url }}" alt="Image" class="rounded-circle">  <!-- alt="image.title"-->
                                                 {% else %}
                                                   <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
                                                 {% endif %}
@@ -549,22 +549,19 @@
                                                       {% endif%}
                                                     {% endif%}
                                                   {% endif%}
+
                                                 </div>
-                                                <div class="row_chat_popup">
-                                                  <p class="chat_popup_content_si_timer">{{ msg.message_date|naturaltime }}</p>
-                                                </div>
+                                                
                                               </div>
+                                              <p class="chat_popup_content_si_timer">{{ msg.message_date|naturaltime }}</p>
                                             </div>
 
-                                            <div class="row_chat_popup">
-                                              <hr class="dropdown-divider">
-                                            </div>
                                           {% endif %}
                                         {% endfor %}
                                       </div>
 
                                       <div class="row_chat_popup">
-                                        <input type="text" name="input_msg_auditV1_{{item.cell_id}}" id="input_msg_auditV1_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
+                                        <input type="text" name="input_msg_auditV1_{{item.cell_id}}" id="input_msg_auditV1_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event,'{{item.cell_id}}','1','{{redirect_next_page}}','auditV1')">
                                         <button class="popUP_chat_send_btn style_none_border  style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','auditV1')" > 
                                           <i class="bi bi-send popUP_chat_send_btn_icon " ></i></button>
                                     </div>
