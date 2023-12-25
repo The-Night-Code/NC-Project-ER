@@ -54,3 +54,20 @@ function CLOSE_popUP_chat(id) {
         divsToHide[i].style.display = "none"; 
     }
 }
+
+
+function OPEN_popUP_files(id){
+    var divsToHide = document.getElementsByClassName("files_popup"); //divsToHide is an array
+    for(var i = 0; i < divsToHide.length; i++){
+        divsToHide[i].style.display = "none"; 
+    }
+    document.getElementById(id).style.display ="block";
+}
+  
+ 
+function CLOSE_popUP_files(id) {
+    var divsToHide = document.getElementsByClassName("files_popup"); //divsToHide is an array
+    for(var i = 0; i < divsToHide.length; i++){
+        divsToHide[i].style.display = "none"; 
+    }
+}

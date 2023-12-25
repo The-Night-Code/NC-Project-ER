@@ -666,9 +666,8 @@ def Auditeur_Accueil(request):
         
     #final_result={'lundi':re1 , 'mardi':re2}
     
-    if request.method == "GET":
-        pass
     return render(request, "html/Auditeur_main_page.html",{'data':data,
+                                                           
                                                         'activities_audit':activities_audit,
                                                         'client_count_added_today':client_count_added_today,
                                                         'client_count_added_month':client_count_added_month,
@@ -726,6 +725,10 @@ def audit_pages(request,redirect_page,html_page):
                  {'index':7,'state':"Envoye"},
                  {'index':8,'state':"Annule"},
                  {'index':9,'state':"Fini"}]
+    auditV=[{'index':'1','name':'auditV1','datafiles_AuditV':datafiles_AuditV1},
+        {'index':'2','name':'auditV2','datafiles_AuditV':datafiles_AuditV2},
+        {'index':'3','name':'auditV3','datafiles_AuditV':datafiles_AuditV3},
+        {'index':'4','name':'auditFinal','datafiles_AuditV':datafiles_AuditFinal}]
     auditeur=[]
     for audi in USER.objects.all():
         audi_role = str(audi.role)
@@ -740,27 +743,28 @@ def audit_pages(request,redirect_page,html_page):
     msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
     Audi=user_.email
     list={ 'data': data ,
-                                                  'col_count':col_count ,
-                                                  'column_names': column_names,
-                                                  'datafiles_VT': datafiles_VT ,
-                                                  'countfiles_VT': countfiles_VT ,
-                                                  'datafiles_AuditV1': datafiles_AuditV1 ,
-                                                  'countfiles_AuditV1': countfiles_AuditV1,
-                                                  'datafiles_AuditV2': datafiles_AuditV2 ,
-                                                  'countfiles_AuditV2': countfiles_AuditV2,
-                                                  'datafiles_AuditV3': datafiles_AuditV3 ,
-                                                  'countfiles_AuditV3': countfiles_AuditV3,
-                                                  'datafiles_AuditFinal':datafiles_AuditFinal,
-                                                  'countfiles_AuditFinal': countfiles_AuditFinal,
-                                                  'message_box_1':message_box_01,
-                                                  'table_index':table_index,
-                                                  'auditeur':auditeur,
-                                                  'Audi':Audi,
-                                                  #'a':a,
-                                                  'redirect_next_page':redirect_page,
-                                                  'msg_box_tagged':msg_box_tagged,
-                                                  #'user_profile_image':user_profile_image
-                                                  }
+        'auditV':auditV,
+        'col_count':col_count ,
+        'column_names': column_names,
+        'datafiles_VT': datafiles_VT ,
+        'countfiles_VT': countfiles_VT ,
+        #'datafiles_AuditV1': datafiles_AuditV1 ,
+        'countfiles_AuditV1': countfiles_AuditV1,
+        #'datafiles_AuditV2': datafiles_AuditV2 ,
+        'countfiles_AuditV2': countfiles_AuditV2,
+        #'datafiles_AuditV3': datafiles_AuditV3 ,
+        'countfiles_AuditV3': countfiles_AuditV3,
+        #'datafiles_AuditFinal':datafiles_AuditFinal,
+        'countfiles_AuditFinal': countfiles_AuditFinal,
+        'message_box_1':message_box_01,
+        'table_index':table_index,
+        'auditeur':auditeur,
+        'Audi':Audi,
+        #'a':a,
+        'redirect_next_page':redirect_page,
+        'msg_box_tagged':msg_box_tagged,
+        #'user_profile_image':user_profile_image
+        }
     return list
 
 @login_required 
@@ -789,6 +793,7 @@ def BE_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,c
     
     
     list=audit_pages(request,redirect_page,html_page)
+    
     return render(request, f"html/{html_page}", list)
 
 
