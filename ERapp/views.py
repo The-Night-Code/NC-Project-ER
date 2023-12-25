@@ -256,27 +256,14 @@ def generate_random_string(length):
     random_string=random_string.replace(" ","")
     return random_string
 
-
+### delete
 @login_required
 def add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table):
     l1=f"table_{column_name_type}[]"
     file_table = ModelByColumn(column_name_type)
     files_date_for_response=[]
     I_icon_class=""
-    files_date_for_response+=[{'file_id':"button_edit_data_on_table",
-                                                        'file_save':"file",
-                                                        'file_format':"format_file",
-                                                        'file_name':"file.name",
-                                                        'file_index':"1111",
-                                                        'column':"column_name_type",
-                                                        'I_icon_class':"I_icon_class",},]
-    files_date_for_response+=[{'file_id':"button_edit_data_on_table",
-                                                        'file_save':"file2",
-                                                        'file_format':"format_file2",
-                                                        'file_name':"file.name2",
-                                                        'file_index':"1111",
-                                                        'column':"column_name_type",
-                                                        'I_icon_class':"I_icon_class",},]
+
     
     for file in request.FILES.getlist(l1, []):
         format_file=file.name.split(".")[1]
@@ -333,7 +320,7 @@ def add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_tab
             
     return files_date_for_response
     
-            
+### delete          
 @login_required
 def add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table):
     l1=f"table_{column_name_type}_{button_edit_data_on_table}"
@@ -366,6 +353,8 @@ def add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table
                     file_save = file,
                     file_format =format_file
                 )
+
+
 @login_required
 def table_view_2(request):
     #Activity_id,Activity_user,Activity_table,Activity_in,Activity_before,Activity_after
@@ -571,7 +560,7 @@ def table_view_2(request):
                                         )
                         
                                     files_date_for_response.append({'file_id':button_edit_data_on_table,
-                                                                'file_save_url':"file.name",
+                                                                #'file_save_url':str(file.url),
                                                                 'file_format':format_file,
                                                                 'file_name':file.name,
                                                                 'file_index':"",

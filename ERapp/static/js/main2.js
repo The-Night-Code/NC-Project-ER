@@ -135,20 +135,22 @@ function submitForm__01(cellId, box, redirectPage,col){
                 var F = data.files_date_for_response[i];
                 var col_n = F.column;
                 
-                var element_id="#ul_for_"+F.column+"_"+F.file_id;
-                var new_File = `
+                var element_id="#fp_container_"+F.column+"_"+F.file_id;
 
-                    <li id="li_for_${F.column}_${F.file_id}" class="color_red_important">
-                        <li class="list-inline-item">
-                            <a class="nav-link nav-icon show" ><i class=" ${F.I_icon_class} " ></i></a>
-                        </li>
-                        ${F.file_name}
-                        <li class="list-inline-item">
-                        <button  class="button_table_data" type="button"  disabled">
-                        <i class="ri-delete-bin-2-fill color_gray" style="color:gray;"></i>
-                        </button>
-                    </li>
-                    </li>
+                var new_File = `
+                    <div class="row_files_popup files_popup_content_si" id="li_for_${F.column}_${F.file_id}"  class="color_red_important">
+                        <div class="fpcs_side_left">
+                            <a class="nav-link nav-icon show" ><i class=" ${F.I_icon_class}  fp_icon" ></i></a>
+                        </div>
+                            
+                        <p class="fpcs_center">${F.file_name}</p>
+                            
+                        <div class="list-inline-item fpcs_side_right">
+                            <button  class="button_table_data" type="button"  disabled">
+                                <i class="ri-delete-bin-2-fill color_gray fp_btn_icon" style="color:gray;"></i>
+                            </button>
+                        </div>
+                    </div>
                     
                 `
                 $(element_id).prepend(new_File);

@@ -448,7 +448,7 @@
                                           <button type="button" class="btn-close top_popup_close_btn "  aria-label="Close" onclick="CLOSE_popUP_files('files_popup_{{ auV.name }}_{{item.cell_id}}')"></button>
                                         </div>
 
-                                        <div class="row_files_popup files_popup_content" id="chat-messages-container_{{ auV.name }}_{{item.cell_id}}">
+                                        <div class="row_files_popup files_popup_content" id="fp_container_{{ auV.name }}_{{item.cell_id}}">
                                           {% for F in auV.datafiles_AuditV %}
                                             {% if F.file_id == item.cell_id %}
                                               <div class="row_files_popup files_popup_content_si" id="li_for_{{ auV.name }}_{{item.cell_id}}_{{F.file_index}}">
