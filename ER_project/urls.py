@@ -21,7 +21,7 @@ from ERapp import consumers
 
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import  LoginU, LogoutU , ProfileU,forgot_password ,showimage,VT_Page_edit_state
+from ERapp.views import  LoginU, LogoutU , main_Page,ProfileU,forgot_password ,showimage,VT_Page_edit_state
 from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,create_acc_auditeur,corbeille,Activities
 from ERapp.views import remove_file_from_MODELS,agent_immo,agent_immo_f,send_message
 from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,BE_home_page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
@@ -39,14 +39,12 @@ formK="formK"
 be="be"
 
 urlpatterns = [
-    path('', chatPage, name="chat-page"),    
+    path('', main_Page, name="main_page"),    
 
     # login-section
     path("auth/login/", LoginView.as_view(template_name="chat/Auditeur_main_page.html"), name="login-user"),
     path("auth/logout/", LogoutView.as_view(), name="logout-user"),
-    
-    path('', LoginU, name="not_logged_in"),
-    path('', LoginU, name="main_page"),
+
     path('admin/', admin.site.urls),
 
 
