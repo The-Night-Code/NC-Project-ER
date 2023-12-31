@@ -23,7 +23,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from ERapp.views import  LoginU, LogoutU , main_Page,ProfileU,forgot_password ,showimage,VT_Page_edit_state
 from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,create_acc_auditeur,corbeille,Activities
-from ERapp.views import remove_file_from_MODELS,agent_immo,agent_immo_f,send_message
+from ERapp.views import remove_file_from_MODELS,agent_immo,agent_immo_f,send_message,msg_checker_notif
 from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,BE_home_page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
 from ERapp.views import download_media_folder,table_view_2,table_view_3,CBFCS,Auditor_Task_Summary,Auditor_Task_Summary_BY_A
 
@@ -76,6 +76,7 @@ urlpatterns = [
     
     path('remove_file_from_MODELS/',remove_file_from_MODELS ,name="remove_file_from_MODELS"),
     path('send-message/',send_message , name="send_message" ),
+    path('msg-checker-notif/',msg_checker_notif , name="msg_checker_notif" ),
     
     
     # Agent Immo Pages

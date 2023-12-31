@@ -356,19 +356,30 @@ table.dataTable thead .sorting_desc_disabled:before {
   text-decoration: none;}
   
 
-.OPEN_popUP_chat_span{display:none;}
-.OPEN_popUP_chat_span_show{
-  font-size: 6px;
-  background-color:red;
+.OPEN_popUP_chat_span{
+  background:red;
   color:white;
   text-decoration: none; 
   padding:2px 5px;
-  margin:5px 0px; 
+  margin:5px; 
   border-radius:25px;
-  font-size:16px;
+  font-size:20px;
   position: relative; 
   top:10px; 
-  display:block;
+  display:none;
+}
+.OPEN_popUP_chat_span_show{
+  background:red;
+  color:white;
+  text-decoration: none; 
+  padding:0px 5px;
+  margin:-2px 5px; 
+  border-radius:25px;
+  font-size:20px;
+  position: relative; 
+  top:10px; 
+
+
   } 
 .popUP_chat_send_btn_icon{color: rgb(1, 71, 81);
   background: transparent !important;
@@ -436,6 +447,7 @@ table.dataTable thead .sorting_desc_disabled:before {
   padding:2px;
   height: auto;
   padding:5px ;
+
   }
 
 .files_popup_content_si{
@@ -826,7 +838,8 @@ h6 {
 /*--------------------------------------------------------------
 # file_removed_status_box
 --------------------------------------------------------------*/
-.table_span_calc_files{background:red;
+.table_span_calc_files{
+  background:red;
   color:white;
   text-decoration: none; 
   padding:2px 5px;
@@ -837,7 +850,8 @@ h6 {
   top:10px; 
   display:none;}
 
-.table_span_calc_files_show{background:red;
+.table_span_calc_files_show{
+  background:red;
   color:white;
   text-decoration: none; 
   padding:2px 5px;
@@ -845,7 +859,7 @@ h6 {
   border-radius:25px;
   font-size:20px;
   position: relative; 
-  top:10px; 
+  top:10px;  
   }
 
 /* -----------------------------------------------------------

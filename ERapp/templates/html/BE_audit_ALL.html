@@ -498,14 +498,15 @@
                                     </td>
                                     <td class="td_input_cell"><!--commentaire-->
 
-                                      <a  class="OPEN_popUP_chat_icon" onclick="OPEN_popUP_chat('chat_popup_{{ auV.name }}_{{item.cell_id}}')">
+                                      <a  class="OPEN_popUP_chat_icon" onclick="OPEN_popUP_chat('chat_popup_{{ auV.name }}_{{item.cell_id}}','{{ auV.name }}','{{item.cell_id}}')">
                                         <i class="bi bi-chat-left-text"><span class="OPEN_popUP_chat_span" id="chat_span_noti_{{ auV.name }}_{{item.cell_id}}" >0</span></i>
                                       </a>
 
+                                      
                                       <div class="chat_popup" id="chat_popup_{{ auV.name }}_{{item.cell_id}}">
                                         <div class="row_files_popup fp_top">
                                           <p class="top_popup_title" >Commentaire: {{ auV.name }}</p>
-                                          <button type="button" class="btn-close top_popup_close_btn"  aria-label="Close" onclick="CLOSE_popUP_chat('chat_popup_{{ auV.name }}_{{item.cell_id}}')"></button>
+                                          <button type="button" class="btn-close top_popup_close_btn"  aria-label="Close" onclick="CLOSE_popUP_chat('chat_popup_{{ auV.name }}_{{item.cell_id}}','{{ auV.name }}','{{item.cell_id}}')"></button>
                                         </div>
 
                                         <div class="row_chat_popup">
@@ -514,7 +515,12 @@
                                         <div class="row_chat_popup chat_popup_content" id="chat-messages-container_{{ auV.name }}_{{item.cell_id}}">
                                           {% for msg in message_box_1 reversed %}
                                             {% if item.cell_id == msg.row_id and msg.box ==  auV.name  %}
-                                              <div class="message-item row_chat_popup chat_popup_content_si">
+                                              {% if user.email not in msg.user_Vue %}
+                                                <script>
+                                                  add_1_to_i_chat_box_noti("chat_span_noti_{{ auV.name }}_{{ item.cell_id }}");
+                                                </script>
+                                              {% endif %}
+                                              <div class="message-item row_chat_popup chat_popup_content_si"{% if user.email not in msg.user_Vue %}style="background-color: rgba(28, 97, 107, 0.9);" {% endif %}>
 
                                                 <div class="chat_popup_content_si_header">
                                                   <div class="row_chat_popup">

@@ -13,6 +13,7 @@ function add_1_to_i_files_box(iddd) {
 }
 
 
+
 function sendMessage43(cellId, box, redirectNextPage,col) {
 
   var csrfToken = $("[name=csrfmiddlewaretoken]").val();

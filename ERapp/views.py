@@ -1027,7 +1027,6 @@ def send_message(request):
         cellId = request.POST.get('cellId')
         msg_id=generate_random_string(10)
         if message:
-            
             new_message = message_box_1.objects.create(
                                                        
                                                         message_id = msg_id,
@@ -1035,6 +1034,7 @@ def send_message(request):
                                                         username =user_.first_name + "  " +  user_.last_name,
                                                         email =  user_.email,
                                                         message =message,
+                                                        user_Vue_list_new = " " +user_.email+ " ; ",
                                                         box = col,
                                                         profile_pic = user_.profile_pic)
             response_data = {
@@ -1047,6 +1047,28 @@ def send_message(request):
     return JsonResponse({'status': 'error'})
 
     
+@login_required
+def msg_checker_notif(request):
+    if request.method=="POST":
+        user_ = request.user
+        chat_span_noti_ID = request.POST.get("chat_span_noti_ID")
+        msg_box = request.POST.get("msg_box")
+        cell_id = request.POST.get("cell_id")
+        
+        msg_objs = message_box_1.objects.filter(row_id=cell_id,box=msg_box)
+        for msg_obj in msg_objs:
+            user_Vue_list_old= msg_obj.user_Vue
+            user_Vue_list_new = user_Vue_list_old +" " +user_.email+ " ; "
+            setattr(msg_obj, 'user_Vue', user_Vue_list_new)
+            msg_obj.save()
+        response_data = {
+            'status': "success",
+            'chat_span_noti_ID':chat_span_noti_ID,
+            }
+        return JsonResponse(response_data)
+    return JsonResponse({'status': 'error'})
+        
+        
 
 def ModelByColumn(model_by_column):
     if model_by_column == "VT" or model_by_column == "vt":

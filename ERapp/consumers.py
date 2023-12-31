@@ -77,6 +77,7 @@ def get_user_object(email):
 @database_sync_to_async
 def create_new_message(msg_id, cell_id, username, email, message_text, col, user_profile_pic):
     return message_box_1.objects.create(
+        user_Vue = " " +email+ " ; ",
         message_id=msg_id,
         row_id=cell_id,
         username=username,
@@ -119,9 +120,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
             # Use database_sync_to_async to execute the create operation asynchronously
             await create_new_message(msg_id, cellId, username, email, message, col, user_profile_pic)
                 
-        
+            new_msg_received = True
             await self.channel_layer.group_send(
                 self.roomGroupName,{
+                    'new_msg_received': new_msg_received,
+
                     "type" : "sendMessage" ,
                     "email":email,
                     "username":username ,
@@ -130,7 +133,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     "col":col ,
                     "cellId":cellId
                 })
-        
+            
+
         
     async def sendMessage(self , event) : 
         user_ = self.scope.get('user')
@@ -141,13 +145,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
         col = event["col"]
         cellId = event["cellId"]
 
+        new_msg_received = event.get('new_msg_received', False)
+
         obj_user = await get_user_object(email)
         user_profile_pic = getattr(obj_user, "profile_pic")
         if message:
             await self.send(text_data = json.dumps({
-                                                    "email":email,
-                                                    "username":username ,
-                                                    "userProfilePic":userProfilePic,
-                                                    "message":message ,
-                                                    "col":col ,
-                                                    "cellId":cellId}))
+                                    'new_msg_received': new_msg_received,
+                                    "email":email,
+                                    "username":username ,
+                                    "userProfilePic":userProfilePic,
+                                    "message":message ,
+                                    "col":col ,
+                                    "cellId":cellId}))
