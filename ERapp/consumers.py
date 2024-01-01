@@ -77,11 +77,11 @@ def get_user_object(email):
 @database_sync_to_async
 def create_new_message(msg_id, cell_id, username, email, message_text, col, user_profile_pic):
     return message_box_1.objects.create(
-        user_Vue = " " +email+ " ; ",
         message_id=msg_id,
         row_id=cell_id,
         username=username,
         email=email,
+        user_Vue=email,
         message=message_text,
         box=col,
         profile_pic=user_profile_pic
@@ -90,19 +90,25 @@ def create_new_message(msg_id, cell_id, username, email, message_text, col, user
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.roomGroupName = "chat_rooms"
-        await self.channel_layer.group_add(
-            self.roomGroupName ,
-            self.channel_name
-        )
-        await self.accept()
+        user_ = self.scope.get('user')
+        if user_ is None or not user_.is_authenticated:
+            # Reject the connection if the user is not authenticated
+            await self.close()
+        else:
+            # Continue with the connection if the user is authenticated
+            await self.channel_layer.group_add(
+                self.roomGroupName ,
+                self.channel_name
+            )
+            await self.accept()
     async def disconnect(self , close_code):
         await self.channel_layer.group_discard(
             self.roomGroupName , 
             self.channel_name #self.channel_name channel_layer
         )
     async def receive(self, text_data):
+        #user_ = self.scope["user"]
         user_ = self.scope.get('user')
-
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         email = text_data_json["email"]
@@ -120,24 +126,31 @@ class ChatConsumer(AsyncWebsocketConsumer):
             # Use database_sync_to_async to execute the create operation asynchronously
             await create_new_message(msg_id, cellId, username, email, message, col, user_profile_pic)
                 
-            new_msg_received = True
+                
+            
+            #if user_.email == email :
+             #   new_background = "red"
+            #else:
+            #    new_background = "blue"
+            
+            if user_:
+                print("user___TRUE")
+            new_background = "blue" if user_ and user_.email == email else "red"
+            print(f"new_background: {new_background}")
             await self.channel_layer.group_send(
                 self.roomGroupName,{
-                    'new_msg_received': new_msg_received,
-
                     "type" : "sendMessage" ,
                     "email":email,
-                    "username":username ,
+                    "username":username  + new_background,
                     "userProfilePic":userProfilePic,
                     "message":message ,
                     "col":col ,
                     "cellId":cellId
                 })
-            
-
+        
         
     async def sendMessage(self , event) : 
-        user_ = self.scope.get('user')
+        #user_ = self.scope["user"]
         email = event["email"]
         username = event["username"]
         userProfilePic = event["userProfilePic"]
@@ -145,16 +158,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
         col = event["col"]
         cellId = event["cellId"]
 
-        new_msg_received = event.get('new_msg_received', False)
-
         obj_user = await get_user_object(email)
         user_profile_pic = getattr(obj_user, "profile_pic")
         if message:
             await self.send(text_data = json.dumps({
-                                    'new_msg_received': new_msg_received,
-                                    "email":email,
-                                    "username":username ,
-                                    "userProfilePic":userProfilePic,
-                                    "message":message ,
-                                    "col":col ,
-                                    "cellId":cellId}))
+                                                    "email":email,
+                                                    "username":username,
+                                                    "userProfilePic":userProfilePic,
+                                                    "message":message ,
+                                                    "col":col ,
+                                                    "cellId":cellId}))

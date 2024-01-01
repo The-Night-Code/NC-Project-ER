@@ -1,4 +1,3 @@
-
 const chatSocket = new WebSocket("ws://" + window.location.host + "/");
 
 function sendMessage(cellId,numb,redirect_next_page,col){
@@ -9,20 +8,17 @@ function sendMessage(cellId,numb,redirect_next_page,col){
                 userProfilePic:userProfilePic,
                 col:col,
                 cellId:cellId,
-                //new_msg_received:'',
+
                 }));
 };
 chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
     var div = document.createElement("div");
     div.innerHTML = data.email + " : " + data.message;
+    
     document.querySelector("#input_msg_"+data.col+"_"+data.cellId).value = "";
-    
-    
-    var new_msg_re = data.new_msg_received ? "background-color: rgba(28, 97, 107, 0.9); " : "";
-
     var newMessage = `
-        <div class="message-item row_chat_popup chat_popup_content_si" ${new_msg_re} >
+        <div class="message-item row_chat_popup chat_popup_content_si">
 
             <div class="chat_popup_content_si_header">
                 <div class="row_chat_popup">
