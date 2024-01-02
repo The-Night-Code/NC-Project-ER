@@ -1057,10 +1057,12 @@ def msg_checker_notif(request):
         
         msg_objs = message_box_1.objects.filter(row_id=cell_id,box=msg_box)
         for msg_obj in msg_objs:
+            
             user_Vue_list_old= msg_obj.user_Vue
-            user_Vue_list_new = user_Vue_list_old +" " +user_.email+ " ; "
-            setattr(msg_obj, 'user_Vue', user_Vue_list_new)
-            msg_obj.save()
+            if(not user_.email in user_Vue_list_old):
+                user_Vue_list_new = user_Vue_list_old +" " +user_.email+ " ; "
+                setattr(msg_obj, 'user_Vue', user_Vue_list_new)
+                msg_obj.save()
         response_data = {
             'status': "success",
             'chat_span_noti_ID':chat_span_noti_ID,

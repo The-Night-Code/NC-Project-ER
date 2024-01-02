@@ -18,7 +18,7 @@ websocket_urlpatterns = [
     re_path(r'ws/user_status/$', consumers.UserStatusConsumer.as_asgi()),
     #re_path(r'ws/chat/$', consumers.ChatConsumer.as_asgi()),
     re_path(r'ws/chat/$', ChatConsumer.as_asgi()),
-    path("" , ChatConsumer.as_asgi()) , 
+    #re_path("" , ChatConsumer.as_asgi()) , 
 
     # Add more WebSocket routes if needed
 ]

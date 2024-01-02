@@ -493,51 +493,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-function sendMessage43(cellId, box, redirectNextPage,col) {
-                    
-    inpust_msg_col_id="input_msg_"+col+"_" + cellId;
-    var message = document.getElementById(inpust_msg_col_id).value;
-    var csrfToken = $("[name=csrfmiddlewaretoken]").val();
-    
-    $.ajax({
-        url: "/send-message/",
-        type: "POST",
-        data: {
-            message: message,
-            box:box,
-            redirectNextPage:redirectNextPage,
-            cellId:cellId,
-            col:col,
-            csrfmiddlewaretoken: csrfToken
-        },
-        success: function (data) {
-            document.getElementById(inpust_msg_col_id).value = ''; // Clear the input field
-            var newMessage = `
-                <li class="message-item">
-                    <a>
-                        <img src="${data.userProfilePic}" alt="Image" width="50"class="rounded-circle">
-                        <div>
-                            <h3>${data.username}</h3>
-                            <h4>${data.message}</h4>
-                            <p> quelques secondes </p>  <!-- Use the naturaltime filter here -->
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-            `;
-
-            // Append the new message to the chat box
-            $("#chat-messages-container_"+col+"_"+cellId).prepend(newMessage);
-
-            document.getElementById(inpust_msg_col_id).value = '';
-
-        },
-    });
-
-}
-
 function preventSubmit(event,cellId,numb,redirect_next_page,col) {
     if (event.key === "Enter") {
         event.preventDefault(); // Prevent the form submission

@@ -90,25 +90,19 @@ def create_new_message(msg_id, cell_id, username, email, message_text, col, user
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.roomGroupName = "chat_rooms"
-        user_ = self.scope.get('user')
-        if user_ is None or not user_.is_authenticated:
-            # Reject the connection if the user is not authenticated
-            await self.close()
-        else:
-            # Continue with the connection if the user is authenticated
-            await self.channel_layer.group_add(
-                self.roomGroupName ,
-                self.channel_name
-            )
-            await self.accept()
+        await self.channel_layer.group_add(
+            self.roomGroupName ,
+            self.channel_name
+        )
+        await self.accept()
     async def disconnect(self , close_code):
         await self.channel_layer.group_discard(
             self.roomGroupName , 
             self.channel_name #self.channel_name channel_layer
         )
     async def receive(self, text_data):
-        #user_ = self.scope["user"]
         user_ = self.scope.get('user')
+
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         email = text_data_json["email"]
@@ -126,22 +120,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
             # Use database_sync_to_async to execute the create operation asynchronously
             await create_new_message(msg_id, cellId, username, email, message, col, user_profile_pic)
                 
-                
-            
-            #if user_.email == email :
-             #   new_background = "red"
-            #else:
-            #    new_background = "blue"
-            
-            if user_:
-                print("user___TRUE")
-            new_background = "blue" if user_ and user_.email == email else "red"
-            print(f"new_background: {new_background}")
+        
             await self.channel_layer.group_send(
                 self.roomGroupName,{
                     "type" : "sendMessage" ,
                     "email":email,
-                    "username":username  + new_background,
+                    "username":username ,
                     "userProfilePic":userProfilePic,
                     "message":message ,
                     "col":col ,
@@ -150,7 +134,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         
         
     async def sendMessage(self , event) : 
-        #user_ = self.scope["user"]
+        user_ = self.scope.get('user')
         email = event["email"]
         username = event["username"]
         userProfilePic = event["userProfilePic"]
@@ -163,7 +147,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if message:
             await self.send(text_data = json.dumps({
                                                     "email":email,
-                                                    "username":username,
+                                                    "username":username ,
                                                     "userProfilePic":userProfilePic,
                                                     "message":message ,
                                                     "col":col ,

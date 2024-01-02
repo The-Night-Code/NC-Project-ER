@@ -46,27 +46,33 @@ INSTALLED_APPS = [
 
 ]
 ASGI_APPLICATION = 'ER_project.asgi.application'
+#ASGI_APPLICATION = 'ER_project.routing.application'
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
 
+
 MIDDLEWARE = [
-    #'channels.middleware.ChannelsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    #'whitenoise..middleware.security.WhiteNoiseMiddleware',
+    #'channels.middleware.ChannelsMiddleware',  # Uncomment this line if needed
+    #'channels.middleware.WebSocketMiddleware',
+    
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    
+    
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     #'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     #'django.contrib.staticfiles.finders.FileSystemFinder',
-    
-    
-
 ]
+
 
 ROOT_URLCONF = 'ER_project.urls'
 
@@ -87,7 +93,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ER_project.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
