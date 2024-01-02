@@ -79,27 +79,26 @@ function OPEN_popUP_chat(id,msg_box,cell_id){
   
  
 function CLOSE_popUP_chat(id,msg_box,cell_id) {
+    //set the notif_box to 0 
+    var chat_span_noti_ID = "chat_span_noti_"+msg_box+"_"+cell_id;
+    var spanElement = document.getElementById(chat_span_noti_ID);
+    // Update the span with the new value
+    //spanElement.innerHTML = 0;
+    //document.getElementById(chat_span_noti_ID).classList.remove("OPEN_popUP_chat_span_show");
+    //document.getElementById(chat_span_noti_ID).classList.add("OPEN_popUP_chat_span");
+
+    // hide the box
     var divsToHide = document.getElementsByClassName("chat_popup"); //divsToHide is an array
     for(var i = 0; i < divsToHide.length; i++){
         divsToHide[i].style.display = "none";
     }
-    var msg_si = document.getElementsByClassName("files_popup");
 
-    //var msg_box_ALL = document.getElementById().children;
+    // change the bg-color of all msg div
     var msg_box_ALL = document.getElementById("chat-messages-container_"+msg_box+"_"+cell_id);
-
-    for (var i = 0; i < msg_box_ALL.children.length; i++) {
-        //var msg_box_si = msg_box_ALL.children[i].getElementsByClassName('chat_popup_content_si');
-        var msg_box_si = msg_box_ALL.children[i].getElementsByClassName('chat_popup_content_si')[0];
-
-        console.log("---- div box"+msg_box_ALL.children.length);
-        msg_box_si.style.removeProperty('background-color');
-        if (msg_box_si) {
-            console.log("plus div box");
-            //msg_box_si.style.removeProperty('background-color');
-            // Set a new background color
-            
-        }       
+    var msg_box_si = msg_box_ALL.getElementsByClassName('chat_popup_content_si');
+    // Iterate through each child div and change the background color
+    for (var i = 0; i < msg_box_si.length; i++) {
+        msg_box_si[i].style.backgroundColor = 'rgba(28, 97, 107, 0.3)'; // Change this to your desired color
     }
 
     
