@@ -527,8 +527,7 @@ def table_view_2(request):
                                 column_name_type_new = column_name_type
                                 if column_name_type == "VT":
                                     VT_files_added +=1
-                                    column_name_type_new="vt"
-                                    
+                                                                        
                                 if column_name_type == "auditV1":
                                     auditV1_files_added +=1
                                 
@@ -714,10 +713,14 @@ def audit_pages(request,redirect_page,html_page):
                  {'index':7,'state':"Envoye"},
                  {'index':8,'state':"Annule"},
                  {'index':9,'state':"Fini"}]
+    
     auditV=[{'index':'1','name':'auditV1','datafiles_AuditV':datafiles_AuditV1},
         {'index':'2','name':'auditV2','datafiles_AuditV':datafiles_AuditV2},
         {'index':'3','name':'auditV3','datafiles_AuditV':datafiles_AuditV3},
         {'index':'4','name':'auditFinal','datafiles_AuditV':datafiles_AuditFinal}]
+    VisiteTechnique=[{'index':'1','name':'VT','name2':'vt','datafiles_AuditV':datafiles_VT}]
+    commentaire=[{'index':'1','name':'chat'}]
+    
     auditeur=[]
     for audi in USER.objects.all():
         audi_role = str(audi.role)
@@ -733,6 +736,8 @@ def audit_pages(request,redirect_page,html_page):
     Audi=user_.email
     list={ 'data': data ,
         'auditV':auditV,
+        'VisiteTechnique':VisiteTechnique,
+        'commentaire':commentaire,
         'col_count':col_count ,
         'column_names': column_names,
         'datafiles_VT': datafiles_VT ,
@@ -1163,24 +1168,32 @@ def remove_file_from_MODELS(request):
 
 @login_required
 def agent_immo(request):
-
+    user_=request.user
     data = TableData001.objects.filter(ai=True).order_by('-creation_time')
     
     col_count = data.count()
+    message_box_01 = message_box_1.objects.all()
+    msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
     # Get unique column names from the TableData model
     column_names = TableData001._meta.get_fields()
-    datafiles_VT = file_table_vt.objects.all()
-    datafiles_AuditV1 = file_table_auditV1.objects.all()
-    datafiles_AuditV2 = file_table_auditV2.objects.all()
-    datafiles_AuditV3 = file_table_auditV3.objects.all()
-    datafiles_AuditFinal = file_table_auditFinal.objects.all()
-    message_box_01 = message_box_1.objects.all()
+    
+    datafiles_VT = file_table_vt.objects.filter(file_removed=False)
+    datafiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False)
+    auditV=[
+        {'index':'1','name':'auditFinal','datafiles_AuditV':datafiles_AuditFinal}]
+    VisiteTechnique=[{'index':'1','name':'VT','name2':'vt','datafiles_AuditV':datafiles_VT}]
+    commentaire=[{'index':'1','name':'chat'}]
+    
     return render(request, 'html/agentimmo.html', { 'data': data ,
+                                                   'auditV':auditV,
+                                                 'VisiteTechnique':VisiteTechnique,
+                                                 'commentaire':commentaire,
                                                   'col_count':col_count ,
                                                   'column_names': column_names,
                                                   'datafiles_VT': datafiles_VT ,
                                                   'datafiles_AuditFinal':datafiles_AuditFinal,
-                                                  'message_box_1':message_box_01})
+                                                  'message_box_1':message_box_01,
+                                                  'msg_box_tagged':msg_box_tagged,})
 @login_required
 def add_files_to_project_1(request,project_id,file_input_name,model_name):
     user_ =request.user
@@ -1261,8 +1274,6 @@ def BE_home_page(request):
     client_count_fini_today = TableData001.objects.filter(fini_time__date=today,bureau_d_etude=user_.com_name).count()
     client_count_fini_month = TableData001.objects.filter(fini_time__range=(first_day_of_month, timezone.now()),bureau_d_etude=user_.com_name).count()
     client_count_fini_year= TableData001.objects.filter(fini_time__range=(first_day_of_year, timezone.now()),bureau_d_etude=user_.com_name).count()
-
-
 
     return render(request, 'html/BE_home_page.html', {'data':data,
                                                         'activities_audit':activities_audit,
@@ -1383,9 +1394,7 @@ def table_view_3(request):
                             if not file_table.objects.filter(file_id=button_edit_data_on_table, file_name=file.name,file_removed=False):
                                 column_name_type_new = column_name_type
                                 if column_name_type == "VT":
-                                    VT_files_added +=1
-                                    column_name_type_new="vt"
-                                    
+                                    VT_files_added +=1                                    
                                 if column_name_type == "auditV1":
                                     auditV1_files_added +=1
                                 
@@ -1512,7 +1521,21 @@ def BE_Page(request):
     
     msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
     
+    datafiles_VT = file_table_vt.objects.filter(file_removed=False)
+    datafiles_AuditV1 = file_table_auditV1.objects.filter(file_removed=False)
+    datafiles_AuditV2 = file_table_auditV2.objects.filter(file_removed=False)
+    datafiles_AuditV3 = file_table_auditV3.objects.filter(file_removed=False)
+    datafiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False)
+    auditV=[{'index':'1','name':'auditV1','datafiles_AuditV':datafiles_AuditV1},
+        {'index':'2','name':'auditV2','datafiles_AuditV':datafiles_AuditV2},
+        {'index':'3','name':'auditV3','datafiles_AuditV':datafiles_AuditV3},
+        {'index':'4','name':'auditFinal','datafiles_AuditV':datafiles_AuditFinal}]
+    VisiteTechnique=[{'index':'1','name':'VT','name2':'vt','datafiles_AuditV':datafiles_VT}]
+    commentaire=[{'index':'1','name':'chat'}]
     return render(request, 'html/BE_page.html', { 'data': data ,
+                                                 'auditV':auditV,
+                                                 'VisiteTechnique':VisiteTechnique,
+                                                 'commentaire':commentaire,
                                                  'table_index':table_index,
                                                   'col_count':col_count ,
                                                   'column_names': column_names,

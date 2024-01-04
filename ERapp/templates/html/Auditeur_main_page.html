@@ -48,7 +48,7 @@
     
 </head>
 
-<body onload="load()">
+<body >
   {% if user.is_authenticated  and "auditeur" in user.role  %} <!-- and "admin" in user.role -->
 
   <input  type="hidden" name="user_email" id="user_email" value="{{ user.email }}">

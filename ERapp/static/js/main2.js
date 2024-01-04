@@ -7,10 +7,6 @@ function submitForm__01(cellId, box, redirectPage,col){
     var myForm_id="myForm";
     var csrfToken = $("[name=csrfmiddlewaretoken]").val();
     
-
-    
-
-
     var myid1 = document.getElementsByName("myid1")[0].value;
     var col_type1 = document.getElementsByName("col_type1")[0].value;
     var button_edit_data_on_table = document.getElementsByName("button_edit_data_on_table")[0].value;
@@ -188,13 +184,13 @@ function submitForm__01(cellId, box, redirectPage,col){
     });
 
 }
-function submitForm__02(cellId, box, redirectPage,col){
+function submitForm__02(cellId, box, redirectPage,col,SF){
     var myForm_id="myForm";
     var csrfToken = $("[name=csrfmiddlewaretoken]").val();
+    
     var myid1 = document.getElementsByName("myid1")[0].value;
     var col_type1 = document.getElementsByName("col_type1")[0].value;
     var button_edit_data_on_table = document.getElementsByName("button_edit_data_on_table")[0].value;
-
 
     var table_firstname = document.getElementsByName("table_firstname_"+cellId)[0].value;
     var table_lastname = document.getElementsByName("table_lastname_"+cellId)[0].value;
@@ -204,18 +200,18 @@ function submitForm__02(cellId, box, redirectPage,col){
     
     // Construct the names of the file input elements
     var table_VT_input_name = 'table_VT_' + cellId;
-    var table_auditV1_input_name = 'table_auditV1_' + cellId;
-    var table_auditV2_input_name = 'table_auditV2_' + cellId;
-    var table_auditV3_input_name = 'table_auditV3_' + cellId;
-    var table_auditFinal_input_name = 'table_auditFinal_' + cellId;
-    // Get the file input elements using the constructed names
     var table_VT_input = document.querySelector('input[name="' + table_VT_input_name + '"]');
-    var table_auditV1_input = document.querySelector('input[name="' + table_auditV1_input_name + '"]');
-    var table_auditV2_input = document.querySelector('input[name="' + table_auditV2_input_name + '"]');
-    var table_auditV3_input = document.querySelector('input[name="' + table_auditV3_input_name + '"]');
-    var table_auditFinal_input = document.querySelector('input[name="' + table_auditFinal_input_name + '"]');
-
-
+    
+    if( SF == "SF_BE"){
+        var table_auditV1_input_name = 'table_auditV1_' + cellId;
+        var table_auditV2_input_name = 'table_auditV2_' + cellId;
+        var table_auditV3_input_name = 'table_auditV3_' + cellId;
+        var table_auditFinal_input_name = 'table_auditFinal_' + cellId;
+        var table_auditV1_input = document.querySelector('input[name="' + table_auditV1_input_name + '"]');
+        var table_auditV2_input = document.querySelector('input[name="' + table_auditV2_input_name + '"]');
+        var table_auditV3_input = document.querySelector('input[name="' + table_auditV3_input_name + '"]');
+        var table_auditFinal_input = document.querySelector('input[name="' + table_auditFinal_input_name + '"]');
+    }
     var formData = new FormData();
 
     formData.append('table_firstname', table_firstname);
@@ -231,29 +227,35 @@ function submitForm__02(cellId, box, redirectPage,col){
     formData.append('csrfmiddlewaretoken', csrfToken);
 
 
+    var index_for_calc = 0;
     // Append all files from table_VT_input to the FormData object
     for (var i = 0; i < table_VT_input.files.length; i++) {
         formData.append('table_VT[]', table_VT_input.files[i]);
+        index_for_calc++;
     }
+    formData.append('table_VT[]', index_for_calc);
 
-    // Append all files from table_auditV1_input to the FormData object
-    for (var i = 0; i < table_auditV1_input.files.length; i++) {
-        formData.append('table_auditV1[]', table_auditV1_input.files[i]);
-    }
 
-    // Append all files from table_auditV2_input to the FormData object
-    for (var i = 0; i < table_auditV2_input.files.length; i++) {
-        formData.append('table_auditV2[]', table_auditV2_input.files[i]);
+    if( SF == "SF_BE"){
+        // Append all files from table_auditV1_input to the FormData object
+        for (var i = 0; i < table_auditV1_input.files.length; i++) {
+            formData.append('table_auditV1[]', table_auditV1_input.files[i]);
+        }
+        
+        // Append all files from table_auditV2_input to the FormData object
+        for (var i = 0; i < table_auditV2_input.files.length; i++) {
+            formData.append('table_auditV2[]', table_auditV2_input.files[i]);
+        }
+        // Append all files from table_auditV2_input to the FormData object
+        for (var i = 0; i < table_auditV3_input.files.length; i++) {
+            formData.append('table_auditV3[]', table_auditV3_input.files[i]);
+        }
+        // Append all files from table_auditV2_input to the FormData object
+        for (var i = 0; i < table_auditFinal_input.files.length; i++) {
+            formData.append('table_auditFinal[]', table_auditFinal_input.files[i]);
+        }
     }
-    // Append all files from table_auditV2_input to the FormData object
-    for (var i = 0; i < table_auditV3_input.files.length; i++) {
-        formData.append('table_auditV3[]', table_auditV3_input.files[i]);
-    }
-    // Append all files from table_auditV2_input to the FormData object
-    for (var i = 0; i < table_auditFinal_input.files.length; i++) {
-        formData.append('table_auditFinal[]', table_auditFinal_input.files[i]);
-    }
-
+    
     var loading_spinner_div = `<div class="upload_spinner" id="upload_spinner_1"></div> `  ;
     $("body").prepend(loading_spinner_div);
 
@@ -291,24 +293,27 @@ function submitForm__02(cellId, box, redirectPage,col){
 
             
             // Loop through files and prepend new list items
+            
             for (var i = 0; i < data.files_date_for_response.length; i++) {
                 var F = data.files_date_for_response[i];
                 var col_n = F.column;
                 
-                var element_id="#ul_for_"+F.column+"_"+F.file_id;
-                var new_File = `
+                var element_id="#fp_container_"+F.column+"_"+F.file_id;
 
-                    <li id="li_for_${F.column}_${F.file_id}" class="color_red_important">
-                        <li class="list-inline-item">
-                            <a class="nav-link nav-icon show" ><i class=" ${F.I_icon_class} " ></i></a>
-                        </li>
-                        ${F.file_name}
-                        <li class="list-inline-item">
-                        <button  class="button_table_data" type="button"  disabled">
-                        <i class="ri-delete-bin-2-fill color_gray" style="color:gray;"></i>
-                        </button>
-                    </li>
-                    </li>
+                var new_File = `
+                    <div class="row_files_popup files_popup_content_si" id="li_for_${F.column}_${F.file_id}"  class="color_red_important">
+                        <div class="fpcs_side_left">
+                            <a class="nav-link nav-icon show" ><i class=" ${F.I_icon_class}  fp_icon" ></i></a>
+                        </div>
+                            
+                        <p class="fpcs_center">${F.file_name}</p>
+                            
+                        <div class="list-inline-item fpcs_side_right">
+                            <button  class="button_table_data" type="button"  disabled">
+                                <i class="ri-delete-bin-2-fill color_gray fp_btn_icon" style="color:gray;"></i>
+                            </button>
+                        </div>
+                    </div>
                     
                 `
                 $(element_id).prepend(new_File);
@@ -330,7 +335,6 @@ function submitForm__02(cellId, box, redirectPage,col){
                     document.getElementById(iddd).classList.remove("table_span_calc_files");
                     document.getElementById(iddd).classList.add("table_span_calc_files_show");
                 }
-                
             }
             // Get the ID of the row to disable // !Disable all inputs within the specified row
             var tr_disabled_id = '#tr_'+cellId;
@@ -338,7 +342,6 @@ function submitForm__02(cellId, box, redirectPage,col){
             
             const remove_loading_spinner_div = document.getElementById("upload_spinner_1");
             remove_loading_spinner_div.remove()
-            
 
 
 

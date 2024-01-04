@@ -50,7 +50,7 @@
     
 </head>
 
-<body >
+<body onload="load()">
   {% if user.is_authenticated  and "auditeur" in user.role  %} <!-- and "admin" in user.role -->
 
   <input  type="hidden" name="user_email" id="user_email" value="{{ user.email }}">
@@ -338,69 +338,67 @@
                                   <td class="td_input_cell"><input class="input_table_data" type="text" name="table_num_{{ item.cell_id }}" id="table{{k.index}}_num{{ item.cell_id }}" value="{{ item.num }}"  ></td>  
                                   <td class="td_input_cell"><input class="input_table_data" type="text" name="table_email_{{ item.cell_id }}" id="table{{k.index}}_email{{ item.cell_id }}" value="{{ item.email }}"  ></td>  
 
-                                  <td class="td_input_cell td_input_file_cell" > <!-- VT-->
-                                    <nav class="header-nav ms-auto" >
-                                      <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                        <i class="ri-file-list-3-line" ><span class="table_span_calc_files" id="table_span_VT_{{ item.cell_id }}"  >0</span></i>
+                                  {% for auV in VisiteTechnique %}
+                                    <td class="td_input_cell td_input_file_cell"> <!-- {{ auV.name }}-->
+                                      <a  class="OPEN_popUP_files_icon" onclick="OPEN_popUP_files('files_popup_{{ auV.name }}_{{item.cell_id}}')">
+                                        <i class="ri-file-list-3-line"><span class="table_span_calc_files" id="table_span_{{ auV.name }}_{{item.cell_id}}" >0</span></i>
                                       </a>
+    
+                                      <div class="files_popup " id="files_popup_{{ auV.name }}_{{item.cell_id}}">
+                                        <div class="row_files_popup fp_top">
+                                          <p class="top_popup_title" >Fichiers: {{ auV.name }}</p>
+                                          <button type="button" class="btn-close top_popup_close_btn "  aria-label="Close" onclick="CLOSE_popUP_files('files_popup_{{ auV.name }}_{{item.cell_id}}')"></button>
+                                        </div>
 
-                                      
-                                      
-                                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" id="ul_for_vt_{{item.cell_id}}">
-                                        <!-- for i in datafiles  if item.cell_id == i.file_id  -->
-                                        {% for F in datafiles_VT %}
+                                        <div class="row_files_popup files_popup_content" id="fp_container_{{ auV.name }}_{{item.cell_id}}">
+                                          {% for F in auV.datafiles_AuditV %}
                                             {% if F.file_id == item.cell_id %}
-                                                <li id="li_for_vt_{{item.cell_id}}_{{F.file_index}}">
+                                              <div class="row_files_popup files_popup_content_si" id="li_for_{{ auV.name }}_{{item.cell_id}}_{{F.file_index}}">
                                                   <script>
-                                                    add_1_to_i_files_box("table_span_VT_{{ item.cell_id }}");
+                                                    add_1_to_i_files_box("table_span_{{ auV.name }}_{{ item.cell_id }}");
                                                   </script>
-                                                    <div class="list-inline-item">
-                                                        {% if F.file_format == "excel" %}
-                                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                                        {% elif F.file_format == "pdf" %}
-                                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                                        {% elif F.file_format == "image" %}
-                                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                                        {% elif F.file_format == "word" %}
-                                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                                        {% elif F.file_format == "pz2" %}
-                                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                                        {% else %}
-                                                            <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                                        {% endif %}
-                                                    </div>
-                                                    {{ F.file_name }}
-                                                    <div class="list-inline-item">
-                                                        <button class="button_table_data" type="button" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','vt','{{redirect_next_page}}','li_for_vt_{{item.cell_id}}_{{F.file_index}}')">
-                                                            <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                                        </button>
-                                                    </div>
-
-
+                                                <div class="fpcs_side_left">
+                                                  {% if F.file_format == "excel" %}
+                                                  <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line fp_icon" ></i></a>
+                                                  {% elif F.file_format == "pdf" %}
+                                                  <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf fp_icon" ></i></a>
+                                                  {% elif F.file_format == "image" %}
+                                                    <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><img src="{{ F.file_save.url }}" alt="Image" ></a>
+                                                  {% elif F.file_format == "word" %}
+                                                    <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word fp_icon" ></i></a>
+                                                  {% elif F.file_format == "pz2" %}
+                                                    <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt fp_icon" ></i></a>
+                                                  {% else %}
+                                                    <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line fp_icon" ></i></a>
+                                                  {% endif %}
+                                                </div>
+                                                  
+                                                <p class="fpcs_center">{{ F.file_name }}</p>
                                                     
-                                                    
-                                                </li>
+                                                <div class="list-inline-item fpcs_side_right">
+                                                  <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','{{ auV.name }}','{{redirect_next_page}}','li_for_{{ auV.name }}_{{item.cell_id}}_{{F.file_index}}')">
+                                                    <i class="ri-delete-bin-2-fill fp_btn_icon" style="color:red;"></i>
+                                                  </button>
+                                                </div>
+                                              </div>
+                                              
                                             {% endif %}
-                                        {% endfor %}
-                                    
-                                        <hr class="dropdown-divider">
-                                    
-                                        <li>
-                                            <input class="input_table_data" type="file" name="table_VT_{{ item.cell_id }}" multiple>
-                                        </li>
-                                        <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                        <li style="text-align:center;height:20px;">
-                                          <button  class="button_table_data" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" >                                                
-                                            <i class="bi bi-save2 save_button_i_style" ></i>
-                                          </button>
-                                        </li>
-                                        <li></li>
-                                    </ul>
+                                          {% endfor %}
+                                          
+                                        </div>
+                                        <div class="row_files_popup">
+                                          <input class="input_table_data" type="file" name="table_{{ auV.name }}_{{ item.cell_id }}" multiple>
+                                          <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                          <a  class="button_table_data fp_btn" onclick="submitForm__01('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" >                                            
+                                            <i class="bi bi-save2 save_button_i_style  "style="font-size: 2em!important;" ></i>
+                                          </a>
+                                        </div>
 
-
-                        
-                                    </nav>
-                                  </td> 
+                                        
+                                      </div>
+                                    
+                                    </td>
+                                  {% endfor %}
 
                                   <td>
                                     <a href="{% url 'download_K_file' file_id=item.cell_id %}" class="button_table_data" style="color:green;"><i class="bi bi-filetype-xlsx fa-2x"></i></a>
@@ -600,59 +598,82 @@
 
                                   </td>
 
-                                  <td class="td_input_cell td_input_file_cell "><!--commentaire-->
-                                    <nav class="header-nav ms-auto" >
-                                      <a class="nav-link nav-icon"  data-bs-toggle="dropdown">
-                                        <i class="bi bi-chat-left-text"></i>
+
+
+                                  {% for auV in commentaire %}
+                                    <td class="td_input_cell"><!--commentaire-->
+
+                                      <a  class="OPEN_popUP_chat_icon" onclick="OPEN_popUP_chat('chat_popup_{{ auV.name }}_{{item.cell_id}}','{{ auV.name }}','{{item.cell_id}}')">
+                                        <i class="bi bi-chat-left-text"><span class="OPEN_popUP_chat_span" id="chat_span_noti_{{ auV.name }}_{{item.cell_id}}" >0</span></i>
                                       </a>
-                                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils chat_box_ul_style" data-popper-placement="bottom-end" >
-                                        <li class="dropdown-header">
-                                          <input type="text" name="input_msg_chat_{{item.cell_id}}" id="input_msg_chat_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event)">
-                                          <button class="style_none_border style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','chat')" > <i class="bi bi-send" ></i></button>
-                                        </li>
-                                        <li>
-                                          <hr class="dropdown-divider">
-                                        </li>
-                                        <div id="chat-messages-container_chat_{{item.cell_id}}">
+
+                                      
+                                      <div class="chat_popup" id="chat_popup_{{ auV.name }}_{{item.cell_id}}">
+                                        <div class="row_files_popup fp_top">
+                                          <p class="top_popup_title" >Commentaire</p>
+                                          <button type="button" class="btn-close top_popup_close_btn"  aria-label="Close" onclick="CLOSE_popUP_chat('chat_popup_{{ auV.name }}_{{item.cell_id}}','{{ auV.name }}','{{item.cell_id}}')"></button>
+                                        </div>
+
+                                        <div class="row_chat_popup">
+                                            <hr class="dropdown-divider">
+                                        </div>
+                                        <div class="row_chat_popup chat_popup_content" id="chat-messages-container_{{ auV.name }}_{{item.cell_id}}">
                                           {% for msg in message_box_1 reversed %}
-                                          {% if item.cell_id == msg.row_id and msg.box == "chat" %}
-                                            <li class="message-item">
-                                              <a>
-                                                {% if msg.email %}  
-                                                  <img src="{{ msg.profile_pic.url }}" alt="Image" width="50" class="rounded-circle">  <!-- alt="image.title"-->
-                                                {% else %}
-                                                  <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
-                                                {% endif %}
-                                                <div>
-                                                  <h3>{{ msg.username }}</h3>
-                                                  {% if msg_box_tagged.1 in msg.message %}
-                                                            <h4 class="color-red">{{ msg.message }}</h4>
+                                            {% if item.cell_id == msg.row_id and msg.box ==  auV.name  %}
+                                              {% if user.email not in msg.user_Vue %}
+                                                <script>
+                                                  add_1_to_i_chat_box_noti("chat_span_noti_{{ auV.name }}_{{ item.cell_id }}");
+                                                </script>
+                                              {% endif %}
+                                              <div class="message-item row_chat_popup chat_popup_content_si"{% if user.email not in msg.user_Vue %}style="background-color: rgba(28, 97, 107, 0.9);" {% endif %}>
+
+                                                <div class="chat_popup_content_si_header">
+                                                  <div class="row_chat_popup">
+                                                  {% if msg.email %}  
+                                                    <img src="{{ msg.profile_pic.url }}" alt="Image" class="rounded-circle">  <!-- alt="image.title"-->
                                                   {% else %}
-                                                    {% if msg_box_tagged.2 in msg.message %}
-                                                        <h4 class="color-red">{{ msg.message }} </h4>
+                                                    <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
+                                                  {% endif %}
+                                                  </div>
+                                                  <div class="row_chat_popup">
+                                                    <h3>{{ msg.username }}</h3>
+                                                  </div>
+                                                </div>
+                                                <div class="column_chat_popup">
+                                                  <div class="row_chat_popup">
+                                                    {% if msg_box_tagged.1 in msg.message %}
+                                                              <p class="color-red">{{ msg.message }}</p>
                                                     {% else %}
-                                                      {% if msg_box_tagged.3 in msg.message %}
-                                                        <h4 class="color-red">{{ msg.message }}</h4>
+                                                      {% if msg_box_tagged.2 in msg.message %}
+                                                          <p class="color-red chat_popup_content_para">{{ msg.message }} </p>
                                                       {% else %}
-                                                        <h4>{{ msg.message }}</h4>
+                                                        {% if msg_box_tagged.3 in msg.message %}
+                                                          <p class="color-red chat_popup_content_para">{{ msg.message }}</p>
+                                                        {% else %}
+                                                          <p class="chat_popup_content_para">{{ msg.message }}</p>
+                                                        {% endif%}
                                                       {% endif%}
                                                     {% endif%}
-                                                  {% endif%}
+
+                                                  </div>
                                                   
-                                                  <p>{{ msg.message_date|naturaltime }}</p>
                                                 </div>
-                                              </a>
-                                            </li>
-                                            <li>
-                                              <hr class="dropdown-divider">
-                                            </li>
+                                                <p class="chat_popup_content_si_timer">{{ msg.message_date|naturaltime }}</p>
+                                              </div>
+
                                             {% endif %}
                                           {% endfor %}
-                                      </div>
-                                      </ul>
-                                    </nav>
-                                  </td>
+                                        </div>
 
+                                        <div class="row_chat_popup">
+                                          <input type="text" name="input_msg_{{ auV.name }}_{{item.cell_id}}" id="input_msg_{{ auV.name }}_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event,'{{item.cell_id}}','1','{{redirect_next_page}}','{{ auV.name }}')">
+                                          <button class="popUP_chat_send_btn style_none_border  style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','{{ auV.name }}')" > 
+                                            <i class="bi bi-send popUP_chat_send_btn_icon " ></i></button>
+                                      </div>
+                                      </div>
+                                        
+                                    </td>
+                                  {% endfor %}
                                     
                                   <td><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
                                   <td ><p style="width:auto;">{{ item.cell_id }}</p></td>
