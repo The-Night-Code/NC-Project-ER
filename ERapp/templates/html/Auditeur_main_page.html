@@ -243,285 +243,282 @@
   <!-- main Page ========================================================================================================================================     -->
   <main id="main" class="main">
     <section class="section dashboard">
-        <div class="row">
+      <div class="row">
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+            <!-- Projet ajouté -->
+            <div class="col-xxl-3 col-md-4">
+              <div class="card info-card sales-card">
+                  <div class="filter">
+                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                          <h6>Filtre</h6>
+                        </li>
+    
+                        <li><a class="dropdown-item" onclick="on_client_count_this('T','Projet ajouté ','{{client_count_added_today}}','client_count_this_title','client_count_this_value')" >Aujourd'hui</a></li>
+                        <li><a class="dropdown-item" onclick="on_client_count_this('Ce mois','Projet ajouté ','{{client_count_added_month}}','client_count_this_title','client_count_this_value')">Ce mois</a></li>
+                        <li><a class="dropdown-item" onclick="on_client_count_this('Cette année','Projet ajouté ','{{client_count_added_year}}','client_count_this_title','client_count_this_value')">Cette année</a></li>
+                      </ul>
+                    </div>
+
+                <div class="card-body">
+                  <h5 class="card-title" id="client_count_this_title">Projet ajouté <span>| Aujourd'hui</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="ri-file-add-fill"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 id="client_count_this_value">{{client_count_added_today}}</h6>
+
+                    </div>
+                  </div>
+                </div>
+                
+                <script>
+                  
+
+                </script>
+              </div>
+            </div><!-- End Projet ajouté -->
   
-          <!-- Left side columns -->
-          <div class="col-lg-8">
-            <div class="row">
+            <!-- Projet fini -->
+            <div class="col-xxl-3 col-md-4" >
+                <div class="card info-card revenue-card">
   
-              <!-- Projet ajouté -->
-              <div class="col-xxl-3 col-md-4">
-                <div class="card info-card sales-card">
-                    <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                          <li class="dropdown-header text-start">
+                  <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
                             <h6>Filtre</h6>
                           </li>
       
-                          <li><a class="dropdown-item" onclick="on_client_count_this('T','Projet ajouté ','{{client_count_added_today}}','client_count_this_title','client_count_this_value')" >Aujourd'hui</a></li>
-                          <li><a class="dropdown-item" onclick="on_client_count_this('Ce mois','Projet ajouté ','{{client_count_added_month}}','client_count_this_title','client_count_this_value')">Ce mois</a></li>
-                          <li><a class="dropdown-item" onclick="on_client_count_this('Cette année','Projet ajouté ','{{client_count_added_year}}','client_count_this_title','client_count_this_value')">Cette année</a></li>
+                          <li><a class="dropdown-item" onclick="on_client_count_this('T','Projet fini','{{client_count_fini_today}}','client_count_fini_title','client_count_fini_value')" >Aujourd'hui</a></li>
+                          <li><a class="dropdown-item" onclick="on_client_count_this('Ce mois','Projet fini','{{client_count_fini_month}}','client_count_fini_title','client_count_fini_value')">Ce mois</a></li>
+                          <li><a class="dropdown-item" onclick="on_client_count_this('Cette année','Projet fini','{{client_count_fini_year}}','client_count_fini_title','client_count_fini_value')">Cette année</a></li>
                         </ul>
-                      </div>
-
+                    </ul>
+                  </div>
+  
                   <div class="card-body">
-                    <h5 class="card-title" id="client_count_this_title">Projet ajouté <span>| Aujourd'hui</span></h5>
+                    <h5 class="card-title" id="client_count_fini_title">Projet fini <span>| Aujourd'hui  </span></h5>
   
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <i class="ri-file-add-fill"></i>
+                        <i class="bi bi-ui-checks"></i>
                       </div>
                       <div class="ps-3">
-                        <h6 id="client_count_this_value">{{client_count_added_today}}</h6>
+                        <h6 id="client_count_fini_value">{{client_count_fini_today}}</h6>
   
                       </div>
                     </div>
                   </div>
+  
+                </div>
+            </div><!-- End Projet fini -->
+            
+            <!-- Projet Envoyé -->
+            <div class="col-xxl-3 col-md-4">
+              <div class="card info-card customers-card">
                   
-                  <script>
-                    
 
-                  </script>
-                </div>
-              </div><!-- End Projet ajouté -->
-   
-              <!-- Projet fini -->
-              <div class="col-xxl-3 col-md-4" >
-                  <div class="card info-card revenue-card">
-    
-                    <div class="filter">
-                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                          <li class="dropdown-header text-start">
-                              <h6>Filtre</h6>
-                            </li>
-        
-                            <li><a class="dropdown-item" onclick="on_client_count_this('T','Projet fini','{{client_count_fini_today}}','client_count_fini_title','client_count_fini_value')" >Aujourd'hui</a></li>
-                            <li><a class="dropdown-item" onclick="on_client_count_this('Ce mois','Projet fini','{{client_count_fini_month}}','client_count_fini_title','client_count_fini_value')">Ce mois</a></li>
-                            <li><a class="dropdown-item" onclick="on_client_count_this('Cette année','Projet fini','{{client_count_fini_year}}','client_count_fini_title','client_count_fini_value')">Cette année</a></li>
-                          </ul>
-                      </ul>
-                    </div>
-    
-                    <div class="card-body">
-                      <h5 class="card-title" id="client_count_fini_title">Projet fini <span>| Aujourd'hui  </span></h5>
-    
-                      <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                          <i class="bi bi-ui-checks"></i>
-                        </div>
-                        <div class="ps-3">
-                          <h6 id="client_count_fini_value">{{client_count_fini_today}}</h6>
-    
-                        </div>
-                      </div>
-                    </div>
-    
+                  <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                    <li class="dropdown-header text-start">
+                        <h6>Filtre</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" onclick="on_client_count_this('T','Projet Envoyé','{{client_count_envoye_today}}','client_count_envoye_title','client_count_envoye_value')" >Aujourd'hui</a></li>
+                        <li><a class="dropdown-item" onclick="on_client_count_this('Ce mois','Projet Envoyé','{{client_count_envoye_month}}','client_count_envoye_title','client_count_envoye_value')">Ce mois</a></li>
+                        <li><a class="dropdown-item" onclick="on_client_count_this('Cette année','Projet Envoyé','{{client_count_envoye_year}}','client_count_envoye_title','client_count_envoye_value')">Cette année</a></li>
+                    </ul>
                   </div>
-              </div><!-- End Projet fini -->
-              
-              <!-- Projet Envoyé -->
-              <div class="col-xxl-3 col-md-4">
-                <div class="card info-card customers-card">
-                    
-
-                    <div class="filter">
-                      <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i></a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
-                      <li class="dropdown-header text-start">
-                          <h6>Filtre</h6>
-                      </li>
+                  <div class="card-body">
+                    <h5 class="card-title" id="client_count_envoye_title">Projet Envoyé <span>| Aujourd'hui</span></h5>
   
-                      <li><a class="dropdown-item" onclick="on_client_count_this('T','Projet Envoyé','{{client_count_envoye_today}}','client_count_envoye_title','client_count_envoye_value')" >Aujourd'hui</a></li>
-                          <li><a class="dropdown-item" onclick="on_client_count_this('Ce mois','Projet Envoyé','{{client_count_envoye_month}}','client_count_envoye_title','client_count_envoye_value')">Ce mois</a></li>
-                          <li><a class="dropdown-item" onclick="on_client_count_this('Cette année','Projet Envoyé','{{client_count_envoye_year}}','client_count_envoye_title','client_count_envoye_value')">Cette année</a></li>
-                      </ul>
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title" id="client_count_envoye_title">Projet Envoyé <span>| Aujourd'hui</span></h5>
-    
-                      <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="color:rgba(128, 0, 128, 0.5);background: rgba(128, 0, 128, 0.1);">
-                          <i class="fas fa-file-import"></i>
-                        </div>
-                        <div class="ps-3">
-                          <h6 id="client_count_envoye_value">{{client_count_envoye_today}}</h6>
-    
-                        </div>
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="color:rgba(128, 0, 128, 0.5);background: rgba(128, 0, 128, 0.1);">
+                        <i class="fas fa-file-import"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6 id="client_count_envoye_value">{{client_count_envoye_today}}</h6>
+  
                       </div>
                     </div>
+                  </div>
 
-                </div>
-              </div><!-- End Projet Envoyé -->
+              </div>
+            </div><!-- End Projet Envoyé -->
 
-              <!-- Modification Faite -->
-              <div class="col-xxl-3 col-md-4">
-                <div class="card info-card customers-card">
-                    
+            <!-- Modification Faite -->
+            <div class="col-xxl-3 col-md-4">
+              <div class="card info-card customers-card">
+                  
 
-                    <div class="filter">
-                      <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i></a>
-                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
-                      <li class="dropdown-header text-start">
-                          <h6>Filtre</h6>
-                      </li>
+                  <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style="">
+                    <li class="dropdown-header text-start">
+                        <h6>Filtre</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" onclick="on_client_count_this('T','Projet Envoyé','{{client_count_Modification_Faite_today}}','client_count_client_count_Modification_Faite_value_title','client_count_Modification_Faite_value')" >Aujourd'hui</a></li>
+                        <li><a class="dropdown-item" onclick="on_client_count_this('Ce mois','Projet Envoyé','{{client_count_Modification_Faite_month}}','client_count_client_count_Modification_Faite_value_title','client_count_Modification_Faite_value')">Ce mois</a></li>
+                        <li><a class="dropdown-item" onclick="on_client_count_this('Cette année','Projet Envoyé','{{client_count_Modification_Faite_year}}','client_count_client_count_Modification_Faite_value_title','client_count_Modification_Faite_value')">Cette année</a></li>
+                    </ul>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title" id="client_count_Modification_Faite_title">Modification Faite <span>| Aujourd'hui</span></h5>
   
-                      <li><a class="dropdown-item" onclick="on_client_count_this('T','Projet Envoyé','{{client_count_Modification_Faite_today}}','client_count_client_count_Modification_Faite_value_title','client_count_Modification_Faite_value')" >Aujourd'hui</a></li>
-                          <li><a class="dropdown-item" onclick="on_client_count_this('Ce mois','Projet Envoyé','{{client_count_Modification_Faite_month}}','client_count_client_count_Modification_Faite_value_title','client_count_Modification_Faite_value')">Ce mois</a></li>
-                          <li><a class="dropdown-item" onclick="on_client_count_this('Cette année','Projet Envoyé','{{client_count_Modification_Faite_year}}','client_count_client_count_Modification_Faite_value_title','client_count_Modification_Faite_value')">Cette année</a></li>
-                      </ul>
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title" id="client_count_Modification_Faite_title">Modification Faite <span>| Aujourd'hui</span></h5>
-    
-                      <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="color:rgb(0, 206, 206);background: rgba(0, 255, 255, 0.1);">
-                          <i class="fas fa-file-import"></i>
-                        </div>
-                        <div class="ps-3">
-                          <h6 id="client_count_Modification_Faite_value">{{client_count_Modification_Faite_today}}</h6>
-                        </div>
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="color:rgb(0, 206, 206);background: rgba(0, 255, 255, 0.1);">
+                        <i class="fas fa-file-import"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6 id="client_count_Modification_Faite_value">{{client_count_Modification_Faite_today}}</h6>
                       </div>
                     </div>
+                  </div>
 
-                </div>
-              </div><!-- End Modification Faite -->
-  
-              <hr class="dropdown-divider">
+              </div>
+            </div><!-- End Modification Faite -->
 
-              <div class="col-lg-12" >
-                <div class="card" style=" height: 100% !important;">
-                  <div class="card-body" style=" height: 100% !important;" >
+            <hr class="dropdown-divider">
 
-                    
-                    <!-- Line Chart -->
-                    <canvas id="lineChart" style=" display: block; box-sizing: border-box; height: 800px !important; "></canvas>
-                    <script>
-                      document.addEventListener("DOMContentLoaded", () => {
-                        new Chart(document.querySelector('#lineChart'), {
-                          type: 'bar',
-                          data: {
-                            labels: ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi','dimanche'],
-                            datasets: [{
-                              label: 'Projet fini',
-                              data: [{{ fini_result.lundi }}, {{fini_result.mardi}}, {{fini_result.mercredi}}, {{fini_result.jeudi}}, {{fini_result.vendredi}}, {{fini_result.samedi}}, {{fini_result.dimanche}}],
-                              fill: false,
-                              backgroundColor: '#2ECA6A',
-                              tension: 0.1
-                            },
-                            {
-                              label: 'Projet Envoyé',
-                              data: [{{ envoye_result.lundi }}, {{envoye_result.mardi}}, {{envoye_result.mercredi}}, {{envoye_result.jeudi}}, {{envoye_result.vendredi}}, {{envoye_result.samedi}}, {{envoye_result.dimanche}}],
-                              fill: false,
-                              backgroundColor: 'purple',
-                              tension: 0.1
-                            },
-                            {
-                              label: 'Modification Faite',
-                              data: [{{ Modification_Faite_result.lundi }}, {{Modification_Faite_result.mardi}}, {{Modification_Faite_result.mercredi}}, {{Modification_Faite_result.jeudi}}, {{Modification_Faite_result.vendredi}}, {{Modification_Faite_result.samedi}}, {{Modification_Faite_result.dimanche}}],
-                              fill: false,
-                              backgroundColor: 'cyan',
-                              tension: 0.1
-                            }
-                            ]
+            <div class="col-lg-12" >
+              <div class="card" style=" height: 100% !important;">
+                <div class="card-body" style=" height: 100% !important;" >
+
+                  
+                  <!-- Line Chart -->
+                  <canvas id="lineChart" style=" display: block; box-sizing: border-box; height: 800px !important; "></canvas>
+                  <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                      new Chart(document.querySelector('#lineChart'), {
+                        type: 'bar',
+                        data: {
+                          labels: ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi','dimanche'],
+                          datasets: [{
+                            label: 'Projet fini',
+                            data: [{{ fini_result.lundi }}, {{fini_result.mardi}}, {{fini_result.mercredi}}, {{fini_result.jeudi}}, {{fini_result.vendredi}}, {{fini_result.samedi}}, {{fini_result.dimanche}}],
+                            fill: false,
+                            backgroundColor: '#2ECA6A',
+                            tension: 0.1
                           },
-                          
-                          options: {
-                            scales: {
-                              y: {
-                                beginAtZero: true,
-                                ticks: {
-                                  stepSize: 1
-                                }
+                          {
+                            label: 'Projet Envoyé',
+                            data: [{{ envoye_result.lundi }}, {{envoye_result.mardi}}, {{envoye_result.mercredi}}, {{envoye_result.jeudi}}, {{envoye_result.vendredi}}, {{envoye_result.samedi}}, {{envoye_result.dimanche}}],
+                            fill: false,
+                            backgroundColor: 'purple',
+                            tension: 0.1
+                          },
+                          {
+                            label: 'Modification Faite',
+                            data: [{{ Modification_Faite_result.lundi }}, {{Modification_Faite_result.mardi}}, {{Modification_Faite_result.mercredi}}, {{Modification_Faite_result.jeudi}}, {{Modification_Faite_result.vendredi}}, {{Modification_Faite_result.samedi}}, {{Modification_Faite_result.dimanche}}],
+                            fill: false,
+                            backgroundColor: 'cyan',
+                            tension: 0.1
+                          }
+                          ]
+                        },
+                        
+                        options: {
+                          scales: {
+                            y: {
+                              beginAtZero: true,
+                              ticks: {
+                                stepSize: 1
                               }
                             }
                           }
-                        });
+                        }
                       });
-                    </script>
-                    <!-- End Line CHart -->
-      
-                  </div>
-                  
-
-                  
+                    });
+                  </script>
+                  <!-- End Line CHart -->
+    
                 </div>
-              </div>
                 
-            </div>
-          </div><!-- End Left side columns -->
-          
-          <!-- Right side columns -->
-          <div class="col-lg-4">
-            
 
-
-            <!-- Recent Activity -->
-            <div class="card">
-              
-  
-              <div class="card-body">
-                <h5 class="card-title">Activité récente <span>| <a  href="{% url 'Activities' %}">Plus</a></span></h5>
-  
-                <div class="activity">
-                  {% for A_AU in activities_audit %}
-                    {% if A_AU.Activity_edit %}  
-                      <div class="activity-item d-flex">
-                        <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
-                        <i class="bi bi-circle-fill activity-badge text-primary align-self-start"></i>
-                        <div class="activity-content">  <!-- NIGHTCODE a modifié le nom dans le projet {} de {} à {} -->
-                          <p class="Activities_audit_p"><b  class="fw-bold text-danger">{{A_AU.Activity_user}}</b> a modifié <b class="fw-bold text-primary">{{A_AU.Activity_name}}</b> dans le projet <b class="fw-bold text-dark">{{A_AU.Activity_project_id}}</b> { <b class="fw-bold text-success ">{{A_AU.Activity_before}}</b> <b class="fw-bold text-dark h5"> &gt </b> <b class="fw-bold text-success ">{{A_AU.Activity_after}}</b> } <i> ({{A_AU.Activity_table}})</i></p>
-                        </div>
-                      </div><!-- End activity item-->
-                    {% endif %}
-                    
-                    {% if A_AU.Activity_add %}
-                      <div class="activity-item d-flex">
-                        <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
-                        <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
-                        <div class="activity-content">
-                          <p class="Activities_audit_p"><b class=" text-danger">{{A_AU.Activity_user}}</b> a ajouté <i class="fw-bold text-success">{{A_AU.Activity_before}}</i> à <b class="fw-bold text-success ">{{A_AU.Activity_after}}</b> dans le projet <b class="fw-bold text-dark">{{A_AU.Activity_project_id}}</b><i> ({{A_AU.Activity_table}})</i></p>
-                        </div>
-                      </div><!-- End activity item-->
-                    {% endif %}
-
-                    {% if A_AU.Activity_delete %}
-                      <div class="activity-item d-flex">
-                        <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
-                        <i class="bi bi-circle-fill activity-badge text-danger  align-self-start"></i>
-                        <div class="activity-content">
-                          <p class="Activities_audit_p"><b class=" text-danger">{{A_AU.Activity_user}}</b> a supprimé le fichier <b class="fw-bold text-success ">{{A_AU.Activity_before}}</b> situé à <b class="fw-bold text-success ">{{A_AU.Activity_after}}</b> dans le projet <b class="fw-bold text-dark">{{A_AU.Activity_project_id}}</b><i> ({{A_AU.Activity_table}})</i></p>
-                        </div>
-                      </div><!-- End activity item-->
-                    {% endif %}
-
-                    {% if A_AU.Activity_add_2 %}
-                      <div class="activity-item d-flex">
-                        <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
-                        <i class="bi bi-circle-fill activity-badge text-info align-self-start"></i>
-                        <div class="activity-content">
-                          <p class="Activities_audit_p"><b class=" text-danger">{{A_AU.Activity_user}}</b> a ajouté  <i class="fw-bold text-primary">{{A_AU.Activity_before}} </i></p>
-                        </div>
-                      </div><!-- End activity item-->
-                    {% endif %}
-
-                  {% endfor %}
-                  
-  
-                </div>
-  
+                
               </div>
-            </div><!-- End Recent Activity -->
-  
-             
-  
-            
-          </div><!-- End Right side columns -->
-  
-        </div>
-    </section>
+            </div>
+              
+          </div>
+        </div><!-- End Left side columns -->
+        
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+          
 
+
+          <!-- Recent Activity -->
+          <div class="card">
+            
+
+            <div class="card-body">
+              <h5 class="card-title">Activité récente <span>| <a  href="{% url 'Activities' %}">Plus</a></span></h5>
+
+              <div class="activity">
+                {% for A_AU in activities_audit %}
+                  {% if A_AU.Activity_edit %}  
+                    <div class="activity-item d-flex">
+                      <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
+                      <i class="bi bi-circle-fill activity-badge text-primary align-self-start"></i>
+                      <div class="activity-content">  <!-- NIGHTCODE a modifié le nom dans le projet {} de {} à {} -->
+                        <p class="Activities_audit_p"><b  class="fw-bold text-danger">{{A_AU.Activity_user}}</b> a modifié <b class="fw-bold text-primary">{{A_AU.Activity_name}}</b> dans le projet <b class="fw-bold text-dark">{{A_AU.Activity_project_id}}</b> { <b class="fw-bold text-success ">{{A_AU.Activity_before}}</b> <b class="fw-bold text-dark h5"> &gt </b> <b class="fw-bold text-success ">{{A_AU.Activity_after}}</b> } <i> ({{A_AU.Activity_table}})</i></p>
+                      </div>
+                    </div><!-- End activity item-->
+                  {% endif %}
+                  
+                  {% if A_AU.Activity_add %}
+                    <div class="activity-item d-flex">
+                      <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
+                      <i class="bi bi-circle-fill activity-badge text-success align-self-start"></i>
+                      <div class="activity-content">
+                        <p class="Activities_audit_p"><b class=" text-danger">{{A_AU.Activity_user}}</b> a ajouté <i class="fw-bold text-success">{{A_AU.Activity_before}}</i> à <b class="fw-bold text-success ">{{A_AU.Activity_after}}</b> dans le projet <b class="fw-bold text-dark">{{A_AU.Activity_project_id}}</b><i> ({{A_AU.Activity_table}})</i></p>
+                      </div>
+                    </div><!-- End activity item-->
+                  {% endif %}
+
+                  {% if A_AU.Activity_delete %}
+                    <div class="activity-item d-flex">
+                      <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
+                      <i class="bi bi-circle-fill activity-badge text-danger  align-self-start"></i>
+                      <div class="activity-content">
+                        <p class="Activities_audit_p"><b class=" text-danger">{{A_AU.Activity_user}}</b> a supprimé le fichier <b class="fw-bold text-success ">{{A_AU.Activity_before}}</b> situé à <b class="fw-bold text-success ">{{A_AU.Activity_after}}</b> dans le projet <b class="fw-bold text-dark">{{A_AU.Activity_project_id}}</b><i> ({{A_AU.Activity_table}})</i></p>
+                      </div>
+                    </div><!-- End activity item-->
+                  {% endif %}
+
+                  {% if A_AU.Activity_add_2 %}
+                    <div class="activity-item d-flex">
+                      <div class="activite-label">{{A_AU.Activity_date|naturaltime}}</div>
+                      <i class="bi bi-circle-fill activity-badge text-info align-self-start"></i>
+                      <div class="activity-content">
+                        <p class="Activities_audit_p"><b class=" text-danger">{{A_AU.Activity_user}}</b> a ajouté  <i class="fw-bold text-primary">{{A_AU.Activity_before}} </i></p>
+                      </div>
+                    </div><!-- End activity item-->
+                  {% endif %}
+
+                {% endfor %}
+                
+
+              </div>
+
+            </div>
+          </div><!-- End Recent Activity -->
+
+            
+
+          
+        </div><!-- End Right side columns -->
+
+      </div>
+    </section>
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->

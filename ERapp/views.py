@@ -78,8 +78,6 @@ kize="VT"
 def main_Page(request):
     return render(request,'html/mainPage.html')
 def Home(request):
-
-    
     #return render(request,'html/home.html',{"name":"night","username":"nightcode"})
     return render(request,'html/home.html')
     
@@ -91,25 +89,19 @@ def send_email(subject,msg,receiver_email):
     [receiver_email],
     fail_silently=False,) 
 
-
 @csrf_protect
 def LoginU(request):
     if request.method == "POST":
-        
         usernameU =request.POST.get('username')
         passwordU =request.POST.get('password')
-        
         user = authenticate(username=usernameU,password=passwordU)
         if user is not None:
             login(request,user)
             return redirect("/")
     return render(request,'html/mainPage.html')
 
-
-
 @csrf_protect
 def SignupU(request):
-    
     
     pl=False
     pm=False
@@ -137,13 +129,11 @@ def SignupU(request):
         if len(str(pw1)) >= 8 :
             pl=True
             
-    
         if pl and pm and pc and pn :
             data = User.objects.create_user(username=username, email=emailU , password=pw1)
             data.save()
             return render(request, 'html/home.html')
 
-        
     return render(request, 'html/signup.html',{"per":per,"pl":pl,"pm":pm,"pc":pc,"pn":pn})
     
     
@@ -152,6 +142,7 @@ def LogoutU(request):
     logout(request)
     return redirect("main_page")
     #return render(request,'html/login.html')
+
 
 @login_required
 def ProfileU(request):
@@ -188,8 +179,6 @@ def ProfileU(request):
                         pass
             return redirect("/profile/")
             
- 
-            
         if change_password_button == "submit":
             newPassword = str(request.POST.get("newPassword"))
             renewPassword = str(request.POST.get("renewPassword"))
@@ -216,6 +205,7 @@ def ProfileU(request):
 
     return render(request,'html/profileU.html',{'profile_image':profile_image,'change_password_state':change_password_state})
 
+
 def forgot_password(request):
     msg = False
     email = request.POST.get('email')
@@ -240,14 +230,6 @@ def forgot_password(request):
     
     return render(request,'html/forgot_password.html',{'change_password_state': change_password_state})
 
-def showimage(request):
-    profile_img = ImageModel.objects.get(user_id="n123") 
-    return render(request,'html/showimage.html',{'profile_image': profile_img})
-
-
-
-
-
 
 def generate_random_string(length):
     characters = string.ascii_letters + string.digits  # You can customize this for your needs
@@ -255,104 +237,6 @@ def generate_random_string(length):
     random_string=random_string.replace("%20","")
     random_string=random_string.replace(" ","")
     return random_string
-
-### delete
-@login_required
-def add_f_to_table_view_2(request,myID1,column_name_type,button_edit_data_on_table,Activity_table):
-    l1=f"table_{column_name_type}[]"
-    file_table = ModelByColumn(column_name_type)
-    files_date_for_response=[]
-    I_icon_class=""
-
-    
-    for file in request.FILES.getlist(l1, []):
-        format_file=file.name.split(".")[1]
-        if format_file in ['jpg','png','jpeg','heic']:
-            format_file="image"
-            I_icon_class="bi bi-file-earmark-image"
-        elif format_file in ['doc','docx']:
-            format_file="word"
-            I_icon_class="bi bi-file-earmark-word"
-        elif format_file in ['xls','xlsm']:
-            format_file="excel" 
-            I_icon_class="ri-file-excel-2-line"
-        elif format_file in ['pdf']:
-            format_file="pdf" 
-            I_icon_class="bi bi-file-earmark-pdf"
-        elif format_file in ['pz2']:
-            format_file="pz2" 
-            I_icon_class="bi bi-file-ppt"
-        else:
-            I_icon_class="ri-file-line"
-        
-        
-        if not file_table.objects.filter(file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name):
-            Activities_audit.objects.create(
-                    Activity_id=generate_random_string(10),
-                    Activity_user = f"{request.user.last_name} {request.user.first_name}",
-                    Activity_user_email = request.user.email,
-                    Activity_table=Activity_table,
-                    Activity_project_id = button_edit_data_on_table,
-                    Activity_before =f"le fichier {file.name}" ,
-                    Activity_after = column_name_type ,
-                    Activity_add=True
-                )
-            file_table.objects.create(
-                    file_id = button_edit_data_on_table,
-                    file_name = file.name,
-                    file_save = file,
-                    file_format =format_file
-                )
-            
-            obj_by_id = get_object_or_404(file_table,file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name,file_save = file)
-            #obj_by_id = file_table.objects.filter(file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name,file_save = file)
-            #GET_file_index = getattr(obj_by_id,'file_index')
-            column_name_type_new = column_name_type
-            if column_name_type == "VT":
-                column_name_type_new="vt"
-            files_date_for_response.append({'file_id':button_edit_data_on_table,
-                                        'file_save':file,
-                                        'file_format':format_file,
-                                        'file_name':file.name,
-                                        'file_index':"1111",
-                                        'column':column_name_type,
-                                        'I_icon_class':I_icon_class,})
-            
-    return files_date_for_response
-    
-### delete          
-@login_required
-def add_f_to_table_view(request,myID1,column_name_type,button_edit_data_on_table,Activity_table):
-    l1=f"table_{column_name_type}_{button_edit_data_on_table}"
-    file_table = ModelByColumn(column_name_type)
-    for file in request.FILES.getlist(l1):
-        format_file=file.name.split(".")[1]
-        if format_file in ['jpg','png','jpeg','heic']:
-            format_file="image"
-        if format_file in ['doc','docx']:
-            format_file="word"
-        if format_file in ['xls','xlsm']:
-            format_file="excel" 
-            
-        
-        
-        if not file_table.objects.filter(file_id=button_edit_data_on_table, file_format=format_file,file_name=file.name):
-            Activities_audit.objects.create(
-                    Activity_id=generate_random_string(10),
-                    Activity_user = f"{request.user.last_name} {request.user.first_name}",
-                    Activity_user_email = request.user.email,
-                    Activity_table=Activity_table,
-                    Activity_project_id = button_edit_data_on_table,
-                    Activity_before =f"le fichier {file.name}" ,
-                    Activity_after = column_name_type ,
-                    Activity_add=True
-                )
-            file_table.objects.create(
-                    file_id = button_edit_data_on_table,
-                    file_name = file.name,
-                    file_save = file,
-                    file_format =format_file
-                )
 
 
 @login_required
@@ -594,7 +478,6 @@ def chatPage(request, *args, **kwargs):
     return render(request, "html/chatPage.html", context)
 
 
-
 @login_required
 def Auditeur_Accueil(request):
     user_=request.user
@@ -682,8 +565,6 @@ def Auditeur_Accueil(request):
 
 @login_required
 def audit_pages(request,redirect_page,html_page):
-    
-    
 
     data = TableData001.objects.all().order_by('-creation_time')
     
@@ -765,7 +646,6 @@ def audit_pages(request,redirect_page,html_page):
 def AI_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
     redirect_page="/AI_audit_ALL/"
     html_page="AI_audit_ALL.html"
-    
 
     list=audit_pages(request,redirect_page,html_page)
     return render(request, f"html/{html_page}", list)
@@ -775,7 +655,6 @@ def AI_audit_BY_A(request): # add row (,firstname,lastname,addressm,num,etat,tp,
     redirect_page="/AI_audit_BY_A/"
     html_page="AI_audit_BY_A.html"
     
-    
     list=audit_pages(request,redirect_page,html_page)
     return render(request, f"html/{html_page}", list)
 
@@ -784,8 +663,7 @@ def AI_audit_BY_A(request): # add row (,firstname,lastname,addressm,num,etat,tp,
 def BE_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,cofrac,paiment,agent,)
     redirect_page="/BE_audit_ALL/"
     html_page="BE_audit_ALL.html"
-    
-    
+
     list=audit_pages(request,redirect_page,html_page)
     
     return render(request, f"html/{html_page}", list)
@@ -795,8 +673,6 @@ def BE_audit_ALL(request): # add row (,firstname,lastname,addressm,num,etat,tp,c
 def BE_audit_BY_A(request):
     redirect_page="/BE_audit_BY_A/"
     html_page="BE_audit_BY_A.html"
-    
-    
     
     list=audit_pages(request,redirect_page,html_page)
     return render(request, f"html/{html_page}", list)
@@ -1229,8 +1105,7 @@ def add_files_to_project_1(request,project_id,file_input_name,model_name):
 def agent_immo_f(request):
     acc_state=False
     user_ = request.user
-    
-        
+ 
     if request.method == 'POST':
         if "ai" in user_.role:
             project_id=generate_random_string(10)
@@ -1568,9 +1443,9 @@ def BE_Page(request):
 def BE_Page_f(request):
     user_= request.user
     user_role= user_.role
-    if  "be" in user_role:
-        
-        if request.method == 'POST' :
+
+    if request.method == 'POST' :
+        if  "be" in user_role:
             cell_id =generate_random_string(10)
             while TableData001.objects.filter(cell_id=cell_id).exists():
                 cell_id =generate_random_string(10)
@@ -1626,6 +1501,8 @@ def VT_Page(request):
                  {'index':2,'state':"Fini"}]
     data = TableData001.objects.all()
     return render(request, 'html/VTPage.html', { 'data': data,'table_index':table_index })
+
+
 @login_required
 def VT_Page_edit_state(request):
     user_ = request.user
@@ -1644,6 +1521,8 @@ def VT_Page_edit_state(request):
     
     
     return redirect(VT)
+
+
 @login_required
 def create_acc_ai(request):
     acc_state = False
@@ -1715,6 +1594,7 @@ def create_acc_ai(request):
     return render(request, 'html/create_acc_ai.html',{'acc_state':acc_state,
                                                       'comp':comp})
     
+
 @login_required
 def create_acc_be(request):
     acc_state = False
@@ -1789,6 +1669,7 @@ def create_acc_be(request):
     return render(request, 'html/create_acc_be.html',{'acc_state':acc_state,
                                                       'comp':comp})
     
+
 @login_required
 def create_acc_auditeur(request):
     acc_state = False
@@ -1862,7 +1743,6 @@ def create_acc_auditeur(request):
                                                       'comp':comp})
   
        
-    
 @login_required
 def corbeille(request):
     redirect_page="/historique_des_fichiers/"
@@ -1884,10 +1764,6 @@ def corbeille(request):
                                                   'datafiles_AuditFinal':datafiles_AuditFinal,
                                                   'redirect_next_page':redirect_page,
                                                   'model_type':model_type})
-
-
-
-
 
 ## <a href="{% url 'download_media_folder' %}">Download Media Folder</a>
 
@@ -1954,8 +1830,6 @@ def download_media_folder(request):
             return response
 
 
-
-
 @login_required
 def Activities(request):
     activities_audit = Activities_audit.objects.order_by("-Activity_date")
@@ -1965,7 +1839,6 @@ def Activities(request):
 @login_required
 def update_xlsx_template(request):
     # Load your XLSX template
-    
     template_path = 'ERapp\static\Kizeo.xlsx'  # Provide the path to your template file
     workbook = openpyxl.load_workbook(template_path)
     
@@ -1988,10 +1861,6 @@ def update_xlsx_template(request):
     # Fetch data from your Django model (Assuming you have a queryset)
     obj = MyModel.objects.get(text_field="t1")
 
-    
-
-
-    
     for i in range(3,17):
         
         # Find and update text cells
@@ -3280,13 +3149,6 @@ def download_K_file(request,file_id):
     response['Content-Disposition'] = 'attachment; filename="Kizeo.xlsx"'
 
     return response
-
-
-
-
-
-
-
 
 
 def generate_pdf(template_path, context):

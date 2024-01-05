@@ -21,7 +21,7 @@ from ERapp import consumers
 
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import  LoginU, LogoutU , main_Page,ProfileU,forgot_password ,showimage,VT_Page_edit_state
+from ERapp.views import  LoginU, LogoutU , main_Page,ProfileU,forgot_password ,VT_Page_edit_state
 from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,create_acc_auditeur,corbeille,Activities
 from ERapp.views import remove_file_from_MODELS,agent_immo,agent_immo_f,send_message,msg_checker_notif
 from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,BE_home_page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
@@ -47,7 +47,6 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
 
-
     path('logout/', LogoutU),
     path('profile/',ProfileU ),
     path('forgot_password/',forgot_password,name="forgot_password"),
@@ -57,9 +56,6 @@ urlpatterns = [
     # Auditeur Pages
     path('table-view/',table_view_2 ,name="table_view_2"),
     path('Accueil/',Auditeur_Accueil ,name="Auditeur_main_page"),
-    
-    
-
     
     path('BE_audit_ALL/',BE_audit_ALL ,name="BE_audit_ALL"),
     path('BE_audit_BY_A/',BE_audit_BY_A ,name="BE_audit_BY_A"),
@@ -77,7 +73,6 @@ urlpatterns = [
     path('remove_file_from_MODELS/',remove_file_from_MODELS ,name="remove_file_from_MODELS"),
     path('send-message/',send_message , name="send_message" ),
     path('msg-checker-notif/',msg_checker_notif , name="msg_checker_notif" ),
-    
     
     # Agent Immo Pages
     # Agent Immo Pages
@@ -113,11 +108,7 @@ urlpatterns = [
         
     path('save_signature/', save_signature, name='save_signature'),
     
-    
-    
-    
     path('download-media/', download_media_folder, name='download_media_folder'),
-
 
     
 ] # + static(settings.MEDIA_URL, documnet_root=settings.MEDIA_ROOT)
