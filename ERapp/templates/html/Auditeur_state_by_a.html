@@ -246,12 +246,12 @@
         
                     <div class="card-body">
                         {% if k.index == 1 %}
-                            <h3><span class="badge bg-secondary">Aujourd'hui</span></h3>
+                            <h3><span class="badge span_for_date_ATMbA">Aujourd'hui</span></h3>
                         {% else %}
                             {% if k.index == 2 %}
-                                <h3><span class="badge bg-secondary">Hier</span></h3>
+                                <h3><span class="badge span_for_date_ATMbA">Hier</span></h3>
                             {% else %}
-                                <h3><span class="badge bg-secondary" >{{k.state|date:_("d/m/Y ") }}</span></h3>
+                                <h3><span class="badge span_for_date_ATMbA" >{{k.state|date:_("d/m/Y ") }}</span></h3>
                             {% endif %}
                         {% endif %}
                         

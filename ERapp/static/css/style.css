@@ -586,6 +586,10 @@ chat box icoon
   overflow: hidden;
 }
 
+.span_for_date_ATMbA{padding-top: 10px!important;
+  font-size: 20px!important;
+  background-color: #b91d47;}/* r#b91d47 b#00aba9 bc#0DCAF0*/
+
 /*  end Activities_audit */
 
 /* start table_Auditeur_state */
