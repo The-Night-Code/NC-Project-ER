@@ -233,10 +233,8 @@
   <!-- End Sidebar ==========================================================================================================================-->
 
   <main id="main" class="main">
-
     <section class="section">
         <div class="row">
-
             <div class="col-lg-9">
                 {% for k  in table_index_2 %}
                 <div class="col-12">
@@ -255,9 +253,6 @@
                             {% endif %}
                         {% endif %}
                         
-    
-                    
-                    
                     <input class="form-control" type="text" id="filterInput_{{ k.index }}" placeholder="Search..." style="width:30%;min-width:100px;">
                     <div class="overflow-auto" style="padding:1px;">
                         <form method="post"  enctype="multipart/form-data" id="myForm">
@@ -268,17 +263,14 @@
                         <table class="table  table-hover  table-bordered table_Auditeur_state" id="tableDATA_{{k.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
     
                             <thead class="table-dark table_Auditeur_state_thead">
-    
-                            <tr class="table_Auditeur_state_tr">
+                              <tr class="table_Auditeur_state_tr">
                                 <th ></th>
                                 <th >id</th>
                                 <th >Email</th>
                                 <th >Nom</th>
                                 <th >Prénom</th>
                                 <th >AI/BE</th>
-                            </tr>
-
-    
+                              </tr>
                             </thead>
                             <tbody  class="table-bordered" id="myTable_{{k.index}}" >
                                 <!-- fini_result-->
@@ -346,7 +338,7 @@
     </section>
     
   
-    </main>
+  </main>
 
   <!-- ======= Footer ======= -->
   {% else %}
@@ -357,11 +349,6 @@
 
   {% endif %}
 
-  
-  
-  
-
-
   <script type="text/javascript" src="{% static 'vendor/apexcharts/apexcharts.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/chart.js/chart.umd.js' %}"></script>
@@ -370,8 +357,6 @@
   <script type="text/javascript" src="{% static 'vendor/simple-datatables/simple-datatables.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/tinymce/tinymce.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-
-  
 
   <!-- Template Main JS File -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
