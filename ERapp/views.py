@@ -1170,13 +1170,20 @@ def remove_file_from_MODELS(request):
 def agent_immo(request):
     user_=request.user
     data = TableData001.objects.filter(ai=True).order_by('-creation_time')
+    table_index=[{'index':1,'state':"A realiser",'state_2':"A realiser ;  En cours ; Envoye ;"},
+                 {'index':2,'state':"Fini",'state_2':"Fini"},
+                 {'index':3,'state':"A modifier",'state_2':"A modifier ; Modification Faite"}]
+    
+    
     
     col_count = data.count()
     message_box_01 = message_box_1.objects.all()
     msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
     # Get unique column names from the TableData model
     column_names = TableData001._meta.get_fields()
-    
+    msg_box_tagged=[user_.email,user_.first_name,user_.last_name]
+
+
     datafiles_VT = file_table_vt.objects.filter(file_removed=False)
     datafiles_AuditFinal = file_table_auditFinal.objects.filter(file_removed=False)
     auditV=[
@@ -1185,15 +1192,17 @@ def agent_immo(request):
     commentaire=[{'index':'1','name':'chat'}]
     
     return render(request, 'html/agentimmo.html', { 'data': data ,
-                                                   'auditV':auditV,
-                                                 'VisiteTechnique':VisiteTechnique,
-                                                 'commentaire':commentaire,
-                                                  'col_count':col_count ,
-                                                  'column_names': column_names,
-                                                  'datafiles_VT': datafiles_VT ,
-                                                  'datafiles_AuditFinal':datafiles_AuditFinal,
-                                                  'message_box_1':message_box_01,
-                                                  'msg_box_tagged':msg_box_tagged,})
+                                                    'auditV':auditV,
+                                                    'table_index':table_index,
+                                                    'VisiteTechnique':VisiteTechnique,
+                                                    'commentaire':commentaire,
+                                                    'col_count':col_count ,
+                                                    'column_names': column_names,
+                                                    'column_names': column_names,
+                                                    'datafiles_VT': datafiles_VT ,
+                                                    'datafiles_AuditFinal':datafiles_AuditFinal,
+                                                    'message_box_1':message_box_01,
+                                                    'msg_box_tagged':msg_box_tagged,})
 @login_required
 def add_files_to_project_1(request,project_id,file_input_name,model_name):
     user_ =request.user
@@ -1302,7 +1311,7 @@ def table_view_3(request):
             files_date_for_response=[]
             button_edit_data_on_table=request.POST.get("cellId_new")
             file_Project_id =request.POST.get("cellId_new")
-            
+            SF = request.POST.get("SF")
             if button_edit_data_on_table:
 
                 try:
@@ -1357,7 +1366,11 @@ def table_view_3(request):
                 auditV3_files_added = 0
                 auditFinal_files_added = 0
                 files_date_for_response=[]
-                column_name_types = ["VT", "auditV1", "auditV2", "auditV3", "auditFinal"]
+                if SF == "SF_BE":
+                    column_name_types = ["VT", "auditV1", "auditV2", "auditV3", "auditFinal"]
+                else:
+                    column_name_types = ["VT"]
+
                 for column_name_type in column_name_types:
                     files_uploaded = request.FILES.getlist(f"table_{column_name_type}[]")
                     if files_uploaded:
@@ -1435,12 +1448,15 @@ def table_view_3(request):
                                     
                                 except:
                                     pass
+                if SF == "SF_BE":
+                    files_added_list=[{'files_added':VT_files_added,'file_id':file_Project_id,'col_n':"VT"},
+                                    {'files_added':auditV1_files_added,'file_id':file_Project_id,'col_n':"auditV1"},
+                                    {'files_added':auditV2_files_added,'file_id':file_Project_id,'col_n':"auditV2"},
+                                    {'files_added':auditV3_files_added,'file_id':file_Project_id,'col_n':"auditV3"},
+                                    {'files_added':auditFinal_files_added,'file_id':file_Project_id,'col_n':"auditFinal"}]
+                else:
+                    files_added_list=[{'files_added':VT_files_added,'file_id':file_Project_id,'col_n':"VT"}]
                 
-                files_added_list=[{'files_added':VT_files_added,'file_id':file_Project_id,'col_n':"VT"},
-                                {'files_added':auditV1_files_added,'file_id':file_Project_id,'col_n':"auditV1"},
-                                {'files_added':auditV2_files_added,'file_id':file_Project_id,'col_n':"auditV2"},
-                                {'files_added':auditV3_files_added,'file_id':file_Project_id,'col_n':"auditV3"},
-                                {'files_added':auditFinal_files_added,'file_id':file_Project_id,'col_n':"auditFinal"}]
                 response_date={
                     're_page':re_page,
                     'cellId_new':button_edit_data_on_table,
@@ -1504,7 +1520,7 @@ def BE_Page(request):
     user_ = request.user
     bureau_d_etude = user_.com_name
     data = TableData001.objects.filter(be=True,bureau_d_etude=bureau_d_etude).order_by('-creation_time')
-    table_index=[{'index':1,'state':"A realiser",'state_2':"A realiser ;  En cours ; "},
+    table_index=[{'index':1,'state':"A realiser",'state_2':"A realiser ;  En cours ; Envoye ;"},
                  {'index':2,'state':"Fini",'state_2':"Fini"},
                  {'index':3,'state':"A modifier",'state_2':"A modifier ; Modification Faite"}]
     

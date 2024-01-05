@@ -1,7 +1,5 @@
   // table1_remove_file_from_model
-function submitForm__uploadfiles(cellId, box, redirectPage,col){
-    submitForm__01(cellId, box, redirectPage,col);
-}
+
 function submitForm__01(cellId, box, redirectPage,col){
     
     var myForm_id="myForm";
@@ -211,6 +209,7 @@ function submitForm__02(cellId, box, redirectPage,col,SF){
         var table_auditV2_input = document.querySelector('input[name="' + table_auditV2_input_name + '"]');
         var table_auditV3_input = document.querySelector('input[name="' + table_auditV3_input_name + '"]');
         var table_auditFinal_input = document.querySelector('input[name="' + table_auditFinal_input_name + '"]');
+       
     }
     var formData = new FormData();
 
@@ -236,7 +235,7 @@ function submitForm__02(cellId, box, redirectPage,col,SF){
     formData.append('table_VT[]', index_for_calc);
 
 
-    if( SF == "SF_BE"){
+    if( SF && SF == "SF_BE"){
         // Append all files from table_auditV1_input to the FormData object
         for (var i = 0; i < table_auditV1_input.files.length; i++) {
             formData.append('table_auditV1[]', table_auditV1_input.files[i]);
@@ -254,8 +253,14 @@ function submitForm__02(cellId, box, redirectPage,col,SF){
         for (var i = 0; i < table_auditFinal_input.files.length; i++) {
             formData.append('table_auditFinal[]', table_auditFinal_input.files[i]);
         }
-    }
     
+
+
+        formData.append('SF', "SF_BE");
+    }else{
+        formData.append('SF', "");
+    }
+
     var loading_spinner_div = `<div class="upload_spinner" id="upload_spinner_1"></div> `  ;
     $("body").prepend(loading_spinner_div);
 
@@ -279,10 +284,12 @@ function submitForm__02(cellId, box, redirectPage,col,SF){
                 location.reload();
             }
             table_VT_input.value = null;
-            table_auditV1_input.value = null;
-            table_auditV2_input.value = null;
-            table_auditV3_input.value = null;
-            table_auditFinal_input.value=null
+            if( SF && SF == "SF_BE"){
+                table_auditV1_input.value = null;
+                table_auditV2_input.value = null;
+                table_auditV3_input.value = null;
+                table_auditFinal_input.value=null
+            }
             var row = document.getElementById("tr_"+cellId);
             var button_edit_data_on_T = row.querySelector('i');
             if (row) {
@@ -495,7 +502,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
+function preventSubmit_1(event){
+    if (event.key === "Enter") {
+    event.preventDefault(); // Prevent the form submission
+}}
 function preventSubmit(event,cellId,numb,redirect_next_page,col) {
     if (event.key === "Enter") {
         event.preventDefault(); // Prevent the form submission

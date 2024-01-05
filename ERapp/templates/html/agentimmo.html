@@ -36,6 +36,9 @@
   <link href="{% static 'vendor/quill/quill.bubble.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
   <script type="text/javascript" src="{% static 'js/main10.js'%}"></script>
   <script type="text/javascript" src="{% static 'js/main11.js'%}"></script>
   <script>
@@ -153,15 +156,15 @@
   <!-- main Page ========================================================================================================================================     -->
   <main id="main" class="main">
     <div style="display:;">
-    <form id="fileUploadForm" enctype="multipart/form-data" method="POST" >
-      {% csrf_token %}
-      <input type="file" id="fileInput" name="fileInput" style="display:none" multiple>
-      <input type="text" name="file_id" id="file_id" style="display:none">
-      <input type="text" name="column" id="column" style="display:none">
-      <button id="submit_add_file_to_model" type="submit" style="display:none"></button>
-    </form>
+      <form id="fileUploadForm" enctype="multipart/form-data" method="POST" >
+        {% csrf_token %}
+        <input type="file" id="fileInput" name="fileInput" style="display:none" multiple>
+        <input type="text" name="file_id" id="file_id" style="display:none">
+        <input type="text" name="column" id="column" style="display:none">
+        <button id="submit_add_file_to_model" type="submit" style="display:none"></button>
+      </form>
 
-  </div>
+    </div>
     <div class="pagetitle">
       <h1>les tableaux</h1>
       
@@ -169,19 +172,15 @@
 
     <section class="section dashboard">
       <div class="row">
-
-        
-
-
          <!--  ======================================================== start table 1 ===============================================================  -->
          <!--  ======================================================== start table 1 ===============================================================  -->
          <!--  ======================================================== start table 1 ===============================================================  -->
          <!--  ======================================================== start table 1 ===============================================================  -->
          <!--  ======================================================== start table 1 ===============================================================  -->
 
-            <!-- Recent Sales -->
+        {% for k  in table_index %}
           <div class="row">
-           
+            
             <div class="col-12">
               <div class="card recent-sales">
                 <!--<div class="reduce_div">
@@ -189,283 +188,294 @@
                 </div>-->
 
                 <div class="card-body">
-                  
+                  <h5 class="card-title">État | <span class="badge" data-badge="{{k.state}}"> {{k.state}}</span> </h5>
 
-                  <input class="form-control" type="text" id="filterInput_1" placeholder="Search..." style="width:30%;min-width:100px;">
+
+                  <input class="form-control" type="text" id="filterInput_{{ k.index }}" placeholder="Search..." style="width:30%;min-width:100px;">
                   <div class="overflow-auto" style="padding:1px;">
                   
-                  <form method="post"  enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <input type="hidden" name="myid1" id="myid1">
-                    <input type="hidden" name="col_type1" id="col_type1">
-                    <input type="hidden" name="mybutton1" id="mybutton1">
-
-                    <table class="table  table-hover  table-bordered  table-borderless border-info fixed-header-table" id="tableDATA_1" cellspacing="0" >  <!-- table-sm  table-responsive-->
+                    <form method="post"  enctype="multipart/form-data" id="myForm">
+                      {% csrf_token %}
+                      <input type="hidden" name="myid{{ k.index }}" id="myid{{ k.index }}">
+                      <input type="hidden" name="col_type{{ k.index }}" id="col_type{{ k.index }}">
+                      <input type="hidden" name="mybutton{{ k.index }}" id="mybutton{{ k.index }}">
+                          
+                      <table class="table  table-hover  table-bordered  table-borderless border-info fixed-header-table"  id="tableDATA_{{k.index}}" cellspacing="0" >  <!-- table-sm  table-responsive-->
                         <thead class="table-dark border-info ">
-                          <th onclick="sortTable('tableDATA_1',0)">Prénom</th>  
-                          <th onclick="sortTable('tableDATA_1',1)">Nom</th> 
-                          <th onclick="sortTable('tableDATA_1',2)">Adresse</th> 
-                          <th onclick="sortTable('tableDATA_1',3)">N° de tél</th>
-                          <th onclick="sortTable('tableDATA_1',4)">E-mail</th> 
+                          <th onclick="sortTable('tableDATA_1',0)"></th> 
+                          <th onclick="sortTable('tableDATA_1',1)">Prénom</th>  
+                          <th onclick="sortTable('tableDATA_1',2)">Nom</th> 
+                          <th onclick="sortTable('tableDATA_1',3)">Adresse</th> 
+                          <th onclick="sortTable('tableDATA_1',4)">N° de tél</th>
+                          <th onclick="sortTable('tableDATA_1',5)">E-mail</th> 
                           <th class="td_input_cell_contain_only_box" colspan="2">Visite technique</th> 
                           <th class="td_input_cell_contain_only_box" colspan="2">Apporteur d'affaire</th> 
                           
                           <th class="td_input_cell_contain_only_box">Commentaire</th>
                           <th onclick="sortTable('tableDATA_1',11 , 1)">Date de création</th>
+                          {% if k.state == "Fini"  %}
+                            <th></th> 
+                          {% endif %}
+                          
                         </thead>
-                        <tbody id="myTable_1">
+                        
+                        <tbody id="myTable_{{k.index}}">
                           {% for item in data %}
-                            {% if item.agent == user.com_name and item.ai %}
+                          
+                            {% if item.etat in k.state_2 and item.agent == user.com_name and item.ai %}
+
                               <input class="input_table_data" type="hidden" name="cell_data0" id="table1_hidden_id{{item.cell_id}}" value="{{item.cell_id}}">
-                              <tr>
-                                  <td class="td_p_cell2"><p>{{ item.firstname }}</p></td>
-                                  <td class="td_p_cell2"><p>{{ item.lastname }}</p></td>
-                                  <td class="td_p_cell2"><p>{{ item.address }}</p></td>
-                                  <td class="td_p_cell2"><p>{{ item.num }}</p></td>  
-                                  <td class="td_p_cell2"><p>{{ item.email }}</p></td> 
+                              
+                              <tr id="tr_{{ item.cell_id }}">
+                                <td class="fixed-column table-secondary"><button  class="button_table_data" onclick="submitForm__02('{{item.cell_id}}','1','{{redirect_next_page}}','send_data','SF_AI')" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" ><i class="ri-checkbox-circle-fill fa-2x color_green " id="i_for_edit_button"></i></button></td>
+                                <td class="td_input_cell" ><input class="input_table_data" type="text" name="table_firstname_{{ item.cell_id }}" id="table{{k.index}}_firstname{{ item.cell_id }}" value="{{ item.firstname }}"  onkeydown="preventSubmit(event)"></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table_lastname_{{ item.cell_id }}" id="table{{k.index}}_lastname{{ item.cell_id }}" value="{{ item.lastname }}"  onkeydown="preventSubmit(event)"></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table_address_{{ item.cell_id }}" id="table{{k.index}}_address{{ item.cell_id }}" value="{{ item.address }}"  onkeydown="preventSubmit(event)"></td>
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table_num_{{ item.cell_id }}" id="table{{k.index}}_num{{ item.cell_id }}" value="{{ item.num }}"  onkeydown="preventSubmit(event)"></td>  
+                                <td class="td_input_cell"><input class="input_table_data" type="text" name="table_email_{{ item.cell_id }}" id="table{{k.index}}_email{{ item.cell_id }}" value="{{ item.email }}"  onkeydown="preventSubmit(event)"></td>  
 
-                                  {% for auV in VisiteTechnique %}
-                                    <td class="td_input_cell td_input_file_cell"> <!-- {{ auV.name }}-->
-                                      <a  class="OPEN_popUP_files_icon" onclick="OPEN_popUP_files('files_popup_{{ auV.name }}_{{item.cell_id}}')">
-                                        <i class="ri-file-list-3-line"><span class="table_span_calc_files" id="table_span_{{ auV.name }}_{{item.cell_id}}" >0</span></i>
-                                      </a>
+                                {% for auV in VisiteTechnique %}
+                                  <td class="td_input_cell td_input_file_cell"> <!-- {{ auV.name }}-->
+                                    <a  class="OPEN_popUP_files_icon" onclick="OPEN_popUP_files('files_popup_{{ auV.name }}_{{item.cell_id}}')">
+                                      <i class="ri-file-list-3-line"><span class="table_span_calc_files" id="table_span_{{ auV.name }}_{{item.cell_id}}" >0</span></i>
+                                    </a>
 
-                                      <div class="files_popup " id="files_popup_{{ auV.name }}_{{item.cell_id}}">
-                                        <div class="row_files_popup fp_top">
-                                          <p class="top_popup_title" >Fichiers: {{ auV.name }}</p>
-                                          <button type="button" class="btn-close top_popup_close_btn "  aria-label="Close" onclick="CLOSE_popUP_files('files_popup_{{ auV.name }}_{{item.cell_id}}')"></button>
-                                        </div>
-
-                                        <div class="row_files_popup files_popup_content" id="fp_container_{{ auV.name }}_{{item.cell_id}}">
-                                          {% for F in auV.datafiles_AuditV %}
-                                            {% if F.file_id == item.cell_id %}
-                                              <div class="row_files_popup files_popup_content_si" id="li_for_{{ auV.name }}_{{item.cell_id}}_{{F.file_index}}">
-                                                  <script>
-                                                    add_1_to_i_files_box("table_span_{{ auV.name }}_{{ item.cell_id }}");
-                                                  </script>
-                                                <div class="fpcs_side_left">
-                                                  {% if F.file_format == "excel" %}
-                                                  <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line fp_icon" ></i></a>
-                                                  {% elif F.file_format == "pdf" %}
-                                                  <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf fp_icon" ></i></a>
-                                                  {% elif F.file_format == "image" %}
-                                                    <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><img src="{{ F.file_save.url }}" alt="Image" ></a>
-                                                  {% elif F.file_format == "word" %}
-                                                    <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word fp_icon" ></i></a>
-                                                  {% elif F.file_format == "pz2" %}
-                                                    <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt fp_icon" ></i></a>
-                                                  {% else %}
-                                                    <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line fp_icon" ></i></a>
-                                                  {% endif %}
-                                                </div>
-                                                  
-                                                <p class="fpcs_center">{{ F.file_name }}</p>
-                                                    
-                                                <div class="list-inline-item fpcs_side_right">
-                                                  <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','{{ auV.name }}','{{redirect_next_page}}','li_for_{{ auV.name }}_{{item.cell_id}}_{{F.file_index}}')">
-                                                    <i class="ri-delete-bin-2-fill fp_btn_icon" style="color:red;"></i>
-                                                  </button>
-                                                </div>
-                                              </div>
-                                              
-                                            {% endif %}
-                                          {% endfor %}
-                                          
-                                        </div>
-                                        <div class="row_files_popup">
-                                          <input class="input_table_data" type="file" name="table_{{ auV.name }}_{{ item.cell_id }}" multiple>
-                                          <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
-                                          <a  class="button_table_data fp_btn" onclick="submitForm__02('{{item.cell_id}}','1','{{redirect_next_page}}','send_data')" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" >                                            
-                                            <i class="bi bi-save2 save_button_i_style  "style="font-size: 2em!important;" ></i>
-                                          </a>
-                                        </div>
-
-                                        
+                                    <div class="files_popup " id="files_popup_{{ auV.name }}_{{item.cell_id}}">
+                                      <div class="row_files_popup fp_top">
+                                        <p class="top_popup_title" >Fichiers: {{ auV.name }}</p>
+                                        <button type="button" class="btn-close top_popup_close_btn "  aria-label="Close" onclick="CLOSE_popUP_files('files_popup_{{ auV.name }}_{{item.cell_id}}')"></button>
                                       </div>
-                                    
-                                    </td>
-                                  {% endfor %}
-                                  
-                                  <td  class="td_badge_cell">
-                                    {% if item.etat_VT  == "A realiser" %}
-                                      <span class="badge bg-warning text-dark" >A réaliser</span>
-                                    {% elif item.etat_VT  == "Realiser" %}
-                                      <span class="badge bg-primary" >Réaliser</span>
-                                    {% elif item.etat_VT  == "Facture" %}
-                                      <span class="badge bg-secondary" >Facturé</span>
-                                    {% elif item.etat_VT  == "Valide" %}
-                                      <span class="badge bg-success" >Validé</span>
-                                    {% endif %}
-                                  </td>
 
-
-                                  <td class="td_input_files_cell td_input_file_cell td_input_cell "> <!-- Apporteur d'affaire	-->
-                                    <nav class="header-nav ms-auto" >
-                                      <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
-                                        <i class="ri-file-list-3-line"></i>
-                                      </a>
-                                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
-                                        
-                                          <!-- for i in datafiles  if item.cell_id == i.file_id -->
-                                        {% for F in datafiles_AuditV1 %}
-                                        
+                                      <div class="row_files_popup files_popup_content" id="fp_container_{{ auV.name }}_{{item.cell_id}}">
+                                        {% for F in auV.datafiles_AuditV %}
                                           {% if F.file_id == item.cell_id %}
-                                          <li>
-                                            <li class="list-inline-item">
-                                              {% if F.file_format == "excel" %}
-                                              <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
-                                              {% elif F.file_format == "pdf" %}
-                                              <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
-                                              {% elif F.file_format == "image" %}
-                                                <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
-                                              {% elif F.file_format == "word" %}
-                                                <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
-                                              {% elif F.file_format == "pz2" %}
-                                                <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
-                                              {% else %}
-                                                <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
-                                              {% endif %}
-                                            </li>
-                                              
-                                              {{ F.file_name }}
+                                            <div class="row_files_popup files_popup_content_si" id="li_for_{{ auV.name }}_{{item.cell_id}}_{{F.file_index}}">
+                                                <script>
+                                                  add_1_to_i_files_box("table_span_{{ auV.name }}_{{ item.cell_id }}");
+                                                </script>
+                                              <div class="fpcs_side_left">
+                                                {% if F.file_format == "excel" %}
+                                                <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line fp_icon" ></i></a>
+                                                {% elif F.file_format == "pdf" %}
+                                                <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf fp_icon" ></i></a>
+                                                {% elif F.file_format == "image" %}
+                                                  <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><img src="{{ F.file_save.url }}" alt="Image" ></a>
+                                                {% elif F.file_format == "word" %}
+                                                  <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word fp_icon" ></i></a>
+                                                {% elif F.file_format == "pz2" %}
+                                                  <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt fp_icon" ></i></a>
+                                                {% else %}
+                                                  <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line fp_icon" ></i></a>
+                                                {% endif %}
+                                              </div>
                                                 
-                                            <li class="list-inline-item">
-                                              <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_remove_file_from_model('{{item.cell_id}}','{{F.file_index}}','auditV1')">
-                                                <i class="ri-delete-bin-2-fill" style="color:red;"></i>
-                                              </button>
-                                            </li>
-                                          </li>
+                                              <p class="fpcs_center">{{ F.file_name }}</p>
+                                                  
+                                              <div class="list-inline-item fpcs_side_right">
+                                                <button  class="button_table_data" type="button" id="" name="" value="" onclick="remove_file_from_m('{{item.cell_id}}','{{F.file_index}}','{{ auV.name }}','{{redirect_next_page}}','li_for_{{ auV.name }}_{{item.cell_id}}_{{F.file_index}}')">
+                                                  <i class="ri-delete-bin-2-fill fp_btn_icon" style="color:red;"></i>
+                                                </button>
+                                              </div>
+                                            </div>
                                             
                                           {% endif %}
                                         {% endfor %}
-                                        <!-- <li style="text-align:center;height:20px;">
-                                            <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_add_files_to_auditV1('{{item.cell_id}}')"><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
-                                            
-                                        </li>-->
-                                        <hr class="dropdown-divider">
-                                        <li><input class="input_table_data" type="file" id="table1_input_files_to_{{ item.cell_id }}" name="table1_input_files_to_{{ item.cell_id }}" multiple></li>
-                                        <input type="hidden" name="mybutton1{{ item.cell_id }}" id="mybutton1{{ item.cell_id }}">
-                                        <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table('{{item.cell_id}}','table1','auditV1')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
-                                        <li></li>
-
-                                      </ul>
-                                    </nav>
-                                  </td>
-                                  <td  class="td_badge_cell">
-                                    {% if item.etat_AdA  == "A Valide" %}
-                                      <span class="badge bg-warning text-dark" >A Validé</span>
-                                    {% elif item.etat_AdA  == "Facture" %}
-                                      <span class="badge bg-secondary" >Facturé</span>
-                                    {% elif item.etat_AdA  == "Valide" %}
-                                      <span class="badge bg-success" >Validé</span>
-                                    {% endif %}
-                                  </td>
-                    
-                                  {% for auV in commentaire %}
-                                    <td class="td_input_cell"><!--commentaire-->
-
-                                      <a  class="OPEN_popUP_chat_icon" onclick="OPEN_popUP_chat('chat_popup_{{ auV.name }}_{{item.cell_id}}','{{ auV.name }}','{{item.cell_id}}')">
-                                        <i class="bi bi-chat-left-text"><span class="OPEN_popUP_chat_span" id="chat_span_noti_{{ auV.name }}_{{item.cell_id}}" >0</span></i>
-                                      </a>
+                                        
+                                      </div>
+                                      <div class="row_files_popup">
+                                        <input class="input_table_data" type="file" name="table_{{ auV.name }}_{{ item.cell_id }}" multiple>
+                                        <input type="hidden" name="mybutton{{k.index}}{{ item.cell_id }}" id="mybutton{{k.index}}{{ item.cell_id }}">
+                                        <a  class="button_table_data fp_btn" onclick="submitForm__02('{{item.cell_id}}','1','{{redirect_next_page}}','send_data','SF_AI')" type="button" id="table{{k.index}}_edit_col" name="button_edit_data_on_table" value="{{item.cell_id}}" >                                            
+                                          <i class="bi bi-save2 save_button_i_style  "style="font-size: 2em!important;" ></i>
+                                        </a>
+                                      </div>
 
                                       
-                                      <div class="chat_popup" id="chat_popup_{{ auV.name }}_{{item.cell_id}}">
-                                        <div class="row_files_popup fp_top">
-                                          <p class="top_popup_title" >Commentaire</p>
-                                          <button type="button" class="btn-close top_popup_close_btn"  aria-label="Close" onclick="CLOSE_popUP_chat('chat_popup_{{ auV.name }}_{{item.cell_id}}','{{ auV.name }}','{{item.cell_id}}')"></button>
-                                        </div>
+                                    </div>
+                                  
+                                  </td>
+                                {% endfor %}
+                                <td  class="td_badge_cell">
+                                  {% if item.etat_VT  == "A realiser" %}
+                                    <span class="badge bg-warning text-dark" >A réaliser</span>
+                                  {% elif item.etat_VT  == "Realiser" %}
+                                    <span class="badge bg-primary" >Réaliser</span>
+                                  {% elif item.etat_VT  == "Facture" %}
+                                    <span class="badge bg-secondary" >Facturé</span>
+                                  {% elif item.etat_VT  == "Valide" %}
+                                    <span class="badge bg-success" >Validé</span>
+                                  {% endif %}
+                                </td>
 
-                                        <div class="row_chat_popup">
-                                            <hr class="dropdown-divider">
-                                        </div>
-                                        <div class="row_chat_popup chat_popup_content" id="chat-messages-container_{{ auV.name }}_{{item.cell_id}}">
-                                          {% for msg in message_box_1 reversed %}
-                                            {% if item.cell_id == msg.row_id and msg.box ==  auV.name  %}
-                                              {% if user.email not in msg.user_Vue %}
-                                                <script>
-                                                  add_1_to_i_chat_box_noti("chat_span_noti_{{ auV.name }}_{{ item.cell_id }}");
-                                                </script>
-                                              {% endif %}
-                                              <div class="message-item row_chat_popup chat_popup_content_si"{% if user.email not in msg.user_Vue %}style="background-color: rgba(28, 97, 107, 0.9);" {% endif %}>
+                                <td class="td_input_files_cell td_input_file_cell td_input_cell "> <!-- Apporteur d'affaire	-->
+                                  <nav class="header-nav ms-auto" >
+                                    <a class="nav-link nav-icon show" href="#" data-bs-toggle="dropdown" aria-expanded="true">
+                                      <i class="ri-file-list-3-line"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages dropdown-menu-for-showFils" data-popper-placement="bottom-end" >
+                                      
+                                        <!-- for i in datafiles  if item.cell_id == i.file_id -->
+                                      {% for F in datafiles_AuditV1 %}
+                                      
+                                        {% if F.file_id == item.cell_id %}
+                                        <li>
+                                          <li class="list-inline-item">
+                                            {% if F.file_format == "excel" %}
+                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-excel-2-line" ></i></a>
+                                            {% elif F.file_format == "pdf" %}
+                                            <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-pdf" ></i></a>
+                                            {% elif F.file_format == "image" %}
+                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-image" ></i></a>
+                                            {% elif F.file_format == "word" %}
+                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-earmark-word" ></i></a>
+                                            {% elif F.file_format == "pz2" %}
+                                              <a class="nav-link nav-icon show" href="{{ F.file_save.url }}" download><i class="bi bi-file-ppt" ></i></a>
+                                            {% else %}
+                                              <a class="nav-link nav-icon show"  href="{{ F.file_save.url }}" download><i class="ri-file-line" ></i></a>
+                                            {% endif %}
+                                          </li>
+                                            
+                                            {{ F.file_name }}
+                                              
+                                          <li class="list-inline-item">
+                                            <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_remove_file_from_model('{{item.cell_id}}','{{F.file_index}}','auditV1')">
+                                              <i class="ri-delete-bin-2-fill" style="color:red;"></i>
+                                            </button>
+                                          </li>
+                                        </li>
+                                          
+                                        {% endif %}
+                                      {% endfor %}
+                                      <!-- <li style="text-align:center;height:20px;">
+                                          <button  class="button_table_data" type="button" id="table1_edit_col" name="" value="" onclick="table1_add_files_to_auditV1('{{item.cell_id}}')"><i class="ri-file-add-fill" style="height:30px;width:30px; !important" ></i></button>
+                                          
+                                      </li>-->
+                                      <hr class="dropdown-divider">
+                                      <li><input class="input_table_data" type="file" id="table1_input_files_to_{{ item.cell_id }}" name="table1_input_files_to_{{ item.cell_id }}" multiple></li>
+                                      <input type="hidden" name="mybutton1{{ item.cell_id }}" id="mybutton1{{ item.cell_id }}">
+                                      <li style="text-align:center;height:20px;"><button  class="button_table_data" type="submit" value="clicked" id="table1_add_file_to_row_{{ item.cell_id }}"   onclick="add_files_to_table('{{item.cell_id}}','table1','auditV1')"><i class="bi bi-save2" style="height:30px;width:30px; !important" ></i></button></li> 
+                                      <li></li>
 
-                                                <div class="chat_popup_content_si_header">
-                                                  <div class="row_chat_popup">
-                                                  {% if msg.email %}  
-                                                    <img src="{{ msg.profile_pic.url }}" alt="Image" class="rounded-circle">  <!-- alt="image.title"-->
-                                                  {% else %}
-                                                    <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
-                                                  {% endif %}
-                                                  </div>
-                                                  <div class="row_chat_popup">
-                                                    <h3>{{ msg.username }}</h3>
-                                                  </div>
+                                    </ul>
+                                  </nav>
+                                </td>
+                                <td  class="td_badge_cell">
+                                  {% if item.etat_AdA  == "A Valide" %}
+                                    <span class="badge bg-warning text-dark" >A Validé</span>
+                                  {% elif item.etat_AdA  == "Facture" %}
+                                    <span class="badge bg-secondary" >Facturé</span>
+                                  {% elif item.etat_AdA  == "Valide" %}
+                                    <span class="badge bg-success" >Validé</span>
+                                  {% endif %}
+                                </td>
+                                
+                                {% for auV in commentaire %}
+                                  <td class="td_input_cell"><!--commentaire-->
+
+                                    <a  class="OPEN_popUP_chat_icon" onclick="OPEN_popUP_chat('chat_popup_{{ auV.name }}_{{item.cell_id}}','{{ auV.name }}','{{item.cell_id}}')">
+                                      <i class="bi bi-chat-left-text"><span class="OPEN_popUP_chat_span" id="chat_span_noti_{{ auV.name }}_{{item.cell_id}}" >0</span></i>
+                                    </a>
+
+                                    
+                                    <div class="chat_popup" id="chat_popup_{{ auV.name }}_{{item.cell_id}}">
+                                      <div class="row_files_popup fp_top">
+                                        <p class="top_popup_title" >Commentaire</p>
+                                        <button type="button" class="btn-close top_popup_close_btn"  aria-label="Close" onclick="CLOSE_popUP_chat('chat_popup_{{ auV.name }}_{{item.cell_id}}','{{ auV.name }}','{{item.cell_id}}')"></button>
+                                      </div>
+
+                                      <div class="row_chat_popup">
+                                          <hr class="dropdown-divider">
+                                      </div>
+                                      <div class="row_chat_popup chat_popup_content" id="chat-messages-container_{{ auV.name }}_{{item.cell_id}}">
+                                        {% for msg in message_box_1 reversed %}
+                                          {% if item.cell_id == msg.row_id and msg.box ==  auV.name  %}
+                                            {% if user.email not in msg.user_Vue %}
+                                              <script>
+                                                add_1_to_i_chat_box_noti("chat_span_noti_{{ auV.name }}_{{ item.cell_id }}");
+                                              </script>
+                                            {% endif %}
+                                            <div class="message-item row_chat_popup chat_popup_content_si"{% if user.email not in msg.user_Vue %}style="background-color: rgba(28, 97, 107, 0.9);" {% endif %}>
+
+                                              <div class="chat_popup_content_si_header">
+                                                <div class="row_chat_popup">
+                                                {% if msg.email %}  
+                                                  <img src="{{ msg.profile_pic.url }}" alt="Image" class="rounded-circle">  <!-- alt="image.title"-->
+                                                {% else %}
+                                                  <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
+                                                {% endif %}
                                                 </div>
-                                                <div class="column_chat_popup">
-                                                  <div class="row_chat_popup">
-                                                    {% if msg_box_tagged.1 in msg.message %}
-                                                              <p class="color-red">{{ msg.message }}</p>
+                                                <div class="row_chat_popup">
+                                                  <h3>{{ msg.username }}</h3>
+                                                </div>
+                                              </div>
+                                              <div class="column_chat_popup">
+                                                <div class="row_chat_popup">
+                                                  {% if msg_box_tagged.1 in msg.message %}
+                                                            <p class="color-red">{{ msg.message }}</p>
+                                                  {% else %}
+                                                    {% if msg_box_tagged.2 in msg.message %}
+                                                        <p class="color-red chat_popup_content_para">{{ msg.message }} </p>
                                                     {% else %}
-                                                      {% if msg_box_tagged.2 in msg.message %}
-                                                          <p class="color-red chat_popup_content_para">{{ msg.message }} </p>
+                                                      {% if msg_box_tagged.3 in msg.message %}
+                                                        <p class="color-red chat_popup_content_para">{{ msg.message }}</p>
                                                       {% else %}
-                                                        {% if msg_box_tagged.3 in msg.message %}
-                                                          <p class="color-red chat_popup_content_para">{{ msg.message }}</p>
-                                                        {% else %}
-                                                          <p class="chat_popup_content_para">{{ msg.message }}</p>
-                                                        {% endif%}
+                                                        <p class="chat_popup_content_para">{{ msg.message }}</p>
                                                       {% endif%}
                                                     {% endif%}
+                                                  {% endif%}
 
-                                                  </div>
-                                                  
                                                 </div>
-                                                <p class="chat_popup_content_si_timer">{{ msg.message_date|naturaltime }}</p>
+                                                
                                               </div>
+                                              <p class="chat_popup_content_si_timer">{{ msg.message_date|naturaltime }}</p>
+                                            </div>
 
-                                            {% endif %}
-                                          {% endfor %}
-                                        </div>
-
-                                        <div class="row_chat_popup">
-                                          <input type="text" name="input_msg_{{ auV.name }}_{{item.cell_id}}" id="input_msg_{{ auV.name }}_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event,'{{item.cell_id}}','1','{{redirect_next_page}}','{{ auV.name }}')">
-                                          <button class="popUP_chat_send_btn style_none_border  style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','{{ auV.name }}')" > 
-                                            <i class="bi bi-send popUP_chat_send_btn_icon " ></i></button>
+                                          {% endif %}
+                                        {% endfor %}
                                       </div>
-                                      </div>
-                                        
-                                    </td>
-                                  {% endfor %}
-    
 
-                                  <td class="td_p_dateTime_cell2"><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
+                                      <div class="row_chat_popup">
+                                        <input type="text" name="input_msg_{{ auV.name }}_{{item.cell_id}}" id="input_msg_{{ auV.name }}_{{item.cell_id}}" style="width:90%;" onkeydown="preventSubmit(event,'{{item.cell_id}}','1','{{redirect_next_page}}','{{ auV.name }}')">
+                                        <button class="popUP_chat_send_btn style_none_border  style_background_transparent" type="button" id="send_msg_1" onclick="sendMessage('{{item.cell_id}}','1','{{redirect_next_page}}','{{ auV.name }}')" > 
+                                          <i class="bi bi-send popUP_chat_send_btn_icon " ></i></button>
+                                    </div>
+                                    </div>
+                                      
+                                  </td>
+                                {% endfor %}
 
+                                <td class="td_p_dateTime_cell2"><p>{{ item.creation_time|date:_("d m Y H:i") }} </p></td>
+
+                                {% if k.state == "Fini"  %}
+                                  <td><button  class="button_table_data" type="button" onclick="etat_a_modif('{{ item.cell_id }}')"  ><i class="ri-checkbox-circle-fill fa-2x color_green "></i></button></td> 
+                                {% endif %}
+                                
 
                               </tr>
 
                             {% endif %}
                           {% endfor %}
                         </tbody>
-                        
-                    </table>
-                    <!--{} form.as_p -->
-                    <!--<button class="btn ri-add-fill"></button>-->
-                    
-                </form>
-                
-              </div>
-                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                      </table>
 
-                <!-- redirect with param -->
-                
-                  <!-- end redirect with param -->
+                        
+                    </form>
+                  
+                  </div>
+                  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+                  <!-- redirect with param -->
+                  
+                    <!-- end redirect with param -->
 
                 </div>
               </div>
             </div><!-- End Recent Sales -->
           </div>
-          <!--  ======================================================== end table 1 ===============================================================  -->
-          <!--  ======================================================== end table 1 ===============================================================  -->
-          <!--  ======================================================== end table 1 ===============================================================  -->
+        {% endfor %}
+        <!--  ======================================================== end table 1 ===============================================================  -->
+        <!--  ======================================================== end table 1 ===============================================================  -->
+        <!--  ======================================================== end table 1 ===============================================================  -->
 
 
         

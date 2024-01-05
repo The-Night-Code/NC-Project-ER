@@ -169,15 +169,15 @@
     </div><!-- End Page Title -->
 
     <div style="display:;">
-    <form id="fileUploadForm" enctype="multipart/form-data" method="POST" >
-      {% csrf_token %}
-      <input type="file" id="fileInput" name="fileInput" style="display:none" multiple>
-      <input type="text" name="file_id" id="file_id" style="display:none">
-      <input type="text" name="column" id="column" style="display:none">
-      <button id="submit_add_file_to_model" type="submit" style="display:none"></button>
-    </form>
+      <form id="fileUploadForm" enctype="multipart/form-data" method="POST" >
+        {% csrf_token %}
+        <input type="file" id="fileInput" name="fileInput" style="display:none" multiple>
+        <input type="text" name="file_id" id="file_id" style="display:none">
+        <input type="text" name="column" id="column" style="display:none">
+        <button id="submit_add_file_to_model" type="submit" style="display:none"></button>
+      </form>
 
-  </div>
+    </div>
     <div class="pagetitle">
       <h1></h1>
       
