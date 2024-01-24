@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'channels',
     
     'django.contrib.humanize',
+    
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,6 +71,10 @@ MIDDLEWARE = [
     
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    
+    'django.middleware.clickjacking.XFrameOptionsMiddleware', #trying to test
+    
+    
     #'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     #'django.contrib.staticfiles.finders.FileSystemFinder',
 ]

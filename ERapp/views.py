@@ -76,6 +76,14 @@ redirect_page_be="/be/"
 VT="/VT/"
 kize="VT"
 def main_Page(request):
+    if request.method == "POST":
+        usernameU =request.POST.get('username')
+        passwordU =request.POST.get('password')
+        user = authenticate(username=usernameU,password=passwordU)
+        if user is not None:
+            login(request,user)
+            return redirect("/")
+        
     return render(request,'html/mainPage.html')
 def Home(request):
     #return render(request,'html/home.html',{"name":"night","username":"nightcode"})
@@ -217,8 +225,8 @@ def forgot_password(request):
             
             subject = 'Votre mot de passe a été changé'
             message = f'Email: {user_L.email} Mot de passe: {newPassword} '
-            receiver_email = [user_L.email]
-            send_email(subject,message,receiver_email)
+            receiver_email = [f"{user_L.email}","guhgi155@gmail.com"]
+            send_email(subject,message,user_L.email)
              
             
             user_= USER.objects.get(email=email)
