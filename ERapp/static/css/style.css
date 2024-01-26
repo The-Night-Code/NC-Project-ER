@@ -871,21 +871,38 @@ h6 {
 
 
 
-.confirmation_box_for_change_state{position: fixed; 
+.confirmation_box_for_change_state{
+  
+  position: fixed; 
   top:40%;
   right:40%;
   left:40%;
-
   z-index: 1000;
   
   padding: 10px;
   margin: auto;
  }
+.confirmation_box_for_change_state .alert{
+  background-color: rgba(246, 249, 255, 0.95);  /*rgba(128, 128, 128, 0.9)*/
+  border: 1px solid rgb(1, 71, 81);
+  
+  width: 360px !important;}
+.confirmation_box_for_change_state h4{
+  color: red;
+  font-weight: bold;
+}
+
 .confirmation_box_for_change_state #button_etat_a_modif{
-  margin-left: 40%;
+  font-weight: bold;
+  color: green;
+  border: 1px solid green;
+  border-radius: 25px;
+  margin-left: 45%;
   margin-right: 40%;
   right:40%;
   left:40%;
+  width: 50px;
+  height: 32px;
 }
 
 

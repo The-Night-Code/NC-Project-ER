@@ -710,12 +710,12 @@ function etat_a_modif(id) {
     let text = "Appuyez sur OK pour confirmer les modifications";
     //if (confirm(text) == true) {
         var confirmation_box_for_change_state =`<div class="confirmation_box_for_change_state" id="CBFCS_${id}">
-        <div class="alert alert-secondary alert-dismissible fade show" role="alert" style="margin:auto;">
-        <h4 class="alert-heading">Confirmer les modifications</h4>
-        <p>Appuyez sur OUI pour confirmer les modifications</p>
+        <div class="alert alert-dismissible fade show" role="alert" style="margin:auto;">
+        <h4 class="alert-heading">Confirmer le changement d'état</h4>
+        <p>Appuyez sur OUI pour confirmer le changement d'état </p>
         <hr>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        <button type="button" id="button_etat_a_modif" onclick="button_etat_a_modif('${id}')"">OUI</button>
+        <button type="button" class="btn btn-outline-success " id="button_etat_a_modif" onclick="button_etat_a_modif('${id}')"">OUI</button>
         </div>
     </div>`;
 
