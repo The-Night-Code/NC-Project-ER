@@ -27,6 +27,11 @@ from django.views.decorators.csrf import csrf_exempt,csrf_protect
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# profile 
+#from PIL import Image
+import PIL.Image
+
+
 # Create your views here.
 import os
 import random
@@ -164,16 +169,31 @@ def ProfileU(request):
     if request.method == 'POST' :
         old_image = user_L.profile_pic
         if Submit_Upload_image=="Submit_Upload_image" and request.FILES['my_uploaded_image']:
-            imagefile = request.FILES['my_uploaded_image']
-            user_L.profile_pic =imagefile 
-            user_L.save(update_fields=['profile_pic'])
             
-            if len(old_image) > 0 and old_image and os.path.exists(old_image.path):
-                try:
-                    os.remove(old_image.path)    
-                except:
-                    pass
-            return redirect("/profile/")
+            #imagefile = request.FILES['my_uploaded_image']
+            imagefile = request.FILES.get('my_uploaded_image')
+            try:
+                
+                    # Open the image using Pillow
+                with PIL.Image.open(imagefile) as img:
+                    
+                    width, height = img.size
+                    if width == height:
+                        user_L.profile_pic =imagefile 
+                        user_L.save(update_fields=['profile_pic'])
+                        
+                        if len(old_image) > 0 and old_image and os.path.exists(old_image.path):
+                            try:
+                                os.remove(old_image.path)    
+                            except:
+                                pass
+                        return redirect("/profile/")
+                    else:
+                        return redirect("/else_asdasd/")
+            except Exception as e:
+                print(f"Error processing image: {e}")
+                #return HttpResponseBadRequest("Invalid image file.")
+                #return redirect("/34fg/")
             
         if remove_profile_image=="remove_profile_image"  :
             
@@ -575,6 +595,9 @@ def Auditeur_Accueil(request):
 def audit_pages(request,redirect_page,html_page):
 
     data = TableData001.objects.all().order_by('-creation_time')
+    
+    User_profile_image = USER.objects.all()
+    
     
     col_count = data.count()
     # Get unique column names from the TableData model

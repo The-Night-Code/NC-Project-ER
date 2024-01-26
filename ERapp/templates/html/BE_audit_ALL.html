@@ -523,7 +523,12 @@
                                                 <div class="chat_popup_content_si_header">
                                                   <div class="row_chat_popup">
                                                   {% if msg.email %}  
-                                                    <img src="{{ msg.profile_pic.url }}" alt="Image" class="rounded-circle">  <!-- alt="image.title"-->
+
+                                                    {% for auditeur_ in auditeur %}
+                                                      {% if msg.email == auditeur_.email%}
+                                                        <img src="{{ auditeur_.profile_pic.url }}" alt="Image" class="rounded-circle">  <!-- alt="image.title"-->
+                                                      {% endif %}
+                                                    {% endfor %}
                                                   {% else %}
                                                     <img src="{% static 'image/default_user_avatar.png' %}" alt="Image" class="rounded-circle">
                                                   {% endif %}

@@ -1429,6 +1429,11 @@ h6 {
   background-color: #f6f9ff;
 }
 
+.header nav ul li a img,
+header nav ul li a img{
+  border-radius: 50%!important;
+}
+
 .header-nav .profile {
   min-width: 240px;
   padding-bottom: 0;
