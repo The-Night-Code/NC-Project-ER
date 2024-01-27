@@ -168,32 +168,7 @@ def ProfileU(request):
     # Upload Profile Image
     if request.method == 'POST' :
         old_image = user_L.profile_pic
-        if Submit_Upload_image=="Submit_Upload_image" and request.FILES['my_uploaded_image']:
-            
-            #imagefile = request.FILES['my_uploaded_image']
-            imagefile = request.FILES.get('my_uploaded_image')
-            try:
-                
-                    # Open the image using Pillow
-                with PIL.Image.open(imagefile) as img:
-                    
-                    width, height = img.size
-                    if width == height:
-                        user_L.profile_pic =imagefile 
-                        user_L.save(update_fields=['profile_pic'])
-                        
-                        if len(old_image) > 0 and old_image and os.path.exists(old_image.path):
-                            try:
-                                os.remove(old_image.path)    
-                            except:
-                                pass
-                        return redirect("/profile/")
-                    else:
-                        return redirect("/else_asdasd/")
-            except Exception as e:
-                print(f"Error processing image: {e}")
-                #return HttpResponseBadRequest("Invalid image file.")
-                #return redirect("/34fg/")
+
             
         if remove_profile_image=="remove_profile_image"  :
             
@@ -207,21 +182,7 @@ def ProfileU(request):
                         pass
             return redirect("/profile/")
             
-        if change_password_button == "submit":
-            newPassword = str(request.POST.get("newPassword"))
-            renewPassword = str(request.POST.get("renewPassword"))
-            if newPassword == renewPassword and newPassword!=" " and newPassword and len(newPassword)>=8:
-                subject = 'Votre mot de passe a été changé'
-                message = f'Email: {user_L.email} Mot de passe: {newPassword} '
-                from_email = ''
-                recipient_list = [user_L.email]
-                send_mail(subject, message, from_email, recipient_list) 
-                
-                user_= request.user
-                user_.set_password(newPassword)
-                user_.save()
-                update_session_auth_hash(request, user_)
-                change_password_state=True
+
                 
         
 
@@ -275,7 +236,34 @@ def Upload_Profile_Pic(request):
                 
     return JsonResponse({'status': 'error'})
     
-    
+def Change_Password(request):
+    user_L=request.user
+    if request.method == 'POST' :
+        #if change_password_button == "submit":
+            newPassword = str(request.POST.get("newPassword"))
+            renewPassword = str(request.POST.get("renewPassword"))
+            if newPassword == renewPassword and newPassword!=" " and newPassword and len(newPassword)>=8:
+                subject = 'Votre mot de passe a été changé'
+                message = f'Email: {user_L.email} Mot de passe: {newPassword} '
+                from_email = ''
+                recipient_list = [user_L.email]
+                #send_mail(subject, message, from_email, recipient_list) 
+                
+                user_= request.user
+                user_.set_password(newPassword)
+                user_.save()
+                update_session_auth_hash(request, user_)
+
+                response_date={
+                            'status': 'success',
+                            'refresh_page':True,
+                        }
+                        
+                return JsonResponse(response_date)
+            
+    return JsonResponse({'status': 'error'})
+                
+                
 def forgot_password(request):
     msg = False
     email = request.POST.get('email')

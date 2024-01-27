@@ -21,7 +21,7 @@ from ERapp import consumers
 
 from django.conf import settings
 from django.conf.urls.static import static
-from ERapp.views import  LoginU, LogoutU , main_Page,ProfileU,Upload_Profile_Pic,forgot_password ,VT_Page_edit_state
+from ERapp.views import  LoginU, LogoutU , main_Page,ProfileU,Upload_Profile_Pic,forgot_password ,Change_Password ,VT_Page_edit_state
 from ERapp.views import download_K_file,save_signature,VT_Page,Kizeo_form_page,kizeo_form_Pieces,kizeo_form_Pieces_delete,create_acc_ai,create_acc_be,create_acc_auditeur,corbeille,Activities
 from ERapp.views import remove_file_from_MODELS,agent_immo,agent_immo_f,send_message,msg_checker_notif
 from ERapp.views import Auditeur_Accueil,BE_Page_f,BE_Page,BE_home_page,AI_audit_ALL,AI_audit_BY_A,BE_audit_ALL,BE_audit_BY_A
@@ -49,6 +49,7 @@ urlpatterns = [
 
     path('logout/', LogoutU),
     path('Upload-Profile-Pic/',Upload_Profile_Pic,name="Upload-Profile-Pic"),
+    path('Change-Password/',Change_Password,name="Change-Password"),
     path('profile/',ProfileU ),
     path('forgot_password/',forgot_password,name="forgot_password"),
     
