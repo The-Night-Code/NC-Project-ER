@@ -165,26 +165,6 @@ def ProfileU(request):
     Submit_Upload_image=request.POST.get("Submit_Upload_image")
     remove_profile_image=request.POST.get("remove_profile_image")
     change_password_button = request.POST.get("change_password")
-    # Upload Profile Image
-    if request.method == 'POST' :
-        old_image = user_L.profile_pic
-
-            
-        if remove_profile_image=="remove_profile_image"  :
-            
-            user_L.profile_pic = 'images/sys_image/default_user_avatar.png'
-            user_L.save(update_fields=['profile_pic'])
-            if old_image.path != '/media/images/sys_image/default_user_avatar.png':
-                if len(old_image) > 0 and os.path.exists(old_image.path) :
-                    try:
-                        os.remove(old_image.path)
-                    except:
-                        pass
-            return redirect("/profile/")
-            
-
-                
-        
 
     profile_image =user_L.profile_pic
     if profile_image :
@@ -263,7 +243,33 @@ def Change_Password(request):
             
     return JsonResponse({'status': 'error'})
                 
+@csrf_exempt
+def Remove_Profile_Pic(request):
+    user_L=request.user
+    if request.method == 'POST' :
+        old_image = user_L.profile_pic
+            
+        user_L.profile_pic = 'images/sys_image/default_user_avatar.png'
+        user_L.save(update_fields=['profile_pic'])
+        if 'default_user_avatar' not in str(old_image.path)  :
+            if len(old_image) > 0 and os.path.exists(old_image.path) :
+                try:
+                    os.remove(old_image.path)
+                except:
+                    pass
                 
+            response_date={
+                        'status': 'success',
+                        'refresh_page':True,
+                    }
+                    
+            return JsonResponse(response_date)
+        else:
+            return JsonResponse({'status': 'error',
+                                 'info':"you can't remove default_user_avatar"})  
+    return JsonResponse({'status': 'error'})  
+
+    
 def forgot_password(request):
     msg = False
     email = request.POST.get('email')
