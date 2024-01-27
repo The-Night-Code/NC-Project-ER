@@ -406,7 +406,7 @@ function updateRowColor(row,cellId) {
 
 function remove_file_from_m(id, index, column, redirect_next_page ,element_tag_id) {
 
-    var csrfToken = $("[name=csrfmiddlewaretoken]").val()
+    var csrfToken = $("[name=csrfmiddlewaretoken]").val();
     
 
 
@@ -486,7 +486,6 @@ function remove_file_from_m(id, index, column, redirect_next_page ,element_tag_i
         },
     });
 };
-
 
 
 document.addEventListener("DOMContentLoaded", function () {

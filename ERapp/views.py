@@ -160,7 +160,7 @@ def LogoutU(request):
 @login_required
 def ProfileU(request):
     change_password_state=False
-    #user_Id="3"
+
     user_L=request.user
     Submit_Upload_image=request.POST.get("Submit_Upload_image")
     remove_profile_image=request.POST.get("remove_profile_image")
@@ -234,6 +234,48 @@ def ProfileU(request):
     return render(request,'html/profileU.html',{'profile_image':profile_image,'change_password_state':change_password_state})
 
 
+@csrf_exempt
+def Upload_Profile_Pic(request):
+    user_L=request.user
+    
+    if request.method == 'POST' :
+        old_image = user_L.profile_pic
+        if request.FILES['my_uploaded_image']:
+            
+            #imagefile = request.FILES['my_uploaded_image']
+            imagefile = request.FILES.get('my_uploaded_image')
+            try:
+                
+                    # Open the image using Pillow
+                with PIL.Image.open(imagefile) as img:
+                    
+                    width, height = img.size
+                    if width == height:
+                        user_L.profile_pic =imagefile 
+                        user_L.save(update_fields=['profile_pic'])
+                        
+                        if len(old_image) > 0 and old_image and os.path.exists(old_image.path):
+                            try:
+                                os.remove(old_image.path)    
+                            except:
+                                pass
+                        response_date={
+                            'status': 'success',
+                            'refresh_page':True,
+                        }
+                        
+                        return JsonResponse(response_date)
+                    else:
+                        return JsonResponse({'status': 'error'})
+            except Exception as e:
+                print(f"Error processing image: {e}")
+                #return HttpResponseBadRequest("Invalid image file.")
+                #return redirect("/34fg/")
+        return JsonResponse({'status': 'error'})
+                
+    return JsonResponse({'status': 'error'})
+    
+    
 def forgot_password(request):
     msg = False
     email = request.POST.get('email')

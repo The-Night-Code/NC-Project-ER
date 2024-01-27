@@ -31,7 +31,11 @@
   <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
   <link href="{% static 'vendor/simple-datatables/style.css' %}" rel="stylesheet">
 
-
+  
+  
+  
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  
 </head>
 
 <body>
@@ -253,8 +257,8 @@
 
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
                   <!-- Profile Edit Form -->
-                  
-                  <form  action="" method="post" enctype="multipart/form-data">
+
+                  <form id="fileUploadForm" enctype="multipart/form-data" method="POST" >
                     {% csrf_token %}
                     
                     <div class="row mb-3">
@@ -267,15 +271,20 @@
                         {% endif %}
                         
                         <div class="pt-2">
-                          <input type="file"  name="my_uploaded_image" accept="image/*" required> 
+                          <input type="file"  name="my_uploaded_image" id="my_uploaded_image" accept="image/*" required> 
                         </div>
                         <div class="pt-2">
-                          <button type="submit"  class="btn btn-primary btn-sm" value="Submit_Upload_image" name="Submit_Upload_image"><i class="bi bi-upload"></i></button>
+                          <button type="button" class="btn btn-primary btn-sm" value="Submit_Upload_image" id="btn-Submit_Upload_image" name="Submit_Upload_image"  ><i class="bi bi-upload"></i></button>                          
                           <button type="submit" class="btn btn-danger btn-sm"  value="remove_profile_image" name="remove_profile_image" formnovalidate ><i class="bi bi-trash"></i></button>
                         </div>
                       </div>
                     </div>
                   </form>
+                  
+
+
+
+
                   
                   <form>
                     <div class="row mb-3">
@@ -369,6 +378,7 @@
 
   <!-- Template Main JS File -->
   <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
+  <script type="text/javascript" src="{% static 'js/main7.js'%}"></script>
 
 </body>
 
