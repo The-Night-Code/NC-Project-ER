@@ -48,10 +48,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('logout/', LogoutU),
+    re_path(r'^logout/', LogoutU),
     path('Upload-Profile-Pic/',Upload_Profile_Pic,name="Upload-Profile-Pic"),
     path('Change-Password/',Change_Password,name="Change-Password"),
     path('Remove-Profile-Pic/',Remove_Profile_Pic,name="Remove-Profile-Pic"),
     path('profile/',ProfileU ),
+    re_path(r'^profile/',ProfileU ),
     path('forgot_password/',forgot_password,name="forgot_password"),
     
     # Auditeur Pages
@@ -59,6 +61,7 @@ urlpatterns = [
     # Auditeur Pages
     path('table-view/',table_view_2 ,name="table_view_2"),
     path('Accueil/',Auditeur_Accueil ,name="Auditeur_main_page"),
+    re_path(r'^Accueil/',Auditeur_Accueil ,name="Auditeur_main_page"),
     
     path('BE_audit_ALL/',BE_audit_ALL ,name="BE_audit_ALL"),
     path('BE_audit_BY_A/',BE_audit_BY_A ,name="BE_audit_BY_A"),
@@ -81,6 +84,7 @@ urlpatterns = [
     # Agent Immo Pages
     # Agent Immo Pages
     path(f'{ai}/',agent_immo ,name="ai"),
+    path(r'^ai/',agent_immo ,name="ai"),
     path(f'{ai}f/',agent_immo_f,name="aif" ),
     
     
@@ -89,6 +93,7 @@ urlpatterns = [
     # Bereau d'etude Pages
     path(f'{be}_home_page/',BE_home_page ,name="be_home_page"),
     path(f'{be}/',BE_Page ,name="be"),
+    re_path(fr'^{be}/',BE_Page ,name="be"),
     path(f'{be}f/',BE_Page_f ,name="bef"),
     path('table-view-3/',table_view_3 ,name="table_view_3"),
     path('CBFCS/',CBFCS ,name="CBFCS"),
@@ -97,6 +102,7 @@ urlpatterns = [
     # Visiteur tech Pages
     # Visiteur tech Pages
     path('VT/', VT_Page,name="VT"),
+    re_path(r'^VT/', VT_Page, name='VT'),
     path('VT1/', VT_Page_edit_state, name="VT_Page_edit_state"),
     
     
