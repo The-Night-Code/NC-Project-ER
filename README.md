@@ -35,9 +35,9 @@ This system has significantly enhanced operational efficiency and project manage
 
 Using venv (Python 3)
   
-`python3 -m venv env` 
+`python3 -m venv venv` 
 
-`source env/bin/activate` or `.\venv\Scripts\activate`
+`source venv/bin/activate` or `.\venv\Scripts\activate`
 
 
 ### Install Dependencies
